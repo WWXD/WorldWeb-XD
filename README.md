@@ -1,9 +1,5 @@
 # Blargboard
 
-http://kuribo64.net/blargboard/
-
-http://kuribo64.net/?page=forum&id=82
-
 -------------------------------------------------------------------------------
 
 Board software written in PHP. Uses MySQL for storage.
