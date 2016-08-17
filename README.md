@@ -1,9 +1,5 @@
 # Blargboard
 
-http://kuribo64.net/blargboard/
-
-http://kuribo64.net/?page=forum&id=82
-
 -------------------------------------------------------------------------------
 
 Board software written in PHP. Uses MySQL for storage.
@@ -40,14 +36,6 @@ If everything went fine, browse to your freshly installed board and configure it
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
 If you have HTML knowledge, you can even edit the templates to change your board's look more in-depth.
 
-## Working plugins
-
-The following plugins have been updated and are known to work with current Blargboard. Any other plugins in the repo are probably broken, so don't try using them.
-
- * CustomUserNameColors
- * ircreport
- * layoutblockstats
-
 ## How to update your board
 
 Download the most recent Blargboard package (be it an official release or a Git package).
@@ -61,16 +49,9 @@ Once that is done, run update.php (http://my.board.for.example/update.php) to up
 
 Depending on the versions, your update may involve running extra scripts to fix certain things. Make sure to follow those instructions.
 
-
-Updating from Blargboard 1.0 isn't covered.
-
 ## Features
 
- * Flexible permission system
- * Plugin system
- * Templates (in the works, about 80% done)
  * URL rewriting, enables human-readable forum and thread URLs for public content (requires code editing to enable it as of now)
- * Post layouts
  * more Acmlmboard feel
  * typical messageboard features
 
@@ -81,11 +62,6 @@ of templates in Blargboard gets in their way. Well uh, can't please everybody. I
 do my best at separating logic and presentation. Besides, the use of templates actually
 makes the code nicer. Just look at the first few revisions and see how much duplicate logic
 is powering the mobile layout, for example. Templates allowed to get rid of all that madness.
-
-As of now, there are no official releases for this, and the ABXD database installer hasn't
-been adapted to Blargboard's database structure yet. Thus, when updating your Blargboard
-copy, you need to check for changes to database.sql and modify your database's structure
-accordingly.
 
 ## Board owner's tips
 
@@ -114,7 +90,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-The Blargboard help forum is at Kuribo64: http://kuribo64.net/?page=forum&id=82
+The Blargboard help forum is at Kuribo64: http://3dshacks.rf.gd/blargboard1.3/
 
 If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
 
@@ -142,7 +118,7 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 Blargboard is provided as-is, with no guarantee that it'll be useful or even work. I'm not
 responsible if it explodes in your face. Use that thing at your own risk.
 
-Oh well, it should work rather well. See Kuribo64. But uh, we never know.
+Oh well, it should work rather well. See the 3DS hacks blargboard subforums. But uh, we never know.
 
 -------------------------------------------------------------------------------
 
