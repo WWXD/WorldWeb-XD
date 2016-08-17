@@ -1,0 +1,89 @@
+body
+{
+	background-color: #FFF;
+	color:black;
+}
+
+/* Default border color */
+table, td, tr, th, div
+{
+	border-color:black;
+}
+
+/* Default link colors */
+a:link
+{
+	color: #05d;
+}
+a:visited
+{
+	color: #05d;
+}
+a:active
+{
+	color: #05d;
+}
+a:hover
+{
+	color:#703;
+}
+
+a:hover span
+{
+	color: #703 !important;
+}
+
+table
+{
+	color: #000;
+}
+
+div.quote div.quotecontent
+{
+	border-color:#CCC;
+}
+
+
+.geshi
+{
+	color: #000;
+}
+
+
+.geshi .kw0, .geshi .kw1, .geshi .kw2, .geshi .kw3, .geshi .kw4
+{
+	color: #04C;
+}
+
+.geshi .br0, .geshi .sy0
+{
+	color: #033;
+}
+
+.geshi .co1, .geshi .coMULTI
+{
+	color: #440;
+}
+
+/* Name color table */
+.nc0x { color: #888888; } .nc1x { color: #888888; } .nc2x { color: #888888; }
+.nc00 { color: #677CBF; } .nc10 { color: #F185C9; } .nc20 { color: #7C60B0; }
+.nc01 { color: #18b8BE; } .nc11 { color: #FFB3F3; } .nc21 { color: #EEB9BA; }
+.nc02 { color: #2FCA6E; } .nc12 { color: #C762F2; } .nc22 { color: #47B53C; }
+.nc03 { color: #9FBA35; } .nc13 { color: #C53A9E; } .nc23 { color: #F0C413; }
+.nc04 { color: #5555FF; } .nc14 { color: #FF5588; } .nc24 { color: #FF55FF; }
+.nc05 { color: #FF0000; } .nc15 { color: #FF0000; } .nc25 { color: #FF0000; }
+
+
+div.spoiler div.spoiled
+{
+	background: #FFF;
+	color: #000;
+}
+
+
+.headertab.selected a
+{
+	background: rgba(200,200,200,0.7)!important;
+}
+

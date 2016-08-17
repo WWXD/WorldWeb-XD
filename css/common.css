@@ -1,0 +1,1081 @@
+/* AcmlmBoard XD - Shared elements */
+
+@import url('mobile.css');
+
+.newMarker
+{
+	width: 2.5em!important;
+	text-align: center;
+}
+
+/* this hack is lame and shouldn't be required, ugh */
+html, body { width: 100%; height: 100%; }
+
+body
+{
+	background-color: #222;
+	color: #FFF;
+	font-family: "Verdana", "Lucida Grande", sans-serif;
+	font-size: 1em; /* 10pt; */
+	margin: 0;
+	/*max-width: 1366px;
+	margin-left: auto;
+	margin-right: auto;*/
+	overflow-y: scroll;
+	-ms-overflow-y: scroll;
+}
+
+.highlight_green
+{
+	background: #040;
+	color: #dfd;
+	border: 1px solid #dfd;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.highlight_yellow
+{
+	background: #440;
+	color: #ffd;
+	border: 1px solid #ffd;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.highlight_red
+{
+	background: #400;
+	color: #fdd;
+	border: 1px solid #fdd;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+/* force header and footer to be the smallest possible */
+#main-header, #main-footer
+{
+	height: 1px;
+}
+
+#main-sidebar
+{
+	width: 14em;
+}
+
+#main-sidebar, #main-page
+{
+	vertical-align: top;
+}
+
+h3
+{
+	font-family: "Verdana", "Lucida Grande", sans-serif;
+	font-size: 1.2em; /* 12pt; */
+	font-weight: bold;
+	margin: 0;
+}
+h4
+{
+	font-family: "Verdana", "Lucida Grande", sans-serif;
+	font-size: 1em; /* 10pt; */
+	margin: 0;
+}
+
+a
+{
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a img
+{
+	border: none;
+}
+
+.nobr
+{
+	white-space: nowrap;
+}
+
+/* Default border color */
+table, td, tr, th, div
+{
+	border-color:black;
+}
+/* Default link colors */
+a:link
+{
+	color: #FFC040;
+}
+a:visited
+{
+	color: #FFC040;
+/*	color: #C09030;*/
+}
+a:active
+{
+	color: #FFEA60;
+}
+a:hover
+{
+	color:#FFF;
+}
+a:hover span
+{
+	color: #FFF !important;
+}
+
+.pagelink
+{
+	padding-left:5px;
+	padding-right:5px;
+	display:inline-block;
+}
+
+
+/* Widths */
+/* TODO REMOVE ME */
+.width100
+{
+	width: 100%;
+}
+.width75
+{
+	width: 75%;
+}
+.width50
+{
+	width: 50%;
+}
+.width25
+{
+	width: 25%;
+}
+
+.margin, .pages
+{
+	margin-bottom: .75em;
+}
+
+.smallFonts
+{
+	font-size: 0.85em !important;
+}
+
+
+/* Positioning */
+
+.left
+{
+	text-align: left;
+}
+.right
+{
+	text-align: right;
+}
+
+table.message
+{
+	text-align: center;
+}
+
+/* Some styles */
+
+.block
+{
+	display: block;
+}
+
+.center
+{
+	text-align: center;
+}
+
+.underline
+{
+	text-decoration: underline;
+}
+
+table
+{
+	color: #FFF;
+
+	border-collapse: separate;
+	border-spacing:0;
+	width: 100%;
+	font-weight: normal;
+}
+
+#header-sep
+{
+	padding: 0;
+	height: 4px;
+}
+
+/* Main table style */
+/* The main table is just here to position elements correctly; make sure it takes no space */
+
+table.layout-table
+{
+	margin: 0;
+	padding: 0;
+	border-spacing: 0;
+	width: 100%;
+}
+
+table.layout-table > tbody > tr > td
+{
+	padding: 0;
+}
+
+
+table.layout-table#main
+{
+	height: 100%;
+}
+
+/* Sidebar table style */
+/* Same kind of border removal as with #header */
+
+table#sidebar
+{
+	height: 100%;
+}
+
+table#sidebar > tbody > tr > td
+{
+	vertical-align: top;
+	padding: 4px;
+}
+
+table#sidebar table td a
+{
+	display: block;
+}
+
+/* Footer table style */
+
+table#footer > tbody > tr > td
+{
+	font-size: 0.8em;
+	text-align: center;
+}
+
+table#page-container
+{
+	height: 100%;
+}
+
+td.crumb-container
+{
+	height: 1px;
+}
+
+td.contents-container
+{
+	vertical-align: top;
+}
+
+div#page_contents
+{
+	padding: 8px;
+	height: 100%;
+}
+
+div#page_contents > .margin:last-child
+{
+	margin-bottom: 0;
+}
+
+/* Header info table */
+
+#headerInfo
+{
+	float: right;
+	width: 300px;
+	margin: 4px;
+	font-size: 0.85em;
+}
+
+/* Navigation bar */
+
+#navBar
+{
+	font-size: 1em !important;
+	text-align: left !important;
+	padding: 2px;
+}
+
+.navButton
+{
+	display: inline-block;
+	padding: 5px;
+	margin: 0 4px;
+	white-space: nowrap;
+}
+
+.navButton > a
+{
+	margin: -5px;
+	padding: 5px;
+}
+
+/* Quick ugly effect. Themes should override it for better effect. */
+.navButton:hover, .dropdownContainer:hover > .navButton
+{
+	background: rgba(0,0,0,0.7);
+}
+
+.breadcrumbs .navButton
+{
+	margin: -5px 4px;
+	font-size: 0.85em;
+}
+
+/* Breadcrumbs */
+
+ul.crumbLinks
+{
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.crumbLinks li
+{
+	display: inline-block;
+	white-space: nowrap;
+}
+
+ul.crumbLinks li:not(:first-child):before
+{
+	content: '\00A0\00BB\00A0';
+}
+
+/* User menu */
+
+.dropdownContainer
+{
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+}
+
+/* make sure the menus on the far right don't bleed out of the window */
+#notifMenuContainer > ul.dropdownMenu,
+.breadcrumbs ul.dropdownMenu
+{
+	right: 0;
+}
+
+table#page-container > tbody > tr:last-child > td.crumb-container .breadcrumbs ul.dropdownMenu
+{
+	bottom: 2em;
+}
+
+.dropdownContainer .navButton
+{
+	display: block;
+}
+
+ul.dropdownMenu
+{
+	list-style-type: none;
+	margin: 3px 4px 0 4px;
+	padding: 0;
+	display: none;
+	position: absolute;
+	
+	cursor: default;
+	font-weight: normal;
+}
+
+ul.dropdownMenu li
+{
+	margin: 0;
+	display: block;
+	border: solid #888;
+	border-width: 0 1px 1px 1px;
+	background: #333;
+	padding: 4px;
+}
+
+ul.dropdownMenu li:first-child
+{
+	border-top-width: 1px;
+}
+
+ul.dropdownMenu li > a
+{
+	display: block;
+	white-space: nowrap;
+}
+
+/* little hack so that the dropdownContainer div comes under the dropdown menu when hovered over */
+/* so we don't get a deactivating gap between the button and the menu */
+.dropdownContainer:hover
+{
+	padding-bottom: 4px;
+	margin-bottom: -4px;
+}
+
+.dropdownContainer:hover > ul.dropdownMenu
+{
+	display: block;
+}
+
+/* Notification button */
+
+@keyframes notifAnim
+{
+	from { }
+	to { transform: scale(2,2); }
+}
+
+@-webkit-keyframes notifAnim
+{
+	from { }
+	to { -webkit-transform: scale(2,2); }
+}
+
+#notifMenuContainer #notifCount
+{
+	color: white;
+	text-shadow: none;
+	padding: 0px 4px;
+	border-radius: 3px;
+	display: inline-block;
+}
+
+#notifMenuContainer.hasNotifs #notifCount
+{
+	background: #c00;
+	border: 1px solid #f44;
+	
+	transform-origin: center;
+	animation-name: notifAnim;
+	animation-delay: 0.5s;
+	animation-duration: 0.4s;
+	animation-iteration-count: 4;
+	animation-timing-function: linear;
+	
+	-webkit-transform-origin: center;
+	-webkit-animation-name: notifAnim;
+	-webkit-animation-delay: 0.5s;
+	-webkit-animation-duration: 0.4s;
+	-webkit-animation-iteration-count: 4;
+	-webkit-animation-timing-function: linear;
+}
+
+#notifMenuContainer.noNotif #notifCount
+{
+	background: #777;
+	border: 1px solid #999;
+}
+
+/* hide the dropdown arrow and notif menu if there are no notifications */
+#notifMenuContainer.noNotif #notifMenuButton i, 
+#notifMenuContainer.noNotif ul.dropdownMenu
+{
+	display: none;
+}
+
+/* Breadcrumbs */
+
+table.breadcrumbs, table.breadcrumbs > tbody > tr > th
+{
+	font-size: 1em !important;
+	text-align: left !important;
+}
+
+table.breadcrumbs > tbody > tr > th
+{
+	padding: 4px;
+}
+
+table.newspost
+{
+	margin-top: 1.25em;
+}
+
+table.form
+{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1200px;
+	clear: both;
+}
+
+table.form_quickreply
+{
+	margin: 4px auto;
+	max-width: 1200px; 
+	clear: both;
+}
+
+/* All cells have border by default */
+table.post>tbody>tr>td, table.outline>tbody>tr>td, table.message>tbody>tr>td
+{
+	font-size: 1em; /* 10pt; */
+	padding:2px 4px;
+}
+
+table.post>tbody>tr>th, table.outline>tbody>tr>th, table.message>tbody>tr>th
+{
+	font-size: 1em; /* 12px; */
+	text-align: left;
+}
+
+tr.header0>th, tr.header1>th
+{
+	text-align: center!important;
+	font-size: .85em!important; /* 8pt; */
+}
+
+/* Post tables */
+
+table.post, table.custompost
+{
+	width: 100%;
+	margin-bottom: 0.75em;
+}
+
+/*table.post *
+{
+	word-break: break-all !important;
+}*/
+
+table.post td.side,
+table.custompost td.side,
+table.threadreview td.side
+{
+	width: 200px;
+	vertical-align: top;
+}
+
+table.post td.post,
+table.custompost td.post
+{
+	vertical-align: top;
+	height: 100px;
+}
+
+table.threadreview td.post
+{
+	vertical-align: top;
+}
+
+table.post td.side
+{
+	padding: 2px 4px;
+}
+
+table.post td.post:not(.haslayout)
+{
+	padding: 10px;
+}
+
+table.post td.post.haslayout
+{
+	padding: 0px!important;
+}
+
+
+table.post td.meta
+{
+	font-size: .85em; /* 8pt; */
+	height: 14px;
+	margin: 0;
+	padding-right: 4px;
+}
+table.post td.links
+{
+	font-size: .85em; /* 8pt; */
+	height: 14px;
+	margin: 0;
+}
+
+.signature
+{
+	font-size: 0.85em;
+}
+
+.post_attachment
+{
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	padding: 1em;
+	margin: 0.5em;
+}
+
+.footer
+{
+	text-align: center;
+	width: 100%;
+	font-size: .8em; /* 10pt; */
+	clear: both;
+}
+.footer *
+{
+	border-width: 0;
+}
+
+.links
+{
+	font-size: 1em; /* 10pt; */
+	text-align: right;
+}
+
+.ignored
+{
+	opacity: 0.5;
+}
+
+/* [Quote] stuff */
+div.quote
+{
+	padding: 4px;
+	margin-top: 4px;
+	margin-bottom:4px;
+	margin-left:50px;
+	margin-right:10px;
+}
+
+div.quote div.quotecontent
+{
+	padding:4px;
+	margin-top:4px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+}
+
+div.quote div.quoteheader
+{
+	font-size:10px;
+	font-style:italic;
+}
+
+.codeblock
+{
+	white-space:pre-wrap;
+	font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+	padding:4px;
+	margin-left:10px;
+	margin-right:10px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+form
+{
+	margin: 0;
+}
+
+.minipic
+{
+	vertical-align: top;
+}
+
+div.spoiler
+{
+	margin-left:10px;
+	margin-right:10px;
+	margin-top:5px;
+	margin-bottom:5px;
+
+}
+
+div.spoiler div.spoiled
+{
+	background: #000;
+	color: #FFF;
+	padding:10px;
+}
+
+div.spoiler div.hidden
+{
+	display: none;
+}
+
+ul.pipemenu
+{
+	display: inline;
+	white-space: nowrap;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+ul.pipemenu li
+{
+	display: inline-block;
+}
+ul.pipemenu li:not(:first-child):before
+{
+	content: '\00A0|\00A0';
+}
+
+#getabetterbrowseryoulazyfuck
+{
+	position: absolute;
+	left: 32px;
+	top: 32px;
+	background: #CCF;
+	border: 4px solid red;
+	color: #000;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.footer a img
+{
+	opacity: .5;
+	     -o-transition: opacity .2s ease-in-out;
+		-ms-transition: opacity .2s ease-in-out;
+	        transition: opacity .2s ease-in-out;
+	   -moz-transition: opacity .2s ease-in-out;
+	-webkit-transition: opacity .2s ease-in-out;
+}
+.footer a:hover img
+{
+	opacity: 1;
+}
+
+.smilies img, #rss img
+{
+	padding: 1px;
+	opacity: .5;
+	border: 1px solid rgba(255, 255, 255, 0);
+	border-radius: 4px;
+	     -o-transition: opacity .2s ease-in-out;
+		-ms-transition: opacity .2s ease-in-out;
+	        transition: opacity .2s ease-in-out;
+	   -moz-transition: opacity .2s ease-in-out;
+	-webkit-transition: opacity .2s ease-in-out;
+}
+.smilies img:hover, #rss img:hover
+{
+	margin: 0;
+	opacity: 1;
+	background: rgba(255, 255, 255, .25);
+	border: 1px solid rgba(255, 255, 255, .5);
+}
+
+input, select, textarea, button
+{
+	font-size: 1em;
+}
+input[disabled], button[disabled]
+{
+	opacity: .5;
+}
+input.color
+{
+	background-image:none!important;
+}
+textarea
+{
+	font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+#body
+{
+	margin: 8px;
+}
+
+.geshi
+{
+	color: #FFF;
+}
+
+.geshi .kw0, .geshi .kw1, .geshi .kw2, .geshi .kw3, .geshi .kw4
+{
+	font-weight: bold;
+	color: #AAF;
+}
+
+.geshi .st0
+{
+	font-style: italic;
+}
+.geshi .br0, .geshi .sy0
+{
+	color: #488;
+}
+.geshi .co1, .geshi .coMULTI
+{
+	font-style: italic;
+	color: #884;
+}
+
+.badge
+{
+	border: 2px solid #666;
+	background: #444;
+	font-size: 10px;
+	color: #FFF;
+	margin: 0;
+	padding: 0px 3px;
+}
+.bronze
+{
+	border-color: chocolate;
+	background: #946231;
+}
+.silver
+{
+	border-color: silver;
+	background: #949494;
+}
+.gold
+{
+	border-color: gold;
+	background: #E8B400;
+}
+.platinum
+{
+	border-color: darkgray;
+	background: #948e82;
+}
+
+#expandedSet, #expandedHelp
+{
+	display: none;
+}
+
+button.expander
+{
+	font-weight: bold;
+	border-width:1px; border-style:solid;
+	padding: 0;
+	width: 20px;
+	margin: 0;
+	float: right;
+}
+
+button.expander:hover
+{
+	border: 1px solid #FFF;
+}
+
+.threadTag
+{
+	text-shadow: 1px 1px 0px hsla(0, 0%, 0%, .5);
+	padding: 0px 2px;
+	border: 1px dotted hsla(0, 0%, 100%, .75);
+	box-shadow: 1px 1px 2px hsla(0, 0%, 0%, .5);
+	margin-right: 2px;
+}
+
+td.threadIcon
+{
+	width: 20px;
+	text-align: center;
+	font-size: .8em;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px #000;
+}
+
+.pollbarContainer
+{
+	border: 1px solid #669;
+	margin: .2em;
+	/*box-shadow: inset 0px 4px 8px #000;*/
+	border-radius: 8px;
+	width: 75%;
+	padding: 1px;
+}
+
+.pollbar
+{
+	border-width:1px; border-style:solid;
+	margin: -1px;
+	background: silver;
+	color: #FFF;
+	text-shadow: 1px 1px 0px #000, 0px 1px 0px #000, -1px 1px 0px #000, -1px 0px 0px #000, -1px -1px 0px #000, 0px -1px 0px #000, 1px -1px 0px #000, 1px 0px 0px #000;
+	/*box-shadow: inset 0px -4px 12px #000;*/
+	border-radius: 8px;
+	white-space: nowrap;
+}
+
+.editprofile
+{
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.eptable 
+{
+	margin: 0px 0px !important;
+}
+
+div#tabs
+{
+	margin: 0px 0px;
+	margin-bottom: -1px;
+	padding: 0px 0px;
+	padding-left: 4px;
+	cursor: default;
+}
+
+div#tabs button
+{
+	margin: 0px;
+	padding-right: 16px;
+}
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom-width: 0px;
+}
+
+.statusIcon
+{
+	display: inline-block;
+	white-space: pre;
+
+	text-shadow: 1px 1px 0px #000, 0px 1px 0px #000, -1px 1px 0px #000, -1px 0px 0px #000, -1px -1px 0px #000, 0px -1px 0px #000, 1px -1px 0px #000, 1px 0px 0px #000;
+	font-weight: bold;
+	font-variant: small-caps;
+}
+
+.statusIcon.new:before { content: 'New\000A'; } 			.statusIcon.new { color: #ff4; }
+.statusIcon.hot:before { content: '!\000A'; } 			.statusIcon.hot { color: #f84; }
+.statusIcon.hotnew:before { content: 'New\000A'; } 		.statusIcon.hotnew { color: #fa4; }
+.statusIcon.off:before { content: '\00D7\000A'; } 		.statusIcon.off { color: #888; }
+.statusIcon.offhot:before { content: '\00D7\000A'; } 	.statusIcon.offhot { color: #888; }
+.statusIcon.offhotnew:before { content: '\00D7\000A'; } 	.statusIcon.offhotnew { color: #880; }
+.statusIcon.offnew:before { content: '\00D7\000A'; } 	.statusIcon.offnew { color: #880; }
+.statusIcon.old:before { content: 'Old\000A'; } 			.statusIcon.old { color: #888; }
+
+td.threadIcons label > input
+{
+	display: none;
+}
+
+td.threadIcons label > input ~ *
+{
+	background: rgba(255, 255, 255, 0);
+	border: 1px solid rgba(255, 255, 255, 0);
+	border-radius: 4px;
+	padding: 0px 2px;
+}
+
+td.threadIcons label > input:checked ~ *
+{
+	background: rgba(255, 255, 255, .25);
+	border: 1px solid rgba(255, 255, 255, .5);
+}
+
+div.postToolbar
+{
+	margin-bottom: 1px;
+}
+
+div.postToolbar button
+{
+	vertical-align: bottom;
+	width: 1.85em;
+	height: 1.85em;
+	margin-right: 1px;
+	padding-bottom: 0.1em;
+}
+
+div#rss
+{
+	float: right;
+	margin-left: 4px;
+}
+
+.themeselector input:checked + label, .fe_selected {
+	outline: 1px solid rgba(255, 255, 255, 0.5);
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type="checkbox"]
+{
+	vertical-align:middle;
+}
+
+label
+{
+	display:inline-block;
+}
+
+div.overlayShade {
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	-webkit-animation-name: fadeIn;
+	-webkit-animation-duration: 1s;
+
+}
+
+@-webkit-keyframes fadeIn {
+	from {
+		background: rgba(0, 0, 0, 0);
+	}
+	to {
+		background: rgba(0, 0, 0, 0.5);
+	}
+}
+
+div.overlayShade div.message {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4em;
+	-webkit-animation-name: overlayScaleIn;
+	-webkit-animation-duration: 0.25s;
+}
+
+@-webkit-keyframes overlayScaleIn {
+	from {
+		opacity: 0;
+		-webkit-transform: scale(0.75);
+	}
+	to {
+		oacpty: 1;
+		-webkit-transform: scale(1);
+	}
+}
+
+div.overlayShade div.overlayContent {
+	padding: 16px;
+}
+
+div.overlayShade div.buttonContainer {
+	text-align: right;
+}
+
+div.overlayShade div.buttonContainer button {
+	margin: 8px;
+}
+
+.postToolbar {
+	cursor: default;
+}
+
+code, pre, kbd
+{
+	font-size: 115%;
+}
+
+.gfxnumber
+{
+	background: url('../img/status/numbers.png');
+	width: 8px;
+	height: 8px;
+	display: inline-block;
+}

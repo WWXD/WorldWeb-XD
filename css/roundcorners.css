@@ -1,0 +1,110 @@
+
+table.post
+{
+	border-radius: 8px;
+}
+
+table.post td.side
+{
+	border-bottom-left-radius: 8px;
+}
+
+table.post td.post
+{
+	border-bottom-right-radius: 8px;
+}
+
+table.post td.meta
+{
+	border-top-right-radius: 8px;
+}
+
+table.post td.userlink
+{
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 0px;
+}
+
+table.outline
+{
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.post_about
+{
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+}
+
+.post_topbar
+{
+	border-top-right-radius: 8px;
+}
+
+.post_content
+{
+	border-bottom-right-radius: 8px;
+}
+
+.post_about, .post_topbar, .post_content
+{
+	box-shadow: 2px 2px 4px #000;
+}
+
+
+.PoRT .errort
+{
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+.PoRT .errorc
+{
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.highlightedPost
+{
+	box-shadow: 0px 0px 1em #FFF;
+}
+
+button.expander
+{
+	border-radius: 8px;
+}
+
+table.outline > tbody:first-child > tr:first-child > *:first-child
+{
+	border-top-left-radius: 8px;
+}
+table.outline > tbody:first-child > tr:first-child > *:last-child
+{
+	border-top-right-radius: 8px;
+}
+
+.PoRT
+{
+	border-radius: 8px;
+}
+
+div#tabs button {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+
+table#header,
+table#header > tbody > tr:first-child > *,
+table#footer,
+table#footer > tbody > tr:first-child > *,
+table#sidebar,
+table#sidebar > tbody > tr:first-child > *,
+table#page-container > tbody > tr:first-child > td.crumb-container > table,
+table#page-container > tbody > tr:first-child > td.crumb-container > table > tbody > tr > *,
+table#page-container > tbody > tr:last-child > td.crumb-container > table,
+table#page-container > tbody > tr:last-child > td.crumb-container > table > tbody > tr > *
+{
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}

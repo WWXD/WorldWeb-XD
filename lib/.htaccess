@@ -1,0 +1,6 @@
+<Files *.php>
+Order Allow,Deny
+Deny from All
+</Files>
+
+ErrorDocument 403 'The required libraries have not been defined.'

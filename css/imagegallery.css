@@ -1,0 +1,21 @@
+
+.imageGallery_min
+{
+	min-width: 50px;
+	min-height: 50px;
+	max-width: 640px;
+	max-height: 480px;
+	cursor: pointer;
+}
+
+.imageGallery_image
+{
+	min-width: 50px;
+	min-height: 50px;
+}
+
+.imageGallery_show table
+{
+	border: none;
+	border-collapse: collapse;
+}

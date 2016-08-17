@@ -1,0 +1,258 @@
+/* New Kuribo theme, flat */
+
+body
+{
+	background: #333;
+	color: #fff;
+}
+
+a:link, a:visited { color: #8fa; }
+a:active, a:hover { color: #fff; text-decoration: underline; }
+
+table.outline, table.post
+{
+	border: 1px solid #043;
+	border-radius: 10px;
+}
+
+.margin, .pages
+{
+	margin-bottom: 1.3em;
+}
+
+div#page_contents
+{
+	padding: 1em;
+}
+
+table.outline > tbody > tr > *,
+table.post td.userlink,
+table.post td.meta
+{
+	border-bottom: 1px solid #043;
+}
+
+table.outline > tbody:last-child > tr:last-child > *
+{
+	border-bottom: none 0;
+}
+
+table.outline > tbody > tr > td,
+table.post td.side:not(.userlink)
+{
+	border-right: 1px solid #043;
+	padding: 3px 5px;
+}
+
+table.outline > tbody > tr > td:last-child
+{
+	border-right: none 0;
+}
+
+table.outline > tbody:first-child > tr:first-child > *:first-child,
+table.post td.userlink
+{
+	border-top-left-radius: 9px;
+}
+table.outline > tbody:first-child > tr:first-child > *:last-child,
+table.post td.meta
+{
+	border-top-right-radius: 9px;
+}
+table.outline > tbody:last-child > tr:last-child > *:first-child,
+table.post td.side:not(.userlink),
+table.deletedpost td.side
+{
+	border-bottom-left-radius: 9px;
+}
+table.outline > tbody:last-child > tr:last-child > *:last-child,
+table.post td.post,
+table.deletedpost td.meta
+{
+	border-bottom-right-radius: 9px;
+}
+
+tr.header0 > th,
+tr.header1 > th,
+table.post td.userlink,
+table.post td.meta
+{
+	/* fallback for lame browsers that don't support gradients */
+	background: #043;
+	/* Firefox */
+	background: #105434 -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+	/* Webkit */
+	background: #105434 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.35)));
+	background: #105434 -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	/* Opera */
+	background: #105434 -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	/* IE10 and up */
+	background: #105434 -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	/* standards compliant */
+	background: #105434 linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	
+	padding: 4px 6px;
+	
+	text-shadow: 1px 1px 2px #000;
+}
+
+td.cell1,
+tr.cell1 > td:not(.cell0):not(.cell2),
+table.post td.post
+{
+	background: #222;
+}
+
+td.cell0, td.cell2,
+tr.cell0 > td:not(.cell1), tr.cell2 > td:not(.cell1),
+table.post td.side:not(.userlink)
+{
+	background: #222624;/*#222c28;*/
+	/* 282828 */
+}
+
+
+table#header,
+table#header > tbody > tr > *,
+table#footer,
+table#footer > tbody > tr > *
+{
+	border-left-width: 0;
+	border-right-width: 0;
+	border-radius: 0;
+}
+
+table#header
+{
+	border-top-width: 0;
+}
+
+table#footer
+{
+	border-bottom-width: 0;
+}
+
+table#sidebar,
+table#sidebar > tbody > tr > *
+{
+	border-left-width: 0;
+	border-top-width: 0;
+	border-bottom-width: 0;
+	border-radius: 0;
+}
+
+table#page-container > tbody > tr:first-child > td.crumb-container > table
+{
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-radius: 0;
+}
+
+table#page-container > tbody > tr:last-child > td.crumb-container > table
+{
+	border-bottom-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-radius: 0;
+}
+
+table#page-container > tbody > tr:first-child > td.crumb-container > table > tbody > tr > *,
+table#page-container > tbody > tr:last-child > td.crumb-container > table > tbody > tr > *
+{
+	border-radius: 0;
+}
+
+#header-sep
+{
+	height: 6px;
+}
+
+
+.navButton:hover, .dropdownContainer:hover > .navButton
+{
+	border: 1px solid #043;
+	/*background: #032;*/
+	background: rgba(0,0,0,0.2);
+	padding: 4px;
+	border-radius: 4px;
+}
+
+ul.dropdownMenu
+{
+	border-radius: 6px;
+	border: 1px solid #043;
+	text-shadow: none;
+}
+
+ul.dropdownMenu li
+{
+	border-top: none 0;
+	border-left: none 0;
+	border-right: none 0;
+	border-bottom: 1px solid #043;
+	background: #222;
+}
+
+ul.dropdownMenu li:first-child
+{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+ul.dropdownMenu li:last-child
+{
+	border-bottom: none 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+
+button, input[type="button"], input[type="submit"]
+{
+	border: 2px solid #043;
+	border-radius: 5px;
+	background: #222c28;
+	color: #fff;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover
+{
+	background: #043;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid #043;
+	border-radius: 5px;
+	background: black;
+	color: white;
+}
+
+div#tabs
+{
+	padding-left: 10px;
+	margin-bottom: -1px;
+}
+
+div#tabs button
+{
+	border-left: 2px solid #043;
+	border-top: 2px solid #043;
+	border-right: 2px solid #043;
+	border-bottom: none 0;
+	border-radius: 5px 5px 0 0;
+	background: #222;
+	padding-bottom: 2px;
+}
+
+div#tabs button.selected, div#tabs button:hover
+{
+	background: #222c28;
+}
+
+div.postToolbar button
+{
+	width: 1.9em;
+	height: 1.9em;
+}

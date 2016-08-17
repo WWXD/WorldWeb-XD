@@ -1,0 +1,96 @@
+
+/* All cells have border by default */
+
+table.outline>tbody>tr>td {
+	border-width:0px 1px 1px 0px;
+	border-style:solid;
+}
+
+table.outline>tbody:first-child>tr:first-child>td {
+	border-top-width:1px;
+}
+table.outline>tbody>tr>td:first-child {
+	border-left-width:1px;
+}
+
+table.outline>tbody>tr>th
+{
+	border-width: 0px 0px 1px 0px;
+	border-style:solid;
+}
+
+table.outline>tbody>tr>th:last-child {
+	border-right-width: 1px;
+}
+table.outline>tbody>tr>th:first-child {
+	border-left-width: 1px;
+}
+table.outline>tbody:first-child>tr:first-child>th {
+	border-top-width: 1px;
+}
+
+
+table.post>tbody>tr>td {
+	border-style:solid;
+}
+table.post>tbody>tr>td.side {
+	border-width: 0px 0px 1px 1px;
+}
+table.post>tbody>tr>td.post {
+	border-width: 1px 1px 1px 1px;
+}
+table.post>tbody>tr>td.meta {
+	border-width: 1px 1px 0px 0px;
+}
+table.post>tbody>tr>td.userlink {
+	border-width: 1px 0px 0px 1px;
+}
+
+
+table.deletedpost>tbody>tr>td.meta {
+	border-width: 1px 1px 1px 0px;
+}
+table.deletedpost>tbody>tr>td.side {
+	border-width: 1px 0px 1px 1px;
+}
+
+
+/* Kuribo64 specific stuff */
+
+table#header > tbody > tr > *,
+table#footer > tbody > tr > *
+{
+	border-left-width: 0;
+	border-right-width: 0;
+}
+
+table#header > tbody:first-child > tr:first-child > *
+{
+	border-top-width: 0;
+}
+
+table#footer > tbody:last-child > tr:last-child > *
+{
+	border-bottom-width: 0;
+}
+
+table#sidebar > tbody > tr > *
+{
+	border-left-width: 0;
+	border-top-width: 0;
+	border-bottom-width: 0;
+}
+
+table#page-container > tbody > tr:first-child > td.crumb-container > table > tbody > tr > *
+{
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+}
+
+table#page-container > tbody > tr:last-child > td.crumb-container > table > tbody > tr > *
+{
+	border-bottom-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+}
