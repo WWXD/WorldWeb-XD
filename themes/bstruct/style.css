@@ -1,0 +1,484 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+/* ABXD - Blank Structure theme
+ *   by roxahris
+ *      adapted to ABXD 2.0 by Kawa
+ */
+
+body
+{
+	background: black url(back.png);
+	color: white;
+	font-family: "Calibri", "Verdana", "Arial", sans-serif;
+	font-size: 1em; /* 10pt; */
+	text-shadow: #000 2px 2px 2px;
+	margin: 0px auto 0px auto;
+}
+
+h3
+{
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 1.2em; /* 12pt; */
+	font-weight: bold;
+	border-top: none;
+	border-bottom: 1px solid #666;
+	margin: 0px;
+}
+
+h4
+{
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 1em; /* 10pt; */
+	margin: 0px;
+}
+
+a
+{
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:link
+{
+	color: #E0E0E0;
+}
+
+a:visited
+{
+	color: #808080;
+}
+
+a:active
+{
+	color: #F0F0F0;
+}
+
+a:hover
+{
+	color:#FFFFFF;
+}
+
+.outline
+{
+		box-shadow: none;
+}
+
+.margin
+{
+	margin-bottom: 4px;
+}
+
+table
+{
+	color: white;
+	width: 100%;
+	font-weight: normal;
+}
+
+th
+{
+	background: #444;
+	font-size: 1em; /* 12px; */
+	text-shadow: #000 1px 1px 2px, #000 -1px -1px 2px;
+	border: 1px solid #000;
+	text-align: left;
+}
+
+table.post
+{
+	width: 100%;
+	background: #303030;
+	border: 1px solid #000;
+	box-shadow: none;
+}
+
+table.post td.side
+{
+	width: 15%;
+	vertical-align: top;
+	border: 0px none;
+}
+
+table.post td.post
+{
+	background: rgba(62, 62, 62, 0.4) url(back_f.png) repeat-x;
+	border: 1px solid #000;
+	vertical-align: top;
+	height: 100px;
+}
+
+table.post td.post td
+{
+	border: 0px none;
+}
+
+table.post td.meta
+{
+	font-size: 0.85em; /* 8pt; */
+	height: 14px;
+	margin: 0px;
+	border: 0px none;
+}
+
+table.post td.links
+{
+	font-size: 0.85em; /* 8pt; */
+	height: 14px;
+	margin: 0px;
+	border: 0px none;
+}
+
+.PoRT
+{
+	float: right;
+	clear: right;
+}
+
+.PoRT td, .PoRT th, .smallFonts td, .smallFonts
+{
+	font-size: 0.85em; /* 8pt; */
+}
+
+.left
+{
+	text-align: left !important;
+}
+
+.right
+{
+	text-align: right;
+}
+
+.center
+{
+	text-align: center;
+}
+
+.underline
+{
+	text-decoration: underline;
+}
+
+.footer
+{
+	text-align: center;
+	width: 100%;
+	font-size: 1em; /* 10pt; */
+	clear: both;
+}
+
+.footer *
+{
+	border: 0px none;
+}
+
+.links
+{
+	font-size: 1em; /* 10pt; */
+	text-align: right;
+}
+
+.cell0
+{
+	background: rgba(16, 16, 16, 0.4) url(back_f.png) repeat;
+}
+
+.cell1
+{
+	background: rgba(64, 64, 64, 0.4) url(back_f.png) repeat;
+}
+
+.cell2
+{
+	background: rgba(32, 32, 32, 0.4) url(back_f.png) repeat;
+}
+
+.cell0, .cell1, .cell2, .cell0 td, .cell1 td, .cell2 td
+{
+	border-right: 3px solid rgba(16,16,16,0.2);
+	border-bottom: 3px solid rgba(16,16,16,0.2);
+}
+
+.header0 th
+{
+	background:  rgb(88,88,88) url(head2_bg.png) repeat-x;
+	text-align: center;
+	font-size: 8pt;
+	color: #DDD;
+	border-bottom: 0px none !important;
+}
+
+.header1 th
+{
+	background:  rgb(88,88,88) url(head_bg.png) repeat-x;
+	text-align: center;
+	font-size: 8pt;
+	color: #DDD;
+	border-top: 0px none !important;
+	border-bottom: 0px none !important;
+}
+
+.header0
+{
+	border: 1px solid #000;
+}
+
+.header1
+{
+	border: 1px solid #000;
+}
+
+table.breadcrumbs, table.breadcrumbs td
+{
+	font-size: 1em; /* 10pt; */
+	border: 0px none;
+}
+
+.pages
+{
+	padding: 4px 0px;
+}
+
+.faq
+{
+	background:  #222 url(head_bg.png) repeat-x;
+	padding: 4px;
+}
+
+/* Name color table */
+.nc0x { color: #888888;
+}
+
+/* [Quote] stuff */
+td.post blockquote
+{
+	padding: 4px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+td.post code.Code
+{
+	background: rgba(8, 8, 8, 0.4) url(back_f.png) repeat;
+	font-family: "Consolas", "Courier New", monospace;
+}
+
+form
+{
+	margin: 0px;
+}
+
+.errort
+{
+	background:  #001132 url(head_bg.png) repeat-x;
+	border: 1px solid #000;
+}
+
+.errorc
+{
+	text-align: center;
+	color: #EEE;
+	border: 1px solid #000;
+	border-top: 0px;
+}
+
+.geshi
+{
+	background: rgba(8, 8, 8, 0.4) url(back_f.png) repeat;
+	font-family: "Consolas", "Courier New", monospace;
+	color: #FFF;
+}
+
+.geshi .kw0, .geshi .kw1, .geshi .kw2, .geshi .kw3, .geshi .kw4
+{
+	font-weight: bold;
+	color: #AAF;
+}
+
+.geshi .st0
+{
+	font-style: italic;
+}
+
+.geshi .br0, .geshi .sy0
+{
+	color: #488;
+}
+
+.geshi .co1
+{
+	font-style: italic;
+	color: #884;
+}
+
+.geshi a
+{
+	border-bottom: 1px dotted #888;
+}
+
+.swf
+{
+	border: 1px outset gray;
+	background: gray;
+	color: black;
+	padding: 2px;
+}
+
+.swfmain
+{
+	border: 2px inset gray;
+	background: black;
+	color: white;
+}
+
+.swfurl
+{
+	display: none;
+}
+
+.swfcontrol
+{
+	margin: 1px;
+}
+
+.swfbuttonoff, .swfbuttonon
+{
+	display: inline-block;
+	background: silver;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	cursor: pointer;
+	font-family: "Verdana", sans-serif;
+	font-size: 14px;
+	margin-top: 1px;
+	margin-right: 2px;
+}
+
+.swfbuttonoff
+{
+	border: 1px outset silver;
+}
+
+.swfbuttonon
+{
+	border: 1px inset silver;
+}
+
+.badge
+{
+	border: 2px solid #666;
+	background: #444;
+	font-size: 10px;
+	color: white;
+	margin: 0px;
+	padding: 0px 3px;
+}
+
+.bronze
+{
+	border-color: rgb(74, 49, 25);
+	background: rgb(148, 98, 49);
+}
+
+.silver
+{
+	border-color: rgb(74, 74, 74);
+	background: rgb(148, 148, 148);
+}
+
+.gold
+{
+	border-color: rgb(123, 90, 0);
+	background: rgb(248, 180, 0);
+}
+
+#expandedSet, #expandedHelp
+{
+	display: none;
+}
+
+button.expander
+{
+	font-weight: bold;
+	border: 0px none;
+	border-radius: 8px;
+	padding: 0px;
+	width: 20px;
+	box-shadow: none;
+	float: right;
+}
+
+button.expander:hover
+{
+	box-shadow: 1px 1px 1px white, -1px 1px 1px white, 1px -1px 1px white, -1px -1px 1px white;
+}
+
+.threadTag
+{
+	font-size: 0.8em;
+	text-shadow: 1px 1px 0px hsla(0,0%,0%,0.5);
+	padding: 0px 2px;
+	border: 1px dotted hsla(0,0%,100%,0.75);
+	box-shadow: 1px 1px 2px hsla(0,0%,0%,0.5);
+	margin-right: 2px;
+}
+
+td.threadIcon
+{
+	width: 20px;
+	text-align: center;
+	font-size: 0.8em;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px black;
+}
+
+/* ABXD 2.0 extensions */
+
+table.outline
+{
+	border: 3px solid rgba(16,16,16,0.2);
+	box-shadow: none;
+}
+
+table.post
+{
+	text-shadow: none;
+}
+
+table.post td.post
+{
+	border-bottom: 0px none;
+	border-right: 0px none;
+}
+
+.pollbarContainer
+{
+	border: 1px solid rgba(16,16,16,0.2);
+}
+
+div#tabs
+{
+	position: relative;
+	left: 8px;
+	top: 8px;
+}
+
+div#tabs button
+{
+	border: 1px solid #000;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 32px;
+	padding-right: 16px;
+	color: #fff;
+	background: #444;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom-color: #444;
+}
+

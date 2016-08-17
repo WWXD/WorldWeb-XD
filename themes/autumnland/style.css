@@ -1,0 +1,124 @@
+/* Blargboard Theme Contest - Autumn Land (by LifeMushroom) */
+
+@import url('../../css/borders.css');
+
+body
+{
+	font-family: Georgia, Times, "Times New Roman", serif;
+	background-image: url("background.jpg");
+}
+
+a:link { color: rgba(214, 226, 226, 0.9); }
+a:visited { color: rgba(214, 226, 226, 0.9); }
+a:hover { color: rgba(255, 255, 255, 1); text-decoration:underline;}
+
+table, tr, td, th, div
+{
+	border-color: rgba(172, 15, 36, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+.header1
+{
+	background-color: rgba(165, 3, 42, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+.header0
+{
+	font-family: Georgia, Times, "Times New Roman", serif;
+	background-color: rgba(220, 54, 17, 0.9);
+}
+
+.cell1, table.post td.post
+{
+	font-family: Verdana, Geneva, sans-serif;
+	background-color: rgba(230, 84, 1, 0.8);
+}
+
+.cell0
+{
+	background-color: rgba(199, 66, 57, 0.7);
+}
+
+.cell2, table.post td.side, table.post td.meta
+{
+	background-color: rgba(214, 15, 36, 0.9);
+}
+
+#main-sidebar
+{
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+#header-sep
+{
+	display: none;
+}
+
+.navButton:hover, .dropdownContainer:hover > .navButton
+{
+	background: rgba(0,0,0,0.15);
+}
+
+#notifMenuContainer.hasNotifs #notifCount
+{
+	font-family: Verdana, Geneva, sans-serif;
+	background-color: rgba(195, 92, 19, 0.9);
+	border: 1px solid rgba(195, 92, 19, 0.9);
+	
+	transform-origin: center;
+	animation-name: notifAnim;
+	animation-delay: 0.25s;
+	animation-duration: 1s;
+	animation-iteration-count: 3;
+    animation-timing-function: ease-in-out;
+	
+	-webkit-transform-origin: center;
+	-webkit-animation-name: notifAnim;
+	-webkit-animation-delay: 0.25s;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: 3;
+	-webkit-animation-timing-function: ease-in-out;
+}
+
+@keyframes notifAnim
+{
+	0% { transform: scale(1,1); }
+	50% { transform: scale(2,2); }
+	100% { transform: scale(1,1); }
+}
+
+@-webkit-keyframes notifAnim
+{
+	0% { -webkit-transform: scale(1,1); }
+	50% { -webkit-transform: scale(2,2); }
+	100% { -webkit-transform: scale(1,1); }
+}
+
+button, input[type="button"], input[type="submit"]
+{
+	border: 2px solid color: rgba(195, 61, 19, 0.9);
+	background: black;
+	color: rgba(195, 61, 19, 0.9);
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: black;
+	border: 1px solid color: rgba(195, 61, 19, 0.9);
+	color: rgba(195, 61, 19, 0.9);
+}
+
+div#tabs button
+{
+	border-width: 1px;
+	border-radius: 0px;
+	margin-bottom: 1px;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #002;
+	background: #002;
+}

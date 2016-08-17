@@ -1,0 +1,62 @@
+<?php
+
+registerPlugin("Battle system");
+
+registerSetting("foo", "Foo?", true);
+
+function BattleSystem_Goggles()
+{
+	global $goggles, $loguserid, $postText;
+	if(!isset($goggles))
+	{
+		$gogR = Query("select {item6} from users_rpg where id = ".$loguserid);
+		if(NumRows($gogR))
+		{
+			$gog = Fetch($gogR);
+			$goggles = (strpos($gog['item6'], "\"Cool shades\"") !== FALSE);
+		}
+	}
+	if($goggles)
+	{
+		$postText = str_replace("<!--", "<span style=\"color: #66ff66;\">&lt;!--", $postText);
+		$postText = str_replace("-->", "--&gt;</span>", $postText);
+	}
+}
+
+function BattleSystem_ProfileRight()
+{
+	global $user, $id;
+	if(FetchResult("select count(*) from users_rpg where id = ".$id." and state != 'notin'", 0, 0) > 0)
+		Write("<a href=\"battle.php\"><img src=\"rpgstatcard.php?id={0}\" alt=\"{1}'s stats\" style=\"margin: 1em 0em; padding: 2px;\" class=\"outline cell2\" /></a>", $id, $user['name']);
+}
+
+function bl4r()
+{
+	print "bl4r";
+}
+
+function h3h3h()
+{
+	write("
+					<tr class=\"header0\">
+						<th colspan=\"2\">H3H3H3H</th>
+					</tr>
+					<tr>
+						<td class=\"cell0\">Plugin Content</td>
+						<td class=\"cell1\">Quite Content Indeed</td>
+					</tr>
+");
+}
+
+function BattleSystem_Header()
+{
+	Write("<li><a href=\"battle.php\">Battle arena</a></li>");
+}
+
+register("postManglers", "BattleSystem_Goggles");
+//register("profileTable", "h3h3h");
+//register("profileLeft", "bl4r");
+register("profileRight", "BattleSystem_ProfileRight");
+//register("headers", "BattleSystem_Header");
+
+?>

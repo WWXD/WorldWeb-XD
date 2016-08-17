@@ -1,0 +1,24 @@
+input[type="range"]
+{
+	background: none;
+	border: none;
+}
+
+textarea.output
+{
+	margin: 1em;
+	width: 90%;
+	height: 16em;
+}
+
+.subeditor
+{
+	width: 50%;
+	float: right;
+	display: none;
+}
+
+h2
+{
+	clear: both;
+}

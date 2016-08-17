@@ -1,0 +1,108 @@
+/* AcmlmBoard XD - YI Orange 
+   (ported from Dimension Project)
+   (C)2011 GlitchMr               */
+
+@import url('../../css/borders.css');
+
+body
+{
+	background: #633623 url(bg.png);
+}
+.cell0, .cell1, td.post
+{
+	background: #410;
+}
+
+.cell2, .faq
+{
+	background: #410;
+}
+
+.header0.smallFonts
+{
+	border-bottom:0px
+}
+
+h3
+{
+	border-bottom: 1px solid #840;
+	border-top: 1px solid #840
+}
+
+a:link
+{
+	color: #F90;
+}
+a:visited
+{
+	color: #F90;
+}
+a:active
+{
+	color: #F60;
+}
+a:hover
+{
+	color: #F60;
+}
+
+.header0 th, .errort
+{
+	background: #730;
+}
+
+.header1 th
+{
+	background: #730;
+}
+
+td.side, td.meta, table.post
+{
+	background: #620;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid #420;
+	background: #000000;
+	color: white;
+}
+
+
+div#tabs
+{
+	position: relative;
+	left: 8px;
+}
+
+div#tabs button
+{
+	background: #730;
+	border: 1px solid #000;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid #730;
+}
+
+.left
+{
+	background: #410;
+}
+.outline.margin.faq, .errort, .errorc
+{
+	border:1px solid black;
+}
+
+.errorc {
+	border-top: none;
+}
+
+.codeblock {
+	background: black;
+	background: rgba(0, 0, 0, 0.8);
+}

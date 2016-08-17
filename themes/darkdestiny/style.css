@@ -1,0 +1,223 @@
+/* Darkened Destiny - what kind of name is that */
+@import url('../../css/borders.css');
+
+body
+{
+	background: black;
+}
+
+.cell0
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.cell1
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.cell2, .faq
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.outline
+{
+	box-shadow: 0px 0px 0px;
+	border: solid 2px gray;
+}
+
+#header, .PoRT
+{
+	box-shadow: none;
+	border: solid 2px gray;
+}
+
+table.outline
+{
+	border: solid 2px gray;
+}
+
+a:link
+{
+	color: gray;
+}
+
+a:visited
+{
+	color: gray;
+}
+
+a:active
+{
+	color: gray;
+}
+
+a:hover
+{
+	color: black;
+}
+
+.header0 th, .errort
+{
+	background: #4C4C4C;
+	border: solid 2px gray;
+}
+
+.header1 th
+{
+	background: #4C4C4C;
+	border: solid 2px gray;
+}
+
+table.post
+{
+	box-shadow: 0px 0px 0px;
+body
+{
+	background: black;
+}
+
+.cell0
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.cell1
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.cell2, .faq
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+.outline
+{
+	box-shadow: 0px 0px 0px;
+	border: solid 2px gray;
+}
+
+#header, .PoRT
+{
+	box-shadow: none;
+	border: solid 2px gray;
+}
+
+table.outline
+{
+	border: solid 2px gray;
+}
+
+a:link
+{
+	color: gray;
+}
+
+a:visited
+{
+	color: gray;
+}
+
+a:active
+{
+	color: gray;
+}
+
+a:hover
+{
+	color: black;
+}
+
+.header0 th, .errort
+{
+	background: #4C4C4C;
+	border: solid 2px gray;
+}
+
+.header1 th
+{
+	background: #4C4C4C;
+	border: solid 2px gray;
+}
+
+table.post
+{
+	box-shadow: 0px 0px 0px;
+
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid gray;
+	background: #000000;
+	color: white;
+}
+
+div#tabs {
+	padding-left: 8px;
+	margin-bottom: 0px;
+}
+
+div#tabs button
+{
+	background: black;
+	border: 1px solid gray;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid gray;
+}
+
+
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: black;
+	border: solid 2px gray;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid gray;
+	background: #000000;
+	color: white;
+}
+
+div#tabs {
+	padding-left: 8px;
+	margin-bottom: 0px;
+}
+
+div#tabs button
+{
+	background: black;
+	border: 1px solid gray;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid gray;
+}
+

@@ -1,0 +1,92 @@
+@import url('../../css/borders-ab2.css');
+
+body
+{
+	background: #040420 url("back2c.png") fixed;
+}
+
+table.outline, table.message, table.post 
+{
+	border: 1px solid rgb(102,102,153);
+}
+
+table.outline > tbody > tr > th,
+table.message > tbody > tr > th
+{
+	border-bottom-width: 1px;
+}
+
+table.outline > tbody:first-child > tr:first-child > *,
+table.message > tbody:first-child > tr:first-child > *,
+table.post td.userlink, table.post td.meta
+{
+	border-top-width: 1px !important;
+}
+
+table.outline > tbody > tr > *:first-child,
+table.message > tbody > tr > *:first-child,
+table.post td.userlink, table.post td.side
+{
+	border-left-width: 1px !important;
+}
+
+table.post
+{
+	background: url("back2t1.png") fixed;
+}
+
+table.post td.post
+{
+	background: url("back2g.png") fixed;
+}
+
+.cell0
+{
+	background: url("back2t2.png") fixed;
+}
+
+.cell1
+{
+	background: url("back2t3.png") fixed;
+}
+
+.cell2
+{
+	background: url("back2t1.png") fixed;
+}
+
+.header0 th
+{
+	background: #131725 url("backc2.png") repeat-x;
+}
+
+.header1 th, .errort
+{
+	background: #131725 url("backh.png") repeat-x;
+}
+
+code.Code, span.Code
+{
+	background: url("back2t2.png");
+}
+
+.PoRT
+{
+	outline: 1px solid #669 !important;
+	box-shadow: none;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #669;
+	background: #04082C;
+	color: #FFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: #04082C;
+	border: 1px solid #669;
+	color: white;
+}
+

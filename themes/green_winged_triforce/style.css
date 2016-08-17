@@ -1,0 +1,114 @@
+@import url('../../css/roundcorners.css');
+@import url('../../css/borders.css');
+
+/* AcmlmBoard XD - Green Triforce custom theme */
+
+.faq
+{
+	border-color: #FFFFFF;
+	background: #05012E;
+}
+
+
+#body
+{
+	background: black url("green_winged_triforce.png");
+}
+
+html
+{
+	background: black url("green_winged_triforce.png");
+}
+
+.header0, .header1
+{
+	border-color: #FFFFFF;
+}
+
+.header0 th
+{
+	background: rgba(0, 49, 100, 0.85);
+	color: #EEEEEE;
+}
+
+.header1 th
+{
+	background: rgba(0, 13, 34, 0.85);
+}
+
+.cell2
+{
+	background: rgba(0, 38, 76, 0.85);
+}
+
+.cell1, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: rgba(0, 28, 56, 0.85);
+}
+
+.cell0, table.post td.post, .faq
+{
+	background: rgba(0, 22, 42, 0.85);
+}
+
+.errort
+{
+	background: rgba(0, 49, 100, 0.85);
+	border-color: #FFFFFF;
+}
+
+.errorc
+{
+	background: rgba(0, 28, 56, 0.85);
+	border-color: #FFFFFF;
+}
+
+
+td, th
+{
+	border-color: #FFFFFF;
+}
+
+
+table.post td.post
+{
+	border-color: #FFFFFF;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #FFFFFF;
+	background: rgba(0, 49, 100, 0.85);
+	color: #EEEEEE;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: rgba(0, 13, 34, 0.90);
+	border: 1px solid #FFFFFF;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: rgba(0, 13, 34, 0.90);
+	border: 1px solid #FFFFFF;
+	color: #B7E6FF;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	border-color: rgba(0, 49, 100, 0.85);
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid rgba(0, 49, 100, 0.85);
+	background: rgba(0, 49, 100, 0.85);
+}
+

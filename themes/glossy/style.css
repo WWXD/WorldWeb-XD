@@ -1,0 +1,292 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+/* AcmlmBoard XD - Glossy board theme -- Made by Nikolaj */
+
+body
+{
+	background: #000 url(back.png);
+}
+
+h3
+{
+	border-top-color: #6B6B6B;
+	border-bottom-color: #6B6B6B;
+}
+
+a:link
+{
+	color: #00BBBB;
+}
+
+a:visited
+{
+	color: #00AAAA;
+}
+
+a:active
+{
+	color: #00CCCC;
+}
+
+a:hover
+{
+	color: #0FF;
+}
+
+th
+{
+	background-color: #383838;
+	/*border-color: #6B6B6B;*/
+}
+
+table.post
+{
+	border-color: #144;
+	background: url(cell0.svg) #3B3B3B;
+}
+
+table.post td.post
+{
+	background-image: url(cell1.svg);
+}
+
+.cell0
+{
+	background: #001F1F url(cell0.svg);
+}
+
+.cell1
+{
+	background: #001010 url(cell1.svg);
+}
+
+.cell2
+{
+	background: #001515 url(cell2.svg);
+}
+
+.header0 th
+{
+	background: #002525 url(header0.svg);
+	border: 1px solid #000;
+}
+
+.header1 th
+{
+	background:  #005555 url(header1.svg);
+}
+
+.faq
+{
+	background: url(cell0.svg);
+}
+
+td.post code.Code
+{
+	background: #000 url(cell0.svg);
+}
+
+.errort
+{
+	background:  #535353 url(header1.svg);
+}
+
+.errorc
+{
+	text-align: center;
+	color: #AEE;
+	border: 1px solid #000;
+	border-top: 0px;
+}
+
+#pmNotice
+{
+	background-color: #000;
+	background-image: URL('header0.svg') !important;
+	color: #FFF !important;
+	width: 80% !important;
+	left: 10%;
+	text-align: center;
+	border-radius: 0px 0px 8px 8px;
+	box-shadow: 0px 2px 8px #0FF;
+}
+
+#pmNotice:hover
+{
+	background-color: #022;
+}
+
+#pmNotice a span, #pmNotice a
+{
+	color: #00FFFF !important;
+}
+
+#pmNotice a:hover span, #pmNotice a:hover
+{
+	color: #FFF !important;
+}
+
+.geshi
+{
+	background: #066 url(generic.svg);
+	color: #DDD;
+}
+
+.geshi .kw0, .geshi .kw1, .geshi .kw2, .geshi .kw3, .geshi .kw4
+{
+	color: #00F;
+}
+
+.geshi .br0, .geshi .sy0
+{
+	color: #0F0;
+}
+
+.geshi .co1
+{
+	color: #F0F;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #002020;
+	background: #000;
+	background-image: url(generic.svg);
+	color: #FFF;
+	-o-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-webkit-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	transition: 0.2s linear;
+}
+
+button:hover, input[type="submit"]:hover {
+	background-color: #088;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: #000;
+	border: 1px solid #288;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: #066 URL(generic_gloss.svg);
+	border: 2px solid #288;
+	color: #000;
+	-o-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-webkit-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	transition: 0.2s linear;
+}
+
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+	background: #0FF;
+	color: #000;
+}
+
+.pollbarContainer
+{
+	border: 1px solid #288;
+	border-radius: 0px;
+	padding: 0px;
+	background: #222 url(generic_gloss.svg);
+}
+
+.pollbar {
+	background-image: URL(generic_gloss.svg) !important;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+.post_about
+{
+	background: url(cell2.svg);
+	border: 1px solid #288;
+}
+
+.post_topbar
+{
+	background: url(cell0.svg);
+	border: 1px solid #288;
+}
+
+.post_content
+{
+	background: url(cell0.svg);
+	border: 1px solid #288;
+}
+
+table.outline
+{
+	border-collapse: separate;
+	border-spacing: 0px;
+	border: none;
+}
+
+/*table.outline tr:first-child th:last-child
+{
+	border-right: 1px solid black;
+}
+
+table.outline tr:first-child th
+{
+	border-top: 1px solid black;
+}
+
+table.outline td
+{
+	border-left: 0px none;
+	border-top: 0px none;
+}
+
+table.outline th
+{
+	border-bottom: 1px solid black;
+}
+
+table.outline tr td:first-child, table.outline tr th:first-child
+{
+	border-left: 1px solid black;
+}
+
+.header0 th
+{
+	border: 0px none;
+}*/
+
+#tabs {
+	margin-left: 10px;
+}
+
+div#tabs button {
+	border: 1px solid #288;
+	border-radius: 8px 8px 0px 0px;
+	background-image: url(generic_gloss.svg);
+	-o-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-webkit-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	transition: 0.2s linear;
+	background-color: #000;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #000;
+	background-color: #0FF;
+	border: 1px solid transparent;
+	position: relative;
+	text-shadow: 1px 1px 5px #000;
+	z-index: 100;
+	-o-transform: scale(1.25);
+	-moz-transform: scale(1.25);
+	-webkit-transform: scale(1.25);
+	-ms-transform: scale(1.25);
+	transform: scale(1.25);
+	top: -2px;
+}
+

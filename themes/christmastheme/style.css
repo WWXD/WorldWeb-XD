@@ -1,0 +1,80 @@
+/* Blargboard - Christmas Theme (by LifeMushroom) */
+
+@import url('../../css/borders.css');
+/* Outline of forum, Outside of recent activity and homepage */
+body
+{
+	background-image: url("background.jpg");
+}
+/* Link color/decoration */
+a:link { color: rgba(8, 216, 46, 1); }
+a:visited { color: rgba(8, 216, 46, 1); }
+a:hover { color: rgba(255, 255, 255, 1); text-decoration:underline;}
+
+/* The thin outline for everything, outside of the PORA - little thin line in between of each bar in forum links */
+table, tr, td, th, div
+{
+	border-color: rgba(0, 158, 44, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+/* The topbar where the links Home and Forum are. bar of recent activity and where the links "rss feed"
+and "post new" are. Also category colors and Home >> Forums - Mark all forums read. */
+
+.header1
+{
+	background-color: rgba(8, 123, 46, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+/* Forum Links bar */
+.header0
+{
+	background-color: rgba(0, 147, 36, 0.85);
+}
+
+/* Under PORA box - all forums color (last post), (Forum Links - every second link) */
+.cell1, table.post td.post
+{
+	background-color: rgba(0, 147, 36, 0.85);
+}
+
+/* User Online, top of board, outside of logo, backgrounds in recent activity */
+.cell0
+{
+	background-color: rgba(0, 119, 36, 0.8);
+}
+
+/* Forum Links - every first link, # of registered + active users, powered by blarg (bottom),
+threads and posts, forums (left) */
+.cell2, table.post td.side, table.post td.meta
+{
+	background-color: rgba(0, 119, 36, 0.9);
+}
+
+button, input[type="button"], input[type="submit"]
+{
+	border: 2px solid color: rgba(42, 255, 255, 1);
+	background: black;
+	color: rgba(0, 222, 36, 0.9);
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: black;
+	border: 1px solid color: rgba(42, 255, 255, 1);
+	color: rgba(0, 222, 36, 0.9);
+}
+
+div#tabs button
+{
+	border-width: 1px;
+	border-radius: 0px;
+	margin-bottom: 1px;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #002;
+	background: #002;
+}

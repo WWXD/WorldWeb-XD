@@ -1,0 +1,121 @@
+/* Blarg - Fall Yolo ;) */
+@import url('../../css/borders.css');
+
+body
+{
+                background-image: url("back.png");
+                font-family: "Microsoft Sans Serif";
+                background-attachment: fixed;
+}
+
+.cell0
+{
+	background: darkblue;
+                font-family: "Microsoft Sans Serif";
+                border: 1px solid brown !important;
+}
+
+.cell1
+{
+	background: darkblue;
+                font-family: "Microsoft Sans Serif";
+                border: 1px solid brown !important;
+}
+
+.cell2, .faq
+{
+	background: darkblue;
+                font-family: "Microsoft Sans Serif";
+                border: 1px solid brown !important;
+}
+
+.outline
+{
+		box-shadow: 0px 0px 0px;
+                                border: 2px solid brown !important;
+}
+
+#header, .PoRT
+{
+	box-shadow: none;
+                font-family: "Microsoft Sans Serif";
+}
+
+table.outline
+{
+                border: 1px solid brown !important;
+}
+
+a:link
+{
+	color: orange;
+}
+
+a:visited
+{
+	color: orange;
+}
+
+a:active
+{
+	color: orange;
+}
+
+a:hover
+{
+	color: white;
+}
+
+.header0 th, .errort
+{
+	background: brown;
+                border: 1px solid orange !important;
+}
+
+.header1 th
+{
+	background: brown;
+                border: 1px solid brown !important;
+}
+
+table.post
+{
+	box-shadow: 0px 0px 0px;
+                font-family: "Microsoft Sans Serif";
+                border: 1px solid brown !important;
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: brown;
+                font-family: "Microsoft Sans Serif";
+                border: 1px solid darkblue !important;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid brown;
+	background: darkblue;
+	color: white;
+                font-family: "Microsoft Sans Serif";
+}
+
+div#tabs {
+	padding-left: 8px;
+	margin-bottom: 0px;
+}
+
+div#tabs button
+{
+	background: darkblue;
+	border: 1px solid brown;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid brown;
+}
+

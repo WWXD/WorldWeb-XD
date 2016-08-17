@@ -1,0 +1,90 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+.faq
+{
+	background: #05012E;
+}
+
+#boardheader
+{
+	background: #000 url("topbg.png");
+	background-repeat: repeat;
+	background-attachment:fixed;
+	background-position:top left;
+}
+
+body
+{
+	background: #000 url("bg.png");
+	background-repeat: repeat;
+	background-attachment:fixed;
+	background-position:top left;
+}
+
+.header0 th
+{
+	background: rgba(120, 112, 104, 0.85);
+	color: #EEEEEE;
+}
+
+.header1 th
+{
+	background: rgba(144, 120, 104, 0.85);
+}
+
+.cell2
+{
+	background: rgba(24, 40, 64, 0.85);
+}
+
+.cell1, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: rgba(64, 80, 104, 0.85);
+}
+
+.cell0, table.post td.post, .faq
+{
+	background: rgba(24, 40, 64, 0.85);
+}
+
+.errort
+{
+	background: rgba(24, 40, 64, 0.85);
+}
+
+.errorc
+{
+	background: rgba(64, 80, 104, 0.85);
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #000;
+	background: rgba(0, 8, 40, 0.85);
+	color: #FFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea, input[type="checkbox"], input[type="radio"]
+{
+	background: rgba(0, 8, 40, 0.90);
+	border: 1px solid #000;
+	color: #FFF;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	border-color: rgba(120, 140, 240, 0.85);
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid rgba(120, 112, 104, 0.85);
+	background: rgba(120, 112, 104, 0.85);
+}
+

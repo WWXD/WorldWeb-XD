@@ -1,0 +1,113 @@
+/* AcmlmBoard XD - Cubeminer theme */
+@import url('../../css/borders.css');
+
+.faq
+{
+	border: 1px solid #000212;
+	background: #05012E;
+}
+
+body
+{
+	background: black url("back.png");
+}
+
+.header0 th
+{
+	background-image: url("header.png");
+	background-color: rgba(0, 0, 0, 0.60);
+	color: #EEEEEE;
+}
+
+.header1 th
+{
+	background-image: url("header.png");
+	background-color: rgba(0, 0, 0, 0.70);
+}
+
+.cell2
+{
+	background-image: url("cell2.png");
+	background-color: rgba(0, 0, 0, 0.40);
+}
+
+.cell1, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: rgba(0, 0, 0, 0.50);
+}
+
+.cell0, table.post td.post, .faq
+{
+	background: rgba(0, 0, 0, 0.60);
+
+}
+
+table, td, th, tr
+{
+	border-color: 1px solid #000212;
+}
+
+
+button, input[type="submit"]
+{
+	border: 1px outset #6F6F6F;
+	background: #6F6F6F;
+	color: white;
+}
+
+button:hover, input[type="submit"]:hover
+{
+	border-color: #7B85BD;
+	background: #7B85BD;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: black;
+	border: 1px solid silver;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: rgba(0, 13, 34, 0.90);
+	border: 1px solid #000212;
+	color: #B7E6FF;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	border-color: rgba(0, 49, 100, 0.85);
+}
+
+
+div#tabs button
+{
+	border: 1px solid black;
+	background-image: url("header.png");
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #2C2C2C;
+	background-image: url("header.png");
+}
+
+.pollbarContainer
+{
+	border: 1px solid black;
+	background: #1C1C1C;
+	box-shadow: none;
+}
+
+.pollbar
+{
+	border: none;
+	box-shadow: none;
+}
+

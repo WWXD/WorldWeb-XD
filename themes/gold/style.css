@@ -1,0 +1,219 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+/* AcmlmBoard XD - ABXD Gold theme */
+
+body
+{
+	background: black url('back.png');
+	background-attachment: fixed;
+	background-repeat: repeat;
+	background-position: top left;
+}
+
+#header
+{
+	background-image: url('post.png');
+	background-attachment: fixed;
+	background-position: top left;
+}
+
+#header * td.cell0
+{
+	background: transparent;
+}
+
+#header * tr.cell1, #header * tr.cell2
+{
+	background-image: url('headerdark.png');
+	background-attachment: fixed;
+	background-position: top left;
+	background-repeat:repeat;
+}
+
+h3
+{
+	border-top: 1px solid #960;
+	border-bottom: 1px solid #960;
+}
+
+a:link
+{
+	color: #ff8400;
+}
+
+a:visited
+{
+	color: #ff8400;
+}
+
+a:active
+{
+	color: #ffd8ae
+}
+
+a:hover
+{
+	color:#ffd8ae;
+}
+
+table.post td.post
+{
+       background: #222 url('post.png');
+       background-attachment: fixed;
+       background-position: top left;
+}
+
+
+.cell0, table.post
+{
+       background-image: url('back2t1.png'), url('cell0.png');
+       background-attachment: scroll, fixed;
+       background-position: top left, top left;
+       background-repeat: repeat-x, repeat;
+}
+
+.cell1
+{
+       background-image: url('back2t1.png'), url('cell1.png');
+       background-attachment: scroll, fixed;
+       background-position: top left, top left;
+       background-repeat: repeat-x, repeat;
+}
+
+.cell2
+{
+       background-image: url('back2t1.png'), url('cell2.png');
+       background-attachment: scroll, fixed;
+       background-position: top left, top left;
+       background-repeat: repeat-x, repeat;
+}
+
+.header0 th
+{
+	background: #811000 url('header1.png');
+	background-attachment: fixed;
+	background-position: top left;
+	color: #EEE;
+}
+
+.header1 th
+{
+	background: #994400 url('header2.png');
+	background-attachment: fixed;
+	background-position: top left;
+	color: #DDD;
+}
+
+.faq
+{
+	background: #222 url('post.png');
+	background-attachment: fixed;
+	background-position: top left;
+}
+
+td.post .codeblock
+{
+	border-color: #c30;
+	background: #000 url('back.png');
+	background-attachment: fixed;
+	background-position: top left;
+}
+
+.errort
+{
+	background: #811000 url('header1.png');
+	background-attachment: fixed;
+	background-position: top left;
+}
+
+.errorc
+{
+	text-align: center;
+	color: #EEE;
+}
+
+
+div#tabs button
+{
+	border: 1px solid #930;
+	border-bottom:1px solid black;
+	background: #811000 url('back.png');
+	background-attachment: fixed;
+	background-position: top left;
+	color: #FFF;
+}
+
+div#tabs button.selected
+{
+	background: #811000 url('header1.png');
+	background-attachment: fixed;
+	background-position: top left;
+	border-color:#000;
+}
+
+button, input[type="submit"]
+{
+	background: #0e2e35 url('forms.png');
+	background-attachment: fixed;
+	background-position: top left;
+
+	border: 1px solid #000212;
+	color: #EEEEEE;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: #0e2e35 url('forms.png');
+	background-attachment: fixed;
+	background-position: top left;
+
+	border: 1px solid #000212;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: #0e2e35 url('forms.png');
+	background-attachment: fixed;
+	background-position: top left;
+	border: 1px solid #000212;
+	color: #B7E6FF;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus, button:hover, input[type="submit"]:hover
+{
+	border-color: #26acc9;
+}
+
+
+.pollbarContainer
+{
+	border: 1px solid #000;
+	background-image: url('transp.png');
+	background-attachment: fixed;
+	background-position: top left;
+	text-shadow: none;
+	box-shadow: none;
+	border-radius:0px;
+}
+
+.pollbar
+{
+	background-color:#0e2e35; /* This can be overridden to color pollbars */
+	background-image: url('transp.png');
+	background-attachment: fixed;
+	background-position: top left;
+	border: 1px solid #000212;
+
+	border-width:1px; border-style:solid;
+
+	text-shadow: none;
+	box-shadow: none;
+	border-radius: 0px;
+}

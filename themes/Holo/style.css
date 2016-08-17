@@ -1,0 +1,490 @@
+/* ABXD - Holo theme
+ * Based on the look of Android 4.0
+ * By Nina
+ *------
+ * Why are borders set to 0px transparent, you might ask.
+ * I don't know. For some reason they show up if you juset set them to 0px none
+ */
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: Roboto, Droid Sans, Tahoma, sans;
+	background: -webkit-linear-gradient(#000, #272D33);
+	background: -moz-linear-gradient(#000, #272D33);
+	background: -o-linear-gradient(#000, #272D33);
+	background: linear-gradient(#000, #272D33);
+	background-attachment: fixed;
+}
+
+#header {
+	background: #111111;
+	border-bottom: 2px solid #33B5E5;
+}
+
+#header table, #header td, #header tr {
+	box-shadow: none;
+}
+
+*::selection {
+	background: #33B5E5;
+	color: black;
+}
+
+h3 {
+	padding: 4px;
+	color: #33B5E5;
+}
+
+table, tr, td, th, div {
+	border: 0px none transparent;
+}
+
+a:link	{ color: #33B5E5; }
+a:visited{color: #33B5E5; }
+a:hover	{ color: #FFFFFF; }
+a:active{ color: #22A5D5; }
+
+ul.pipemenu li {
+	border: 0px none;
+}
+
+body, input, button {
+	font-family: Droid Sans, Tahoma, sans;
+}
+
+:not(.post) table:not(.post).margin.outline {
+	border: 0px none transparent;
+	background: #111111;
+	border-radius: 2px;
+	border: 1px solid #212121;
+	box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.25);
+}
+
+:not(.post) table:not(.post) tr:first-child th, .eptable tr th, .header0 th, .header1 th {
+	border-bottom: 2px solid #575757;
+	text-transform: uppercase;
+	color: #CCCCCC;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.eptable tr th, :not(post) .header0 th:only-child, .header1 th:only-child {
+	text-align: left !important;
+	padding-left: 4px;
+}
+
+.cell0, .cell1, .cell2, .table.post td.side, table.pst td.userlink, table.post td.meta, table.post td.post, .faq, td, th
+{
+	border: 0px transparent;
+}
+
+table.post {
+	border-radius: 2px;
+}
+
+table.post td.side, table.post td.post {
+	background: #131313;
+	border-radius: 0px;
+}
+table.post td.userlink, table.post td.meta {
+	background: #131313;
+	border-radius: 0px;
+	border-bottom: 2px solid #33B5E5;
+}
+
+:not(.post) table:not(.post) tr:not(:last-child) td, :not(.post) table:not(.post) tr:not(.header0):not(.header1):only-child td {
+	border-bottom: 1px solid #282828;
+}
+
+#header table tr td {
+	border-bottom: 0px none transparent;
+}
+
+#header > table {
+	border-bottom: 0px solid transparent;
+	background: transparent;
+}
+
+:not(.post) .message {
+	background-color: #333333;
+	background-image: -webkit-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: -moz-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: -o-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: linear-gradient(-180deg, #333333, #414141, #333333);
+	border-radius: 2px;
+	background-size: 50% 2px;
+	background-repeat: no-repeat;
+}
+:not(.post) .message th {
+	border-bottom: 2px solid #33B5E5 !important;
+	color: #33B5E5 !important;
+	text-transform: none !important;
+	text-align: left !important;
+	font-weight: bold !important;
+	font-size: 120% !important;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+:not(.post) .message td {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+button, input[type="submit"]
+{
+	background: #5D5D5D;
+	border: 1px solid #646464;
+	color: #FFF;
+}
+
+button:hover, input[type="submit"]:hover {
+	background: #33B5E5;
+}
+
+button:active, input[type="submit"]:active {
+	background: #33B5E5;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea {
+	background-color: transparent;
+	border: 0px none;
+	color: #FFF;
+	background-image: -webkit-linear-gradient(#313131, #313131), -webkit-linear-gradient(#313131, #313131);
+	background-image: -moz-linear-gradient(#313131, #313131), -moz-linear-gradient(#313131, #313131);
+	background-image: -o-linear-gradient(#313131, #313131), -o-linear-gradient(#313131, #313131);
+	background-image: linear-gradient(#313131, #313131), linear-gradient(#313131, #313131);
+	background-size: 1px 3px, 1px 3px;
+	background-repeat: no-repeat, no-repeat;
+	background-position: bottom left, bottom right;
+	border-bottom: 1px solid #313131;
+	padding: 0px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+
+	background-image: -webkit-linear-gradient(#33B5E5, #33B5E5), -webkit-linear-gradient(#33B5E5, #33B5E5);
+	background-image: -moz-linear-gradient(#33B5E5, #33B5E5), -moz-linear-gradient(#33B5E5, #33B5E5);
+	background-image: -o-linear-gradient(#33B5E5, #33B5E5), -o-linear-gradient(#33B5E5, #33B5E5);
+	background-image: linear-gradient(#33B5E5, #33B5E5), linear-gradient(#33B5E5, #33B5E5);
+	border-bottom-color: #33B5E5;
+	outline: none;
+}
+
+select {
+	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: -o-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-size: 8px 8px;
+	background-position: bottom right;
+	-moz-appearance: none !important;
+	-webkit-appearance: push-button;
+	-o-appearance: push-button;
+	appearance: none;
+	padding-left: 2px;
+	padding-right: 2px;
+	border-radius: 0px !important;
+}
+
+select:focus {
+	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #33B5E5 50%, #33B5E5);
+	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #33B5E5 50%, #33B5E5);
+	background-image: -o-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #33B5E5 50%, #33B5E5);
+	background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #33B5E5 50%, #33B5E5);
+	background-image: -ms-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #33B5E5 50%, #33B5E5);
+}
+
+select:active {
+	background-color: #33B5E5;
+	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: -o-linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, #313131 50%, #313131);
+	border-bottom: 1px solid #313131;
+}
+
+option {
+	background: #131313;
+	color: #FFFFFF;
+}
+
+/* ====================
+ * This worked fine in Webkit-based browsers and Opera...
+ * ...But of course not Firefox because it has to suck for some rason
+input[type="checkbox"] {
+	-webkit-appearance: none;
+	-moz-appearance: none !important;
+	-ms-appearance: push-button;
+	background-color: rgba(0, 0, 0, 0); 
+	appearance: button;
+	border: 0px solid rgba(0, 0, 0, 0) !important;
+	color: transparent;
+	width: 20px;
+	height: 20px;
+	background: url(./checkbox_normal.png);
+	margin: 0px 0px;
+}
+
+input[type="checkbox"]:checked {
+	background: url(./checkbox_checked_normal.png);
+}
+
+input[type="checkbox"]:focus {
+	background-image: url(./checkbox_focus.png), url(./checkbox_normal.png);
+	background-position: top left, 2px 1px;
+	margin-top: -1px;
+	margin-bottom: -1px;
+	margin-left: -2px;
+	margin-right: -1px;
+	width: 23px;
+	height: 22px;
+}
+
+input[type="checkbox"]:focus:checked {
+	background-image: url(./checkbox_checked_focus.png), url(checkbox_checked_normal.png);
+	background-position: top left, 2px 2px;
+	height: 23px;
+	margin-top: -2px;
+}
+
+input[type="checkbox"]:active {
+	margin: -8px -8px;
+	background: url(./checkbox_active.png);
+	width: 36px;
+	height: 36px;
+}
+
+input[type="checkbox"]:active:checked {
+	margin: -8px -8px;
+	background-image: url(./checkbox_checked_active.png);
+	width: 36px;
+	height: 36px;
+}
+*/
+
+div#tabs button, table.post td.meta ul.pipemenu li {
+	text-transform: uppercase;
+	border-radius: 0px;
+	margin: 0px;
+	background: none;
+	border: 0px none;
+	color: #FFF;
+	height: 32px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-bottom: 0px;
+	-webkit-transition: 0s none;
+	-moz-transition: 0s none;
+	-o-transition: 0s none;
+	transition: 0s none;
+}
+
+table.post td.meta {
+	line-height: 24px;
+}
+
+table.post td.meta ul.pipemenu {
+	display: inline-block;
+	margin-bottom: -2px;
+}
+
+table.post td.meta ul.pipemenu li {
+	height: 26px;
+	line-height: 26px;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 8px;
+	padding-right: 8px;
+	display: inline-block;
+}
+
+table.post td.meta ul.pipemenu a {
+	color: #FFF;
+}
+
+div#tabs button.selected, h3, table.post td.meta ul.pipemenu li:active, .mainMenu li:hover {
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 90%, #33B5E5 90%);
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 90%, #33B5E5 90%);
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 90%, #33B5E5 90%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 90%, #33B5E5 90%);
+	margin-bottom: 0px;
+}
+
+div#tabs button:active, table.post td.meta ul.pipemenu li:active, .mainMenu li:active {
+	background-color: #33819D;
+}
+
+/* Entry-specific hacks */
+
+/* Nicer searchbox */
+/*button#submitQuery {
+	background: url('./search.png');
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 16px;
+	border-radius: 0px;
+	width: 16px;
+	font-size: 0px;
+	color: transparent;
+	border: 2px solid transparent;
+}*/
+
+button#submitQuery {
+	display: none;
+}
+
+input[placeholder="Search"]:placeholder {
+	padding-left: 16px;
+}
+
+.postToolbar, div.tabs {
+	cursor: default;
+}
+
+.postToolbar button {
+	border: none;
+	background: none;
+	opacity: 0.50;
+}
+
+.postToolbar button:hover {
+	opacity: 1;
+}
+
+.pollbarContainer {
+	background: #28262C;
+	border-radius: 0px;
+	border: none;
+	box-shadow: none;
+	padding: 0px;
+}
+
+.pollbar {
+	padding: 0px;
+	margin: 0px;
+	border: 0px none;
+	border-radius: 0px;
+	box-shadow: none;
+	display: block;
+}
+
+/* NSMBHD userpanel */
+#userpanel {
+	background: #111111;
+}
+
+#userpanel a {
+	color: #FFF;
+}
+
+#userpanel a:hover {
+	border-bottom: 2px solid #33B5E5;
+	padding-bottom: 2px;
+}
+
+.mainMenuContainer {
+	margin: 0px;
+	padding: 0px;
+}
+
+.mainMenuContainer td {
+	margin: 0px;
+	padding: 0px;
+}
+
+.mainMenu {
+	padding: 0px;
+	margin: 0px;
+}
+
+.mainMenu li {
+	text-transform: uppercase;
+	height: 32px;
+	margin: 0px;
+	margin-bottom: -8px !important;
+}
+
+.mainMenu a {
+	color: #FFF;
+}
+
+/* User menu */
+
+.userMenu {
+	background: #333333 !important;
+	border: 1px solid #505050;
+	border-radius: 2px;
+	box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.5);
+}
+
+.userMenu li {
+	height: 32px !important;
+	line-height: 32px;
+}
+
+.userMenu li:not(:last-child) {
+	border-bottom: 1px solid #505050;
+}
+
+.userMenu li:hover {
+	background: #33B5E5;
+}
+
+.userMenu li a {
+	color: #FFF;
+}
+
+/* NSMBHD side menu */
+#navigation {
+	background-color: #333333;
+	background-image: -webkit-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: -moz-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: -o-linear-gradient(-180deg, #333333, #414141, #333333);
+	background-image: linear-gradient(-180deg, #333333, #414141, #333333);
+	border-radius: 2px;
+	background-size: 50% 2px;
+	background-repeat: no-repeat;
+}
+
+#navigation th {
+	border-bottom: 2px solid #33B5E5 !important;
+	color: #33B5E5 !important;
+	text-transform: none !important;
+	text-align: left !important;
+	font-weight: bold !important;
+	font-size: 120% !important;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#navigation a {
+	color: #FFF;
+	padding-left: 8px;
+}
+
+#navigation td {
+	padding: 0px;
+}
+
+#navigation a:hover {
+	background: #33B5E5;
+}
+
+#pmNotice, #pmNotice:hover {
+	background: #002E3E;
+	color: #FFF;
+	opacity: 1;
+	line-height: 24px;
+	font-size: 12pt !important;
+	border-bottom: 2px solid #33B5E5;
+	box-shadow: 0px 0px 2px #000;
+}
+
+#pmNotice a			{ color: #33B5E5; }
+#pmNotice a:hover	{ color: #FFF; }

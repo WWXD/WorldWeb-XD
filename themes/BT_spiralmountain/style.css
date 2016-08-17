@@ -1,0 +1,87 @@
+/* AcmlmBoard XD - Oldschool Cheese theme */
+
+
+
+.outline, .PoRT
+{
+	box-shadow: none;
+}
+
+.faq
+{
+
+}
+
+body
+{
+	background: url("background8.png");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.header0, .header1, td, th
+{
+
+}
+
+.header0 th, td.side, 
+{
+	background: rgba(0,0,0,0);
+}
+
+.header1 th
+{
+
+}
+
+.cell1, .cell0, .cell2 
+{
+	background: rgba(0,0,0,0.25);
+}
+
+table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: rgba(0,0,0,0.5);
+}
+
+table.post td.post
+{
+	background: rgba(0,0,0,0.25);
+}
+
+.errort
+{
+
+}
+
+.errorc
+{
+
+}
+
+
+button, input[type="submit"]
+{
+	background: green;
+	color: white;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: green;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: green;
+	color: white;
+}
+
+div#tabs button.selected
+{
+	background: black;
+	color: white;
+}
+

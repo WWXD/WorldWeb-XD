@@ -1,0 +1,314 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+/* ABXD Neptune theme by Kiyoshi Kasuga
+It takes love to make a good Krabby Patty
+Damn HTML and CSS have more blues than Satchmo */
+
+body
+{
+	background: black url("back.png") repeat;
+	color: aliceblue !important;
+}
+
+#header, #header tr, #header tr td
+{
+	background: rgba(0, 0, 0, .25);
+	box-shadow: none;
+	border-color: rgba(0, 255, 255, .5);
+}
+
+#header .cell0
+{
+	padding: 0px !important;
+}
+
+#header .cell0 tr
+{
+	border: 0px none !important;
+}
+
+a, a span
+{
+	text-shadow: -1px -1px 2px rgba(0, 0, 0, .5),
+				  1px -1px 2px rgba(0, 0, 0, .5),
+				  1px 1px 2px rgba(0, 0, 0, .5),
+				  -1px 1px 2px rgba(0, 0, 0, .5);
+}
+
+a:link
+{
+	color: lightseagreen;
+}
+
+a:visited
+{
+	color: seagreen;
+}
+
+a:active
+{
+	color: darkseagreen;
+}
+
+a:hover, a:hover span, #header  a:hover, #header a:hover span
+{
+	color: aliceblue !important;
+}
+
+.cell0
+{
+	background: rgba(0, 0, 255, .25);
+}
+
+.cell1
+{
+	background: rgba(0, 0, 0, .25);
+}
+
+.cell2
+{
+	background: rgba(0, 255, 255, .125);
+}
+
+.header0 th
+{
+	background: blue;
+	background-image: -o-linear-gradient(navy, cadetblue);
+	background-image: -moz-linear-gradient(center top, navy 0%, cadetblue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, navy), color-stop(1, cadetblue));
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1em;
+	margin: 4px;
+}
+
+.header1 th
+{
+	background: navy;
+	background-image: -o-linear-gradient(black, blue);
+	background-image: -moz-linear-gradient(center top, black 0%, blue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, black), color-stop(1, blue));
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1em;
+	margin: 4px;
+}
+
+.header0, .header1
+{
+	background: rgba(0, 0, 0, .25);
+}
+
+.PoRT
+{
+	box-shadow: 0px 0px 8px rgba(0, 255, 255, .5);
+	margin: 8px;
+}
+
+.errort
+{
+	background: navy;
+	background-image: -o-linear-gradient(black, blue);
+	background-image: -moz-linear-gradient(center top, black 0%, blue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, black), color-stop(1, blue));
+	border: 2px groove rgba(0, 255, 255, .5);
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+.errorc
+{
+	border: 2px groove rgba(0, 255, 255, .5);
+	border-top: 0px;
+	background: rgba(0, 0, 0, .25);
+}
+
+td, tr
+{
+	border-color:#088;
+}
+
+table
+{
+	color: aliceblue;
+}
+
+table.post
+{
+	background: rgba(255, 255, 255, .125);
+	border-color: rgba(0, 0, 0, .5);
+}
+
+table.post td
+{
+	border-color: rgba(0, 0, 0, .5);
+}
+
+table.post td.side
+{
+	background: rgba(0, 255, 255, .25);
+}
+
+table.post td.post
+{
+	background: rgba(0, 0, 255, .125);
+}
+
+table.post td.meta
+{
+	background: rgba(0, 255, 255, .25);
+}
+
+.faq
+{
+	background: rgba(0, 0, 255, .5);
+}
+
+h3
+{
+	border: 0px none;
+}
+
+.codeblock
+{
+	background: rgba(0, 0, 0, .5);
+	border: 2px inset rgba(0, 0, 0, .5);
+}
+
+
+ul.pipemenu li
+{
+	border-left: 2px ridge rgba(0, 255, 255, .5);
+}
+
+.swf
+{
+	border: 2px outset rgba(0, 255, 255, .5);
+	border-radius: 4px;
+	box-shadow: 0px 0px 16px rgba(0, 255, 255, .5);
+	background: rgba(0, 255, 255, .125);
+}
+
+.swfmain
+{
+	border: 2px groove rgba(0, 0, 0, .5);
+	color: aliceblue;
+}
+
+button.expander
+{
+	border: 1px solid rgba(0, 255, 255, .5);
+	color: aliceblue;
+}
+
+button.expander:hover
+{
+	border: 1px solid aqua;
+	color: aliceblue;
+}
+
+.pollbarContainer
+{
+	border: 2px outset rgba(0, 255, 255, .5);
+	box-shadow: 0px 0px 16px rgba(0, 255, 255, .5);
+	border-radius: 0px;
+}
+
+.pollbar
+{
+	border: 0px none;
+	border-radius: 0px;
+	color: aliceblue;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid rgba(0, 255, 255, .5);
+	background: navy;
+	background-image: -o-linear-gradient(cornflowerblue, dodgerblue, cornflowerblue);
+	background-image: -moz-linear-gradient(center top, cornflowerblue 0%, dodgerblue 50%, cornflowerblue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, cornflowerblue), color-stop(.5, dogderblue), color-stop(1, cornflowerblue));
+	border-radius: 16px;
+	padding: 2px 16px;
+	color: aliceblue;
+}
+
+button:hover, input[type="submit"]:hover
+{
+	border: 1px solid aqua;
+	background: blue;
+	background-image: -o-linear-gradient(royalblue, powderblue, royalblue);
+	background-image: -moz-linear-gradient(center top, royalblue 0%, powderblue 50%, royalblue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, royalblue), color-stop(.5, powderblue), color-stop(1, royalblue));
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 2px inset rgba(0, 0, 0, .5);
+	background: rgba(0, 0, 0, .5);
+	color: aliceblue;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	border: 2px inset rgba(255, 255, 255, .5);
+	background: rgba(0, 0, 0, .5);
+	width: 1.25em;
+	height: 1.25em;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+div#tabs
+{
+	top: 7px;
+}
+
+div#tabs button
+{
+	border: 2px outset rgba(0, 255, 255, .5);
+	background: navy;
+	background-image: -o-linear-gradient(cornflowerblue, dodgerblue);
+	background-image: -moz-linear-gradient(center top, cornflowerblue 0%, dodgerblue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, cornflowerblue), color-stop(1, dodgerblue));
+	border-radius: 8px 32px 0px 0px;
+	border-bottom: 0px none;
+	font-weight: bold;
+	color: aliceblue;
+}
+
+div#tabs button:hover
+{
+	background: blue;
+	background-image: -o-linear-gradient(royalblue, powderblue);
+	background-image: -moz-linear-gradient(center top, royalblue 0%, powderblue 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, royalblue), color-stop(1, powderblue));
+}
+
+div#tabs button.selected
+{
+	background: lightblue;
+	background-image: -o-linear-gradient(navy, aquamarine);
+	background-image: -moz-linear-gradient(center top, navy 0%, aquamarine 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, navy), color-stop(1, aquamarine));
+}
+
+div.postToolbar button
+{
+	padding-top: 4px;
+	padding-bottom: 20px;
+}
+
+div#smiliesContainer
+{
+	padding: 0px 0px;
+}
+
+.highlightedPost
+{
+	box-shadow: 0px 0px 1em aliceblue !important;
+}
+

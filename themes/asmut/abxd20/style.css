@@ -1,0 +1,255 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+body
+{
+	background: black url(back.png) repeat-x;
+}
+
+#header, #header tr, #header tr td
+{
+	background: none !important;
+	box-shadow: none;
+	border: 0px none;
+}
+
+.outline
+{
+	box-shadow: 0px 0px 4px rgb(192, 192, 255);
+}
+
+.cell0
+{
+	background: rgba(160, 160, 255, 0.025);
+}
+
+.cell1
+{
+	background: rgba(160, 160, 255, 0.050);
+}
+
+.cell2
+{
+	background: rgba(160, 160, 255, 0.075);
+}
+
+.header0 th
+{
+	background: rgba(160, 160, 255, 0.150);
+	color: white;
+	text-shadow: 1px 1px 2px black;
+}
+
+.header1 th
+{
+	background: rgba(160, 160, 255, 0.200);
+	color: white;
+	text-shadow: 1px 1px 2px black;
+}
+
+.header0
+{
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.header1
+{
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+div.header0, div.header1
+{
+	background: rgba(160, 160, 255, 0.175);
+}
+
+.errort
+{
+	background: rgba(160, 160, 255, 0.35);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	text-align: center;
+}
+
+.errorc
+{
+	text-align: center;
+	color: white;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-top: 0px;
+}
+
+td, th
+{
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+table.outline
+{
+	border: 0px none;
+}
+
+table.outline tr:first-child th:last-child
+{
+	border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+table.outline tr:first-child th
+{
+	border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+table.outline th
+{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+table.outline tr td:first-child, table.outline tr th:first-child
+{
+	border-left: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.footer
+{
+	font-size: 0.9em;
+}
+
+table.post
+{
+	width: 100%;
+	background: rgba(160, 160, 255, 0.000);
+	border: 1px solid rgba(160, 160, 255, 0.500);
+}
+
+table.post td.side
+{
+	width: 15%;
+	vertical-align: top;
+	background: rgba(160, 160, 255, 0.100);
+	border: 0px none;
+}
+
+table.post td.post
+{
+	background: rgba(160, 160, 255, 0.075);
+	border: 1px solid #000;
+	border-bottom: 0px none;
+	border-right: 0px none;
+	vertical-align: top;
+	height: 100px;
+}
+
+table.post td.post td
+{
+	border: 0px none;
+}
+
+table.post td.meta
+{
+	font-size: 0.80em; /* 8pt; */
+	height: 10px;
+	margin: 0px;
+	border: 0px none;
+	background: rgba(160, 160, 255, 0.100);
+}
+
+table.post td.links
+{
+	margin: 0px;
+	border: 0px none;
+}
+
+.faq
+{
+	background: rgba(0, 0, 0, 0.5);
+}
+
+h3
+{
+	border: 0px none;
+}
+
+td.post code.Code, .geshi
+{
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.swf
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	border-radius: 4px;
+	box-shadow: 0px 0px 4px white;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.swfmain
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	background: black;
+	color: white;
+}
+
+button.expander
+{
+	color: white;
+	border: 1px solid rgba(160, 160, 255, 0.175);
+}
+
+.pollbarContainer
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	background: rgba(160, 160, 255, 0.200);
+	border-radius: 8px;
+	color: white;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	background: rgba(0, 0, 0, 0.500);
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	background: rgba(0, 0, 0, 0.500);
+	color: white;
+	border-radius: 2px;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+div#tabs {
+	margin-bottom: 1px;
+}
+
+div#tabs button
+{
+	border: 1px solid rgba(160, 160, 255, 0.175);
+	border-bottom: 0px none;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 32px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	padding-right: 16px;
+	margin-bottom: 0px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid #181826;
+	padding-bottom: 1px;
+	margin-bottom: -1px;
+}
+

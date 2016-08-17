@@ -1,0 +1,133 @@
+
+body
+{
+	background: rgba(20, 52, 112, 1) url("luna.png") no-repeat fixed top right!important;
+	color: white;
+}
+
+
+button, input[type="submit"]
+{
+	border: 1px solid gray;
+	background: black;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid gray;
+	background: black;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: black;
+	background: rgba(0, 0, 0, 0.5);
+	border: 2px ridge gray;
+	color: white;
+}
+
+
+div#tabs
+{
+	position: relative;
+	left: 8px;
+	top: 8px;
+}
+
+
+.cell0
+{
+	background: gray;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+
+.cell1, .faq
+{
+	background: gray;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+
+.cell2
+{
+	background: gray;
+	background: rgba(0, 0, 0, 0.55);
+}
+
+
+.header0 th
+{
+	background: silver;
+	background: rgba(64, 64, 64, 0.5);
+}
+
+
+.header1 th
+{
+	background: silver;
+	background: rgba(128, 128, 128, 0.5);
+}
+
+
+table.post
+{
+	background: gray;
+	background: rgba(0, 0, 0, 0.55);
+}
+
+
+table.post td.post
+{
+	background: black;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+
+.pollbarContainer
+{
+	border: 1px solid black;
+	background: black;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+
+.pollbar
+{
+	border: none;
+}
+
+
+.codeblock
+{
+	border: 1px solid black;
+	background: black;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+
+div#tabs button
+{
+	border-color: black;
+	background: silver;
+	background: rgba(64, 64, 64, 0.5);
+}
+
+
+div#tabs button.selected
+{
+	border-bottom-color: silver;
+	border-bottom-color: rgba(64, 64, 64, 0.5);
+}
+
+
+h3
+{
+	border-color: gray;
+}

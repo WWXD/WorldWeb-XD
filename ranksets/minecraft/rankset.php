@@ -1,0 +1,36 @@
+<?php
+
+$ranksetNames["minecraft"] = "Minecraft";
+
+$ranksetData["minecraft"] = array(
+	array("num" => 0, "image" => '', "text" => 'Non-poster'),
+	array("num" => 1, "image" => '', "text" => 'Newcomer'),
+	array("num" => 10, "image" => 'dirt.png', "text" => 'Dirt'),
+	array("num" => 20, "image" => 'grass.png', "text" => 'Grass'),
+	array("num" => 35, "image" => 'wood.png', "text" => 'Wood'),
+	array("num" => 50, "image" => 'planks.png', "text" => 'Planks'),
+	array("num" => 65, "image" => 'stone.png', "text" => 'Stone'),
+	array("num" => 80, "image" => 'cobble.png', "text" => 'Cobble'),
+	array("num" => 100, "image" => 'mossy.png', "text" => 'Mossy Cobble'),
+	array("num" => 120, "image" => 'brick.png', "text" => 'Brick'),
+	array("num" => 140, "image" => 'bedrock.png', "text" => 'Bedrock'),
+	array("num" => 160, "image" => 'coal.png', "text" => 'Coal'),
+	array("num" => 180, "image" => 'iron.png', "text" => 'Iron'),
+	array("num" => 200, "image" => 'lapis.png', "text" => 'Lapis Lazuli'),
+	array("num" => 225, "image" => 'gold.png', "text" => 'Gold'),
+	array("num" => 250, "image" => 'diamond.png', "text" => 'Diamond'),
+	array("num" => 275, "image" => 'redstone.png', "text" => 'Redstone'),
+	array("num" => 300, "image" => 'emerald.png', "text" => 'Emerald'),
+	array("num" => 325, "image" => 'chicken.png', "text" => 'Chicken'),
+	array("num" => 350, "image" => 'squid.png', "text" => 'Squid'),
+	array("num" => 375, "image" => 'pig.png', "text" => 'Pig'),
+	array("num" => 400, "image" => 'sheep.png', "text" => 'Sheep'),
+	array("num" => 425, "image" => 'cow.png', "text" => 'Cow'),
+	array("num" => 450, "image" => 'silver.png', "text" => 'Silverfish'),
+	array("num" => 475, "image" => 'wolf.png', "text" => 'Wolf'),
+	array("num" => 500, "image" => 'zombie.png', "text" => 'Zombie'),
+	array("num" => 525, "image" => 'skeleton.png', "text" => 'Skeleton'),
+	array("num" => 550, "image" => 'creeper.png', "text" => 'Creeper'),
+	array("num" => 575, "image" => 'villager.png', "text" => 'Villager'),
+	array("num" => 600, "image" => 'steve.png', "text" => 'Steve'),
+);

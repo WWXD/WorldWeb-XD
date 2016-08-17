@@ -1,0 +1,2 @@
+Set the forumid setting in plugin.settings to the ID of the forum you want to have a random title and description.
+Then fill in the titles and descriptions in titles.txt and descs.txt, seperated by newliens.

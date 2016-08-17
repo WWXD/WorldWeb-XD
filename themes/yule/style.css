@@ -1,0 +1,103 @@
+/* AcmlmBoard XD - Pissin' on Jul */
+@import url('../../css/borders.css');
+
+body
+{
+	background: #000 url(starsbg.png);
+}
+
+.cell0
+{
+	background: #111133;
+}
+
+.cell1
+{
+	background: #111133;
+}
+
+.cell2, .faq
+{
+	background: #11112b;
+}
+
+.outline
+{
+		box-shadow: 0px 0px 0px;
+}
+
+#header, .PoRT
+{
+	box-shadow: none;
+}
+
+table.outline
+{
+}
+
+a:link
+{
+	color: #bebafe;
+}
+
+a:visited
+{
+	color: #9990c0;
+}
+
+a:active
+{
+	color: #cfbeff;
+}
+
+a:hover
+{
+	color: #cecafe;
+}
+
+.header0 th, .errort
+{
+	background: #2f2f5f;
+}
+
+.header1 th
+{
+	background: #302048;
+}
+
+table.post
+{
+	box-shadow: 0px 0px 0px;
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: #111133;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid #663399;
+	background: #000000;
+	color: white;
+}
+
+div#tabs {
+	padding-left: 8px;
+	margin-bottom: 0px;
+}
+
+div#tabs button
+{
+	background: #2f2f5f;
+	border: 1px solid #000;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid #2f2f5f;
+}
+

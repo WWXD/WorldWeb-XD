@@ -1,0 +1,142 @@
+@import url('../../css/roundcorners.css');
+
+/* Pinklines theme
+   Created by Nina */
+
+table.outline, table.outline td, table.post td, table.outline .header0 th, table.outline .header1 th
+{
+	border-width: 0px!important;
+}
+
+.faq
+{
+	border: 1px solid hsl(0, 0%, 25%);
+	background: hsl(0, 0%, 10%);
+}
+
+body
+{
+	background: black;
+	color: #FFFFFF;
+}
+
+#header {
+	background: -moz-linear-gradient(hsl(0, 0%, 10%) 82%, hsl(0, 0%, 5%) 90%, hsl(0, 0%, 0%));
+	background: -webkit-linear-gradient(hsl(0, 0%, 10%) 82%, hsl(0, 0%, 5%) 90%, hsl(0, 0%, 0%));
+	background: -o-linear-gradient(hsl(0, 0%, 10%) 82%, hsl(0, 0%, 5%) 90%, hsl(0, 0%, 0%));
+}
+
+#header tr:first-child {
+	background: hsl(0, 0%, 10%);
+}
+
+.header0, .header1
+{
+	border: 0px none;
+}
+
+.header0 th, .header1 th
+{
+	background: -moz-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsla(0, 0%, 0%, 0));
+	background: -webkit-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsla(0, 0%, 0%, 0));
+	background: -o-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsla(0, 0%, 0%, 0));
+	padding-top: 4px;
+	color: #FFFFFF;
+}
+
+.header1:first-child th, .header0:first-child th, .errort
+{
+	background: -moz-linear-gradient(hsl(0, 50%, 45%), hsl(0, 50%, 35%));
+	background: -webkit-linear-gradient(hsl(0, 50%, 45%), hsl(0, 50%, 35%));
+	background: -o-linear-gradient(hsl(0, 50%, 45%), hsl(0, 50%, 35%));
+	border-bottom: 0px none;
+	padding-bottom: 4px;
+}
+
+.cell2
+{
+	background: none;
+}
+
+.cell1, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: none;
+}
+
+.cell0, table.post td.post, .faq
+{
+	background: none;
+}
+
+table.outline, .errorc
+{
+	background: hsl(0, 0%, 10%);
+}
+
+table.post
+{
+	background: hsl(0, 0%, 10%);
+}
+
+table.post tr:first-child td {
+	background: -moz-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsl(0, 0%, 10%));
+	background: -webkit-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsl(0, 0%, 10%));
+	background: -o-linear-gradient(hsl(0, 50%, 15%) 0px, hsl(0, 50%, 50%) 2px, hsl(0, 50%, 35%) 4px, hsl(0, 0%, 7%) 4px, hsl(0, 0%, 10%));
+	padding-top: 4px;
+}
+
+button, input[type="submit"]
+{
+	border: 0px none;
+	background: hsl(0, 0%, 15%);
+	border-radius: 4px;
+	color: #FFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: hsl(0, 0%, 15%);
+	border-radius: 4px;
+	border: 0px none;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: hsl(0, 0%, 15%);
+	border: 0px none;
+	border-radius: 4px;
+	color: hsl(0, 0%, 15%);
+	transition: 0.2s linear;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	box-shadow: 0px 0px 4px hsl(0, 50%, 45%);
+}
+
+div#tabs {
+	margin-bottom: 0px;
+}
+
+div#tabs button {
+	border-radius: 0px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+div#tabs button.selected
+{
+	background: hsl(0, 50%, 45%);
+}
+
+.themeselector input:checked + label, .fe_selected {
+	background: hsl(0, 0%, 15%);
+}

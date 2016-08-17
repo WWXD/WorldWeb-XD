@@ -1,0 +1,131 @@
+@import url('../../css/borders-ab2.css');
+@import url('../../css/roundcorners.css');
+
+/* AcmlmBoard XD - Default board theme */
+body
+{
+	background: #040420 url(back2c.png);
+}
+
+th
+{
+	background: #336;
+	border: 1px solid #000;
+}
+
+table.outline
+{
+	border: 1px solid #669;
+}
+
+table.post
+{
+	background: url(back2t1.png) #303678;
+	border-collapse: separate;
+	border-spacing: 0;
+	border-radius: 8px;
+	border: 1px solid #669;
+	box-shadow: 2px 2px 4px #000;
+}
+
+table.post td.post
+{
+	background: #222 url(back2g.png);
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #669;
+	background: #24285C;
+	color: #FFF;
+}
+
+.PoRT
+{
+	box-shadow: 0px 0px 4px #FFF;
+}
+
+.cell0
+{
+	background: #24285C url(back2t2.png);
+}
+
+.cell1
+{
+	background: #1F224F url(back2t3.png);
+}
+
+.cell2
+{
+	background: #303678 url(back2t1.png);
+}
+
+.header0 th
+{
+	background: #373E89 url(backc2.png) repeat-x;
+	color: #EEE;
+}
+
+.header1 th
+{
+	background: #4E5174 url(backh.png) repeat-x;
+	color: #DDD;
+}
+
+.faq
+{
+	background: #222 url(back2g.png);
+}
+
+td.post code.Code .geshi .post_about
+{
+	background: #24285C url(back2t2.png);
+}
+
+.errort
+{
+	background: #4E5174 url(backh.png) repeat-x;
+}
+
+.errorc
+{
+	color: #EEE;
+}
+
+.post_about
+{
+	border: 1px solid #669;
+}
+
+.post_topbar
+{
+	border: 1px solid #669;
+	background: url(back2t2.png);
+}
+
+.post_content
+{
+	background: url(back2t1.png);
+	border: 1px solid #669;
+}
+
+h3
+{
+	border-top: 1px solid #669;
+	border-bottom: 1px solid #669;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: #24285C;
+	border: 1px solid #669;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: #24285C;
+	border: 2px ridge #669;
+	color: white;
+}
+

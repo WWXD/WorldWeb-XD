@@ -1,0 +1,84 @@
+/* ABXD Fire Wave theme by Kiyoshi Kasuga
+Original AcmlmBoard version by KP9000
+Shittin' on board2 */
+@import url('../../css/borders-ab2.css');
+
+body
+{
+	background: #300000 url("background.jpg");
+	color: #fff;
+	font-family: "Verdana", "Lucida Grande", sans-serif;
+}
+
+table.outline, table.message, table.post 
+{
+	border: 1px solid #966;
+}
+
+table.outline > tbody > tr > th,
+table.message > tbody > tr > th
+{
+	border-bottom-width: 1px;
+}
+
+table.outline > tbody:first-child > tr:first-child > *,
+table.message > tbody:first-child > tr:first-child > *,
+table.post td.userlink, table.post td.meta
+{
+	border-top-width: 1px !important;
+}
+
+table.outline > tbody > tr > *:first-child,
+table.message > tbody > tr > *:first-child,
+table.post td.userlink, table.post td.side
+{
+	border-left-width: 1px !important;
+}
+
+.cell0, .faq
+{
+	background: #4f2020 url("celldark.png");
+}
+.cell1, button, input[type="submit"], table.post td.post
+{
+	background: #5c2824 url("cellmedium.png");
+}
+
+.cell2, table.post
+{
+	background: #783036 url("celllight.png");
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 2px ridge #77D;
+	background: #000;
+	color: #fff;
+}
+
+.header0 th, .errort
+{
+	background: #bd3939 url("header0.png");
+	background-size: 14px 100%;
+	color: #eee;
+}
+
+.header1 th
+{
+	background: #946464 url("header1.png");
+	background-size: 14px 100%;
+	font-weight: bold;
+	color: #ddd;
+}
+
+button, input[type="submit"]
+{
+	border: 2px ridge rgb(255,208,64);
+	color: rgb(255,208,64);
+	font-weight: bold;
+}
+
+button.tab
+{
+	border:1px solid black;
+}

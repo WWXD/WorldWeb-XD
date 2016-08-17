@@ -1,0 +1,4 @@
+name=IRC Report
+description=Reports posts on the board to an IRC bot through TCP
+author=Dirbaio
+

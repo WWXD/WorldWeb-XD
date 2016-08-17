@@ -1,0 +1,32 @@
+/* Green by GlitchMr (C) 2010
+
+It's actually overcommented style while it has few lines
+of code - making themes for ABXD is SO simple         */
+@import url('../../css/borders.css');
+
+/* make nice glowing effect from PORT */
+.PoRT{box-shadow: 0px 0px 10px #FAA}
+.PoRT{border-radius:0 !important; background: #262;}
+
+/* make kind of background on body */
+body{background:#01250A}
+
+/* after that, make some nice colorful (colourful?) colors */
+.errort{background:#398235}.cell2{background:#262}.cell1{
+background:#251}.header1 th{background:#576}.header0 th{background:#383}
+.cell0{background:#262}
+
+/* also for posts */
+table.post,.faq{background:#353;border:1px solid #696}
+table.post td.post{background:#131}
+
+/* make gradient at top */
+#header>table>tbody>tr>.cell0{background: #67841e;background:
+-moz-linear-gradient(top, #b9ce86 0%, #225511 33%, #225511 100%);
+background: -webkit-linear-gradient(top, #b9ce86 0%,#225511 33%,#225511 100%);
+background: -o-linear-gradient(top, #b9ce86 0%,#225511 33%,#225511 100%);
+background: -ms-linear-gradient(top, #b9ce86 0%,#225511 33%,#225511 100%);}
+
+/* profile buttons */
+#tabs .tab{background:green;border:none}
+#tabs .tab.selected{background:lightgreen;border-bottom:1px solid lightgreen}

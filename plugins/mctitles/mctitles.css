@@ -1,0 +1,62 @@
+.mcTitle {
+	transform: rotate(-20deg);
+	-webkit-transform: rotate(-20deg);
+	-ms-transform: rotate(-20deg);
+	transform-origin: bottom center;
+	-webkit-transform-origin: bottom center;
+	-ms-transform-origin: bottom center;
+	display: inline-block;
+	position: relative;
+	top: -30px;
+	left: -240px;
+	font-size: 20px;
+	color: yellow;
+	text-shadow: 2px 2px 0px #000;
+	width: 16em;
+	margin-right: -16em;
+	text-align: center;
+	pointer-events: none;
+
+	animation-name: animateMcTitle;
+	animation-duration: 0.25s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: alternate;
+	-webkit-animation-name: animateMcTitle;
+	-webkit-animation-duration: 0.25s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-direction: alternate;
+	-ms-animation-name: animateMcTitle;
+	-ms-animation-duration: 0.25s;
+	-ms-animation-iteration-count: infinite;
+	-ms-animation-timing-function: linear;
+	-ms-animation-direction: alternate;
+}
+
+@keyframes animateMcTitle {
+	from {
+		transform: rotate(-20deg) scale(1);
+	}
+	to {
+		transform: rotate(-20deg) scale(1.1);
+	}
+}
+
+@-webkit-keyframes animateMcTitle {
+	from {
+		-webkit-transform: rotate(-20deg) scale(1);
+	}
+	to {
+		-webkit-transform: rotate(-20deg) scale(1.1);
+	}
+}
+
+@-ms-keyframes animateMcTitle {
+	from {
+		-ms-transform: rotate(-20deg) scale(1);
+	}
+	to {
+		-ms-transform: rotate(-20deg) scale(1.1);
+	}
+}

@@ -1,0 +1,4 @@
+name=TwitPlug
+description=Displays the latest entry on your Twitter account.
+author=Kawa
+$twitName=Twitter account

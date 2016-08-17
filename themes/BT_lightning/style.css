@@ -1,0 +1,121 @@
+@import url('../../css/borders.css');
+
+.outline, .PoRT
+{
+	box-shadow: 2px 2px 2px;
+}
+
+body
+{
+	background: url("background9.png");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	color: #fff;
+}
+
+.header0, .header1, table
+{
+}
+
+.header0 th
+{
+	border: solid 2px green;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 4px;
+}
+
+.header1 th
+{
+	border: solid 2px green;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 4px;
+}
+
+.cell1, table.post td.post
+{
+	border: solid 1px yellow;
+	border-radius: 4px;
+	background: rgba(0,0,0,0.75);
+}
+
+table.post td.post
+{
+	border: 1px yellow solid;
+	border-radius: 4px;
+	background: rgba(0,0,0,0.5);
+	color: #0ff;
+	padding: 4px;
+	margin: 8px;
+}
+
+table.post td.side, table.post td.userlink, table.post td.meta
+{
+	border: 1px yellow solid;
+	border-radius: 0px;
+	padding: 4px;
+	margin: 8px;
+	background: rgba(0,0,0,1);
+	color: #0ff;
+}
+
+.cell0, .cell2
+{
+	border: solid 2px yellow;
+	background: rgba(0,0,0,0.5);
+	padding: 2px;
+	margin: 2px;
+	border-radius: 4px;
+}
+
+.errort
+{
+
+}
+
+.errorc
+{
+
+}
+
+td, th
+{
+	border-color: #0ff;
+}
+
+
+button, input[type="submit"]
+{
+	background: url("button.png");
+	border: green solid 1px;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: url("text.png");
+	border: green solid 1px;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: url("button.png");
+	border: yellow solid 1px;
+}
+
+div#tabs button.selected
+{
+	border: solid 1px yellow;
+}
+
+table.codeblock
+{
+	border: solid #0ff 2px;
+	border-radius: 4px;
+	padding: 4px;
+	margin: 28px;
+}

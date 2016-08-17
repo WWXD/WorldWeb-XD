@@ -1,0 +1,352 @@
+@import url('../../css/borders-ab2.css');
+@import url('../../css/roundcorners.css');
+
+/* ABXD Panda theme by Kiyoshi Kasuga
+Loosely based on Panda Internet Security 2011 */
+
+body
+{
+	background: black url("back.png") repeat;
+}
+
+table.layout-table > tbody > tr > td
+{
+	border: 0px none !important;
+}
+
+#header, #header tr, #header tr td
+{
+	background: none;
+		box-shadow: none;
+	border: 0px none;
+}
+
+h4
+{
+	color: white;
+}
+
+h4 a:hover, .userlink a:hover
+{
+	transform-origin: left;
+	-o-transform-origin: left;
+	-moz-transform-origin: left;
+	-webkit-transform-origin: left;
+}
+
+a:link
+{
+	color: white;
+}
+
+a:visited
+{
+	color: #50A0B0;
+}
+
+a:active
+{
+	color: #90E0F0;
+}
+
+.outline
+{
+	}
+
+.cell0, .cell2
+{
+	background: rgb(64, 64, 64);
+	padding: 2px 4px;
+}
+
+.cell1
+{
+	background: rgba(240, 248, 255, .125);
+	padding: 2px 4px;
+}
+
+.header0 th
+{
+	background: black;
+	background-image: -o-linear-gradient(rgb(0, 0, 0), rgb(64, 64, 64));
+	background-image: -moz-linear-gradient(center top, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(0, 0, 0)), color-stop(1, rgb(64, 64, 64)));
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1em;
+	color: white;
+}
+
+.header1 th
+{
+	background: black;
+	background-image: -o-linear-gradient(rgb(16, 96, 128), rgb(32, 144, 208));
+	background-image: -moz-linear-gradient(center top, rgb(16, 96, 128) 0%, rgb(32, 144, 208) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(16, 96, 128)), color-stop(1, rgb(32, 144, 208)));
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1em;
+	color: white;
+}
+
+.header0, .header1
+{
+	border: 1px solid rgb(32, 32, 32);
+}
+
+div.header0, div.header1
+{
+	background: rgb(64, 64, 64);
+}
+
+.errort
+{
+	background: black;
+	background-image: -o-linear-gradient(rgb(16, 96, 128), rgb(32, 144, 208));
+	background-image: -moz-linear-gradient(center top, rgb(16, 96, 128) 0%, rgb(32, 144, 208) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(16, 96, 128)), color-stop(1, rgb(32, 144, 208)));
+	border: 1px solid rgb(128, 160, 192);
+	color: white;
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+.errorc
+{
+	color: white;
+	border: 1px solid rgb(128, 160, 192);
+	border-top: 0px;
+	background: rgb(64, 64, 64);
+}
+
+td, th
+{
+	border: 1px solid rgb(32, 32, 32);
+}
+
+table.outline
+{
+	border: 1px solid rgb(128, 160, 192);
+}
+
+table.outline tr:first-child th:last-child
+{
+	border-right: 1px solid rgb(32, 32, 32);
+}
+
+table.outline tr:first-child th
+{
+	border-top: 1px solid rgb(32, 32, 32);
+}
+
+table.outline th
+{
+	border-bottom: 1px solid rgb(32, 32, 32);
+}
+
+table.outline tr td:first-child, table.outline tr th:first-child
+{
+	border-left: 1px solid rgb(32, 32, 32);
+}
+
+table.post
+{
+	width: 100%;
+	border: 1px solid rgb(128, 160, 192);
+	background: rgba(240, 248, 255, .05);
+}
+
+table.post td.side
+{
+	font-family: "Helvetica", "Arial", sans-serif;
+	width: 15%;
+	vertical-align: top;
+	background: rgba(96, 128, 255, .1);
+	border: 0px none;
+}
+
+table.post td.post
+{
+	background: rgba(240, 248, 255, .05);
+	border: 1px solid rgb(32, 32, 32);
+	border-bottom: 0px none;
+	border-right: 0px none;
+	vertical-align: top;
+	padding: 2px 4px;
+	height: 100px;
+}
+
+table.post td.post td
+{
+	border: 0px none;
+}
+
+table.post td.meta
+{
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: .9em;
+	height: 10px;
+	margin: 0px;
+	border: 0px none;
+	background: rgba(96, 128, 255, .1);
+}
+
+table.post td.links
+{
+	margin: 0px;
+	border: 0px none;
+}
+
+.faq
+{
+	background: rgb(64, 64, 64);
+	border: 1px solid rgb(128, 160, 192);
+}
+
+h3
+{
+	border: 0px none;
+}
+
+td.post code.Code, .geshi
+{
+	background: rgb(64, 64, 64);
+	border: 1px solid rgb(32, 32, 32);
+}
+
+ul.pipemenu li
+{
+	border-left: 1px solid rgb(128, 160, 192);
+}
+
+.swf
+{
+	border: 1px solid rgb(128, 160, 192);
+	border-radius: 4px;
+	box-shadow: 0px 0px 4px white;
+	background: rgba(240, 248, 255, .1);
+}
+
+.swfmain
+{
+	border: 1px solid rgb(32, 32, 32);
+}
+
+button.expander
+{
+	border: 1px solid rgb(128, 160, 192);
+}
+
+.pollbarContainer
+{
+	border: 1px solid rgb(192, 192, 192);
+	box-shadow: 0px 0px 8px rgb(192, 192, 192);
+	border-radius: 0px;
+}
+
+.pollbar
+{
+	border: 0px none;
+	border-radius: 0px;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid rgb(192, 192, 192);
+	background: black;
+	background-image: -o-linear-gradient(rgb(64, 64, 64), rgb(0, 0, 0));
+	background-image: -moz-linear-gradient(center top, rgb(64, 64, 64) 0%, rgb(0, 0, 0) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(64, 64, 64)), color-stop(1, rgb(0, 0, 0)));
+	border-radius: 16px;
+	padding: 2px 16px;
+	color: white;
+}
+
+button:hover, input[type="submit"]:hover
+{
+	background: black;
+	background-image: -o-linear-gradient(rgb(32, 144, 208), rgb(16, 96, 128));
+	background-image: -moz-linear-gradient(center top, rgb(32, 144, 208) 0%, rgb(16, 96, 128) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(32, 144, 208)), color-stop(1, rgb(16, 96, 128)));
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid rgb(32, 32, 32);
+	background: black;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	border: 3px inset rgb(240, 248, 255);
+	background: white;
+	color: black;
+	width: 1.2em;
+	height: 1.2em;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+div#tabs
+{
+	top: 7px;
+}
+
+div#tabs button
+{
+	border: 1px solid rgb(0, 80, 160);
+	background: rgb(32, 152, 211);
+	padding-left: 16px;
+	border-radius: 0px;
+	font-weight: bold;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid white;
+}
+
+.nc0x, .nc00, .nc01, .nc02, .nc03, .nc04, .nc05, .nc1x, .nc10, .nc11, .nc12, .nc13, .nc14, .nc15, .nc2x, .nc20, .nc21, .nc22, .nc23, .nc24, .nc25
+{
+	text-shadow: -1px 0px 2px rgb(32, 32, 32), 1px 0px 2px rgb(32, 32, 32);
+}
+
+a:hover
+{
+	color: white !important;
+	border-bottom: 1px solid white;
+}
+
+div#header .cell0 a:hover, div#rss a, .smilies img:hover, .avaLib img:hover, .footer a:hover, table.post img:hover, tr.cell0 td img, .cell1 td img, .cell2 td img
+{
+	border-bottom: 0px none;
+	transform: scale(1.0);
+	-o-transform: scale(1.0);
+	-moz-transform: scale(1.0);
+	-webkit-transform: scale(1.0);
+}
+
+div#header .cell2 a:hover
+{
+	color: white;
+	border-bottom: 1px solid white;
+	transform: scale(1.1);
+	-o-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+}
+
+div.postToolbar button
+{
+	padding-top: 4px;
+	padding-bottom: 20px;
+}
+
+div#smiliesContainer
+{
+	padding: 0px 0px;
+}
+

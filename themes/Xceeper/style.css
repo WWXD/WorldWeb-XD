@@ -1,0 +1,164 @@
+@import url('../../css/borders-ab2.css');
+@import url('../../css/roundcorners.css');
+
+/* Style by StarLand created for Blargboard */
+
+body
+{
+	background: black url(xceeperNatural.jpg);
+	background-repeat: repeat;
+	background-position: center bottom;
+	color: white;
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 10pt;
+	text-shadow: #312 0px -1px 10px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	background-size: 100% auto;
+}
+
+h3
+{
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	border-top: 1px solid #669;
+	border-bottom: 1px solid #669;
+	margin: 0px;
+}
+
+table
+{
+	color: white;
+}
+
+table.outline, table.post
+{
+	border: 1px solid rgb(255,255,255);
+}
+
+table.post td.side, table.post td.meta, table.post td.links
+{
+	background: rgba(10, 90, 80, 0.7);
+}
+table.post td.side
+{
+	vertical-align: top;
+}
+
+table.post td.post
+{
+	background: rgba(0, 10, 0, 0.7);
+	border: 1px solid #000;
+	vertical-align: top;
+	height: 100px;
+}
+
+.cell0
+{
+	background: rgba(16, 90, 64, 0.4) url() repeat-x;
+}
+
+.cell1
+{
+	background: rgba(00, 128, 99, 0.4) url() repeat-x;
+}
+
+.cell2
+{
+	background: rgba(32, 62, 119, 0.4) url() repeat-x;
+}
+
+.header0 th
+{
+	background: #304B81 url() repeat-x;
+	text-align: center;
+	color: #EEE;
+	font-size: 8pt;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+
+.header1 th
+{
+	background:  #000055 url() repeat;
+	text-align: center;
+	font-size: 8pt;
+	color: #DDD;
+	border-width: 0px;
+}
+
+.header0
+{
+	border-width: 1px;
+}
+
+.header1
+{
+	border-width: 1px;
+}
+
+.faq
+{
+	background: rgba(0, 0, 0, 0.7);
+}
+
+td.post .codeblock
+{
+	background: #24285C url();
+	font-family: "Consolas", "Courier New", monospace;
+}
+
+.errort
+{
+	background:  #4E5174 url() repeat-x;
+	border: 1px solid #000;
+}
+
+.errorc
+{
+	text-align: center;
+	color: #EEE;
+	border: 1px solid #000;
+	border-top: 0px;
+}
+
+button
+{
+	border: 1px solid #0A9;
+	background: #33F;
+	color: #FFF;
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #00ff00s;
+	background: rgba(0, 49, 100, 0.85);
+	color: #EEEEEE;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: rgba(0, 13, 34, 0.90);
+	border: 1px solid #000212;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: rgba(0, 13, 34, 0.90);
+	border: 1px solid #000212;
+	color: #B7E6FF;
+}
+
+input[type="radio"]
+{
+	border-radius: 10px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	border-color: rgba(0, 0, 200, 0.85);
+}
+

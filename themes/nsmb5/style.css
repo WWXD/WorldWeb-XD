@@ -1,0 +1,125 @@
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+.faq
+{
+	border: 1px solid #000;
+}
+
+#boardheader
+{
+	background-image: url("overbg.png");
+	background-repeat: repeat;
+	background-position:center bottom;
+	padding:0px!important;
+	margin:0px!important;
+}
+
+#theme_banner
+{
+	padding:0px!important;
+}
+
+body
+{
+	background-color:#000;
+	background-image: url("overbg.png"), url("bg.png");
+	background-repeat: repeat-x, repeat;
+	background-attachment:fixed, fixed;
+	background-position:left bottom, left bottom;
+}
+
+.header0 th
+{
+	background: rgba(0, 35, 100, 0.95);
+	color: #ABF;
+}
+
+.header1 th
+{
+	background: rgba(0, 35, 100, 0.95);
+	color: #ABF;
+}
+
+.cell2
+{
+	background: rgba(0, 0, 25, 0.85);
+}
+
+.cell0 .cell2, .cell1 .cell2
+{
+	background: rgba(0, 0, 25, 0.35);
+}
+
+.cell1, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: rgba(17, 40, 80, 0.85);
+}
+
+.cell0, table.post td.post, .faq
+{
+	background: rgba(80, 10, 15, 0.85);
+}
+
+.footer
+{
+	background:rgba(0, 0, 25, 0.55);
+	margin:0px;
+	margin-top:10px;
+	border-top: 1px black solid;	
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+a, a:link, a:visited, .cell1 a {color: #78F!important;
+}
+
+a:hover, .cell1 a:hover {color: #ABF!important;
+}
+
+.cell0 a {color: #F78!important;
+}
+
+.cell0 a:hover {color: #FAB!important;
+}
+
+.errort
+{
+	background: rgba(80, 10, 15, 0.85);
+}
+
+.errorc
+{
+	background: rgba(10, 80, 15, 0.85);
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #000;
+	background: rgba(0, 8, 40, 0.85);
+	color: #FFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea, input[type="checkbox"], input[type="radio"]
+{
+	background: rgba(0, 8, 40, 0.90);
+	border: 1px solid #000;
+	color: #FFF;
+}
+
+input[type="radio"]
+{
+	border-radius: 8px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, select:focus, textarea:focus
+{
+	border-color: rgba(72, 88, 120, 0.85);
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid rgba(120, 112, 104, 0.85);
+	background: rgba(120, 112, 104, 0.85);
+}
+

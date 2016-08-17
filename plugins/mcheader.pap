@@ -1,0 +1,75 @@
+<?php
+
+function Minecraft_Write()
+{
+	global $footerExtensions, $ScriptName;
+	if(strrpos($_SERVER['SCRIPT_NAME'], "index.php") === FALSE)
+		return;
+
+	$rndMojang = array(
+		"Awesome!",
+		"100% Pure",
+		"May contain nuts!",
+		"Better than Blackhole's",
+		"More rounded corners!",
+		"100% More Doctype Declarations!",
+		"Sexy!",
+		"Limited edition!",
+		"This text is totally not a rip-off!",
+		"Made by Kawa!",
+		"Best in class!",
+		"Less than 20 installed!",
+		"Check it out!",
+		"Holy cow, man!",
+		"It's a messageboard!",
+		"Made in The Netherlands!",
+		"Uses Tidy!",
+		"Reticulating splines!",
+		"ABXD!",
+		"Yaaay!",
+		"2.1!",
+		"Massive Multiplayer!",
+		"Not Keyboard Compatible!",
+		"Undocumented!",
+		"That's no injection vector!",
+		"The bee's knees!",
+		"Open source!",
+		"Wow!",
+		"Free!",
+		"Oh man!",
+		"Check it out!",
+		"Now with Root users!",
+		"70% bug free!",
+		"Pretty!",
+		"Not vBulletin!",
+		"Nice horse!",
+		"Minors welcome!",
+		"Not made by Acmlm!",
+		"BACON!!!",
+		"This is not a header!",
+		"Cartesian!",
+		"Inspired!",
+		"No, Ma'am!",
+		"Not visited by communists!",
+		"SVG!",
+		"Try it!",
+		"How would I know? I'm a cat!",
+		"Hide your mother!",
+		"Freaky-deaky Dutch!",
+		"Tell your friends!",
+		"All is full of love!",
+		"Spock is cooler!",
+		"EXTERMINATE!!!",
+		"DDR! DDR! DDR!",
+		"Opera recommended!",
+		"Xkeeper tested, Xkeeper disapproved",
+	);
+
+	//$rndMojang = array("Xkeeper tested, Xkeeper disapproved");
+
+	$footerExtensions .= "<div style=\"position: absolute; left: 30%; top: 70px; text-shadow: 3px 3px 2px black, -1px -1px 0px black, 1px 1px 0px black, -1px 1px 0px black, 1px -1px 0px black; color: yellow; font-size: 14pt; -o-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); font-weight: bold; text-align: center; width: 16em; font-family: 'Verdana', 'Arial', sans-serif;\">".$rndMojang[array_rand($rndMojang)]."</div>";
+}
+
+register("footers", "Minecraft_Write");
+
+?>

@@ -1,0 +1,91 @@
+/* AcmlmBoard XD - Pissin' on Board2 */
+@import url('../../css/borders-ab2.css');
+
+body
+{
+	background: #0C0B43 url(back1000.png);
+}
+
+table.outline, td, th, .header0, .header1, #body table, #body .faq
+{
+	border-color: #8677E7;
+}
+
+.header0 th
+{
+	background: #373E89 url(backc2.png) repeat-x;
+	color: #EEE;
+}
+
+.header1 th
+{
+	background: #4E5174 url(backh.png) repeat-x;
+	color: #DDD;
+}
+
+.cell0
+{
+	background: #1A2464 url(backt100.png);
+}
+
+.cell1
+{
+	background: #06015D url(backt200.png);
+}
+
+.cell2, .faq
+{
+	background: #1A2464 url(backt100.png);
+}
+
+table.post
+{
+	border: 0px none;
+	box-shadow: 0px 0px 0px;
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: #111133;
+}
+
+td.post code.Code .geshi .post_about
+{
+	background: #24285C url(back2t2.png);
+}
+
+input, select, textarea, button
+{
+	border: 2px ridge #7777DD;
+	background: #000000;
+	color: white;
+}
+
+button, input[type="submit"]
+{
+	border: 2px ridge #FFD040;
+	color: #FFD040;
+}
+
+div#tabs
+{
+	position: relative;
+	left: 8px;
+}
+
+div#tabs button
+{
+	background: #5344B4;
+	border: 1px solid #8677E7;
+	padding-right: 16px;
+	color: #FFF;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid #8677E7;
+	background: #8677E7;
+}
+

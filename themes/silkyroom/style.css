@@ -1,0 +1,53 @@
+@import url('../../css/borders.css');
+
+body
+{
+	background: #100;
+	color: #FFF;
+}
+
+.cell0
+{
+	background: #200;
+}
+
+.cell1
+{
+	background: #300;
+}
+
+.cell2
+{
+	background: #402;
+}
+
+.header0 th, table.post
+{
+	background: #502;
+	color: #F9B;
+}
+
+.header1 th, .errort
+{
+	background: #704;
+	color: #F9B;
+}
+
+table, td, tr, th, div
+{
+	border-color: #700;
+}
+
+table.post td.post
+{
+	color: #FFF;
+	background: #200;
+}
+
+button, input, select
+{
+	background: #704;
+	color: #FFF;
+	border: 1px solid #F9B;
+}
+

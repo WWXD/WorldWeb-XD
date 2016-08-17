@@ -1,0 +1,102 @@
+/* Blargboard - Because css deserves better usage*/
+@import url('../../css/borders.css');
+
+body
+{
+	background: #000 url(back.jpg);
+}
+
+.cell0
+{
+	background: #000 url(back.jpg);
+}
+
+.cell1
+{
+	background: #000 url(back.jpg);
+}
+.cell2, .faq
+{
+	background: #000 url(back.jpg)
+}
+
+.outline
+{
+		box-shadow: 0px 0px 0px;
+}
+
+#header, .PoRT
+{
+	box-shadow: none;
+}
+
+table.outline
+{
+}
+
+a:link
+{
+	color: #bebafe;
+}
+
+a:visited
+{
+	color: #9990c0;
+}
+
+a:active
+{
+	color: #cfbeff;
+}
+
+a:hover
+{
+	color: #cecafe;
+}
+
+.header0 th, .errort
+{
+	background: darkblue;
+}
+
+.header1 th
+{
+	background: darkblue;
+}
+
+table.post
+{
+	box-shadow: 0px 0px 0px;
+}
+
+td.side, td.meta, table.post td.post
+{
+	background: darkblue;
+}
+
+input, select, textarea, button
+{
+	border: 1px solid blue;
+	background: darkblue;
+	color: white;
+}
+
+div#tabs {
+	padding-left: 8px;
+	margin-bottom: 0px;
+}
+
+div#tabs button
+{
+	background: darkblue;
+	border: 2px solid blue;
+	padding-right: 16px;
+}
+
+div#tabs button.selected
+{
+	position: static;
+	z-index: -100;
+	border-bottom: 1px solid blue;
+}
+

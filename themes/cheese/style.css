@@ -1,0 +1,90 @@
+/* AcmlmBoard XD - Oldschool Cheese theme */
+
+@import url('../../css/borders.css');
+
+.outline, .PoRT
+{
+	box-shadow: none;
+}
+
+.faq
+{
+	border-color: #1F6FA5;
+	background: #05012E;
+}
+
+body
+{
+	background: black url("background.png");
+}
+
+.header0, .header1, table
+{
+	border-color: #1F6FA5;
+}
+
+.header0 th
+{
+	background: #0B246C;
+}
+
+.header1 th
+{
+	background: #0F4687;
+}
+
+.cell1, table.post td.post
+{
+	background: #05012E;
+}
+
+.cell0, .cell2, table.post td.side, table.post td.userlink, table.post td.meta
+{
+	background: #080151;
+}
+
+.errort
+{
+	background: #0F4687;
+	border-color: #1F6FA5;
+}
+
+.errorc
+{
+	background: #05012E;
+	border-color: #1F6FA5;
+}
+
+td, th
+{
+	border-color: #1F6FA5;
+}
+
+
+button, input[type="submit"]
+{
+	border: 2px solid #1F6FA5;
+	background: black; /*#05012E;*/
+	color: #FFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: black; /*#05012E;*/
+	border: 1px solid #1F6FA5;
+	color: white;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	background: black; /*#05012E;*/
+	border: 1px solid #1F6FA5;
+	color: white;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #0B246C;
+	background: #0B246C;
+}
+

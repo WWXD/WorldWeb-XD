@@ -1,0 +1,174 @@
+/* ABXD D-frac theme by Kiyoshi Kasuga
+Blowing Xkeeper away in UltraFragments
+ABXD rules --> AleX DurBs */
+@import url('../../css/borders-ab2.css');
+
+body
+{
+	background: #224 url("background.png");
+}
+
+a, a span
+{
+	text-shadow: -1px -1px 2px rgba(0, 0, 64, .5), 
+				   1px -1px 2px rgba(0, 0, 64, .5), 
+				   1px 1px 2px rgba(0, 0, 64, .5), 
+				   -1px 1px 2px rgba(0, 0, 64, .5);
+}
+
+a:link
+{
+	color: #6cf;
+}
+a:visited
+{
+	color: #6cf;
+/*	color: #49d;*/
+}
+a:active
+{
+	color: #9ef;
+}
+
+a:hover, a:hover span, #header  a:hover, #header a:hover span
+{
+	color: aliceblue !important;
+}
+
+.cell0
+{
+	background: rgba(0, 0, 128, .5);
+}
+.cell1
+{
+	background: rgba(48, 64, 128, .5);
+}
+.cell2
+{
+	background: rgba(96, 128, 255, .25);
+}
+/*
+.outline, table.outline
+{
+	outline: 1px solid rgba(0, 0, 128, .5) !important;
+}*/
+table.outline
+{
+	border: 1px solid rgb(102,102,153);
+}
+
+td, th, .header0, .header1, #body table, #body .faq
+{
+	border-color: #003;
+}
+
+#header, #header tr, #header tr td
+{
+/*  This causes bad flickering in NSMBHD layout on Firefox ~Dirbaio*/
+/*	background: rgba(0, 0, 64, .25);*/
+	outline: 0;
+	border: 0;
+}
+
+.header0, .header1
+{
+	background: rgba(48, 48, 96, .5);
+}
+.header0 th, .header1 th
+{
+	margin: 4px;
+	color: aliceblue;
+}
+.header0 th
+{
+	background: -ms-linear-gradient(left, rgba(64, 64, 128, .5) 0%, rgba(0, 0, 192, .5) 50%, rgba(64, 64, 128, .5) 100%);
+	background: -moz-linear-gradient(left, rgba(64, 64, 128, .5) 0%, rgba(0, 0, 192, .5) 50%, rgba(64, 64, 128, .5) 100%);
+	background: -o-linear-gradient(left, rgba(64, 64, 128, .5) 0%, rgba(0, 0, 192, .5) 50%, rgba(64, 64, 128, .5) 100%);
+	background: -webkit-linear-gradient(left, rgba(64, 64, 128, .5) 0%, rgba(0, 0, 192, .5) 50%, rgba(64, 64, 128, .5) 100%);
+	background: linear-gradient(left, rgba(64, 64, 128, .5) 0%, rgba(0, 0, 192, .5) 50%, rgba(64, 64, 128, .5) 100%);
+}
+.header1 th
+{
+	background: -ms-linear-gradient(top, rgba(0, 0, 128, .75) 0%, rgba(0, 0, 255, .5) 50%, rgba(0, 0, 128, .75) 100%);
+	background: -moz-linear-gradient(top, rgba(0, 0, 128, .75) 0%, rgba(0, 0, 255, .5) 50%, rgba(0, 0, 128, .75) 100%);
+	background: -o-linear-gradient(top, rgba(0, 0, 128, .75) 0%, rgba(0, 0, 255, .5) 50%, rgba(0, 0, 128, .75) 100%);
+	background: -webkit-linear-gradient(top, rgba(0, 0, 128, .75) 0%, rgba(0, 0, 255, .5) 50%, rgba(0, 0, 128, .75) 100%);
+	background: linear-gradient(top, rgba(0, 0, 128, .75) 0%, rgba(0, 0, 255, .5) 50%, rgba(0, 0, 128, .75) 100%);
+}
+
+table.post
+{
+	background: rgba(255, 255, 255, .125);
+}
+
+table.post td.side
+{
+	background: rgba(0, 0, 255, .25);
+}
+
+table.post td.post
+{
+	background: rgba(0, 0, 255, .125);
+}
+
+table.post td.meta
+{
+	background: rgba(0, 0, 255, .25);
+}
+
+td.post code.Code, .geshi
+{
+	background: rgba(0, 0, 0, .5);
+}
+
+ul.pipemenu li
+{
+	border-left: 2px solid rgba(0, 0, 255, .5);
+}
+
+button, input[type="submit"]
+{
+	border: 1px solid #5be;
+	background: rgba(0, 0, 255, .25);
+	padding: 2px 16px;
+	color: #9ed;
+	font-weight: bold;
+}
+button:hover, input[type="submit"]:hover
+{
+	background: rgba(0, 0, 255, .5);
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid #49b;
+	background: rgba(0, 0, 0, .5);
+	color: aliceblue;
+}
+input[type="checkbox"], input[type="radio"]
+{
+	border: 1px solid #5be;
+	background: rgba(0, 0, 0, .5);
+	color: aliceblue;
+}
+
+div#tabs
+{
+	top: 7px;
+}
+div#tabs button
+{
+	border: 1px solid #5be;
+	background: rgba(0, 0, 255, .25);
+	border-bottom: 0;
+	font-weight: bold;
+	color: aliceblue;
+}
+div#tabs button:hover
+{
+	background: rgba(0, 0, 255, .5);
+}
+div#tabs button.selected
+{
+	background: rgba(0, 0, 255, .75);
+}

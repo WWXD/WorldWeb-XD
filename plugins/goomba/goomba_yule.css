@@ -1,0 +1,10 @@
+.goomba
+{
+	background: url("../plugins/goomba_yule.png") no-repeat 0px 0px;
+	width: 16px;
+	height: 24px;
+	position: fixed;
+	bottom: 0px;
+	left: -32px;
+	z-index: 100;
+}

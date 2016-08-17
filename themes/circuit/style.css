@@ -1,0 +1,231 @@
+@import url('../../css/borders.css');
+/*@import url('../../css/roundcorners.css');*/
+
+/* AcmlmBoard XD - Circuit board theme, ported from AcmlmBoard 1.x
+By Nikolaj */
+*::selection {
+	background: #AFA;
+	color: #000;
+}
+
+body
+{
+	background: #222222 URL('circuitbg.jpg');
+	color: #EEFFDD;
+	font-family: "Tahoma";
+}
+
+h3
+{
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	font-family: "Tahoma";
+}
+
+h4
+{
+	font-family: "Tahoma";
+}
+
+a:link, a:visited, a:hover, a:active
+{
+	color: #DEFECA;
+}
+
+a:hover
+{
+	color: #F6FFF0 !important;
+}
+
+table
+{
+	color: #EEFFDD;
+}
+
+.outline
+{
+	outline-color: #000;
+}
+
+td
+{
+	border-color: #000;
+}
+
+th
+{
+	background: #406030;
+	border-color: #000;
+}
+
+table.post
+{
+	border-color: #000;
+	background: #10200C;
+}
+
+table.post td.post
+{
+	background: black;
+	border-left-color: #000;
+	border-top-color: #000;
+}
+
+table.post td.meta
+{
+	border-bottom-color: #000;
+}
+
+table.post td.links
+{
+	border-bottom-color: #000;
+}
+
+.cell0
+{
+	background: #10200C;
+}
+
+div.footer
+{
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+}
+
+.cell1
+{
+	background: #183012;
+}
+
+.cell2
+{
+	background: #10200C;
+}
+
+.header0 th
+{
+	background: #204018;
+	border: 1px solid #000;
+}
+
+.header1 th
+{
+	background: #406030;
+	color: #DEFECA;
+}
+
+.header0
+{
+	border-color: #000;
+}
+
+.header1
+{
+	border-color: #000;
+}
+
+td.post code.Code
+{
+	background: #10200C;
+	color: #FFF;
+}
+
+.errort
+{
+	background: #406030;
+	border: 1px solid #000;
+}
+
+.errorc
+{
+	background: #10200C;
+	text-align: center;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+
+#pmNotice
+{
+	background: #000;
+	color: #FFF !important;
+	opacity: 0.5;
+}
+
+#pmNotice:hover
+{
+	opcity: 1;
+}
+
+#pmNotice a span, #pmNotice a
+{
+	color: white !important;
+}
+
+#pmNotice a:hover span, #pmNotice a:hover
+{
+	color: white !important;
+}
+
+input, select, textarea
+{
+	background: #000;
+	border: 1px solid #555;
+	color: white;
+}
+
+input[type="submit"], button
+{
+	border: 1px solid #000;
+	background: #000;
+	color: white;
+}
+
+.geshi
+{
+	background: #10200C;
+	color: #FFF;
+}
+
+.geshi .kw0, .geshi .kw1, .geshi .kw2, .geshi .kw3, .geshi .kw4
+{
+	color: #FAA;
+}
+
+.geshi .st0
+{
+}
+
+.geshi .br0, .geshi .sy0
+{
+	color: #FAF;
+}
+
+.geshi .co1
+{
+	color: #AAF;
+}
+
+.faq
+{
+	background: rgba(50,50,50,0.4);
+/* Suck it, IE, if you can't do RGBA */
+	padding: 4px;
+}
+
+.PoRT, .outline
+{
+		box-shadow: none;
+}
+
+div#tabs button
+{
+	background: #103007;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #204018;
+	background: #204018;
+}
+

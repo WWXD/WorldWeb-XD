@@ -1,0 +1,73 @@
+/* Blargboard - Grayscale (by LifeMushroom) */
+
+@import url('../../css/borders.css');
+@import url('../../css/roundcorners.css');
+
+body
+{
+	background: rgba(19, 19, 17, 0.9);
+}
+
+a:link { color: rgba(217, 217, 217, 0.9); }
+a:visited { color: rgba(217, 217, 217, 0.9); }
+a:hover { color: white; text-decoration:underline;}
+
+table, tr, td, th, div
+{
+	border-color: rgba(5, 5, 8, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+.header1
+{
+	background-color: rgba(45, 45, 45, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+.header0
+{
+	background-color: rgba(45, 45, 40, 0.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+.cell1, table.post td.post
+{
+	background-color: rgba(43, 43, 43, 0.9);
+}
+
+.cell0
+{
+	background-color: rgba(37, 37, 37, 1);
+}
+
+.cell2, table.post td.side, table.post td.meta
+{
+	background-color: rgba(19, 19, 17, 0.9);
+}
+
+button, input[type="button"], input[type="submit"]
+{
+	border: 2px solid color: white;
+	background: black;
+	color: white;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	background: black;
+	border: 1px solid color: white;
+	color: white;
+}
+
+div#tabs button
+{
+	border-width: 1px;
+	border-radius: 0px;
+	margin-bottom: 1px;
+}
+
+div#tabs button.selected
+{
+	border-bottom: white;
+	background: black;
+}

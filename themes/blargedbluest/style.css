@@ -1,0 +1,106 @@
+/* Blarged Bluest - by 8JeDaYoshi8
+    Theme created for Blargboard 
+    Thanks for downloading it! :) */
+
+body
+{
+	background-image: url("background.png");
+	color: #fff;
+}
+
+a:link { color: #00FFFF; }
+a:visited { color: #00FFFF; }
+a:hover { color: #00FFFF; text-decoration:underline;}
+
+table, tr, td, th, div
+{
+	border-color: #000;
+	text-shadow: #000 1px 1px 1px;
+}
+
+.header1
+{
+	background-color: rgba(0, 90, 0, 71.9);
+	text-shadow: #000 1px 1px 1px;
+}
+
+
+.header0
+{
+	background-color: #FFF);
+}
+
+td.cell1,
+tr.cell1 > td:not(.cell0):not(.cell2),
+table.post td.post
+{
+	background: #00B00B;
+}
+
+.cell0
+{
+	background-color: rgba(0, 90, 0, 71.9);
+	background-image: url("blargblue.png");
+}
+
+.cell2, table.post td.side, table.post td.meta
+{
+	background-color: #03A9C9;
+}
+
+ul.dropdownMenu
+{
+	border-radius: 6px;
+	border: 1px solid #0EB502;
+	text-shadow: none;
+}
+
+ul.dropdownMenu li
+{
+	border-top: none 0;
+	border-left: none 0;
+	border-right: none 0;
+	border-bottom: 1px solid #0EB502;
+	background: #222;
+}
+
+ul.dropdownMenu li:first-child
+{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+ul.dropdownMenu li:last-child
+{
+	border-bottom: none 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+button, input[type="button"], input[type="submit"]
+{
+	border: 2px solid color: #0EB502;
+	background: #008000;
+	color: #00FFFF;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
+{
+	border: 1px solid #008000;
+	border-radius: 5px;
+	background: #008000;
+	color: #00FFFF;
+}
+
+div#tabs button
+{
+	border-width: 1px;
+	border-radius: 0px;
+	margin-bottom: 1px;
+}
+
+div#tabs button.selected
+{
+	border-bottom: 1px solid #024A02;
+	background: #024A02;
+}
