@@ -128,7 +128,7 @@
 		</tr>
 		<tr class="cell0">
 			<td class="smallFonts center" colspan="3">
-				{$layout_onlineusers}{if $layout_birthdays}<br><br>{$layout_birthdays}{/if}
+				{$layout_onlineusers}{if $layout_birthdays}<br>{$layout_birthdays}{/if}
 			</td>
 		</tr>
 		<tr class="header1"><th id="header-sep" colspan="3"></th></tr>
