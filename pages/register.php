@@ -35,8 +35,6 @@ if($_POST['register'])
 	
 	if ($check < (time()-300))
 		$err = __('The token has expired. Reload the page and try again.');
-	else if ($ngoombas != (int)$_POST['kurichallenge'])
-		$err = __('You failed the challenge. Look harder.');
 	else if (IsProxy())
 	{
 		$adminemail = Settings::get('ownerEmail');
@@ -167,9 +165,6 @@ $fields = array(
 	'email' => "<input type=\"email\" name=\"email\" value=\"".htmlspecialchars($_POST['email'])."\" maxlength=\"60\" size=24>",
 	'sex' => MakeOptions("sex",$_POST['sex'],$sexes),
 	'readfaq' => "<label><input type=\"checkbox\" name=\"readFaq\">".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>",
-	'kurichallenge' => "<img src=\"".resourceLink("kurichallenge.php?data=".urlencode($kuridata))."\" alt=\"[reload the page if the image fails to load]\"><br>
-		<input type=\"text\" name=\"kurichallenge\" size=\"10\" maxlength=\"6\" class=\"required\">
-		<input type=\"hidden\" name=\"kuridata\" value=\"".htmlspecialchars($kuridata)."\">",
 	'autologin' => "<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($_POST['autologin']?' checked="checked"':'').">".__("Log in afterwards")."</label>",
 	
 	'btnRegister' => "<input type=\"submit\" name=\"register\" value=\"".__("Register")."\">",
