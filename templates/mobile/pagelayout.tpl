@@ -19,36 +19,36 @@
 				</td></tr>
 				{/foreach}
 			{/if}
-			<tr class="header1"><th style="height:5px;"></th></tr>
-
-			{if $layout_actionlinks}
-				{foreach $layout_actionlinks as $link}
-					<tr><td class="cell{cycle values='1,2'} link">{$link}</td></tr>
-				{/foreach}
-				
-				<tr class="header1"><th style="height:5px;"></th></tr>
-			{/if}
 			
-			{foreach $sidelinks as $cat=>$links}
-				{if !$links@first}
-				<tr class="header1"><th>{$cat}</th></tr>
-				{/if}
-				{foreach $links as $url=>$text}
-					<tr><td class="cell{cycle values='1,2'} link"><a href="{$url|escape}">{$text}</a></td></tr>
-				{/foreach}
-			{/foreach}
-			
-			{if $loguserid}
-				<tr class="header1"><th>{$loguserlink}</th></tr>
-				{foreach $layout_userpanel as $url=>$text}
-					<tr><td class="cell{cycle values='1,2'} link"><a href="{$url|escape}">{$text}</a></td></tr>
-				{/foreach}
-				<tr><td class="cell{cycle values='1,2'} link"><a href="#" onclick="$('#logout').submit(); return false;">Log out</a></td></tr>
-			{else}
-				<tr><td class="cell{cycle values='1,2'} link"><a href="{actionLink page='register'}">Register</a></td></tr>
-				<tr><td class="cell{cycle values='1,2'} link"><a href="{actionLink page='login'}">Log in</a></td></tr>
-			{/if}
-		</table>
+	<tr class="header0"><th>Navigation</th></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/"><i class="icon-home" aria-hidden="true"></i> Home</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=board">Forums</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=FAQ"><i class="icon-question" aria-hidden="true"></i> FAQ</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=memberlist"><i class="icon-group" aria-hidden="true"></i> Member list</a></td></tr>
+	{if $loguserid}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=online"><i class="icon-eye-open" aria-hidden="true"></i> Online users</a></td></tr>{/if}
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=lastposts"><i class="icon-reorder" aria-hidden="true"></i> Last posts</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=search"><i class="icon-search" aria-hidden="true"></i> Search</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=IRC"><i class="icon-quote-right" aria-hidden="true"></i> IRC</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=wiki"><i class="fa fa-edit fa-fw" aria-hidden="true"></i> Wiki</a></td></tr>
+	<tr class="header0 center"><th><i class="fa fa-user" aria-hidden="true"></i> {if $loguserid}{$loguserlink}{else}Guest{/if}</th></tr>
+	{if $loguserid}{if HasPermission('user.editprofile')}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=editprofile"><i class="icon-pencil" aria-hidden="true"></i> Edit profile</a></td></tr>
+	{if HasPermission('user.editavatars')}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=editavatars"><i class="icon-picture" aria-hidden="true"></i> Mood avatars</a></td></tr>
+	{/if}{/if}
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=private"><i class="icon-envelope" aria-hidden="true"></i> Private messages</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=favorites"><i class="icon-star" aria-hidden="true"></i> Favorites</a></td></tr>
+	{if HasPermission('admin.viewadminpanel')}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=admin"><i class="icon-cogs" aria-hidden="true"></i> Admin</a></td></tr>{/if}
+	<tr><td class="cell{cycle values='1,2'} link"><a href="#" onclick="$('#logout').submit(); return false;"><i class="icon-signout" aria-hidden="true"></i> Log out</a></td></tr>
+	{else}
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=login"><i class="icon-signin" aria-hidden="true"></i> Login</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></td></tr>
+					{/if}
+					{if $layout_actionlinks}
+					<tr class="header0"><th>Page Settings</th></tr>
+									{foreach $layout_actionlinks as $link}
+						<tr><td class="cell{cycle values='1,2'} link">{$link}</td></tr>
+					{/foreach}
+					{/if}
+							</table>
 	</div>
 	</div>
 
@@ -67,13 +67,26 @@
 		<button onclick="window.location='{$prevcrumb|escape}';">&lt;</button> {$layout_crumbs[$thiscrumb]}
 		{/if}
 		
+		<center> <h1>
+			{$boardname}</h1>
+		</center>
+		
 	</th></tr>
 	</table>
 
 	{$layout_contents}
 
 	</div>
-	<div class="footer" style="clear:both; margin-bottom:1.2em;">
-		{$mobileswitch}
-	</div>
+<table class="layout-table" style="line-height: 1.4em;">
+			<tr class="cell1 link">
+			<td style="text-align: center;">
+				{$layout_credits}<hr>
+			</td>
+			</tr>
+			<tr class="cell1 link">
+			<td style="text-align: center;">
+				{$mobileswitch}
+			</td>
+			</tr>
+</table>
 </div>
