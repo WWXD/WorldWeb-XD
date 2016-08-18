@@ -1,9 +1,7 @@
 <?php
 if (!defined('BLARG')) die();
-
 $ishttps = ($_SERVER['SERVER_PORT'] == 443);
 $serverport = ($_SERVER['SERVER_PORT'] == ($ishttps?443:80)) ? '' : ':'.$_SERVER['SERVER_PORT'];
-
 function urlNamify($urlname)
 {
 	$urlname = strtolower($urlname);
@@ -14,18 +12,16 @@ function urlNamify($urlname)
 	$urlname = preg_replace("/-$/", "", $urlname);
 	return $urlname;
 }
-
 function actionLink($action, $id="", $args="", $urlname="")
 {
 	$boardroot = URL_ROOT;
 	if($boardroot == "")
 		$boardroot = "./";
-
 	// calling plugins at EVERY link?! way to waste performances
 	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
 	
 	// rewritten links
-	if ($action == MAIN_PAGE) $action = '';
+	/*if ($action == MAIN_PAGE) $action = '';
 	else $action .= '/';
 	
 	if ($id)
@@ -35,26 +31,20 @@ function actionLink($action, $id="", $args="", $urlname="")
 	}
 	else $id = '';
 	
-	return $boardroot.$action.$id.($args ? '?'.$args : '');
-
+	return $boardroot.$action.$id.($args ? '?'.$args : '');*/
 	// non-rewritten links
-	/*$res = "";
-
+	$res = "";
 	if($action != MAIN_PAGE)
 		$res .= "&page=$action";
-
 	if($id != "")
 		$res .= "&id=".urlencode($id);
 	if($args)
 		$res .= "&$args";
-
 	if($res == "")
 		return $boardroot;
 	else
-		return $boardroot."?".substr($res, 1);*/
+		return $boardroot."?".substr($res, 1);
 }
-
-
 function actionLinkTag($text, $action, $id='', $args="", $urlname="")
 {
 	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>';
@@ -63,7 +53,6 @@ function actionLinkTagItem($text, $action, $id='', $args="", $urlname="")
 {
 	return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a></li>';
 }
-
 function actionLinkTagConfirm($text, $prompt, $action, $id='', $args="")
 {
 	return '<a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a>';
@@ -72,7 +61,6 @@ function actionLinkTagItemConfirm($text, $prompt, $action, $id='', $args="")
 {
 	return '<li><a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a></li>';
 }
-
 function getForm($action, $id='')
 {
 	$ret = '<form method="GET"><input type="hidden" name="page" value="'.$action.'">';
@@ -82,18 +70,15 @@ function getForm($action, $id='')
 	
 	return $ret;
 }
-
 function resourceLink($what)
 {
 	return URL_ROOT.$what;
 }
-
 function themeResourceLink($what)
 {
 	global $theme;
 	return URL_ROOT."themes/$theme/$what";
 }
-
 function getMinipicTag($user)
 {
 	if (!$user['minipic']) return '';
@@ -101,7 +86,6 @@ function getMinipicTag($user)
 	$minipic = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\" class=\"minipic\" />&nbsp;";
 	return $minipic;
 }
-
 function prettyRainbow($s)
 {
 	$r = mt_rand(0,359);
@@ -155,10 +139,8 @@ function prettyRainbow($s)
 	}
 	return $out;
 }
-
 $poptart = mt_rand(0,359);
 $dorainbow = -1;
-
 function userLink($user, $showMinipic = false, $customID = false)
 {
 	global $usergroups;
@@ -172,7 +154,6 @@ function userLink($user, $showMinipic = false, $customID = false)
 		if ($newToday >= 600)
 			$dorainbow = true;
 	}
-
 	$fgroup = $usergroups[$user['primarygroup']];
 	$fsex = $user['sex'];
 	$fname = ($user['displayname'] ? $user['displayname'] : $user['name']);
@@ -180,7 +161,6 @@ function userLink($user, $showMinipic = false, $customID = false)
 	$fname = str_replace(" ", "&nbsp;", $fname);
 	
 	$isbanned = $fgroup['id'] == Settings::get('bannedGroup');
-
 	$minipic = "";
 	if($showMinipic || Settings::get("alwaysMinipic"))
 		$minipic = getMinipicTag($user);
@@ -195,7 +175,6 @@ function userLink($user, $showMinipic = false, $customID = false)
 	else $scolor = 'color_unspec';
 	
 	$classing = ' style="color: '.htmlspecialchars($fgroup[$scolor]).';"';
-
 	$bucket = "userLink"; include(__DIR__."/pluginloader.php");
 	
 	if (!$isbanned && $luckybastards && in_array($user['id'], $luckybastards))
@@ -220,11 +199,9 @@ function userLink($user, $showMinipic = false, $customID = false)
 	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
 	return actionLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", $user["id"], "", $user["name"]);
 }
-
 function userLinkById($id)
 {
 	global $userlinkCache;
-
 	if(!isset($userlinkCache[$id]))
 	{
 		$rUser = Query("SELECT u.(_userfields) FROM {users} u WHERE u.id={0}", $id);
@@ -235,19 +212,15 @@ function userLinkById($id)
 	}
 	return UserLink($userlinkCache[$id]);
 }
-
 function makeThreadLink($thread)
 {
 	$tags = ParseThreadTags($thread['title']);
-
 	$link = actionLinkTag($tags[0], 'thread', $thread['id'], '', HasPermission('forum.viewforum',$thread['forum'],true)?$tags[0]:'');
 	$tags = $tags[1];
-
 	if (Settings::get("tagsDirection") === 'Left')
 		return $tags." ".$link;
 	else
 		return $link." ".$tags;
-
 }
 function makeFromUrl($url, $from)
 {
@@ -258,20 +231,16 @@ function makeFromUrl($url, $from)
 	}
 	else return $url.$from;
 }
-
 function pageLinks($url, $epp, $from, $total)
 {
 	if ($total <= $epp) return '';
 	
 	$url = htmlspecialchars($url);
-
 	if($from < 0) $from = 0;
 	if($from > $total-1) $from = $total-1;
 	$from -= $from % $epp;
-
 	$numPages = (int)ceil($total / $epp);
 	$page = (int)ceil($from / $epp) + 1;
-
 	$first = ($from > 0) ? "<a class=\"pagelink firstpage\" href=\"".makeFromUrl($url, 0)."\">&#x00AB;</a> " : "";
 	$prev = $from - $epp;
 	if($prev < 0) $prev = 0;
@@ -281,7 +250,6 @@ function pageLinks($url, $epp, $from, $total)
 	if($next > $last) $next = $last;
 	$next = ($from < $total - $epp) ? " <a class=\"pagelink nextpage\"  href=\"".makeFromUrl($url, $next)."\">&#x203A;</a>" : "";
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink lastpage\"  href=\"".makeFromUrl($url, $last)."\">&#x00BB;</a>" : "";
-
 	$pageLinks = array();
 	for($p = $page - 5; $p < $page + 5; $p++)
 	{
@@ -292,23 +260,18 @@ function pageLinks($url, $epp, $from, $total)
 		else
 			$pageLinks[] = "<a class=\"pagelink\"  href=\"".makeFromUrl($url, (($p-1) * $epp))."\">".$p."</a>";
 	}
-
 	return $first.$prev.join($pageLinks, "").$next.$last;
 }
-
 function pageLinksInverted($url, $epp, $from, $total)
 {
 	if ($total <= $epp) return '';
 	
 	$url = htmlspecialchars($url);
-
 	if($from < 0) $from = 0;
 	if($from > $total-1) $from = $total-1;
 	$from -= $from % $epp;
-
 	$numPages = (int)ceil($total / $epp);
 	$page = (int)ceil($from / $epp) + 1;
-
 	$first = ($from > 0) ? "<a class=\"pagelink\" href=\"".makeFromUrl($url, 0)."\">&#x00BB;</a> " : "";
 	$prev = $from - $epp;
 	if($prev < 0) $prev = 0;
@@ -318,7 +281,6 @@ function pageLinksInverted($url, $epp, $from, $total)
 	if($next > $last) $next = $last;
 	$next = ($from < $total - $epp) ? " <a class=\"pagelink\"  href=\"".makeFromUrl($url, $next)."\">&#x2039;</a>" : "";
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink\"  href=\"".makeFromUrl($url, $last)."\">&#x00AB;</a>" : "";
-
 	$pageLinks = array();
 	for($p = $page + 5; $p >= $page - 5; $p--)
 	{
@@ -329,62 +291,48 @@ function pageLinksInverted($url, $epp, $from, $total)
 		else
 			$pageLinks[] = "<a class=\"pagelink\"  href=\"".makeFromUrl($url, (($p-1) * $epp))."\">".($numPages+1-$p)."</a>";
 	}
-
 	return $last.$next.join($pageLinks, "").$prev.$first;
 }
-
-
 function absoluteActionLink($action, $id=0, $args="")
 {
 	global $serverport;
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
 }
-
 function getRequestedURL()
 {
     return $_SERVER['REQUEST_URI'];
 }
-
-
 function getServerDomainNoSlash($https = false)
 {
 	global $serverport;
 	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport;
 }
-
 function getServerURL($https = false)
 {
     return getServerURLNoSlash($https)."/";
 }
-
 function getServerURLNoSlash($https = false)
 {
     global $serverport;
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
-
 function getFullRequestedURL($https = false)
 {
     return getServerURL($https) . $_SERVER['REQUEST_URI'];
 }
-
 function getFullURL()
 {
 	return getFullRequestedURL();
 }
-
 // ----------------------------------------------------------------------------
 // --- Smarty interface
 // ----------------------------------------------------------------------------
-
 function smarty_function_actionLink($params, $template)
 {
 	return htmlspecialchars(actionLink($params['page'], ($params['id']?:''), $params['args'], $params['urlname']));
 }
-
 function smarty_function_resourceLink($params, $template)
 {
 	return htmlspecialchars(resourceLink($params['url']));
 }
-
 ?>
