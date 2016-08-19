@@ -173,6 +173,368 @@ function makeCrumbs($path, $links='')
 	$layout_actionlinks = $links;
 }
 
+function makeForumListing($parent, $board2='')
+{
+	global $loguserid, $loguser, $usergroups;
+		
+	$viewableforums = ForumsWithPermission('forum.viewforum');
+	$viewhidden = HasPermission('user.viewhiddenforums');
+	$rFora = Query("	SELECT f.*,
+							c.name cname,
+							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+								WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew,
+							lu.(_userfields)
+						FROM {forums} f
+							LEFT JOIN {categories} c ON c.id=f.catid
+							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
+						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
+						ORDER BY c.corder, c.id, f.forder, f.id", 
+						$loguserid, $viewableforums, $board, -$parent);
+	if (!NumRows($rFora))
+		return;
+		
+	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $board, -$parent));
+						
+	$rSubfora = Query("	SELECT f.*,
+							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+								WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew
+						FROM {forums} f
+							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
+						ORDER BY f.forder, f.id", 
+						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
+	$subfora = array();
+	while ($sf = Fetch($rSubfora))
+		$subfora[-$sf['catid']][] = $sf;
+	
+	$rMods = Query("	SELECT 
+							p.(arg, applyto, id),
+							u.(_userfields)
+						FROM
+							{permissions} p
+							LEFT JOIN {users} u ON p.applyto=1 AND p.id=u.id
+						WHERE SUBSTR(p.perm,1,4)={0} AND p.arg!=0 AND p.value=1
+						GROUP BY p.applyto, p.id, p.arg
+						ORDER BY p.applyto, p.id",
+						'mod.');
+	$mods = array();
+	while($mod = Fetch($rMods))
+		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
+	$categories = array();
+	while($forum = Fetch($rFora))
+	{
+		$skipThisOne = false;
+		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
+		if($skipThisOne)
+			continue;
+			
+		if (!$categories[$forum['catid']])
+			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
+			
+		$fdata = array('id' => $forum['id']);
+			
+		if ($forum['redirect'])
+		{
+			$redir = $forum['redirect'];
+			if ($redir[0] == ':')
+			{
+				$redir = explode(':', $redir);
+				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
+				$forum['numthreads'] = '-';
+				$forum['numposts'] = '-';
+				
+				if ($redir[1] == 'board')
+				{
+					$tboard = $redir[2];
+					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
+					
+					$forum['numthreads'] = 0;
+					$forum['numposts'] = 0;
+					$sforums = Query("	SELECT f.id, f.numthreads, f.numposts, f.lastpostid, f.lastpostuser, f.lastpostdate,
+											".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+											(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+												WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew,
+											lu.(_userfields)
+										FROM {forums} f
+											".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
+										WHERE f.l>={1} AND f.r<={2}", 
+										$loguserid, $f['minl'], $f['maxr']);
+					while ($sforum = Fetch($sforums))
+					{
+						$forum['numthreads'] += $sforum['numthreads'];
+						$forum['numposts'] += $sforum['numposts'];
+						
+						if (!HasPermission('forum.viewforum', $sforum['id']))
+							continue;
+						
+						if (!$sforum['ignored'])
+							$forum['numnew'] += $sforum['numnew'];
+						
+						if ($sforum['lastpostdate'] > $forum['lastpostdate'])
+						{
+							$forum['lastpostdate'] = $sforum['lastpostdate'];
+							$forum['lastpostid'] = $sforum['lastpostid'];
+							$forum['lastpostuser'] = $sforum['lastpostuser'];
+							foreach ($sforum as $key=>$val)
+							{
+								if (substr($key,0,3) != 'lu_') continue;
+								$forum[$key] = $val;
+							}
+						}
+					}
+				}
+			}
+			else
+				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
+		}
+		else
+			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
+				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
+				
+		$fdata['ignored'] = $forum['ignored'];
+		$newstuff = 0;
+		$localMods = '';
+		$subforaList = '';
+		$newstuff = $forum['ignored'] ? 0 : $forum['numnew'];
+		if ($newstuff > 0)
+			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
+			
+		$fdata['description'] = $forum['description'];
+		if (isset($mods[$forum['id']]))
+		{
+			foreach($mods[$forum['id']] as $user)
+			{
+				if ($user['groupid'])
+					$localMods .= htmlspecialchars($usergroups[$user['groupid']]['name']).', ';
+				else
+					$localMods .= UserLink($user).', ';
+			}
+		}
+		if($localMods)
+			$fdata['localmods'] = substr($localMods,0,-2);
+			
+		if (isset($subfora[$forum['id']]))
+		{
+			foreach ($subfora[$forum['id']] as $subforum)
+			{
+				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
+					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
+				
+				if ($subforum['ignored'])
+					$link = '<span class="ignored">'.$link.'</span>';
+				else if ($subforum['numnew'] > 0)
+					$link = '<div class="statusIcon new"></div> '.$link;
+					
+				$subforaList .= $link.', ';
+			}
+		}
+			
+		if($subforaList)
+			$fdata['subforums'] = substr($subforaList,0,-2);
+			
+		$fdata['threads'] = $forum['numthreads'];
+		$fdata['posts'] = $forum['numposts'];
+		if($forum['lastpostdate'])
+		{
+			$user = getDataPrefix($forum, "lu_");
+			$fdata['lastpostdate'] = formatdate($forum['lastpostdate']);
+			$fdata['lastpostuser'] = UserLink($user);
+			$fdata['lastpostlink'] = actionLink('post', $forum['lastpostid']);
+		}
+		else
+			$fdata['lastpostdate'] = 0;
+			
+		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
+	}
+	
+	RenderTemplate('forumlist2', array('categories' => $categories));
+}
+
+function makeForumListing($parent, $board1='')
+{
+	global $loguserid, $loguser, $usergroups;
+		
+	$viewableforums = ForumsWithPermission('forum.viewforum');
+	$viewhidden = HasPermission('user.viewhiddenforums');
+	$rFora = Query("	SELECT f.*,
+							c.name cname,
+							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+								WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew,
+							lu.(_userfields)
+						FROM {forums} f
+							LEFT JOIN {categories} c ON c.id=f.catid
+							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
+						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
+						ORDER BY c.corder, c.id, f.forder, f.id", 
+						$loguserid, $viewableforums, $board, -$parent);
+	if (!NumRows($rFora))
+		return;
+		
+	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $board, -$parent));
+						
+	$rSubfora = Query("	SELECT f.*,
+							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+								WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew
+						FROM {forums} f
+							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
+						ORDER BY f.forder, f.id", 
+						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
+	$subfora = array();
+	while ($sf = Fetch($rSubfora))
+		$subfora[-$sf['catid']][] = $sf;
+	
+	$rMods = Query("	SELECT 
+							p.(arg, applyto, id),
+							u.(_userfields)
+						FROM
+							{permissions} p
+							LEFT JOIN {users} u ON p.applyto=1 AND p.id=u.id
+						WHERE SUBSTR(p.perm,1,4)={0} AND p.arg!=0 AND p.value=1
+						GROUP BY p.applyto, p.id, p.arg
+						ORDER BY p.applyto, p.id",
+						'mod.');
+	$mods = array();
+	while($mod = Fetch($rMods))
+		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
+	$categories = array();
+	while($forum = Fetch($rFora))
+	{
+		$skipThisOne = false;
+		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
+		if($skipThisOne)
+			continue;
+			
+		if (!$categories[$forum['catid']])
+			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
+			
+		$fdata = array('id' => $forum['id']);
+			
+		if ($forum['redirect'])
+		{
+			$redir = $forum['redirect'];
+			if ($redir[0] == ':')
+			{
+				$redir = explode(':', $redir);
+				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
+				$forum['numthreads'] = '-';
+				$forum['numposts'] = '-';
+				
+				if ($redir[1] == 'board')
+				{
+					$tboard = $redir[2];
+					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
+					
+					$forum['numthreads'] = 0;
+					$forum['numposts'] = 0;
+					$sforums = Query("	SELECT f.id, f.numthreads, f.numposts, f.lastpostid, f.lastpostuser, f.lastpostdate,
+											".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
+											(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
+												WHERE t.forum=f.id AND t.lastpostdate>".($loguserid ? "IFNULL(tr.date,0)" : time()-900).") numnew,
+											lu.(_userfields)
+										FROM {forums} f
+											".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
+											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
+										WHERE f.l>={1} AND f.r<={2}", 
+										$loguserid, $f['minl'], $f['maxr']);
+					while ($sforum = Fetch($sforums))
+					{
+						$forum['numthreads'] += $sforum['numthreads'];
+						$forum['numposts'] += $sforum['numposts'];
+						
+						if (!HasPermission('forum.viewforum', $sforum['id']))
+							continue;
+						
+						if (!$sforum['ignored'])
+							$forum['numnew'] += $sforum['numnew'];
+						
+						if ($sforum['lastpostdate'] > $forum['lastpostdate'])
+						{
+							$forum['lastpostdate'] = $sforum['lastpostdate'];
+							$forum['lastpostid'] = $sforum['lastpostid'];
+							$forum['lastpostuser'] = $sforum['lastpostuser'];
+							foreach ($sforum as $key=>$val)
+							{
+								if (substr($key,0,3) != 'lu_') continue;
+								$forum[$key] = $val;
+							}
+						}
+					}
+				}
+			}
+			else
+				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
+		}
+		else
+			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
+				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
+				
+		$fdata['ignored'] = $forum['ignored'];
+		$newstuff = 0;
+		$localMods = '';
+		$subforaList = '';
+		$newstuff = $forum['ignored'] ? 0 : $forum['numnew'];
+		if ($newstuff > 0)
+			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
+			
+		$fdata['description'] = $forum['description'];
+		if (isset($mods[$forum['id']]))
+		{
+			foreach($mods[$forum['id']] as $user)
+			{
+				if ($user['groupid'])
+					$localMods .= htmlspecialchars($usergroups[$user['groupid']]['name']).', ';
+				else
+					$localMods .= UserLink($user).', ';
+			}
+		}
+		if($localMods)
+			$fdata['localmods'] = substr($localMods,0,-2);
+			
+		if (isset($subfora[$forum['id']]))
+		{
+			foreach ($subfora[$forum['id']] as $subforum)
+			{
+				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
+					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
+				
+				if ($subforum['ignored'])
+					$link = '<span class="ignored">'.$link.'</span>';
+				else if ($subforum['numnew'] > 0)
+					$link = '<div class="statusIcon new"></div> '.$link;
+					
+				$subforaList .= $link.', ';
+			}
+		}
+			
+		if($subforaList)
+			$fdata['subforums'] = substr($subforaList,0,-2);
+			
+		$fdata['threads'] = $forum['numthreads'];
+		$fdata['posts'] = $forum['numposts'];
+		if($forum['lastpostdate'])
+		{
+			$user = getDataPrefix($forum, "lu_");
+			$fdata['lastpostdate'] = formatdate($forum['lastpostdate']);
+			$fdata['lastpostuser'] = UserLink($user);
+			$fdata['lastpostlink'] = actionLink('post', $forum['lastpostid']);
+		}
+		else
+			$fdata['lastpostdate'] = 0;
+			
+		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
+	}
+	
+	RenderTemplate('forumlist1', array('categories' => $categories));
+}
+
 
 // parent=0: index listing
 function makeForumListing($parent, $board='')
