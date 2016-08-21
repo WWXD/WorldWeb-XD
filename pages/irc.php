@@ -24,7 +24,7 @@ Port: 6667<br><p>If your IRC client allows irc:// links, click <a href="irc://<?
 </table><br><br>
 <table class="outline"><tr class="header0"><th>IRC Client</th></tr>
 <tr class="cell0 center"><td><iframe src="https://kiwiirc.com/client/<?php echo $net; ?>/?nick=<?php echo $nameprefix; ?>/?#<?php echo $chan; ?>" style="border:0; width:100%; height:525px;"></iframe></td></tr></table>
-<br><br><table><tr><th class="header0">What is IRC?</th></tr>
+<br><br><table class="outline"><tr class="header0"><th>What Is IRC?</th></tr>
 <tr class="cell0 center"><td>
 	IRC - Internet Relay Chat is a method to broadcast and receive live, synchronous, messages. 
 	There are hundreds of IRC channels (discussion areas) around the world, hosted on servers, on which people type their messages to others on the same channel interested in the same subject. 
