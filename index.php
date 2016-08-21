@@ -159,7 +159,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
+<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter and MaorNinja322<br>
 Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
 	
 
@@ -219,6 +219,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_crumbs' => $layout_crumbs,
 		'layout_actionlinks' => $layout_actionlinks,
 		'headerlinks' => $headerlinks,
+		'dropdownlinks' => $dropdownlinks,
 		'sidelinks' => $sidelinks,
 		'layout_userpanel' => $layout_userpanel,
 		'notifications' => $notifications,
