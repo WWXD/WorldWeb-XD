@@ -28,8 +28,9 @@
 	{if $loguserid}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=online"><i class="icon-eye-open" aria-hidden="true"></i> Online users</a></td></tr>{/if}
 	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=lastposts"><i class="icon-reorder" aria-hidden="true"></i> Last posts</a></td></tr>
 	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=search"><i class="icon-search" aria-hidden="true"></i> Search</a></td></tr>
-	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=IRC"><i class="icon-quote-right" aria-hidden="true"></i> IRC</a></td></tr>
-	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=wiki"><i class="fa fa-edit fa-fw" aria-hidden="true"></i> Wiki</a></td></tr>
+	{foreach $sidelinks as $cat=>$links}
+	{foreach $links as $url=>$text}
+	<tr><td class="cell{cycle values='1,2'} link"><a href="{$url|escape}">{$text}</a></td></tr>{/foreach}{/foreach}
 	<tr class="header0 center"><th><i class="fa fa-user" aria-hidden="true"></i> {if $loguserid}{$loguserlink}{else}Guest{/if}</th></tr>
 	{if $loguserid}{if HasPermission('user.editprofile')}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=editprofile"><i class="icon-pencil" aria-hidden="true"></i> Edit profile</a></td></tr>
 	{if HasPermission('user.editavatars')}<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=editavatars"><i class="icon-picture" aria-hidden="true"></i> Mood avatars</a></td></tr>
@@ -48,6 +49,10 @@
 						<tr><td class="cell{cycle values='1,2'} link">{$link}</td></tr>
 					{/foreach}
 					{/if}
+	<tr class="header0"><th>Board Listing</th></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=board">BlargBoard</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=board1">ABXD</a></td></tr>
+	<tr><td class="cell{cycle values='1,2'} link"><a href="/?page=board2">RHCafe</a></td></tr>
 							</table>
 	</div>
 	</div>
