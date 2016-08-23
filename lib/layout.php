@@ -173,7 +173,7 @@ function makeCrumbs($path, $links='')
 	$layout_actionlinks = $links;
 }
 
-function makeForumListing($parent, $board2='')
+function makeForumListing($parent, $boardlol='')
 {
 	global $loguserid, $loguser, $usergroups;
 		
@@ -351,10 +351,10 @@ function makeForumListing($parent, $board2='')
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 	
-	RenderTemplate('forumlist2', array('categories' => $categories));
+	RenderTemplate('forumlistlol', array('categories' => $categories));
 }
 
-function makeForumListing($parent, $board1='')
+function makeForumListing($parent, $boardmeh='')
 {
 	global $loguserid, $loguser, $usergroups;
 		
@@ -532,7 +532,7 @@ function makeForumListing($parent, $board1='')
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 	
-	RenderTemplate('forumlist1', array('categories' => $categories));
+	RenderTemplate('forumlistmeh', array('categories' => $categories));
 }
 
 
