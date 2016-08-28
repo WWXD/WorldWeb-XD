@@ -1,15 +1,13 @@
-# Blargboard
+# Blargboard XD
 
-http://kuribo64.net/blargboard/
-
-http://kuribo64.net/?page=forum&id=82
+http://3dshacks.rf.gd/forum/1-support/
 
 -------------------------------------------------------------------------------
 
 Board software written in PHP. Uses MySQL for storage.
 
-This is the software that powers Kuribo64 (http://kuribo64.net/). Or well, not quite.
-The code provided here is a cleaned up version, with all the K64-specific stuff removed.
+This is the software that powers 3DS Hacks (http://3dshacks.rf.gd/forum/1/). Or well, not quite.
+The code provided here is a cleaned up version, with all the 3DS Hacks-specific stuff removed.
 
 It is based off ABXD. ABXD is made by Dirbaio, Nina, GlitchMr & co, and was originally
 Kawa's project. See http://abxd.dirbaio.net/ for more details.
@@ -21,7 +19,7 @@ This board follows the Acmlmboard concept. If you don't know Acmlmboard, you don
 
 ## Requirements
 
-Blargboard requires PHP 5.3. You also need the mcrypt extension.
+Blargboard XD requires PHP 5.3. You also need the mcrypt extension.
 
 There is no exact requirement for MySQL, but make sure to have a recent version.
 
@@ -29,9 +27,9 @@ Everything else is provided in the package.
 
 ## How to install and use
 
-PHP and MySQL knowledge isn't required to use Blargboard but is a plus.
+PHP and MySQL knowledge isn't required to use Blargboard XD but is a plus.
 
-Get a webserver. Upload the Blargboard codebase to it. Create an empty MySQL database.
+Get a webserver. Upload the Blargboard XD codebase to it. Create an empty MySQL database.
 
 Browse to your board's install.php (http://my.board.for.example/install.php) and follow the instructions.
 
@@ -39,14 +37,6 @@ If everything went fine, browse to your freshly installed board and configure it
 
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
 If you have HTML knowledge, you can even edit the templates to change your board's look more in-depth.
-
-## Working plugins
-
-The following plugins have been updated and are known to work with current Blargboard. Any other plugins in the repo are probably broken, so don't try using them.
-
- * CustomUserNameColors
- * ircreport
- * layoutblockstats
 
 ## How to update your board
 
@@ -61,29 +51,27 @@ Once that is done, run update.php (http://my.board.for.example/update.php) to up
 
 Depending on the versions, your update may involve running extra scripts to fix certain things. Make sure to follow those instructions.
 
-
-Updating from Blargboard 1.0 isn't covered.
-
 ## Features
 
  * Flexible permission system
  * Plugin system
  * Templates (in the works, about 80% done)
- * URL rewriting, enables human-readable forum and thread URLs for public content (requires code editing to enable it as of now)
+ * URL rewriting, enables human-readable forum and thread URLs for public content
  * Post layouts
  * more Acmlmboard feel
  * typical messageboard features
+ * Smiley Box.
 
 -------------------------------------------------------------------------------
 
 Coders and such, who like to hack new features in their software, may think that the use
-of templates in Blargboard gets in their way. Well uh, can't please everybody. I tried to
+of templates in Blargboard XD gets in their way. Well uh, can't please everybody. I tried to
 do my best at separating logic and presentation. Besides, the use of templates actually
 makes the code nicer. Just look at the first few revisions and see how much duplicate logic
 is powering the mobile layout, for example. Templates allowed to get rid of all that madness.
 
 As of now, there are no official releases for this, and the ABXD database installer hasn't
-been adapted to Blargboard's database structure yet. Thus, when updating your Blargboard
+been adapted to Blargboard XD's database structure yet. Thus, when updating your Blargboard XD
 copy, you need to check for changes to database.sql and modify your database's structure
 accordingly.
 
@@ -114,7 +102,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-The Blargboard help forum is at Kuribo64: http://kuribo64.net/?page=forum&id=82
+The Blargboard help forum is at Kuribo64: http://3dshacks.rf.gd/forum/1-support/
 
 If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
 
@@ -127,22 +115,16 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 
 (no particular order there)
 
- * finish implementing templates
- * improve the permission editing interfaces
- * port the 'show/hide sidebar' feature from Kuribo64? or just nuke the sidebar? more leaning towards the latter.
- * merge/split threads a la phpBB (albeit without the shitty interface)
- * support multiple password hashing methods? (for importing from other board softwares, or for those who feel SHA256 with per-user salt isn't enough) (kinda addressed via login plugins)
- * more TODO at Kuribo64 and RVLution
- 
- * low priority: change/remove file headers? most of the original files still say 'AcmlmBoard XD'
- * besides it'd be an opportunity to add a license like the GPL
+ * Subtitles
+ * Multiple board listing
+ * A Better post toolbar
 
 -------------------------------------------------------------------------------
 
-Blargboard is provided as-is, with no guarantee that it'll be useful or even work. I'm not
+Blargboard XD is provided as-is, with no guarantee that it'll be useful or even work. I'm not
 responsible if it explodes in your face. Use that thing at your own risk.
 
-Oh well, it should work rather well. See Kuribo64. But uh, we never know.
+Oh well, it should work rather well. See 3DS Hacks. But uh, we never know.
 
 -------------------------------------------------------------------------------
 
