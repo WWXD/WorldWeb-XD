@@ -102,7 +102,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-The Blargboard help forum is at Kuribo64: http://3dshacks.rf.gd/forum/1-support/
+The Blargboard help forum is at 3DS Hacks: http://3dshacks.rf.gd/forum/1-support/
 
 If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
 
@@ -118,6 +118,18 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * Subtitles
  * Multiple board listing
  * A Better post toolbar
+ * SubTitles
+ * Better Mobile layout
+ * Makes Favorites usable
+ * make userlinks usable
+ * Multiple Forum listing layout
+ * Multiple Board layouts
+ * Switch from logo to text anytime
+ * Make filter posts anytime without editing the lib folder
+ * Add multiple 'boards'
+ * Add categories in the categories uploader without SQL
+ * Add events in the calendar
+ * Others here.
 
 -------------------------------------------------------------------------------
 
