@@ -13,29 +13,7 @@ $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($_POST['register'])
 {
-	$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
-	$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-	$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), base64_decode($_POST['kuridata']), MCRYPT_MODE_ECB, $iv);
-	if (!$kuridata) Kill('Hack attempt detected');
-	
-	$kuridata = explode('|', $kuridata);
-	if (count($kuridata) != 3) Kill('Hack attempt detected');
-	$kuriseed = intval($kuridata[0]);
-	$check = intval($kuridata[1]);
-	$kurichallenge = $kuridata[2];
-	$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
-	if (!$kurichallenge) Kill('Hack attempt detected');
-	
-	$kurichallenge = explode('|', $kurichallenge);
-	if (count($kurichallenge) != 3) Kill('Hack attempt detected');
-	if ($kurichallenge[0] != $kuridata[0]) Kill('Hack attempt detected');
-	if ($kurichallenge[1] != $kuridata[1]) Kill('Hack attempt detected');
-	
-	$ngoombas = intval($kurichallenge[2]);
-	
-	if ($check < (time()-300))
-		$err = __('The token has expired. Reload the page and try again.');
-	else if (IsProxy())
+	if (IsProxy())
 	{
 		$adminemail = Settings::get('ownerEmail');
 		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;

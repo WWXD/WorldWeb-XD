@@ -40,14 +40,6 @@
 				{$fields.readfaq}
 			</td>
 		</tr>
-		<tr>
-			<td class="cell2 center">
-				How many Goombas are there?
-			</td>
-			<td class="cell1">
-				{$fields.kurichallenge}
-			</td>
-		</tr>
 		<tr class="cell2">
 			<td></td>
 			<td>
