@@ -193,6 +193,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
 	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
 	
