@@ -1,7 +1,7 @@
 <table class="outline margin anncbar">
 		<tr class="header1">
 			<th colspan="2">
-				<a href="/?page=announcements">Announcements</a>
+				<a href="{actionLink page='announcements'}">Announcements</a>
 			</th>
 		</tr>
 		<tr class="cell1">
