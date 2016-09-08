@@ -28,6 +28,9 @@ $bbcodeCallbacks = array
 	"[td" => "bbcodeTableCell",
 	
 	'[youtube' => 'bbcodeYoutube',
+	//Meme BBCode starts here
+	"[instameme" => "bbcodeMeme",
+	"[ugotbanned" => "bbcodeBan",
 );
 
 //Allow plugins to register their own callbacks (new bbcode tags)
