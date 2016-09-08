@@ -99,6 +99,8 @@ $TagList = array
 	'[trh'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 	'[td'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 	
+	'[ugotbanned'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
+	'[instameme'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[youtube' 	=> 	TAG_GOOD | TAG_NOAUTOLINK,
 );
 
