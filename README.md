@@ -61,6 +61,7 @@ Depending on the versions, your update may involve running extra scripts to fix 
  * more Acmlmboard feel
  * typical messageboard features
  * Smiley Box.
+ * Instameme (thanks Jon)
 
 -------------------------------------------------------------------------------
 
@@ -129,6 +130,8 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * Add multiple 'boards'
  * Add categories in the categories uploader without SQL
  * Add events in the calendar
+ * Add "moderation" like style for normal users.
+ * Add friends/foes list (for automatically setting above)
  * Others here.
 
 -------------------------------------------------------------------------------
