@@ -173,7 +173,7 @@ function makeCrumbs($path, $links='')
 	$layout_actionlinks = $links;
 }
 
-function makeForumListing($parent, $boardlol='')
+function makeForumListinglol($parent, $boardlol='')
 {
 	global $loguserid, $loguser, $usergroups;
 		
@@ -191,7 +191,7 @@ function makeForumListing($parent, $boardlol='')
 							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY c.corder, c.id, f.forder, f.id", 
-						$loguserid, $viewableforums, $board, -$parent);
+						$loguserid, $viewableforums, $boardlol, -$parent);
 	if (!NumRows($rFora))
 		return;
 		
@@ -354,7 +354,7 @@ function makeForumListing($parent, $boardlol='')
 	RenderTemplate('forumlistlol', array('categories' => $categories));
 }
 
-function makeForumListing($parent, $boardmeh='')
+function makeForumListingmeh($parent, $boardmeh='')
 {
 	global $loguserid, $loguser, $usergroups;
 		
@@ -372,7 +372,7 @@ function makeForumListing($parent, $boardmeh='')
 							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY c.corder, c.id, f.forder, f.id", 
-						$loguserid, $viewableforums, $board, -$parent);
+						$loguserid, $viewableforums, $boardmeh, -$parent);
 	if (!NumRows($rFora))
 		return;
 		
