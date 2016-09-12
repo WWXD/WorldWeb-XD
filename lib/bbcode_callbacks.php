@@ -269,6 +269,14 @@ function bbcodeMeme($contents, $arg, $parenttag)
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme2.jpg" alt="Instameme2"/>';
 	elseif ($contents == '3')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme3.jpg" alt="Instameme3"/>';
+	elseif ($contents == '4')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme4.png" alt="Instameme4"/>';
+	elseif ($contents == '5')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme5.jpg" alt="Instameme5"/>';
+	elseif ($contents == '6')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme6.png" alt="Instameme6"/>';
+	elseif ($contents == '7')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/instameme7.jpg" alt="Instameme7"/>';
 	//If a number was found that is not in the collection
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../instameme/insta404.jpg" alt="Instameme404"/>';
