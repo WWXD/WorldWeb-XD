@@ -40,7 +40,7 @@ if($user['displayname'])
 	
 $title = __('Edit profile');
 
-makeCrumbs(array(actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
+makeCrumbs(array(actionLink("u", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
 
 loadRanksets();
 $ranksets = $ranksetNames;
@@ -113,7 +113,7 @@ AddCategory('personal', 'personal', __('Personal information'));
 
 AddField('personal', 'personal', 'sex', __('Gender'), 'radiogroup', array('options'=>$sexes));
 AddField('personal', 'personal', 'realname', __('Real name'), 'text', array('width'=>24, 'length'=>60));
-AddField('personal', 'personal', 'location', __('Location'), 'text', array('width'=>24, 'length'=>60));
+AddField('personal', 'personal', 'location', __('Firmware'), 'text', array('width'=>24, 'length'=>60));
 AddField('personal', 'personal', 'birthday', __('Birthday'), 'birthday');
 
 if ($editUserMode || HasPermission('user.editbio'))
@@ -191,7 +191,6 @@ if ($editUserMode || HasPermission('user.editpostlayout'))
 	if ($pltype == 2) 
 		AddField('layout', 'postlayout', 'fulllayout', __('Apply layout to whole post box'), 'checkbox');
 }
-
 
 // EDITPROFILE TAB -- THEME ---------------------------------------------------
 AddPage('theme', __('Theme'));
@@ -416,7 +415,7 @@ if($_POST['actionsave'])
 			$his = HisHer($user['sex']);
 		Report("[b]".$loguser['name']."[/] edited ".$his." profile. -> [g]#HERE#?uid=".$userid, 1);
 
-		die(header("Location: ".actionLink("profile", $userid, '', $_POST['name']?:$user['name'])));
+		die(header("Location: ".actionLink("u", $userid, '', $_POST['name']?:$user['name'])));
 	}
 }
 
@@ -488,7 +487,7 @@ function HandlePicture($field, $type, &$usepic)
 	list($width, $height, $fileType) = getimagesize($tempFile);
 
 	if ($type == 0 && ($width > 300 || $height > 300))
-		return __("That avatar is definitely too big. The avatar field is meant for an avatar, not a wallpaper.");
+		return __("That avatar is definitely too big. Please shrink it.");
 
 	$extension = strtolower(strrchr($fileName, "."));
 	if(!in_array($extension, $extensions))
@@ -704,17 +703,18 @@ foreach($themes as $themeKey => $themeData)
 		$selected = "";
 
 	$themeList .= format(
-"
-	<div style=\"display: inline-block;\" class=\"theme\" title=\"{0}\">
-		<input style=\"display: none;\" type=\"radio\" name=\"theme\" value=\"{3}\"{4} id=\"{3}\" onchange=\"ChangeTheme(this.value);\" />
-		<label style=\"display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top\" onmousedown=\"void();\" for=\"{3}\">
-			{2}<br />
-			<strong>{0}</strong>
-			{1}<br />
-			{5}
+'
+	<div style="display: inline-block;" class="theme" title="{0}">
+		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
+			<table class="outline"><tr class="header1">
+			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></th>
+			<th class="center"><strong>{0}</strong></th></tr>
+			<tr class="header0"><th colspan="2">{2}</th></tr>
+			<tr><td>&nbsp;</td><td>{1}</td></tr>
+			<tr><td>&nbsp;</td><td>{5}</td></tr></table>
 		</label>
 	</div>
-",	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+',	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
 }
 
 if(!isset($selectedTab))
