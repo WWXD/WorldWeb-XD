@@ -40,7 +40,7 @@ if($user['displayname'])
 	
 $title = __('Edit profile');
 
-makeCrumbs(array(actionLink("u", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
+makeCrumbs(array(actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
 
 loadRanksets();
 $ranksets = $ranksetNames;
@@ -113,7 +113,7 @@ AddCategory('personal', 'personal', __('Personal information'));
 
 AddField('personal', 'personal', 'sex', __('Gender'), 'radiogroup', array('options'=>$sexes));
 AddField('personal', 'personal', 'realname', __('Real name'), 'text', array('width'=>24, 'length'=>60));
-AddField('personal', 'personal', 'location', __('Firmware'), 'text', array('width'=>24, 'length'=>60));
+AddField('personal', 'personal', 'location', __('Location'), 'text', array('width'=>24, 'length'=>60));
 AddField('personal', 'personal', 'birthday', __('Birthday'), 'birthday');
 
 if ($editUserMode || HasPermission('user.editbio'))
@@ -415,7 +415,7 @@ if($_POST['actionsave'])
 			$his = HisHer($user['sex']);
 		Report("[b]".$loguser['name']."[/] edited ".$his." profile. -> [g]#HERE#?uid=".$userid, 1);
 
-		die(header("Location: ".actionLink("u", $userid, '', $_POST['name']?:$user['name'])));
+		die(header("Location: ".actionLink("profile", $userid, '', $_POST['name']?:$user['name'])));
 	}
 }
 
