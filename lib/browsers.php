@@ -26,6 +26,7 @@ $knownBrowsers = array
 	"Opera" => "Opera",
 	"MozillaDeveloperPreview" => "Firefox (Development build)",
 	"Waterfox" => "Waterfox",
+	"SeaMonkey" => "SeaMonkey",
 	"Firefox" => "Firefox",
 	"dwb" => "DWB",
 	"Chrome" => "Chrome",
