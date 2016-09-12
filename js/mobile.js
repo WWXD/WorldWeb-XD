@@ -3,7 +3,7 @@ var sidebarOn = false;
 
 function closeSidebar()
 {
-	$('#mobile-sidebar-container').hide();
+	$('#mobile-sidebar-container').hide('slide', {direction: 'right'}, 250);
 	$('#realbody').css('max-width', 'none');
 	$('#realbody').css('max-height', 'none');
 	$('#realbody').css('overflow', 'auto');
@@ -14,7 +14,7 @@ function closeSidebar()
 
 function openSidebar()
 {
-	$('#mobile-sidebar-container').show();
+	$('#mobile-sidebar-container').show('slide', {direction: 'right'}, 250);
 	$('#realbody').css('max-width', '100%');
 	$('#realbody').css('max-height', '100%');
 	$('#realbody').css('overflow', 'hidden');
