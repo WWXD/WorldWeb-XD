@@ -53,12 +53,12 @@ Depending on the versions, your update may involve running extra scripts to fix 
 
 ## Credits
 
-Mariogamer - for uploading this for me
-Phase - JSON ranksets, animation mobile, and Gist tab
-JeDa - Plugins
-Lifemushroom - Themes
-StapleButter - Original BB
-Maorninja - Leader, coder.
+Mariogamer - for uploading this for me           
+Phase - JSON ranksets, animation mobile, fix MySQL5.7 support and Gist tab                 
+JeDa - Plugins                    
+Lifemushroom - Themes               
+StapleButter - Original BB           
+Maorninja - Leader, coder.           
 
 ## Features
 
