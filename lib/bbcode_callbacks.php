@@ -26,8 +26,10 @@ $bbcodeCallbacks = array
 	"[tr" => "bbcodeTableRow",
 	"[trh" => "bbcodeTableRowHeader",
 	"[td" => "bbcodeTableCell",
-	
+
 	'[youtube' => 'bbcodeYoutube',
+  '[gist' => 'bbcodeGist',
+
 	//Meme BBCode starts here
 	"[instameme" => "bbcodeMeme",
 	"[ugotbanned" => "bbcodeBan",
@@ -185,7 +187,7 @@ function bbcodeSpoiler($contents, $arg, $parenttag)
 
 function bbcodeCode($contents, $arg, $parenttag)
 {
-	return '<div class="codeblock">'.htmlentities($contents).'</div>';
+	return '<pre><code>'.htmlentities($contents).'</code></pre>';
 }
 
 function bbcodeTable($contents, $arg, $parenttag)
@@ -221,7 +223,7 @@ function bbcodeTableRowHeader($contents, $arg, $parenttag)
 	return "<tr class=\"header0\">$contents</tr>";
 }
 
-function getYoutubeIdFromUrl($url) 
+function getYoutubeIdFromUrl($url)
 {
     $pattern =
         '%^# Match any youtube URL
@@ -260,6 +262,26 @@ function bbcodeYoutube($contents, $arg, $parenttag)
 }
 
 //Coding for custom bbcodes start here
+function bbcodeGist($contents, $arg) {
+    if (!function_exists('curl_init')) {
+        return "<a href=\"https://gist.github.com/$contents\">View $contents on GitHub</a>";
+    }
+    else if (!preg_match("/([0-9_a-zA-Z]+)\/([0-9a-f]+)/", $contents)) {
+        return "<pre><code>Invalid Gist</code></pre>";
+    }
+    else {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://gist.githubusercontent.com/$contents/raw");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $code = curl_exec($ch);
+        curl_close($ch);
+        return "<pre><code>$code</code></pre>";
+    }
+}
+
 function bbcodeMeme($contents, $arg, $parenttag)
 {
 	//Detecting what meme to use from whats inbetween the tag and the close tag

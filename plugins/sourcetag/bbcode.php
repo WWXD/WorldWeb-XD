@@ -6,23 +6,13 @@ $bbcodeCallbacks["source"] = "bbcodeCodeHighlight";
 
 function bbcodeCodeHighlight($contents, $arg)
 {
-	include_once("geshi.php");
-
 	if(!$arg)
 	{
-		return '<div class="codeblock">'.htmlentities($contents).'</div>';
+		return '<pre><code>'.htmlentities($contents).'</code></pre>';
 	}
 	else
 	{
-		$language = $arg;
-		$geshi = new GeSHi(trim($contents), $language, null);
-		$geshi->set_header_type(GESHI_HEADER_NONE);
-		$geshi->enable_classes();
-		$geshi->enable_keyword_links(false);
-
-		$code = str_replace("\n", "", $geshi->parse_code());
-		$code = decodeCrapEntities($code);
-		return "<div class=\"codeblock geshi\">$code</div>";
+		return "<pre><code>$code</code></pre>";
 	}
 }
 
