@@ -51,6 +51,15 @@ Once that is done, run update.php (http://my.board.for.example/update.php) to up
 
 Depending on the versions, your update may involve running extra scripts to fix certain things. Make sure to follow those instructions.
 
+## Credits
+
+Mariogamer - for uploading this for me
+Phase - JSON ranksets, animation mobile, and Gist tab
+JeDa - Plugins
+Lifemushroom - Themes
+StapleButter - Original BB
+Maorninja - Leader, coder.
+
 ## Features
 
  * Flexible permission system
