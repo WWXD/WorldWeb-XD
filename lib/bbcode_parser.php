@@ -10,13 +10,13 @@ define('TAG_BLOCK', 		0x0002);	// block tag (subject to newline removal after st
 define('TAG_SELFCLOSING',	0x0004);	// self-closing (br, img, ...)
 define('TAG_CLOSEOPTIONAL',	0x0008);	// closing tag optional (tr, td, li, p, ...)
 define('TAG_RAWCONTENTS',	0x0010);	// tag whose contents shouldn't be parsed (<style>)
-define('TAG_NOAUTOLINK',	0x0020);	// prevent autolinking 
+define('TAG_NOAUTOLINK',	0x0020);	// prevent autolinking
 define('TAG_NOBR',			0x0040);	// no conversion of linebreaks to <br> (pre)
 
 $TagList = array
 (
 	// HTML
-	
+
 	'<a'		=>	TAG_GOOD | TAG_NOAUTOLINK,
 	'<abbr' 	=>  TAG_GOOD,
 	'<acronym'  =>  TAG_GOOD,
@@ -68,40 +68,41 @@ $TagList = array
 	'<ul'		=>	TAG_GOOD | TAG_BLOCK,
 	'<link'		=>	TAG_GOOD | TAG_BLOCK | TAG_SELFCLOSING,
 	'<wbr' 		=>	TAG_GOOD | TAG_SELFCLOSING,
-	
+
 	'<audio'	=>	TAG_GOOD,
 	'<video'	=>  TAG_GOOD,
 	'<source'	=>  TAG_GOOD | TAG_SELFCLOSING,
-	
+
 	// BBCode
-	
+
 	'[b'		=>	TAG_GOOD,
 	'[i'		=>	TAG_GOOD,
 	'[u'		=>	TAG_GOOD,
 	'[s'		=>	TAG_GOOD,
-	
+
 	'[url'		=>	TAG_GOOD | TAG_NOAUTOLINK,
 	'[img'		=>	TAG_GOOD | TAG_RAWCONTENTS,
 	'[imgs'		=>	TAG_GOOD | TAG_RAWCONTENTS,
-	
+
 	'[user'		=>	TAG_GOOD | TAG_SELFCLOSING,
 	'[thread'	=>	TAG_GOOD | TAG_SELFCLOSING,
 	'[forum'	=>	TAG_GOOD | TAG_SELFCLOSING,
-	
+
 	'[quote'	=>	TAG_GOOD | TAG_BLOCK,
 	'[reply'	=>	TAG_GOOD | TAG_BLOCK,
-	
+
 	'[spoiler' 	=>	TAG_GOOD | TAG_BLOCK,
 	'[code'		=>	TAG_GOOD | TAG_BLOCK | TAG_RAWCONTENTS,
-	
+
 	'[table'	=> 	TAG_GOOD | TAG_BLOCK,
 	'[tr'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 	'[trh'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 	'[td'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
-	
+
 	'[ugotbanned'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[instameme'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[youtube' 	=> 	TAG_GOOD | TAG_NOAUTOLINK,
+	'[gist' => TAG_GOOD | TAG_NOFORMAT,
 );
 
 $TagAllowedIn = array
@@ -115,10 +116,10 @@ $TagAllowedIn = array
 	'<td'		=> array('<tr' => 1),
 	'<th' 		=> array('<tr' => 1),
 	'<col'		=> array('<colgroup' => 1),
-	
+
 	'<li' 		=> array('<ul' => 1, '<ol' => 1),
-	
-	
+
+
 	'[tr'		=> array('[table' => 1),
 	'[trh' 		=> array('[table' => 1),
 	'[td'		=> array('[tr' => 1, '[trh' => 1),
@@ -128,13 +129,13 @@ $TagAllowedIn = array
 function filterTag($tag, $attribs, $contents, $close, $parenttag)
 {
 	global $TagList, $bbcodeCallbacks;
-	
+
 	if ($tag[0] == '<')
 	{
 		$output = $tag.$attribs.$contents;
 		// TODO filter attributes? (remove onclick etc)
 		// this is done by the security filter, though, so it'd be redundant
-		
+
 		if ($close || !($TagList[$tag] & (TAG_CLOSEOPTIONAL | TAG_SELFCLOSING)))
 			$output .= '</'.substr($tag,1).'>';
 	}
@@ -143,20 +144,20 @@ function filterTag($tag, $attribs, $contents, $close, $parenttag)
 		$attribs = substr($attribs,1,-1);
 		$output = $bbcodeCallbacks[$tag]($contents, $attribs, $parenttag);
 	}
-	
+
 	return $output;
 }
 
 function filterText($s, $parentTag, $parentMask)
 {
 	global $mobileLayout;
-	
+
 	if ($parentMask & TAG_RAWCONTENTS) return $s;
-	
+
 	// prevent unwanted shit
 	$s = str_replace(array('<', '>'), array('&lt;', '&gt;'), $s);
 	//$s = preg_replace('@&([a-z0-9]*[^a-z0-9;])@', '&amp;$1', $s);
-	
+
 	if (!($parentMask & TAG_NOBR)) $s = nl2br($s);
 	$s = postDoReplaceText($s, $parentTag, $parentMask);
 	return $s;
@@ -165,7 +166,7 @@ function filterText($s, $parentTag, $parentMask)
 function tagAllowedIn($curtag, $parenttag)
 {
 	global $TagAllowedIn;
-	
+
 	if (!array_key_exists($curtag, $TagAllowedIn)) return true;
 	return array_key_exists($parenttag, $TagAllowedIn[$curtag]);
 }
@@ -176,11 +177,11 @@ function parseBBCode($text)
 	global $TagList, $TagAllowedIn;
 	$spacechars = array(' ', "\t", "\r", "\n", "\f");
 	$attrib_bad = array(' ', "\t", "\r", "\n", "\f", '<', '[', '/', '=');
-	
+
 	$raw = preg_split("@(</?[a-zA-Z][^\s\f/>]*|\[/?[a-zA-Z][a-zA-Z0-9]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
 	$outputstack = array(0 => array('tag' => '', 'attribs' => '', 'contents' => ''));
 	$si = 0;
-	
+
 	$currenttag = '';
 	$currentmask = 0;
 
@@ -194,7 +195,7 @@ function parseBBCode($text)
 			$isclosing = $cur[1] == '/';
 			$tagname = $cur[0].substr($cur, ($isclosing ? 2:1));
 			$closechar = ($cur[0] == '<') ? '>' : ']';
-			
+
 			// raw contents tags (<style> & co)
 			// continue outputting RAW content until we meet a matching closing tag
 			if (($currentmask & TAG_RAWCONTENTS) && (!$isclosing || $currenttag != $tagname))
@@ -202,7 +203,7 @@ function parseBBCode($text)
 				$outputstack[$si]['contents'] .= $rawcur;
 				continue;
 			}
-			
+
 			// invalid tag -- output it escaped
 			$test = trim($raw[$i]);
 			if (!array_key_exists($tagname, $TagList) || $test[0] == '<' || $test[0] == '[')
@@ -210,12 +211,12 @@ function parseBBCode($text)
 				$outputstack[$si]['contents'] .= filterText(htmlspecialchars($rawcur), $currenttag, $currentmask);
 				continue;
 			}
-			
+
 			// we got a proper tag? find where it ends
 			$tagmask = $TagList[$tagname];
-			
+
 			$next = $raw[$i++];
-			
+
 			$j = 0;
 			$endfound = false;
 			$inquote = false; $inattrib = ($cur[0]=='<')?0:1;
@@ -226,7 +227,7 @@ function parseBBCode($text)
 				{
 					$ch = $next[$j];
 					$isspace = in_array($ch, $spacechars);
-					
+
 					if (!$inquote)
 					{
 						if ($ch == $closechar)
@@ -234,7 +235,7 @@ function parseBBCode($text)
 							$endfound = true;
 							break;
 						}
-						
+
 						if ($inattrib == 0 && !in_array($ch, $attrib_bad))
 							$inattrib = 1;
 						else if ($inattrib == 1)
@@ -248,14 +249,14 @@ function parseBBCode($text)
 						{
 							if ($isspace)
 								continue;
-							
+
 							if ($ch == '"' || $ch == '\'')
 								$inquote = $ch;
 							else
 								$inquote = ' ';
 						}
 					}
-					else if ($ch == $inquote || 
+					else if ($ch == $inquote ||
 						($inquote == ' ' && $isspace))
 					{
 						$inquote = false;
@@ -267,35 +268,35 @@ function parseBBCode($text)
 						break;
 					}
 				}
-				
+
 				if ($endfound)
 					break;
-				
+
 				if ($i >= $nraw)
 					break;
-				
+
 				if ($j >= $nlen)
 					$next .= $raw[$i++];
 				else
 					break;
 			}
-			
+
 			if (!$endfound) // tag end not found-- call it invalid
 				$outputstack[$si]['contents'] .= filterText(htmlspecialchars($rawcur.$next), $currenttag, $currentmask);
 			else
 			{
 				$tagattribs = substr($next,0,$j+1);
 				$followingtext = substr($next,$j+1);
-				
+
 				if ($tagmask & TAG_BLOCK)
 					$followingtext = preg_replace("@^\r?\n@", '', $followingtext);
-				
+
 				if ($isclosing)
 				{
 					$tgood = false;
-					
+
 					// tag closing. Close any tags that need it before.
-					
+
 					$k = $si;
 					while ($k > 0)
 					{
@@ -306,7 +307,7 @@ function parseBBCode($text)
 							break;
 						}
 					}
-					
+
 					if ($tgood)
 					{
 						while ($si > 0)
@@ -316,16 +317,16 @@ function parseBBCode($text)
 							$cattribs = $closer['attribs'];
 							$ctag = $closer['tag'];
 							$ctagname = substr($ctag,1);
-							
+
 							if ($ctag != $tagname)
 								$outputstack[$si]['contents'] .= filterTag($ctag, $cattribs, $ccontents, false, $outputstack[$si]['tag']);
 							else
 								break;
 						}
-						
+
 						$currenttag = $outputstack[$si]['tag'];
 						$currentmask = $TagList[$currenttag];
-						
+
 						$outputstack[$si]['contents'] .= filterTag($ctag, $cattribs, $ccontents, true, $currenttag).filterText($followingtext, $currenttag, $currentmask);
 					}
 					else
@@ -334,14 +335,14 @@ function parseBBCode($text)
 				else if ($tagmask & TAG_SELFCLOSING)
 				{
 					// self-closing tag (<br>, <img>, ...)
-					
+
 					$followingtext = filterText($followingtext, $currenttag, $currentmask);
 					$outputstack[$si]['contents'] .= filterTag($cur, $tagattribs, '', false, $currenttag).$followingtext;
 				}
 				else
 				{
 					// tag opening. See if we need to close some tags before.
-					
+
 					if ($currentmask & TAG_CLOSEOPTIONAL)
 					{
 						$tgood = false;
@@ -356,7 +357,7 @@ function parseBBCode($text)
 							}
 						}
 						$k++;
-						
+
 						if ($tgood)
 						{
 							while ($si > $k)
@@ -366,12 +367,12 @@ function parseBBCode($text)
 								$cattribs = $closer['attribs'];
 								$ctag = $closer['tag'];
 								$ctagname = substr($ctag,1);
-								
+
 								$outputstack[$si]['contents'] .= filterTag($ctag, $cattribs, $ccontents, false, $outputstack[$si]['tag']);
 							}
-							
+
 							$outputstack[++$si] = array('tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask));
-						
+
 							$currenttag = $cur;
 							$currentmask = $tagmask;
 						}
@@ -381,7 +382,7 @@ function parseBBCode($text)
 					else if (tagAllowedIn($tagname, $currenttag))
 					{
 						$outputstack[++$si] = array('tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask));
-						
+
 						$currenttag = $cur;
 						$currentmask = $tagmask;
 					}
@@ -393,7 +394,7 @@ function parseBBCode($text)
 		else if ($rawcur)
 			$outputstack[$si]['contents'] .= filterText($rawcur, $currenttag, $currentmask);
 	}
-	
+
 	// close any leftover opened tags
 	while ($si > 0)
 	{
@@ -401,7 +402,7 @@ function parseBBCode($text)
 		$ccontents = $closer['contents'];
 		$cattribs = $closer['attribs'];
 		$ctag = $closer['tag'];
-		
+
 		if (!($TagList[$ctag] & TAG_SELFCLOSING))
 			$outputstack[$si]['contents'] .= filterTag($ctag, $cattribs, $ccontents, false, $outputstack[$si]['tag']);
 	}

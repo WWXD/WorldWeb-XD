@@ -59,22 +59,22 @@ if ($loguser['flags'] & 0x2)
 
 if (!$fakeerror)
 {
-	try 
+	try
 	{
-		try 
+		try
 		{
 			if(array_key_exists($page, $pluginpages))
 			{
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
-				
+
 				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
 				if(!file_exists($page))
 					throw new Exception(404);
 				include($page);
 				unset($self);
 			}
-			else 
+			else
 			{
 				$page = __DIR__.'/pages/'.$page.'.php';
 				if(!file_exists($page))
@@ -155,13 +155,13 @@ $favicon = resourceLink('img/favicon.ico');
 $themefile = "themes/$theme/style.css";
 if(!file_exists(__DIR__.'/'.$themefile))
 	$themefile = "themes/$theme/style.php";
-	
 
-$layout_credits = 
+
+$layout_credits =
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
 <a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter and MaorNinja322<br>
 Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
-	
+
 
 $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 
@@ -175,12 +175,12 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 <html lang="en">
 <head>
 	<title><?php print $layout_title; ?></title>
-	
+
 	<meta http-equiv="Content-Type" content="text/html; CHARSET=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=10">
 	<meta name="description" content="<?php print $metaStuff['description']; ?>">
 	<meta name="keywords" content="<?php print $metaStuff['tags']; ?>">
-	
+
 	<link rel="shortcut icon" type="image/x-icon" href="<?php print $favicon;?>">
 	<link rel="stylesheet" type="text/css" href="<?php print resourceLink("css/common.css");?>">
 	<link rel="stylesheet" type="text/css" id="theme_css" href="<?php print resourceLink($themefile); ?>">
@@ -193,26 +193,28 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
-	
+
 	<?php if ($mobileLayout) { ?>
 	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width">
 	<script type="text/javascript" src="<?php echo resourceLink('js/mobile.js'); ?>"></script>
 	<?php if ($oldAndroid) { ?>
-	<style type="text/css"> 
-	#mobile-sidebar { height: auto!important; max-height: none!important; } 
-	#realbody { max-height: none!important; max-width: none!important; overflow: scroll!important; } 
+	<style type="text/css">
+	#mobile-sidebar { height: auto!important; max-height: none!important; }
+	#realbody { max-height: none!important; max-width: none!important; overflow: scroll!important; }
 	</style>
 	<?php } ?>
-	
+
 	<?php } ?>
 </head>
 <body style="width:100%; font-size: <?php echo $loguser['fontsize']; ?>%;">
 <form action="<?php echo htmlentities(actionLink('login')); ?>" method="post" id="logout" style="display:none;"><input type="hidden" name="action" value="logout"></form>
-<?php 
+<?php
 	if (Settings::get('maintenance'))
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';
 
@@ -235,7 +237,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_birthdays' => $layout_birthdays,
 		'layout_credits' => $layout_credits,
 		'mobileswitch' => $mobileswitch,
-		'perfdata' => $perfdata)); 
+		'perfdata' => $perfdata));
 ?>
 </body>
 </html>
@@ -244,4 +246,3 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 $bucket = "finish"; include(__DIR__.'/lib/pluginloader.php');
 
 ?>
-
