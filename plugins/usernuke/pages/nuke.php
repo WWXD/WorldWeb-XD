@@ -48,8 +48,8 @@ if(isset($_POST["currpassword"]))
 		query("delete pt from {pmsgs_text} pt
 				left join {pmsgs} p on pt.pid = p.id
 				where p.user={0}", $uid);
-		query("delete from {pmsgs}
-				where userto={0} or userfrom={0}", $uid);
+		query("delete from {pmsgs} where userfrom={0}", $uid);
+		query("delete from {pmsgs} where userto={0}", $uid);
 
 		//Delete THE USER ITSELF
 		query("delete from {users}
