@@ -194,7 +194,7 @@ $logSqlErrors = 0;
 	<br>
 	You should now:
 	<ul>
-		<li>delete install.php and database.sql
+		<li>delete install.php and db/install.sql
 		<li><a href="./login/">log in to your board</a> and configure it
 	</ul>
 	<br>
