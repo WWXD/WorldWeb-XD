@@ -84,6 +84,12 @@
 							{$commentField}
 						</td>
 					</tr>
+					{else}
+					<tr class="cell2">
+						<td colspan=2>
+							You may not post profile comments here.
+						</td>
+					</tr>
 					{/if}
 				</table>
 			</td>
