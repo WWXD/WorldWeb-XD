@@ -1,23 +1,23 @@
 <?php
 if (!defined('BLARG')) die();
 
-$board = $_GET['id'];
-if (!$board) $board = '';
-if (!isset($forumBoards[$board])) $board = '';
+$boardlol = $_GET['id'];
+if (!$boardlol) $boardlol = '';
+if (!isset($forumBoards[$boardlol])) $boardlol = '';
 
 if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread")
 {
-	Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, t.id, {1} FROM {threads} t".($board!='' ? ' LEFT JOIN {forums} f ON f.id=t.forum WHERE f.board={2}' : ''), 
+	Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, t.id, {1} FROM {threads} t".($boardlol!='' ? ' LEFT JOIN {forums} f ON f.id=t.forum WHERE f.board={2}' : ''), 
 		$loguserid, time(), $board);
 		
-	die(header("Location: ".actionLink("board", $board)));
+	die(header("Location: ".actionLink("board1", $boardlol)));
 }
 
 $links = array();
 if($loguserid)
-	$links[] = actionLinkTag(__("Mark all forums read"), "board", $board, "action=markallread");
+	$links[] = actionLinkTag(__("Mark all forums read"), "board1", $boardlol, "action=markallread");
 
-MakeCrumbs(forumCrumbs(array('board' => $board)), $links);
+MakeCrumbs(forumCrumbs(array('board1' => $boardlol)), $links);
 
 if ($board == '')
 {
@@ -42,6 +42,6 @@ if ($board == '')
 }
 
 makeAnncBar();
-makeForumListing(0, $board1);
+makeForumListinglol(0, $boardlol);
 
 ?>

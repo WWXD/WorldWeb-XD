@@ -195,7 +195,7 @@ function makeForumListinglol($parent, $boardlol='')
 	if (!NumRows($rFora))
 		return;
 		
-	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $board, -$parent));
+	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $boardlol, -$parent));
 						
 	$rSubfora = Query("	SELECT f.*,
 							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
@@ -351,7 +351,7 @@ function makeForumListinglol($parent, $boardlol='')
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 	
-	RenderTemplate('forumlistlol', array('categories' => $categories));
+	RenderTemplate('forumlist1', array('categories' => $categories));
 }
 
 function makeForumListingmeh($parent, $boardmeh='')
@@ -376,7 +376,7 @@ function makeForumListingmeh($parent, $boardmeh='')
 	if (!NumRows($rFora))
 		return;
 		
-	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $board, -$parent));
+	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $boardmeh, -$parent));
 						
 	$rSubfora = Query("	SELECT f.*,
 							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
@@ -532,7 +532,7 @@ function makeForumListingmeh($parent, $boardmeh='')
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 	
-	RenderTemplate('forumlistmeh', array('categories' => $categories));
+	RenderTemplate('forumlist2', array('categories' => $categories));
 }
 
 

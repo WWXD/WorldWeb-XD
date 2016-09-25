@@ -44,13 +44,6 @@ if(isset($_POST["nuke"]))
 		//Delete usercomments by user or to user
 		query("delete from {usercomments}
 				where uid={0} or cid={0}", $uid);
-
-		//Delete Private Messages
-		query("delete pt from {pmsgs_text} pt
-				left join {pmsgs} p on pt.pid = p.id
-				where p.user={0}", $uid);
-		query("delete from {pmsgs} where userfrom={0}", $uid);
-		query("delete from {pmsgs} where userto={0}", $uid);
 				
 		echo "User data nuked!<br/>";
 		echo "You will need to ", actionLinkTag("Recalculate statistics now", "recalc");

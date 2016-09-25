@@ -2,7 +2,7 @@
 	<table class="outline margin forumlist">
 		<tr class="header1">
 			<th>{$cat.name}</th>
-			<th>Last post</th>
+			<th style="width:25%;">Last post</th>
 		</tr>
 		{foreach $cat.forums as $forum}
 		<tr class="cell1">
@@ -24,3 +24,4 @@
 		</tr>
 		{/foreach}
 	</table>
+{/foreach}

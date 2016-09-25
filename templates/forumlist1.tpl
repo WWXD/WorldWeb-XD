@@ -7,7 +7,7 @@
 			<th style="width: 50px;">Posts</th>
 			<th style="min-width:150px; width:15%;">Last post</th>
 		</tr>
-			{foreach $categories as $cat}
+		{foreach $categories as $cat}
 		<tr class="header0">
 			<th colspan="5" class="center">{$cat.name}</th>
 		</tr>
@@ -36,6 +36,6 @@
 			</td>
 		</tr>
 		{/foreach}
-		
-	{/foreach}
+		{/foreach}
 	</table>
+{/foreach}
