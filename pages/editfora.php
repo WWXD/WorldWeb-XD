@@ -606,7 +606,7 @@ function MakeCatSelect($i, $cats, $fora, $v, $fid)
 			
 			$r .= '				
 				<option value="'.$forum['id'].'"'.($forum['id'] == -$v ? ' selected="selected"':'').'>'
-				.str_repeat('&nbsp; &nbsp; ', $level).htmlspecialchars($forum['title'])
+				.str_repeat('&nbsp; &nbsp; ', $level < 0 ? 0 : $level).htmlspecialchars($forum['title'])
 				.'</option>
 ';
 		}
