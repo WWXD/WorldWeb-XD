@@ -4,6 +4,7 @@ if (!defined('BLARG')) die();
 $viewableforums = ForumsWithPermission('forum.viewforum');
 	
 $homepage = Settings::get('homepageText');
+$homepage = parseBBCode($homepage);
 
 // timestamp => data
 $lastActivity = array();
