@@ -1,13 +1,13 @@
 # Blargboard XD
 
-http://3dshacks.rf.gd/forum/1-support/
+https://www.3dshacks.xyz/forum/1-support/
 
 -------------------------------------------------------------------------------
 
 Board software written in PHP. Uses MySQL for storage.
 
-This is the software that powers 3DS Hacks (http://3dshacks.rf.gd/forum/1/). Or well, not quite.
-The code provided here is a cleaned up version, with all the 3DS Hacks-specific stuff removed.
+This is the software that powers 3DS Hacks (https://www.3dshacks.xyz), well,
+excluding the 3DS Hacks-specific modifications.
 
 It is based off ABXD. ABXD is made by Dirbaio, Nina, GlitchMr & co, and was originally
 Kawa's project. See http://abxd.dirbaio.net/ for more details.
@@ -50,15 +50,6 @@ Everything else is safe to overwrite. Be careful to not lose any changes you hav
 Once that is done, run update.php (http://my.board.for.example/update.php) to update the board's database structure.
 
 Depending on the versions, your update may involve running extra scripts to fix certain things. Make sure to follow those instructions.
-
-## Credits
-
-Mariogamer - for uploading this for me           
-Phase - JSON ranksets, animation mobile, fix MySQL5.7 support and Gist tab                 
-JeDa - Plugins                    
-Lifemushroom - Themes               
-StapleButter - Original BB           
-Maorninja - Leader, coder.           
 
 ## Features
 
@@ -142,6 +133,15 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * Add "moderation" like style for normal users.
  * Add friends/foes list (for automatically setting above)
  * Others here.
+ 
+## Credits
+
+ * *StapleButter* - Original Blargboard we all love.
+ * *Maorninja* - Leader, coder.
+ * *Mariogamer* - Uploading original Blargboard.
+ * *Phase* - JSON ranksets, animation mobile, fix MySQL5.7 support and Gist tab.
+ * *JeDa* - Plugins, coding.
+ * *LifeMushroom* - Themes.
 
 -------------------------------------------------------------------------------
 
