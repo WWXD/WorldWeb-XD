@@ -120,6 +120,7 @@ $faq = str_replace("<themeexample1 />", DoGeshi($code1), $faq);
 $faq = str_replace("<themeexample2 />", DoGeshi($code2), $faq);
 $faq = str_replace("<themelist />", $finaltlist, $faq);
 $faq = str_replace("<admin />", $admin, $faq);
+$faq = parseBBCode($faq);
 
 echo $faq;
 
