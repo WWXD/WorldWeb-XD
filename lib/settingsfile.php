@@ -26,12 +26,6 @@ if (!defined('BLARG')) die();
 			"name" => "Text in breadcrumbs' first link",
 			'category' => 'Board identity'
 		),
-		"menuMainName" => array (
-			"type" => "text",
-			"default" => "Main",
-			"name" => "Text in menu's first link",
-			'category' => 'Board identity'
-		),
 		
 		
 		"dateformat" => array (
