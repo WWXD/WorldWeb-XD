@@ -1,4 +1,3 @@
-	{foreach $categories as $cat}
 	<table class="outline margin forumlist">
 		<tr class="header1">
 			<th>&nbsp;</th>
@@ -38,4 +37,3 @@
 		{/foreach}
 		{/foreach}
 	</table>
-{/foreach}
