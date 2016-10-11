@@ -1,2 +1,0 @@
-Holo
-Based on the look of Android 4.0.<br />Theme by Nina.

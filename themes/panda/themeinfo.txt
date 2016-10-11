@@ -1,2 +1,0 @@
-Panda
-By Kiyoshi, loosely based on his virus scanner
