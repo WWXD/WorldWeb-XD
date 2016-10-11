@@ -1,3 +1,0 @@
-name=Git Puller
-description=Adds an admin option that runs "git pull", and reports revision and branch in the footer.
-

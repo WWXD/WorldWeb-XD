@@ -116,14 +116,11 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 
 (no particular order there)
 
- * Subtitles
+ * Thread Description
  * Multiple board listing
- * A Better post toolbar
- * SubTitles
+ * A Better post toolbar 
  * Better Mobile layout
- * Makes Favorites usable
- * make userlinks usable
- * Multiple Forum listing layout
+ * Make Favorites & userlinks usable 
  * Multiple Board layouts
  * Switch from logo to text anytime
  * Make filter posts anytime without editing the lib folder
@@ -132,6 +129,8 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * Add events in the calendar
  * Add "moderation" like style for normal users.
  * Add friends/foes list (for automatically setting above)
+ * PM thread
+ * Quick quote
  * Others here.
  
 ## Credits

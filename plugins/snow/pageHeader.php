@@ -1,1 +1,0 @@
-<script type="text/javascript" src="<?php print resourceLink("plugins/snow/script/snowstorm.js");?>"></script>
