@@ -24,24 +24,6 @@ function actionLink($action, $id="", $args="", $urlname="")
 	// calling plugins at EVERY link?! way to waste performances
 	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
 
-if ($mobileLayout) {
-     $res = "";
-
-	if($action != MAIN_PAGE)
-		$res .= "&page=$action";
-
-	if($id != "")
-		$res .= "&id=".urlencode($id);
-	if($args)
-		$res .= "&$args";
-
-	if($res == "")
-		return $boardroot;
-	else
-		return $boardroot."?".substr($res, 1);
-
-} else {
-
 	// rewritten links
 	if ($action == MAIN_PAGE) $action = '';
 	else $action .= '/';
@@ -49,11 +31,12 @@ if ($mobileLayout) {
 	if ($id)
 	{
 		if ($urlname) $id .= '-'.urlNamify($urlname);
-		$id .= '/';
+		$id .= '';
 	}
 	else $id = '';
 	
-	return $boardroot.$action.$id.($args ? '?'.$args : ''); }
+	return $boardroot.$action.$id.($args ? '?'.$args : '');
+	
 }
 
 
