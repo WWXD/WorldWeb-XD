@@ -28,7 +28,7 @@ $bbcodeCallbacks = array
 	"[td" => "bbcodeTableCell",
 
 	'[youtube' => 'bbcodeYoutube',
-  '[gist' => 'bbcodeGist',
+    '[gist' => 'bbcodeGist',
 
 	//Meme BBCode starts here
 	"[instameme" => "bbcodeMeme",
@@ -285,19 +285,19 @@ function bbcodeGist($contents, $arg) {
 function bbcodeMeme($contents, $arg, $parenttag)
 {
 	//Detecting what meme to use from whats inbetween the tag and the close tag
-	if ($contents == '1')
+	if ($arg == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
-	elseif ($contents == '2')
+	elseif ($arg == '2')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme2.jpg" alt="Instameme2"/>';
-	elseif ($contents == '3')
+	elseif ($arg == '3')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme3.jpg" alt="Instameme3"/>';
-	elseif ($contents == '4')
+	elseif ($arg == '4')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme4.png" alt="Instameme4"/>';
-	elseif ($contents == '5')
+	elseif ($arg == '5')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme5.jpg" alt="Instameme5"/>';
-	elseif ($contents == '6')
+	elseif ($arg == '6')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme6.png" alt="Instameme6"/>';
-	elseif ($contents == '7')
+	elseif ($arg == '7')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
 	//If a number was found that is not in the collection
 	else
