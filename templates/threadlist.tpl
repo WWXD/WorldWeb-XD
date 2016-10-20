@@ -23,7 +23,7 @@
 				{$thread.gotonew}
 				{$thread.poll}
 				{$thread.link}
-				{if $thread.pagelinks} <small>[{$thread.pagelinks}]</small>{/if}
+				{if $thread.pagelinks} <small>[{$thread.pagelinks}]</small>{/if}<br><i>{$thread.description}</i>
 			</td>
 			{if $showforum}<td class="center">{$thread.forumlink}</td>{/if}
 			<td class="center">{$thread.startuser}</td>

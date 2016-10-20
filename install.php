@@ -190,7 +190,7 @@
 					Congratulations!
 				</div>
 				<div class="box cell center">
-					The Blargboard XD installation was successful. You may now <a href="./?page=login">proceed to your board and login</a>. Thanks for choosing Blargboard Plus!
+					The Blargboard XD installation was successful. You may now <a href="./login/">proceed to your board and login</a>. Thanks for choosing Blargboard XD!
 				</div>
 			</div>
 		</div>
@@ -245,7 +245,7 @@
 						<small>Once the installation is complete, the owner account with these credentials will be made. Sign into that when you're done.</small>
 						</div>
 						<div class="box cell center">
-							<input type="submit" name="submit" value="Install Blargboard Plus">
+							<input type="submit" name="submit" value="Install Blargboard XD">
 						</div>
 					</div>
 				</form>

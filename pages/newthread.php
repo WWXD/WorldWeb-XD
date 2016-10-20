@@ -228,9 +228,9 @@ else if(isset($_POST['actionpost']))
 		else
 			$pod = 0;
 
-		$rThreads = Query("insert into {threads} (forum, user, title, icon, lastpostdate, lastposter, closed, sticky, poll)
-										  values ({0},   {1},  {2},   {3},  {4},          {1},        {5},   {6},     {7})",
-										    $fid, $loguserid, $_POST['title'], $iconurl, time(), $closed, $sticky, $pod);
+		$rThreads = Query("insert into {threads} (forum, user, title, icon, lastpostdate, lastposter, closed, sticky, poll, description)
+										  values ({0},   {1},  {2},   {3},  {4},          {1},        {5},   {6},     {7},  {8})",
+										    $fid, $loguserid, $_POST['title'], $iconurl, time(), $closed, $sticky, $pod, $_POST['description']);
 		$tid = InsertId();
 
 		$rUsers = Query("update {users} set posts={0}, lastposttime={1} where id={2} limit 1", $loguser['posts']+1, time(), $loguserid);
@@ -383,6 +383,7 @@ if (HasPermission('mod.stickthreads', $forum['id']))
 
 $fields = array(
 	'title' => "<input type=\"text\" name=\"title\" size=80 maxlength=\"60\" value=\"$trefill\">",
+	'description' => "<input type=\"text\" name=\"description\" size=80 maxlength=\"60\" value=\"$trefill\">",
 	'icon' => $iconSettings,
 	'pollQuestion' => "<input type=\"text\" name=\"pollQuestion\" value=\"".htmlspecialchars($_POST['pollQuestion'])."\" size=80 maxlength=\"100\">",
 	'pollOptions' => $pollSettings,

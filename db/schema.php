@@ -405,6 +405,7 @@ $tables = array
 			"closed" => $bool,
 			"sticky" => $bool,
 			"poll" => $genericInt,
+			"description" => "varchar(100)".$utf8ci.$notNull,
 		),
 		"special" => $keyID.", key `forum` (`forum`), key `user` (`user`), key `sticky` (`sticky`), key `lastpostdate` (`lastpostdate`), key `date` (`date`), fulltext key `title` (`title`)"
 	),
