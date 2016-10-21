@@ -41,7 +41,37 @@ $knownBrowsers = array
 	"Nokia" => "Nokia mobile",
 );
 
-$mobileBrowsers = array('Opera Tablet', 'Opera Mobile', 'Opera Mini', 'Nintendo DSi', 'Nitro', 'Nintendo 3DS', 'Android', 'Nokia', 'iPod', 'iPad', 'iPhone');
+$knownOSes = array
+(
+	"Nintendo 3DS" => "Nintendo 3DS",
+	'iPod' => 'iPod',
+	'iPad' => 'iPad',
+	'iPhone' => 'iPhone',
+	"HTC_" => "HTC mobile",
+	"Series 60" => "S60",
+	"Nexus" => "Android (Nexus %)",
+	"Android" => "Android",
+	"Windows 4.0" => "Windows 95",
+	"Windows 4.1" => "Windows 98",
+	"Windows 4.9" => "Windows ME",
+	"Windows NT 5.0" => "Windows NT",
+	"Windows NT 5.1" => "Windows XP",
+	"Windows NT 5.2" => "Windows XP 64",
+	"Windows NT 6.0" => "Windows Vista",
+	"Windows NT 6.1" => "Windows 7",
+	"Windows NT 6.2" => "Windows 8",
+	"Windows Mobile" => "Windows Mobile",
+	"FreeBSD" => "FreeBSD",
+	"Ubuntu" => "Ubuntu",
+	"Linux" => "GNU/Linux %",
+	"Mac OS X" => "Mac OS X %",
+	"BlackBerry" => "BlackBerry",
+	"Nintendo Wii" => "Nintendo Wii",
+	"Nitro" => "Nintendo DS",
+	"Firefox" => "Firefox OS",
+);
+
+$mobileBrowsers = array('Opera Tablet', 'Opera Mobile', 'Opera Mini', 'Nintendo DSi', 'Nitro', 'Nintendo 3DS', 'Android', 'Nokia', 'iPod', 'iPad', 'iPhone', 'Firefox OS');
 $mobileLayout = false;
 
 $ua = $_SERVER['HTTP_USER_AGENT'];
@@ -58,6 +88,8 @@ foreach($knownBrowsers as $code => $name)
 			$version = substr($ua, strpos($ua, "Version/") + 8);
 			
 		if (in_array($code, $mobileBrowsers)) $mobileLayout = true;
+
+		$lastKnownBrowser = $name." ".$version;
 		break;
 	}
 }
@@ -67,6 +99,33 @@ else if ($_COOKIE['forcelayout'] == -1) $mobileLayout = false;
 
 $oldAndroid = false;
 if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;
+
+$browserName = $name;
+$browserVers = (float)$version;
+
+$os = "";
+foreach($knownOSes as $code => $name)
+{
+	if (strpos($ua, "X11")) $suffix = " (X11)";
+	else if (strpos($ua, "textmode")) $suffix = " (text mode)";
+	if (strpos($ua, $code) !== FALSE)
+	{
+		$os = $name;
+		if(strpos($name, "%") !== FALSE)
+		{
+			$versionStart = strpos($ua, $code) + strlen($code);
+			$version = GetVersion($ua, $versionStart);
+			$os = str_replace("%", $version, $os);
+		}
+		//If we're using the default Android browser, just report the version of Android being used ~Nina
+		$lkbhax = explode(' ', $lastKnownBrowser);
+		if ($lkbhax[0] == "Android") break;
+		if (isset($suffix)) $os = $os . $suffix;
+		if (in_array($code, $mobileBrowsers)) $mobileLayout = true;
+		$lastKnownBrowser = format(__("{0} on {1}"), $lastKnownBrowser, $os);
+		break;
+	}
+}
 
 $lastKnownBrowser = $ua;
 
@@ -97,6 +156,15 @@ function GetVersion($ua, $versionStart)
 			}
 			else if(strpos("0123456789.-", $ch) !== FALSE)
 				$version .= $ch;
+			else if(strpos(":/", $ch) !== FALSE)
+				continue;
+			else if(!$numDots)
+			{
+				preg_match('/\G\w+/', $ua, $matches, 0, $versionStart + 1);
+				return $matches[0];
+			}
+			else
+				break;
 		}
 	}
 	return $version;

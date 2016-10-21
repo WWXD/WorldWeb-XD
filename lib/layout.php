@@ -120,6 +120,16 @@ function forumCrumbs($forum)
 	return $ret;
 }
 
+function makeForumCrumbs($crumbs, $forum)
+{
+	while(true)
+	{
+		$crumbs->addStart(new PipeMenuLinkEntry($forum['title'], "forum", $forum["id"]));
+		if($forum["catid"] >= 0) break;
+		$forum = Fetch(Query("SELECT * from {forums} WHERE id={0}", -$forum["catid"]));
+	}
+}
+
 function doThreadPreview($tid, $maxdate=0)
 {
 	global $loguser;
@@ -171,6 +181,15 @@ function makeCrumbs($path, $links='')
 	
 	$layout_crumbs = $path;
 	$layout_actionlinks = $links;
+}
+
+function makeBreadcrumbs($path)
+{
+	global $layout_crumbs;
+	$path->addStart(new actionLink(Settings::get("breadcrumbsMainName"), "board"));
+	$path->setClass("breadcrumbs");
+	$bucket = "breadcrumbs"; include("lib/pluginloader.php");
+	$layout_crumbs = $path;
 }
 
 function makeForumListinglol($parent, $boardlol='')

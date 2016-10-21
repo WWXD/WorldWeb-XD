@@ -81,9 +81,20 @@ function getPluginData($plugin, $load = true)
 	{
 		if(substr($f, -4) == ".php")
 		{
-			$bucketname = substr($f, 0, -4);
-			$plugindata['buckets'][] = $bucketname;
-			if($load) $pluginbuckets[$bucketname][] = $plugindata['dir'];
+			
+			if(substr($f, 0, 5) == "page_") {
+				$pagename = substr($f, 5, strlen($f) - 4 - 5);
+				$plugindata["pages"][] = $pagename;
+				if($load) $pluginpages[$pagename] = $plugindata['dir'];
+			} else if(substr($f, 0, 5) == "tpl_"){
+				$tplname = substr($f, 0, -4);
+				$plugindata['templates'][] = $tplname;
+				if($load) $plugintemplates[$tplname] = $plugindata['dir'];
+			} else {
+				$bucketname = substr($f, 0, -4);
+				$plugindata['buckets'][] = $bucketname;
+				if($load) $pluginbuckets[$bucketname][] = $plugindata['dir'];
+			}
 		}
 	}
 	closedir($pdir);

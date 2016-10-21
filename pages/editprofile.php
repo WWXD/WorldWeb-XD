@@ -704,12 +704,12 @@ foreach($themes as $themeKey => $themeData)
 
 	$themeList .= format(
 '
-	<div style="display: inline-block;" class="theme" title="{0}">
+	<div style="display: inline-block; padding: 15px 15px 15px 15px;" class="theme" title="{0}">
 		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
 			<table class="outline"><tr class="header1">
-			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></th>
+			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><div style="padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></div></th>
 			<th class="center"><strong>{0}</strong></th></tr>
-			<tr class="header0"><th colspan="2">{2}</th></tr>
+			<tr class="header0"><th colspan="2"><div style="padding: 5px 5px 5px 5px;">{2}</div></th></tr>
 			<tr><td>&nbsp;</td><td>{1}</td></tr>
 			<tr><td>&nbsp;</td><td>{5}</td></tr></table>
 		</label>

@@ -3,10 +3,18 @@
 if (!defined('BLARG')) die();
 
 $bots = array(
-	"Microsoft URL Control",
-	"Yahoo! Slurp",
+	"Microsoft URL Control", "Bingbot",
+	"Yahoo! Slurp", "Slurp",
+	"Mediapartners-Google", "AdsBot-Google-Mobile-Apps", "Googlebot-News", "Googlebot-Image", "GoogleBot", "AdsBot-Google", "AdsBot-Google-Mobile-Apps",
 	"Twiceler",
-	"facebook",
+	"facebook", "facebookexternalhit",
+	"DuckDuckBot",
+	"Baiduspider", "Baiduspider-ads", "Baiduspider-cpro", "	Baiduspider-favo", "Baiduspider-news", "Baiduspider-video", "Baiduspider-image",
+	"YandexBot",
+	"Sogou Pic Spider", "Sogou head spider", "Sogou web spider", "Sogou Orion spider", "Sogou-Test-Spider"
+	"ia_archiver",
+	"catchbot",
+	"Gigabot"
 	"bot","spider","crawler", //catch-all
 );
 

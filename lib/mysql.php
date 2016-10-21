@@ -56,6 +56,12 @@ function Query_AddUserInput($match)
 
 	if($format == "i") return (string)((int)$var);
 	if($format == "u") return (string)max((int)$var, 0);
+	if($format == "l") 
+	{
+		//This is used for storing integers using the full 32bit range.
+		//TODO: add code to emulate the 32bit overflow on 64bit.
+		return (string)((int)$var);
+	}
 	return '\''.SqlEscape($var).'\'';
 }
 
@@ -130,8 +136,9 @@ function rawQuery($query)
 			<input type=\"hidden\" name=\"action\" value=\"Install\" />
 			<input type=\"hidden\" name=\"existingSettings\" value=\"true\" />
 			<input type=\"submit\" value=\"Click here to re-run the installation script\" /></form>");*/
-		}	
-		trigger_error("MySQL Error.", E_USER_ERROR);
+		}
+		else
+				trigger_error("MySQL Error.", E_USER_ERROR);
 		die("MySQL Error.");
 	}
 
