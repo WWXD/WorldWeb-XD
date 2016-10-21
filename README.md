@@ -36,7 +36,10 @@ Browse to your board's install.php (http://my.board.for.example/install.php) and
 If everything went fine, browse to your freshly installed board and configure it. If not, let us know.
 
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
-If you have HTML knowledge, you can even edit the templates to change your board's look more in-depth.
+
+If you want plugins, they're here: https://github.com/Blargboard-XD/Plugins      
+If you want themes, they're here: https://github.com/Blargboard-XD/Themes     
+If you want ranksets, they're here: https://github.com/Blargboard-XD/Ranksets
 
 ## How to update your board
 
