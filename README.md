@@ -106,7 +106,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-The Blargboard help forum is at 3DS Hacks: http://3dshacks.rf.gd/forum/1-support/
+The Blargboard help forum is at 3DS Hacks: http://3dshacks.xyz/forum/1-support/
 
 If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
 
@@ -119,10 +119,7 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 
 (no particular order there)
 
- * Thread Description
- * Multiple board listing
- * A Better post toolbar 
- * Better Mobile layout
+ * Display Thread Description
  * Make Favorites & userlinks usable 
  * Multiple Board layouts
  * Switch from logo to text anytime
@@ -134,7 +131,9 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * Add friends/foes list (for automatically setting above)
  * PM thread
  * Quick quote
- * Others here.
+ * RPG/Item Shop/Battle.
+ * Port ABXD link feature.
+ * Others here
  
 ## Credits
 

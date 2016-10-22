@@ -124,7 +124,7 @@ function makeForumCrumbs($crumbs, $forum)
 {
 	while(true)
 	{
-		$crumbs->addStart(new PipeMenuLinkEntry($forum['title'], "forum", $forum["id"]));
+		$crumbs->addStart(new actionLink($forum['title'], "forum", $forum["id"]));
 		if($forum["catid"] >= 0) break;
 		$forum = Fetch(Query("SELECT * from {forums} WHERE id={0}", -$forum["catid"]));
 	}
