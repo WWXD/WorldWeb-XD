@@ -124,7 +124,7 @@ function makeForumCrumbs($crumbs, $forum)
 {
 	while(true)
 	{
-		$crumbs->addStart(new actionLink($forum['title'], "forum", $forum["id"]));
+		$crumbs->addStart(new PipeMenuLinkEntry($forum['title'], "forum", $forum["id"]));
 		if($forum["catid"] >= 0) break;
 		$forum = Fetch(Query("SELECT * from {forums} WHERE id={0}", -$forum["catid"]));
 	}
@@ -186,7 +186,7 @@ function makeCrumbs($path, $links='')
 function makeBreadcrumbs($path)
 {
 	global $layout_crumbs;
-	$path->addStart(new actionLink(Settings::get("breadcrumbsMainName"), "board"));
+	$path->addStart(new PipeMenuLinkEntry(Settings::get("breadcrumbsMainName"), "board"));
 	$path->setClass("breadcrumbs");
 	$bucket = "breadcrumbs"; include("lib/pluginloader.php");
 	$layout_crumbs = $path;

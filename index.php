@@ -31,6 +31,26 @@ $metaStuff = array(
 	'tags' => Settings::get('metaTags')
 );
 
+// Protect from <iframe> password steal hack
+header('X-Frame-Options: DENY');
+
+
+//Use buffering to draw the page. 
+//Useful to have it disabled when running from the terminal.
+$useBuffering = true;
+//Support for running pages from the terminal.
+if(isset($argv))
+{
+	$_GET = array();
+	$_GET["page"] = $argv[1];
+	
+	$_SERVER = array();
+	$_SERVER["REMOTE_ADDR"] = "0.0.0.0";
+	
+	$ajaxPage = true;
+	$useBuffering = false;
+}
+
 
 //=======================
 // Do the page
@@ -42,10 +62,25 @@ else
 if(!ctype_alnum($page))
 	$page = MAIN_PAGE;
 
+if($page == $mainPage)
+{
+	if(isset($_GET['fid']) && (int)$_GET['fid'] > 0 && !isset($_GET['action']))
+		die(header("Location: ".actionLink("forum", (int)$_GET['fid'])));
+	if(isset($_GET['tid']) && (int)$_GET['tid'] > 0)
+		die(header("Location: ".actionLink("thread", (int)$_GET['tid'])));
+	if(isset($_GET['uid']) && (int)$_GET['uid'] > 0)
+		die(header("Location: ".actionLink("profile", (int)$_GET['uid'])));
+	if(isset($_GET['pid']) && (int)$_GET['pid'] > 0)
+		die(header("Location: ".actionLink("post", (int)$_GET['pid'])));
+}
+
 define('CURRENT_PAGE', $page);
 
 ob_start();
 $layout_crumbs = "";
+
+if($useBuffering)
+	ob_start();
 
 $fakeerror = false;
 if ($loguser['flags'] & 0x2)
@@ -99,7 +134,10 @@ if (!$fakeerror)
 
 if($ajaxPage)
 {
-	ob_end_flush();
+	if($useBuffering) {
+		header("Content-Type: text/plain");
+		ob_end_flush();
+	}
 	die();
 }
 
@@ -128,6 +166,23 @@ else $mobileswitch .= '<a href="?forcelayout=1" rel="nofollow">Force mobile view
 
 $notifications = getNotifications();
 
+ob_start();
+$bucket = "userBar"; include("./lib/pluginloader.php");
+/*
+if($rssBar)
+{
+	write("
+	<div style=\"float: left; width: {1}px;\">&nbsp;</div>
+	<div id=\"rss\">
+		{0}
+	</div>
+", $rssBar, $rssWidth + 4);
+}*/
+$bucket = "topBar"; include("./lib/pluginloader.php");
+$layout_bars = ob_get_contents();
+ob_end_clean();
+
+
 
 //=======================
 // Misc stuff
@@ -145,12 +200,37 @@ if($title != '')
 //=======================
 // Board logo and theme
 
-$layout_logopic = 'img/logo.png';
-if (!file_exists(__DIR__.'/'.$layout_logopic))
-	$layout_logopic = 'img/logo.jpg';
-$layout_logopic = resourceLink($layout_logopic);
 
-$favicon = resourceLink('img/favicon.ico');
+function checkForImage(&$image, $external, $file)
+{
+	global $dataDir, $dataUrl;
+	if($image) return;
+	if($external)
+	{
+		if(file_exists($dataDir.$file))
+			$image = $dataUrl.$file;
+	}
+	else
+	{
+		if(file_exists($file))
+			$image = resourceLink($file);
+	}
+}
+
+checkForImage($layout_logopic, true, "logos/logo_$theme.png");
+checkForImage($layout_logopic, true, "logos/logo_$theme.jpg");
+checkForImage($layout_logopic, true, "logos/logo_$theme.gif");
+checkForImage($layout_logopic, true, "logos/logo.png");
+checkForImage($layout_logopic, true, "logos/logo.jpg");
+checkForImage($layout_logopic, true, "logos/logo.gif");
+checkForImage($layout_logopic, false, "themes/$theme/logo.png");
+checkForImage($layout_logopic, false, "themes/$theme/logo.jpg");
+checkForImage($layout_logopic, false, "themes/$theme/logo.gif");
+checkForImage($layout_logopic, false, "img/logo.png");
+
+checkForImage($favicon, true, "logos/favicon.gif");
+checkForImage($favicon, true, "logos/favicon.ico");
+checkForImage($favicon, false, "img/favicon.ico");
 
 $themefile = "themes/$theme/style.css";
 if(!file_exists(__DIR__.'/'.$themefile))

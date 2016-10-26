@@ -11,10 +11,10 @@ $bots = array(
 	"DuckDuckBot",
 	"Baiduspider", "Baiduspider-ads", "Baiduspider-cpro", "	Baiduspider-favo", "Baiduspider-news", "Baiduspider-video", "Baiduspider-image",
 	"YandexBot",
-	"Sogou Pic Spider", "Sogou head spider", "Sogou web spider", "Sogou Orion spider", "Sogou-Test-Spider"
+	"Sogou Pic Spider", "Sogou head spider", "Sogou web spider", "Sogou Orion spider", "Sogou-Test-Spider",
 	"ia_archiver",
 	"catchbot",
-	"Gigabot"
+	"Gigabot",
 	"bot","spider","crawler", //catch-all
 );
 
@@ -78,6 +78,7 @@ function isIPBanned($ip)
 {
 	$rIPBan = Query("select * from {ipbans} where instr({0}, ip)=1", $ip);
 	
+	$result = false;
 	while ($ipban = Fetch($rIPBan))
 	{
 		// check if this IP ban is actually good
@@ -86,21 +87,24 @@ function isIPBanned($ip)
 			continue;
 		
 		return $ipban;
+		
+		if (IPMatches($ip, $ipban['ip']))
+			if ($ipban['whitelisted'])
+				return false;
+			else
+				$result = $ipban;
 	}
-	return false;
+	return $result;
+}
+
+function IPMatches($ip, $mask) {
+	return $ip === $mask || $mask[strlen($mask) - 1] === '.';
 }
 
 $ipban = isIPBanned($_SERVER['REMOTE_ADDR']);
 
 if($ipban)
-{
-	$adminemail = Settings::get('ownerEmail');
-	
-	print "You have been IP-banned from this board".($ipban['date'] ? " until ".gmdate("M jS Y, G:i:s",$ipban['date'])." (GMT). That's ".TimeUnits($ipban['date']-time())." left" : "").". Attempting to get around this in any way will result in worse things.";
-	print '<br>Reason: '.$ipban['reason'];
-	if ($adminemail) print '<br><br>If you were erroneously banned, contact the board owner at: '.$adminemail;
-	exit();
-}
+	$_GET["page"] = "ipbanned";
 
 function doHash($data)
 {

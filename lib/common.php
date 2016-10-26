@@ -87,9 +87,7 @@ include(__DIR__."/loguser.php");
 include(__DIR__."/permissions.php");
 
 if (Settings::get('maintenance') && !$loguser['root'] && (!isset($_GET['page']) || $_GET['page'] != 'login'))
-{
-	die('The board is in maintenance mode, please try again later. Our apologies for the inconvenience.');
-}
+	$_GET["page"] = "maintenance";
 
 include(__DIR__."/notifications.php");
 include(__DIR__."/firewall.php");
@@ -110,6 +108,7 @@ include(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
 $tpl->assign('loguserid', $loguserid);
+include("./class/PipeMenuBuilder.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 

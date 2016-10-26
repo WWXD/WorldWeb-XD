@@ -11,7 +11,7 @@
 		
 		<tr class="cell{cycle values='0,1'}">
 			<td class="cell2 newMarker">{$pm.newIcon}</td>
-			<td>{$pm.link}</td>
+			<td>{$pm.link}<br><i>{$pm.description}</i></td>
 			<td class="center">{$pm.userlink}</td>
 			<td class="center">{$pm.formattedDate}</td>
 			<td class="center">{$pm.deleteCheck}</td>

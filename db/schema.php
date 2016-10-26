@@ -232,6 +232,7 @@ $tables = array
 		(
 			"pid" => $AI,
 			"title" => "varchar(256)".$utf8ci.$notNull,
+			"description" => "varchar(256)".$utf8ci.$notNull,
 			"text" => $postText,
 		),
 		"special" => "primary key (`pid`)"
