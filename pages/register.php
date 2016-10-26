@@ -23,8 +23,8 @@ if($_POST['register'])
 	}
 	else
 	{
-		$name = $_POST['name'];
-		$cname = trim(str_replace(" ","", strtolower($name)));
+		$name = trim($_POST['name']);
+		$cname = str_replace(" ","", strtolower($name));
 
 		$rUsers = Query("select name, displayname from {users}");
 		while($user = Fetch($rUsers))
