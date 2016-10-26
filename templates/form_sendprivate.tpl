@@ -21,14 +21,6 @@
 		</tr>
 		<tr class="cell0">
 			<td class="cell2 center">
-				Description
-			</td>
-			<td>
-				{$fields.description}
-			</td>
-		</tr>
-		<tr class="cell0">
-			<td class="cell2 center">
 				Message
 			</td>
 			<td>

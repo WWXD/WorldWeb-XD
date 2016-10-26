@@ -148,8 +148,6 @@ while($pm = Fetch($rPM))
 		$pmdata['link'] = actionLinkTag(htmlspecialchars($pm['title']), 'sendprivate', '', 'pid='.$pm['id'].$snoop);
 	else
 		$pmdata['link'] = actionLinkTag(htmlspecialchars($pm['title']), 'showprivate', $pm['id'], substr($snoop,1));
-	
-	$pmdata['description'] = actionLinkTag(htmlspecialchars($pm['description']), '', '', '');
 
 	$pmdata['deleteCheck'] = $snoop ? '' : "<input type=\"checkbox\" name=\"delete[{$pm['id']}]\">";
 	
@@ -163,7 +161,6 @@ echo "
 	
 RenderTemplate('pmlist', array(
 	'pms' => $pms,
-	'description' => $description,
 	'inbox' => !$showWhat,
 	'deleteCheckAll' => "<input type=\"checkbox\" id=\"ca\" onchange=\"checkAll();\">",
 	'deleteCheckedLink' => "<a href=\"javascript:void();\" onclick=\"document.getElementById('pmform').submit();\">".__("Delete checked")."</a>",

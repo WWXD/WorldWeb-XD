@@ -8,10 +8,19 @@
 */
 
 INSERT INTO `{$dbpref}categories` (`id`, `name`, `corder`, `board`) VALUES
-(1, 'Sample category', 0, '');
+(1, 'Sample category', 0, ''),
+(2, 'Staff Corner', -2147483648, ''),
+(3, 'End', 0, '');
 
 INSERT INTO `{$dbpref}forums` (`id`, `title`, `description`, `catid`, `numthreads`, `numposts`, `lastpostdate`, `lastpostuser`, `lastpostid`, `hidden`, `forder`, `board`, `l`, `r`, `redirect`, `offtopic`) VALUES
-(1, 'Sample forum', 'This is a sample forum. You might want to add some more, though.', 1, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0);
+(1, 'Announcements', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 5, 6, '', 0),
+(4, 'Latest news', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 7, 8, '', 0),
+(2, 'Administrator section', 'Modifying settings, forums, promoting users, etc...', 2, 0, 0, 0, 0, 0, 0, 0, '', 13, 14, '', 0),
+(3, 'Moderator Section', 'Banning users, moderating forums, etc...', 2, 0, 0, 0, 0, 0, 0, 0, '', 15, 16, '', 0),
+(5, 'General Chat', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 9, 10, '', 0),
+(6, 'Site Discussion', 'Found a bug? Got a suggestion? Post it here.', 1, 0, 0, 0, 0, 0, 0, 0, '', 11, 12, '', 0),
+(7, 'Trash', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0),
+(8, 'Deleted', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 3, 4, '', 0);
 
 INSERT INTO `{$dbpref}misc` (`version`, `views`, `hotcount`, `maxusers`, `maxusersdate`, `maxuserstext`, `maxpostsday`, `maxpostsdaydate`, `maxpostshour`, `maxpostshourdate`, `milestone`) VALUES
 (1337, 0, 30, 0, 0, '', 0, 0, 0, 0, '');

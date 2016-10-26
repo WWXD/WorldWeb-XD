@@ -35,7 +35,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		$block = (int)$_GET['block'];
 		$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 		$isBlocked = NumRows($rBlock);
-		if($block && !$isBlocked)
+		if($block && !$isBlocked && $loguserid != $id)
 			$rBlock = Query("insert into {blockedlayouts} (user, blockee) values ({0}, {1})", $id, $loguserid);
 		elseif(!$block && $isBlocked)
 			$rBlock = Query("delete from {blockedlayouts} where user={0} and blockee={1} limit 1", $id, $loguserid);
@@ -88,7 +88,7 @@ if($loguserid)
 	$isBlocked = NumRows($rBlock);
 	if($isBlocked)
 		$blockLayoutLink = actionLinkTag($unblocktext, "profile", $id, "block=0&token={$loguser['token']}");
-	else
+	else if($id != $loguserid)
 		$blockLayoutLink = actionLinkTag($blocktext, "profile", $id, "block=1&token={$loguser['token']}");
 }
 
