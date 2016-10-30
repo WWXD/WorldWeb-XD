@@ -15,12 +15,9 @@ INSERT INTO `{$dbpref}categories` (`id`, `name`, `corder`, `board`) VALUES
 INSERT INTO `{$dbpref}forums` (`id`, `title`, `description`, `catid`, `numthreads`, `numposts`, `lastpostdate`, `lastpostuser`, `lastpostid`, `hidden`, `forder`, `board`, `l`, `r`, `redirect`, `offtopic`) VALUES
 (1, 'Announcements', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 5, 6, '', 0),
 (4, 'Latest news', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 7, 8, '', 0),
-(2, 'Administrator section', 'Modifying settings, forums, promoting users, etc...', 2, 0, 0, 0, 0, 0, 0, 0, '', 13, 14, '', 0),
-(3, 'Moderator Section', 'Banning users, moderating forums, etc...', 2, 0, 0, 0, 0, 0, 0, 0, '', 15, 16, '', 0),
 (5, 'General Chat', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 9, 10, '', 0),
 (6, 'Site Discussion', 'Found a bug? Got a suggestion? Post it here.', 1, 0, 0, 0, 0, 0, 0, 0, '', 11, 12, '', 0),
-(7, 'Trash', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0),
-(8, 'Deleted', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 3, 4, '', 0);
+(7, 'Trash', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0);
 
 INSERT INTO `{$dbpref}misc` (`version`, `views`, `hotcount`, `maxusers`, `maxusersdate`, `maxuserstext`, `maxpostsday`, `maxpostsdaydate`, `maxpostshour`, `maxpostshourdate`, `milestone`) VALUES
 (1337, 0, 30, 0, 0, '', 0, 0, 0, 0, '');
@@ -31,7 +28,8 @@ INSERT INTO `{$dbpref}usergroups` (`id`, `name`, `title`, `rank`, `type`, `displ
 (1, 'Local moderators', 'Local moderator', 100, 0, 1, '#D8E8FE', '#FFB3F3', '#EEB9BA'),
 (2, 'Global moderators', 'Global moderator', 200, 0, 1, '#AFFABE', '#C762F2', '#47B53C'),
 (3, 'Administrators', 'Administrator', 300, 0, 1, '#FFEA95', '#C53A9E', '#F0C413'),
-(4, 'Owners', 'Owner', 1000, 0, 1, '#5555FF', '#FF5588', '#FF55FF');
+(4, 'Owners', 'Owner', 1000, 0, 1, '#5555FF', '#FF5588', '#FF55FF'),
+(5, 'VIP', 'VIP', 50, 0, 0, '#D8E8FE', '#FFB3F3', '#EEB9BA');
 
 INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VALUES
 (0, -1, 'admin.adminusercomments', 0, -1),
@@ -41,6 +39,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, -1, 'admin.editsettings', 0, -1),
 (0, -1, 'admin.editsmilies', 0, -1),
 (0, -1, 'admin.editusers', 0, -1),
+(0, -1, 'admin.userdelete', 0, -1),
 (0, -1, 'admin.ipsearch', 0, -1),
 (0, -1, 'admin.manageipbans', 0, -1),
 (0, -1, 'admin.viewadminnotices', 0, -1),
@@ -86,6 +85,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 0, 'admin.editsettings', 0, -1),
 (0, 0, 'admin.editsmilies', 0, -1),
 (0, 0, 'admin.editusers', 0, -1),
+(0, 0, 'admin.userdelete', 0, -1),
 (0, 0, 'admin.ipsearch', 0, -1),
 (0, 0, 'admin.manageipbans', 0, -1),
 (0, 0, 'admin.viewadminnotices', 0, -1),
@@ -131,6 +131,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 1, 'admin.editsettings', 0, -1),
 (0, 1, 'admin.editsmilies', 0, -1),
 (0, 1, 'admin.editusers', 0, -1),
+(0, 1, 'admin.userdelete', 0, -1),
 (0, 1, 'admin.ipsearch', 0, -1),
 (0, 1, 'admin.manageipbans', 0, -1),
 (0, 1, 'admin.viewadminnotices', 0, -1),
@@ -168,6 +169,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 2, 'admin.editsettings', 0, -1),
 (0, 2, 'admin.editsmilies', 0, -1),
 (0, 2, 'admin.editusers', 0, -1),
+(0, 2, 'admin.userdelete', 0, -1),
 (0, 2, 'admin.ipsearch', 0, -1),
 (0, 2, 'admin.manageipbans', 0, -1),
 (0, 2, 'admin.viewadminnotices', 0, -1),
@@ -213,6 +215,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 3, 'admin.editsettings', 0, 1),
 (0, 3, 'admin.editsmilies', 0, 1),
 (0, 3, 'admin.editusers', 0, 1),
+(0, 3, 'admin.userdelete', 0, 1),
 (0, 3, 'admin.ipsearch', 0, 1),
 (0, 3, 'admin.manageipbans', 0, 1),
 (0, 3, 'admin.viewadminnotices', 0, 1),
@@ -259,6 +262,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 4, 'admin.editsettings', 0, 1),
 (0, 4, 'admin.editsmilies', 0, 1),
 (0, 4, 'admin.editusers', 0, 1),
+(0, 4, 'admin.userdelete', 0, 1),
 (0, 4, 'admin.ipsearch', 0, 1),
 (0, 4, 'admin.manageipbans', 0, 1),
 (0, 4, 'admin.viewadminnotices', 0, 1),
@@ -297,7 +301,45 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 4, 'user.sendpms', 0, 1),
 (0, 4, 'user.viewhiddenforums', 0, 1),
 (0, 4, 'user.votepolls', 0, 1),
-(0, 4, 'user.voteposts', 0, 1);
+(0, 4, 'user.voteposts', 0, 1),
+(0, 5, 'admin.adminusercomments', 0, -1),
+(0, 5, 'admin.banusers', 0, -1),
+(0, 5, 'admin.editforums', 0, -1),
+(0, 5, 'admin.editgroups', 0, -1),
+(0, 5, 'admin.editsettings', 0, -1),
+(0, 5, 'admin.editsmilies', 0, -1),
+(0, 5, 'admin.editusers', 0, -1),
+(0, 5, 'admin.userdelete', 0, -1),
+(0, 5, 'admin.ipsearch', 0, -1),
+(0, 5, 'admin.manageipbans', 0, -1),
+(0, 5, 'admin.viewadminnotices', 0, -1),
+(0, 5, 'admin.viewadminpanel', 0, -1),
+(0, 5, 'admin.viewallranks', 0, -1),
+(0, 5, 'admin.viewips', 0, -1),
+(0, 5, 'admin.viewlog', 0, -1),
+(0, 5, 'admin.viewpms', 0, -1),
+(0, 5, 'admin.viewstaffpms', 0, -1),
+(0, 5, 'forum.postreplies', 0, 1),
+(0, 5, 'forum.postthreads', 0, 1),
+(0, 5, 'forum.viewforum', 0, 1),
+(0, 5, 'user.deleteownposts', 0, 1),
+(0, 5, 'user.deleteownusercomments', 0, 1),
+(0, 5, 'user.doublepost', 0, -1),
+(0, 5, 'user.editavatars', 0, 1),
+(0, 5, 'user.editbio', 0, 1),
+(0, 5, 'user.editdisplayname', 0, 1),
+(0, 5, 'user.editownposts', 0, 1),
+(0, 5, 'user.editpostlayout', 0, 1),
+(0, 5, 'user.editprofile', 0, 1),
+(0, 5, 'user.edittitle', 0, 1),
+(0, 5, 'user.havetitle', 0, 1),
+(0, 5, 'user.postusercomments', 0, 1),
+(0, 5, 'user.renameownthreads', 0, 1),
+(0, 5, 'user.reportposts', 0, 1),
+(0, 5, 'user.sendpms', 0, 1),
+(0, 5, 'user.viewhiddenforums', 0, -1),
+(0, 5, 'user.votepolls', 0, 1),
+(0, 5, 'user.voteposts', 0, 1);
 
 INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'boardname', 'Blargboard'),

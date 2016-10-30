@@ -355,6 +355,9 @@ if (HasPermission('admin.banusers') && $loguserid != $id)
 		$links[] = actionLinkTag('Unban user', 'banhammer', $id, 'unban=1');
 }
 
+if(HasPermission('admin.userdelete') && HasPermission('user.editprofile') && $loguserid == !$id && HasPermission('admin.editusers'))
+	$links[] = actionLinkTag(__("Delete user"), "deleteuser", $id);
+
 if(HasPermission('user.editprofile') && $loguserid == $id)
 	$links[] = actionLinkTag(__("Edit my profile"), "editprofile");
 else if(HasPermission('admin.editusers'))

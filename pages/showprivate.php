@@ -7,9 +7,13 @@ $title = __("Private messages");
 
 if(!$loguserid)
 	Kill(__("You must be logged in to view your private messages."));
+
+if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
+	Kill(__("You may not read the PM's of someone who has a higher rank than you."));
 	
 $id = (int)$_REQUEST['id'];
-if (!$id) Kill(__("No PM specified."));
+if (!$id) 
+	Kill(__("No PM specified."));
 $pmid = $id;
 
 $staffpms = '';
