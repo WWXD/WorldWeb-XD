@@ -165,6 +165,20 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		),
 		
 		
+		"ircserver" => array (
+			"type" => "text",
+			"default" => "irc.fortytwo.tech",
+			"name" => "Server Name",
+			'category' => 'IRC'
+		),
+		"ircchannel" => array (
+			"type" => "text",
+			"default" => "42net",
+			"name" => "Channel",
+			'category' => 'IRC'
+		),
+		
+		
 		'PoRATitle' => array(
 			'type' => 'text',
 			'default' => 'Blargbox',

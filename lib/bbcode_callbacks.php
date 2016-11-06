@@ -7,6 +7,7 @@ $bbcodeCallbacks = array
 	"[i" => "bbcodeItalics",
 	"[u" => "bbcodeUnderline",
 	"[s" => "bbcodeStrikethrough",
+	"[center" => "bbcodeCenter",
 
 	"[url" => "bbcodeURL",
 	"[img" => "bbcodeImage",
@@ -30,9 +31,27 @@ $bbcodeCallbacks = array
 	'[youtube' => 'bbcodeYoutube',
     '[gist' => 'bbcodeGist',
 
-	//Meme BBCode starts here
 	"[instameme" => "bbcodeMeme",
 	"[ugotbanned" => "bbcodeBan",
+	
+	//Color BBCode Starts here
+	"[color"  => "bbcodecolordefault",
+	"[colour" => "bbcodecolourdefault",
+	"[purple" => "bbcodecolorpurple",
+	"[yellow" => "bbcodecoloryellow",
+	"[orange" => "bbcodecolororange",
+	"[violet" => "bbcodecolorviolet",
+	"[indigo" => "bbcodecolorindigo",
+	"[red"    => "bbcodecolorred",
+	"[blue"   => "bbcodecolorblue",
+	"[bleu"   => "bbcodecolorbleu",
+	"[pink"   => "bbcodecolorpink",
+	"[green"  => "bbcodecolorgreen",
+	"[white"  => "bbcodecolorwhite",
+	"[black"  => "bbcodecolorblack",
+	"[rouge"  => "bbcodecolorrouge",
+	"[grey"   => "bbcodecolorgrey",
+	"[gray"   => "bbcodecolorgray",
 );
 
 //Allow plugins to register their own callbacks (new bbcode tags)
@@ -53,6 +72,10 @@ function bbcodeUnderline($contents, $arg, $parenttag)
 function bbcodeStrikethrough($contents, $arg, $parenttag)
 {
 	return "<del>$contents</del>";
+}
+function bbcodeCenter($contents, $arg, $parenttag)
+{
+	return "<center>$contents</center>";
 }
 
 function bbcodeURL($contents, $arg, $parenttag)
@@ -261,7 +284,6 @@ function bbcodeYoutube($contents, $arg, $parenttag)
 	return '[youtube]'.$contents.'[/youtube]';
 }
 
-//Coding for custom bbcodes start here
 function bbcodeGist($contents, $arg) {
     if (!function_exists('curl_init')) {
         return "<a href=\"https://gist.github.com/$contents\">View $contents on GitHub</a>";
@@ -322,4 +344,85 @@ function bbcodeBan($contents, $arg, $parenttag)
 	//Put this here for a 100% true statement to run code under it
 	if ('1' == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';
+}
+
+//Code for Color BBCode Starts Here.
+
+function bbcodeColor($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: $arg;\">$contents</div>";
+}
+function bbcodeColour($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: $arg;\">$contents</div>";
+}
+function bbcodeColorred($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FF0000;\">$contents</div>";
+}
+function bbcodeColoryellow($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FFFF00;\">$contents</div>";
+}
+function bbcodeColorgreen($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #008000;\">$contents</div>";
+}
+function bbcodeColorblue($contents, $arg, $parenttag)
+{
+	if ($arg == 'dark')
+		return "<div style=\"color: #00008B;\">$contents</div>";
+	elseif ($arg == 'light')
+		return "<div style=\"color: #ADD8E6;\">$contents</div>";
+	elseif ($arg == 'alice')
+		return "<div style=\"color: #F0F8FF;\">$contents</div>";
+	else
+		return "<div style=\"color: #0000FF;\">$contents</div>";
+}
+function bbcodeColorbleu($contents, $arg, $parenttag)
+{
+	if ($arg == 'dark')
+		return "<div style=\"color: #00008B;\">$contents</div>";
+	elseif ($arg == 'light')
+		return "<div style=\"color: #ADD8E6;\">$contents</div>";
+	elseif ($arg == 'alice')
+		return "<div style=\"color: #F0F8FF;\">$contents</div>";
+	else
+		return "<div style=\"color: #0000FF;\">$contents</div>";
+}
+function bbcodeColorwhite($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FFFFFF;\">$contents</div>";
+}
+function bbcodeColorpurple($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #800080;\">$contents</div>";
+}
+function bbcodeColorrouge($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FF0000;\">$contents</div>";
+}
+function bbcodeColorOrange($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FFA500;\">$contents</div>";
+}
+function bbcodeColorIndigo($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #4B0082;\">$contents</div>";
+}
+function bbcodeColorPink($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #FFC0CB;\">$contents</div>";
+}
+function bbcodeColorGrey($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #808080;\">$contents</div>";
+}
+function bbcodeColorGray($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #808080;\">$contents</div>";
+}
+function bbcodeColorBlack($contents, $arg, $parenttag)
+{
+	return "<div style=\"color: #000000;\">$contents</div>";
 }

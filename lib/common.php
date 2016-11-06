@@ -81,6 +81,7 @@ $thisURL = $_SERVER['SCRIPT_NAME'];
 if($q = $_SERVER['QUERY_STRING'])
 	$thisURL .= "?$q";
 
+include(__DIR__."/browsers.php");
 include(__DIR__."/pluginsystem.php");
 loadFieldLists();
 include(__DIR__."/loguser.php");

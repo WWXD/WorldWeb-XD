@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" class="cell0 smallFonts">
-				Specifying an email address is not a requirement, but it will allow you to reset your password should you forget it. By default, your email is made private.
+				Specifying an email address is a requirement because it will allow you to reset your password should you forget it. By default, your email is made private.
 			</td>
 		</tr>
 	</table>
