@@ -79,6 +79,7 @@ $TagList = array
 	'[i'		=>	TAG_GOOD,
 	'[u'		=>	TAG_GOOD,
 	'[s'		=>	TAG_GOOD,
+	'[center'	=>	TAG_GOOD,
 
 	'[url'		=>	TAG_GOOD | TAG_NOAUTOLINK,
 	'[img'		=>	TAG_GOOD | TAG_RAWCONTENTS,
@@ -101,8 +102,25 @@ $TagList = array
 
 	'[ugotbanned'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[instameme'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
-	'[youtube' 	=> 	TAG_GOOD | TAG_NOAUTOLINK,
-	'[gist' => TAG_GOOD | TAG_NOFORMAT,
+	'[youtube' 		=> 	TAG_GOOD | TAG_NOAUTOLINK,
+	'[gist' 		=> TAG_GOOD | TAG_NOFORMAT,
+	
+	'[color'	=>	TAG_GOOD,
+	'[colour'	=>	TAG_GOOD,
+	'[purple'	=>	TAG_GOOD,
+	'[yellow'	=>	TAG_GOOD,
+	'[orange'	=>	TAG_GOOD,
+	'[violet'	=>	TAG_GOOD,
+	'[indigo'	=>	TAG_GOOD,
+	'[red'	=>	TAG_GOOD,
+	'[blue'	=>	TAG_GOOD,
+	'[bleu'	=>	TAG_GOOD,
+	'[pink'	=>	TAG_GOOD,
+	'[green'	=>	TAG_GOOD,
+	'[white'	=>	TAG_GOOD,
+	'[black'	=>	TAG_GOOD,
+	'[grey'	=>	TAG_GOOD,
+	'[gray'	=>	TAG_GOOD,
 );
 
 $TagAllowedIn = array

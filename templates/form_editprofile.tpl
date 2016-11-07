@@ -1,3 +1,7 @@
+
+<script src=\"".resourceLink('js/register.js')."\"></script>
+<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>
+
 	<div class="editprofile">
 	
 		<div class="margin tabs" id="tabs">
