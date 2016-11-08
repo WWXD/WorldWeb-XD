@@ -306,7 +306,7 @@ function bbcodeGist($contents, $arg) {
 
 function bbcodeMeme($contents, $arg, $parenttag)
 {
-	//Detecting what meme to use from whats inbetween the tag and the close tag
+	//Detecting what meme to use
 	if ($arg == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
 	elseif ($arg == '2')
@@ -321,6 +321,8 @@ function bbcodeMeme($contents, $arg, $parenttag)
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme6.png" alt="Instameme6"/>';
 	elseif ($arg == '7')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
+	elseif ($arg == '8')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme8.jpg" alt="Instameme8"/>';
 	elseif ($contents == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
 	elseif ($contents == '2')
@@ -335,6 +337,8 @@ function bbcodeMeme($contents, $arg, $parenttag)
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme6.png" alt="Instameme6"/>';
 	elseif ($contents == '7')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
+	elseif ($contents == '8')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme8.jpg" alt="Instameme8"/>';
 	//If a number was found that is not in the collection
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/insta404.jpg" alt="Instameme404"/>';

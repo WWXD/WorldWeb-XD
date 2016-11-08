@@ -975,18 +975,18 @@ td.threadIcons label > input:checked ~ *
 	border: 1px solid rgba(255, 255, 255, .5);
 }
 
-div.postToolbar
-{
+div.postToolbar {
 	margin-bottom: 1px;
 }
 
-div.postToolbar button
-{
+div.postToolbar button {
 	vertical-align: bottom;
-	width: 1.85em;
-	height: 1.85em;
+	width: 24px;
+	height: 24px;
 	margin-right: 1px;
 	padding-bottom: 0.1em;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 div#rss

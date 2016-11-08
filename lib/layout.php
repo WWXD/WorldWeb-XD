@@ -14,19 +14,19 @@ function RenderTemplate($template, $options=null)
 		$plugin = $plugintemplates[$template];
 		$self = $plugins[$plugin];
 		
-		$tplroot = __DIR__.'/../plugins/'.$self['dir'].'/templates/';
+		$tplroot = __DIR__.'/../plugins/'.$self['dir'].'/layouts/';
 	}
 	else
-		$tplroot = __DIR__.'/../templates/';
+		$tplroot = __DIR__.'/../layouts/';
 	
 	if ($mobileLayout)
 	{
 		$tplname = $tplroot.'mobile/'.$template.'.tpl';
 		if (!file_exists($tplname)) 
-			$tplname = $tplroot.$template.'.tpl';
+			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	}
 	else
-		$tplname = $tplroot.$template.'.tpl';
+		$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	
 	if ($options)
 		$tpl->assign($options);

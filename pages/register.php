@@ -151,9 +151,7 @@ echo "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\">
 
 RenderTemplate('form_register', array('fields' => $fields));
 
-echo "<span style=\"display : none;\"><input type=\"checkbox\" name=\"likesCake\"> I am a robot</span></form>
-<script src=\"".resourceLink('js/register.js')."\"></script>
-<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+echo "<span style=\"display : none;\"><input type=\"checkbox\" name=\"likesCake\"> I am a robot</span></form>";
 
 
 function MakeOptions($fieldName, $checkedIndex, $choicesList)

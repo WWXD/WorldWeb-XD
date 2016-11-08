@@ -330,68 +330,81 @@ function ConstructToolbar()
 
 	var buttons =
 	[
-		{ label: "fa fa-bold", title: "Bold", insert: "b" }, 
-		{ label: "fa fa-italic", title: "Italic", insert: "i" }, 
-		{ label: "fa fa-underline", title: "Underlined", insert: "u" }, 
-		{ label: "fa fa-strikethrough", title: "Strikethrough", insert: "s" }, 
-		{ label: "-" }, 
-		{ label: "fa fa-superscript", title: "Superscript", insert: "sup", html: true }, 
-		{ label: "fa fa-subscript", title: "Subscript", insert: "sub", html: true },
- 		{ label: "-" },
- 		{ label: "fa fa-user", title: "User", insert: "user=", close: true },
- 		{ label: "fa fa-comment", title: "Thread", insert: "thread=", close: true },
- 		{ label: "fa fa-list", title: "Forum", insert: "forum=", close: true }, 
-		{ label: "-" },
- 		{ label: "fa fa-link", title: "Link", insert: "url" },
- 		{ label: "fa fa-photo fa-08x", title: "Resized image", insert: "imgs" }, 
-		{ label: "fa fa-youtube-play", title: "Youtube video", insert: "youtube" }, 
-		{ label: "-" },
- 		{ label: "fa fa-quote-left", title: "Quote", insert: "quote" },
- 		{ label: "fa fa-minus-square", title: "Spoiler", insert: "spoiler" }, 
-		{ label: "fa fa-code", title: "Code", insert: "code" },
+		{ icon: "bold", title: "Bold", insert: "b" }, 
+		{ icon: "italic", title: "Italic", insert: "i" }, 
+		{ icon: "underline", title: "Underlined", insert: "u" }, 
+		{ icon: "strikethrough", title: "Strikethrough", insert: "s" }, 
+		{ separator: true },
+		{ icon: "superscript", title: "Superscript", insert: "sup", html: true }, 
+		{ icon: "subscript", title: "Subscript", insert: "sub", html: true },
+ 		{ separator: true },
+ 		{ icon: "user", title: "User", insert: "user=", close: true },
+ 		{ icon: "comment", title: "Thread", insert: "thread=", close: true },
+ 		{ icon: "list", title: "Forum", insert: "forum=", close: true }, 
+		{ separator: true },
+ 		{ icon: "link", title: "Link", insert: "url" },
+ 		{ icon: "picture", title: "Resized image", insert: "imgs" }, 
+		{ icon: "youtube-play", title: "Youtube video", insert: "youtube" }, 
+		{ separator: true },
+ 		{ icon: "quote-left", title: "Quote", insert: "quote" },
+ 		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" }, 
+		{ icon: "fa fa-code", title: "Code", insert: "code" },
 
 	];
 
 	for(var i = 0; i < buttons.length; i++)
 	{
 		var button = buttons[i];
-		if(button.label == "-")
-		{
-			toolbar.innerHTML += " ";
+		if (button.separator !== undefined && button.separator == true) {
+			toolbar.appendChild(document.createTextNode(" "));
 			continue;
 		}
-		var newButton = "<button ";
-		if (button.title != undefined)
-			newButton += "title=\"" + button.title + "\" ";
-		newButton += "onclick=\"Insert('" + button.insert + "', " + button.html + "); return false;\">";
-		//if (button.style != undefined)
-		//	newButton += "<span style=\"" + button.style + "\">";
-		newButton += '<i class="'+button.label+'"></i>';
-		//if (button.style != undefined)
-		//	newButton += "</span>";
-		newButton += "</button>";
-		toolbar.innerHTML += newButton;
+
+		var newButton = document.createElement("button");
+		newButton.type = "button";
+
+		if (button.title != undefined) {
+			newButton.title = button.title;
+		}
+
+		if (button.callback !== undefined) {
+			newButton.addEventListener("click", button.callback, false);
+		} else {
+			//Kind of a hack… -Nina
+			newButton.insert = button.insert;
+			newButton.insertHtml = button.html;
+			newButton.addEventListener('click', function(e) {
+				e.preventDefault();
+				insert(this.insert, this.insertHtml);
+			}, false);
+		}
+
+		var icon = document.createElement("i");
+		icon.className = "icon-" + button.icon;
+
+		newButton.appendChild(icon);
+
+		toolbar.appendChild(newButton);
 	}
 
 	textEditor.parentNode.insertBefore(toolbar, textEditor);
 }
-function HandleKey()
-{
-	if(event.ctrlKey && !event.altKey)
-	{
+
+function HandleKey() {
+	if(event.ctrlKey && !event.altKey) {
 		var charCode = event.charCode ? event.charCode : event.keyCode;
 		var c = String.fromCharCode(charCode).toLowerCase();
 		if (c == "b" || c == "i" || c == "u")
 		{
 			textEditor.focus();
-			Insert(c);
+			insert(c);
 			event.preventDefault();
 			return false;
 		}
 	}
 }
-function Insert(stuff, html)
-{
+
+function insert(stuff, html) {
 	var oldSelS = textEditor.selectionStart;
 	var oldSelE = textEditor.selectionEnd;
 	var scroll = textEditor.scrollTop;

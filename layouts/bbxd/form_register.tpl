@@ -53,3 +53,6 @@
 			</td>
 		</tr>
 	</table>
+
+	<script src=\"".resourceLink('js/register.js')."\"></script>
+<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>

@@ -151,8 +151,8 @@ setLastActivity();
 //=======================
 // Panels and footer
 
-require(__DIR__.'/layout/userpanel.php');
-require(__DIR__.'/layout/menus.php');
+require(__DIR__.'/layouts/userpanel.php');
+require(__DIR__.'/layouts/menus.php');
 
 $mobileswitch = '';
 if ($mobileLayout) $mobileswitch .= 'Mobile view - ';
