@@ -336,6 +336,7 @@ function makePost($post, $type, $params=array())
 
 	$sidebar['lastpost'] = $lastpost;
 	$sidebar['lastview'] = $lastview;
+	$sidebar['posterID'] = $poster['id'];
 
 	if($poster['lastactivity'] > time() - 300)
 		$sidebar['isonline'] = __("User is <strong>online</strong>");

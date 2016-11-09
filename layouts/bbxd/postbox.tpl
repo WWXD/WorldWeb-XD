@@ -52,6 +52,7 @@
 					<br>
 					Last post: {$post.sidebar.lastpost}<br>
 					Last view: {$post.sidebar.lastview}<br>
+					User ID:   {$post.sidebar.posterID}<br>
 					{$post.sidebar.isonline}
 				</div>
 			</td>
