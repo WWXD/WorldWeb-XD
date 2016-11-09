@@ -1,6 +1,8 @@
 <?php
 if (!defined('BLARG')) die();
 
+$layout = Settings::get("defaultLayout");
+
 // ----------------------------------------------------------------------------
 // --- General layout functions
 // ----------------------------------------------------------------------------
@@ -26,7 +28,9 @@ function RenderTemplate($template, $options=null)
 			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	}
 	else
-		$tplname = $tplroot.'bbxd/'.$template.'.tpl';
+		$tplname = $tplroot.$layout.$template.'.tpl';
+		if (!file_exists($tplname)) 
+			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	
 	if ($options)
 		$tpl->assign($options);

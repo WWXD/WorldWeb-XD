@@ -210,6 +210,12 @@
 					</div>
 				</div>
 			</div>
+			<div class="outline">
+				<div class="box cell center">
+					Please note that you are using a version of ABXD obtained from the Git repository.<br />
+-					This version of ABXD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
+				</div>
+			</div>
 				<form action="" method="POST">
 					<div class="outline">
 						<div class="box col2 center">

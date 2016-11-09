@@ -16,8 +16,8 @@ function loadRanksets()
             while (($file = readdir($dh)) !== false) {
 				if(filetype($dir . $file) != "dir") continue;
 				if($file == ".." || $file == ".") continue;
-                $jsonfile = $dir.$file."/rankset.json";
-				$phpfile = $dir.$file."/rankset.php";
+                $jsoninfofile = $dir.$file."/rankset.json";
+				$phpinfofile = $dir.$file."/rankset.php";
                 if(file_exists($jsonfile)) {
                     switch (json_last_error()) {
                     case JSON_ERROR_NONE:
@@ -50,8 +50,8 @@ function loadRanksets()
                         array_push($ranksetData[$file],array("num" => $num, "image" => $image, "text" => $text));
                     }
                 }
-                else if(file_exists($phpfile))
-                    include($phpfile);
+                else if(file_exists($phpinfofile))
+                    include($phpinfofile);
             }
             closedir($dh);
         }

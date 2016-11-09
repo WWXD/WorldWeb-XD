@@ -200,14 +200,9 @@ function makeLayoutList($fieldname, $value)
 {
 	$layouts = array();
 	$dir = @opendir("layouts");
-	while ($file = readdir($dir))
-	{
-		if (endsWith($file, ".php"))
-		{
-			$layout = substr($file, 0, strlen($file)-4);
-			$layouts[$layout] = @file_get_contents("./layouts/".$layout.".info.txt");
-		}
-	}
+	while ($layout = readdir($dir))
+		if($layout != "." && $layout != "..")
+			$layouts[$layout] = @file_get_contents("./layouts/".$layout."/info.txt");
 	closedir($dir);
 	return makeSelect($fieldname, $value, $layouts);
 }

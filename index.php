@@ -298,7 +298,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	if (Settings::get('maintenance'))
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';
 
-	RenderTemplate('pagelayout', array(
+	RenderTemplate('default', array(
 		'layout_contents' => $layout_contents,
 		'layout_crumbs' => $layout_crumbs,
 		'layout_actionlinks' => $layout_actionlinks,

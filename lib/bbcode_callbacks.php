@@ -309,35 +309,35 @@ function bbcodeMeme($contents, $arg, $parenttag)
 	//Detecting what meme to use
 	if ($arg == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
-	elseif ($arg == '2')
+	else if ($arg == '2')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme2.jpg" alt="Instameme2"/>';
-	elseif ($arg == '3')
+	else if ($arg == '3')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme3.jpg" alt="Instameme3"/>';
-	elseif ($arg == '4')
+	else if ($arg == '4')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme4.png" alt="Instameme4"/>';
-	elseif ($arg == '5')
+	else if ($arg == '5')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme5.jpg" alt="Instameme5"/>';
-	elseif ($arg == '6')
+	else if ($arg == '6')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme6.png" alt="Instameme6"/>';
-	elseif ($arg == '7')
+	else if ($arg == '7')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
-	elseif ($arg == '8')
+	else if ($arg == '8')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme8.jpg" alt="Instameme8"/>';
-	elseif ($contents == '1')
+	else if ($contents == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
-	elseif ($contents == '2')
+	else if ($contents == '2')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme2.jpg" alt="Instameme2"/>';
-	elseif ($contents == '3')
+	else if ($contents == '3')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme3.jpg" alt="Instameme3"/>';
-	elseif ($contents == '4')
+	else if ($contents == '4')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme4.png" alt="Instameme4"/>';
-	elseif ($contents == '5')
+	else if ($contents == '5')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme5.jpg" alt="Instameme5"/>';
-	elseif ($contents == '6')
+	else if ($contents == '6')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme6.png" alt="Instameme6"/>';
-	elseif ($contents == '7')
+	else if ($contents == '7')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
-	elseif ($contents == '8')
+	else if ($contents == '8')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme8.jpg" alt="Instameme8"/>';
 	//If a number was found that is not in the collection
 	else
