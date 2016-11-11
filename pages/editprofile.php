@@ -487,7 +487,7 @@ function HandlePicture($field, $type, &$usepic)
 	list($width, $height, $fileType) = getimagesize($tempFile);
 
 	if ($type == 0 && ($width > 300 || $height > 300))
-		return __("That avatar is definitely too big. Please shrink it.");
+		return __("The avatar you uploaded is too large. Try something smaller.");
 
 	$extension = strtolower(strrchr($fileName, "."));
 	if(!in_array($extension, $extensions))
@@ -679,18 +679,38 @@ while ($c = Fetch($countdata))
 
 asort($themes);
 
-foreach($themes as $themeKey => $themeData)
-{
+foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
 	$numUsers = $themeData['num'];
 
+	$csspreview = false;
 	$preview = "themes/".$themeKey."/preview.png";
-	if(!is_file($preview))
+	if(is_file("themes/".$themeKey."/preview.css")) {
+		$csspreview = true;
+		$preview = "themes/".$themeKey."/preview.css";
+	} elseif(!is_file($preview)) {
 		$preview = "img/nopreview.png";
+	}
 	$preview = resourceLink($preview);
 
-	$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">";
+	if ($csspreview) {
+		$preview = 
+		'<link rel="stylesheet" type="text/css" id="theme_preview" href="'.$preview.'">
+			<table class="outline margin previewbox p'.$themeKey.'">
+				<tr class="pheader1">
+					<th>'.$themeName.'</th>
+				</tr>
+				<tr class="pcell0">
+					<td>'.$themeAuthor.'</td>
+				</tr>
+				<tr class="pcell2">
+					<td>'.$numUsers.' users</td>
+				</tr>
+			</table>';
+	} else {
+		$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">"; 
+	}
 
 	if($themeAuthor)
 		$byline = "<br>".nl2br($themeAuthor);
@@ -702,7 +722,17 @@ foreach($themes as $themeKey => $themeData)
 	else
 		$selected = "";
 
-	$themeList .= format(
+	if($csspreview) {
+		$themeList .= format(
+		"<div style=\"display: inline-block;\" class=\"theme\" title=\"{0}\">
+		<input style=\"display: none;\" type=\"radio\" name=\"theme\" value=\"{3}\"{4} id=\"{3}\" onchange=\"ChangeTheme(this.value);\" />
+		<label style=\"display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top\" onmousedown=\"void();\" for=\"{3}\">
+			{2}
+		</label>
+	</div>
+	",	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+	} else {
+		$themeList .= format(
 '
 	<div style="display: inline-block; padding: 15px 15px 15px 15px;" class="theme" title="{0}">
 		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
@@ -715,6 +745,7 @@ foreach($themes as $themeKey => $themeData)
 		</label>
 	</div>
 ',	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+	}
 }
 
 if(!isset($selectedTab))

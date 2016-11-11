@@ -174,6 +174,8 @@
 		require(__DIR__.'/db/functions.php');
 		$debugMode = 1;
 		
+		echo '<div class="container"><div class="outline"><div class="box header center">Installing...</div><div class="box cell center">';
+		
 		Upgrade();
 		Import(__DIR__.'/db/install.sql');
 		
@@ -182,6 +184,8 @@
 		
 		Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
 			1, $boardusername, $sha, $pss, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
+			
+		echo '</div></div></div>';
 			
 	?>
 		<div class="container">
@@ -208,6 +212,9 @@
 					<div id="title">
 						Blargboard XD Installer
 					</div>
+				</div>
+				<div class="box col2 center">
+					<a href="https://github.com/Blargboard-XD/BBXD">GitHub repo</a> - <a href="https://github.com/Blargboard-XD/BBXD/blob/master/README.md">Readme file</a>
 				</div>
 			</div>
 			<div class="outline">

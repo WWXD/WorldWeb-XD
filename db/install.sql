@@ -351,7 +351,7 @@ INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'viewcountInterval', '50000'),
 ('main', 'ajax', '1'),
 ('main', 'guestLayouts', '1'),
-('main', 'registrationWord', ''),
+('main', 'minwords', '5'),
 ('main', 'breadcrumbsMainName', 'Home'),
 ('main', 'mailResetSender', ''),
 ('main', 'defaultTheme', 'blargboard'),

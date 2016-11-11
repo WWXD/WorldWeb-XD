@@ -35,7 +35,7 @@ if($forum['locked'])
 
 if(!isset($_POST['poll']) || isset($_GET['poll']))
 	$_POST['poll'] = $_GET['poll'];
-	
+
 $isHidden = !HasPermission('forum.viewforum', $fid, true);
 $urlname = $isHidden ? '' : $forum['title'];
 
@@ -46,16 +46,12 @@ MakeCrumbs(forumCrumbs($forum) + array('' => __("New thread")));
 
 $attachs = array();
 
-if (isset($_POST['saveuploads']))
-{
+if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
-}
-else if(isset($_POST['actionpreview']))
-{
+} else if(isset($_POST['actionpreview'])) {
 	$attachs = HandlePostAttachments(0, false);
 	
-	if($_POST['poll'])
-	{
+	if($_POST['poll']) {
 		$options = array();
 		
 		$pdata = array();
@@ -68,16 +64,14 @@ else if(isset($_POST['actionpreview']))
 			"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",);
 			
 		$totalVotes = 0;
-		foreach ($_POST['pollOption'] as $i=>$opt)
-		{
+		foreach ($_POST['pollOption'] as $i=>$opt) {
 			$opt = array('choice'=>$opt, 'color'=>$_POST['pollColor'][$i], 'votes' => rand(1,10));
 			$totalVotes += $opt['votes'];
 			$options[] = $opt;
 		}
 		
 		$pops = 0;
-		foreach($options as $option)
-		{
+		foreach($options as $option) {
 			$odata = array();
 			
 			$odata['color'] = htmlspecialchars($option['color']);
@@ -90,12 +84,10 @@ else if(isset($_POST['actionpreview']))
 			$odata['label'] = $label;
 				
 			$odata['votes'] = $option['votes'];
-			if($totalVotes > 0)
-			{
+			if($totalVotes > 0) {
 				$width = (100 * $odata['votes']) / $totalVotes;
 				$odata['percent'] = sprintf('%.4g', $width);
-			}
-			else
+			} else
 				$odata['percent'] = 0;
 
 			$pdata['options'][] = $odata;
@@ -126,27 +118,20 @@ else if(isset($_POST['actionpreview']))
 	$previewPost['u_posts']++;
 
 	MakePost($previewPost, POST_SAMPLE);
-}
-else if(isset($_POST['actionpost']))
-{
+} else if(isset($_POST['actionpost'])) {
 	$titletags = parseThreadTags($_POST['title']);
 	$trimmedTitle = trim(str_replace('&nbsp;', ' ', $titletags[0]));
 
 	//Now check if the thread is acceptable.
 	$rejected = false;
 
-	if(!trim($_POST['text']))
-	{
+	if(!trim($_POST['text'])) {
 		Alert(__("Enter a message and try again."), __("Your post is empty."));
 		$rejected = true;
-	}
-	else if(!$trimmedTitle)
-	{
+	} else if(!$trimmedTitle) {
 		Alert(__("Enter a thread title and try again."), __("Your thread is unnamed."));
 		$rejected = true;
-	}
-	else if($_POST['poll'])
-	{
+	} else if($_POST['poll']) {
 		$optionCount = 0;
 		foreach ($_POST['pollOption'] as $po)
 			if ($po)
@@ -163,12 +148,9 @@ else if(isset($_POST['actionpost']))
 			Alert(__("You need to enter a poll question to make a poll."), __("Invalid poll."));
 			$rejected = true;
 		}
-	}
-	else
-	{
+	} else {
 		$lastPost = time() - $loguser['lastposttime'];
-		if($lastPost < Settings::get("floodProtectionInterval"))
-		{
+		if($lastPost < Settings::get("floodProtectionInterval")) {
 			//Check for last thread the user posted.
 			$lastThread = Fetch(Query("SELECT * FROM {threads} WHERE user={0} ORDER BY id DESC LIMIT 1", $loguserid));
 
@@ -181,13 +163,15 @@ else if(isset($_POST['actionpost']))
 		}
 	}
 
-	if(!$rejected)
-	{
+	if(!$rejected) {
+		if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
+			Alert(__("Error: Could not post."), __("Your post is too short."));
+			$rejected = true;
+		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 	}
 
-	if(!$rejected)
-	{
+	if(!$rejected) {
 		$post = $_POST['text'];
 
 		$options = 0;
@@ -211,21 +195,17 @@ else if(isset($_POST['actionpost']))
 		if (HasPermission('mod.stickthreads', $forum['id']))
 			$sticky = ($_POST['stick'] == 'on') ? '1':'0';
 
-		if($_POST['poll'])
-		{
+		if($_POST['poll']) {
 			$doubleVote = ($_POST['multivote']) ? 1 : 0;
 			$rPoll = Query("insert into {poll} (question, doublevote) values ({0}, {1})", $_POST['pollQuestion'], $doubleVote);
 			$pod = InsertId();
-			foreach ($_POST['pollOption'] as $i=>$opt)
-			{
-				if($opt)
-				{
+			foreach ($_POST['pollOption'] as $i=>$opt) {
+				if($opt) {
 					$pollColor = filterPollColors($_POST['pollColor'][$i]);
 					$rPollOption = Query("insert into {poll_choices} (poll, choice, color) values ({0}, {1}, {2})", $pod, $opt, $pollColor);
 				}
 			}
-		}
-		else
+		} else
 			$pod = 0;
 
 		$rThreads = Query("insert into {threads} (forum, user, title, icon, lastpostdate, lastposter, closed, sticky, poll, description)
@@ -244,7 +224,7 @@ else if(isset($_POST['actionpost']))
 		$rFora = Query("update {forums} set numthreads=numthreads+1, numposts=numposts+1, lastpostdate={0}, lastpostuser={1}, lastpostid={2} where id={3} limit 1", time(), $loguserid, $pid, $fid);
 
 		Query("update {threads} set date={2}, firstpostid={0}, lastpostid = {0} where id = {1}", $pid, $tid, time());
-		
+
 		$attachs = HandlePostAttachments($pid, true);
 		Query("UPDATE {posts} SET has_attachments={0} WHERE id={1}", (!empty($attachs))?1:0, $pid);
 
@@ -257,8 +237,7 @@ else if(isset($_POST['actionpost']))
 		$bucket = "newthread"; include(BOARD_ROOT."lib/pluginloader.php");
 
 		die(header("Location: ".actionLink("thread", $tid)));
-	}
-	else
+	} else
 		$attachs = HandlePostAttachments(0, false);
 }
 
@@ -269,8 +248,7 @@ $trefill = htmlspecialchars($_POST['title']);
 if(!isset($_POST['iconid']))
 	$_POST['iconid'] = 0;
 
-function getCheck($name)
-{
+function getCheck($name) {
 	if(isset($_POST[$name]) && $_POST[$name])
 		return "checked=\"checked\"";
 	else return "";
@@ -309,13 +287,10 @@ if($_POST['addpoll'])
 	$_POST['poll'] = 1;
 else if($_POST['deletepoll'])
 	$_POST['poll'] = 0;
-else if ($_POST['pollAdd'])
-{
+else if ($_POST['pollAdd']) {
 	$_POST['pollOption'][] = '';
 	$_POST['pollColor'][] = '';
-}
-else if ($_POST['pollRemove'])
-{
+} else if ($_POST['pollRemove']) {
 	$i = array_keys($_POST['pollRemove']);
 	$i = $i[0];
 	
@@ -331,8 +306,7 @@ else
 echo '</style>';
 	
 $pollSettings = '<div id="pollOptions">';
-if (!isset($_POST['pollOption']))
-{
+if (!isset($_POST['pollOption'])) {
 	$pollSettings .= '<div class="polloption">
 		<input type="text" name="pollOption[0]" size=48 maxlength=40>
 		&nbsp;Color: <input type="text" name="pollColor[0]" size=10 maxlength=7 class="color {hash:true,required:false,pickerFaceColor:\'black\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\',pickerPosition:\'left\',pickerMode:\'HVS\'}">
@@ -343,11 +317,8 @@ if (!isset($_POST['pollOption']))
 		&nbsp;Color: <input type="text" name="pollColor[1]" size=10 maxlength=7 class="color {hash:true,required:false,pickerFaceColor:\'black\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\',pickerPosition:\'left\',pickerMode:\'HVS\'}">
 		&nbsp; <input type="submit" name="pollRemove[1]" value="&#xD7;" onclick="removeOption(this.parentNode);return false;">
 	</div>';
-}
-else
-{
-	foreach ($_POST['pollOption'] as $i=>$opt)
-	{
+} else {
+	foreach ($_POST['pollOption'] as $i=>$opt) {
 		$color = htmlspecialchars($_POST['pollColor'][$i]);
 		$opttext = htmlspecialchars($opt);
 		

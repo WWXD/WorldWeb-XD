@@ -45,7 +45,7 @@ if(NumRows($rFora))
 	$forum = Fetch($rFora);
 else
 	Kill(__("Unknown forum ID."));
-	
+
 if (!HasPermission('forum.viewforum', $forum['id']))
 	Kill(__('You may not access this forum.'));
 
@@ -101,8 +101,7 @@ MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $isHidden?
 LoadPostToolbar();
 
 $attachs = array();
-if ($post['has_attachments'])
-{
+if ($post['has_attachments']) {
 	$res = Query("SELECT id,filename 
 		FROM {uploadedfiles}
 		WHERE parenttype={0} AND parentid={1} AND deldate=0
@@ -112,12 +111,9 @@ if ($post['has_attachments'])
 		$attachs[$a['id']] = $a['filename'];
 }
 
-if (isset($_POST['saveuploads']))
-{
+if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
-}
-else if(isset($_POST['actionpreview']))
-{
+} else if(isset($_POST['actionpreview'])) {
 	$attachs = HandlePostAttachments(0, false);
 	
 	$previewPost['text'] = $_POST['text'];
@@ -133,21 +129,22 @@ else if(isset($_POST['actionpreview']))
 	foreach($user as $key => $value)
 		$previewPost['u_'.$key] = $value;
 	MakePost($previewPost, POST_SAMPLE);
-}
-else if(isset($_POST['actionpost']))
-{
+} else if(isset($_POST['actionpost'])) {
 	if ($_POST['key'] != $loguser['token']) Kill(__("No."));
 
 	$rejected = false;
 
-	if(!trim($_POST['text']))
-	{
+	if(!trim($_POST['text'])) {
 		Alert(__("Enter a message and try again."), __("Your post is empty."));
 		$rejected = true;
 	}
 
 	if(!$rejected)
 	{
+		if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
+			Alert(__("Error: Could not post."), __("Your post is too short."));
+			$rejected = true;
+		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 	}
 
@@ -170,16 +167,14 @@ else if(isset($_POST['actionpost']))
 
 			// mark the thread as new if we edited the last post
 			// all we have to do is update the thread's lastpostdate
-			if($isLastPost)
-			{
+			if($isLastPost) {
 				Query("UPDATE {threads} SET lastpostdate={0} WHERE id={1}", $now, $thread['id']);
 				Query("UPDATE {forums} SET lastpostdate={0} WHERE id={1}", $now, $fid);
 			}
-		}
-		else
+		} else
 			Query("update {posts} set options={0}, mood={1} where id={2} limit 1",
 							$options, (int)$_POST['mood'], $pid);
-							
+
 		$attachs = HandlePostAttachments($pid, true);
 		Query("UPDATE {posts} SET has_attachments={0} WHERE id={1}", (!empty($attachs))?1:0, $pid);
 
@@ -187,19 +182,15 @@ else if(isset($_POST['actionpost']))
 		$bucket = 'editpost'; include(BOARD_ROOT."lib/pluginloader.php");
 
 		die(header("Location: ".actionLink("post", $pid)));
-	}
-	else
+	} else
 		$attachs = HandlePostAttachments(0, false);
 }
 
-if(isset($_POST['actionpreview']) || isset($_POST['actionpost']))
-{
+if(isset($_POST['actionpreview']) || isset($_POST['actionpost'])) {
 	$prefill = $_POST['text'];
 	if($_POST['nopl']) $nopl = "checked=\"checked\"";
 	if($_POST['nosm']) $nosm = "checked=\"checked\"";
-}
-else
-{
+} else {
 	$prefill = $post['text'];
 	if($post['options'] & 1) $nopl = "checked=\"checked\"";
 	if($post['options'] & 2) $nosm = "checked=\"checked\"";

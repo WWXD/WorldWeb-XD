@@ -124,6 +124,12 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Old thread threshold (months)",
 			'category' => 'Functionality'
 		),
+		"minwords" => array (
+			"type" => "integer",
+			"default" => "5",
+			"name" => "Minimum post word count"
+			'category' => 'Functionality'
+		),
 		"viewcountInterval" => array (
 			"type" => "integer",
 			"default" => "10000",

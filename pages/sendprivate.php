@@ -9,7 +9,7 @@ MakeCrumbs(array(actionLink("private") => __("Private messages"), '' => __("Send
 
 if(!$loguserid) //Not logged in?
 	Kill(__("You must be logged in to send private messages."));
-	
+
 CheckPermission('user.sendpms');
 
 $draftID = 0;
@@ -18,15 +18,13 @@ $convStart = 0;
 $urlargs = array();
 
 $pid = (int)$_GET['pid'];
-if($pid)
-{
+if($pid) {
 	$urlargs[] = 'pid='.$pid;
 	
 	// this shouldn't select drafts someone else is preparing for us
 	// those drafts will have recipients stored in draft_to, with userto set to 0
 	$rPM = Query("select * from {pmsgs} left join {pmsgs_text} on pid = {pmsgs}.id where (userfrom={0} OR userto={0}) and {pmsgs}.id = {1}", $loguserid, $pid);
-	if(NumRows($rPM))
-	{
+	if(NumRows($rPM)) {
 		$pm = Fetch($rPM);
 		$rUser = Query("select name from {users} where id = {0}", $pm['userfrom']);
 		if(NumRows($rUser))
@@ -37,8 +35,7 @@ if($pid)
 		$prefill = $pm['text'];
 		$trefill = $pm['title'];
 		
-		if (!$pm['drafting'])
-		{
+		if (!$pm['drafting']) {
 			$convStart = $pm['conv_start'] ?: $pm['id'];
 			$replyTo = $pm['userfrom'];
 			
@@ -53,27 +50,22 @@ if($pid)
 				
 			if(!isset($_POST['to']))
 			$_POST['to'] = $user['name'];
-		}
-		else
-		{
+		} else {
 			$draftID = $pid;
 			$convStart = $pm['conv_start'];
 			
 			$_POST['to'] = $pm['draft_to'];
 		}
-	} 
-	else
+	} else
 		Kill(__("Unknown PM."));
 }
 
 $uid = (int)$_GET['uid'];
-if($uid && !$_POST['to'])
-{
+if($uid && !$_POST['to']) {
 	$urlargs[] = 'uid='.$uid;
 	
 	$rUser = Query("select name from {users} where id = {0}", $uid);
-	if(NumRows($rUser))
-	{
+	if(NumRows($rUser)) {
 		$user = Fetch($rUser);
 		$_POST['to'] = $user['name'];
 	} else
@@ -94,74 +86,64 @@ LoadPostToolbar();
 
 
 $recipIDs = array();
-if($_POST['to'])
-{
+if($_POST['to']) {
 	$recipients = explode(";", $_POST['to']);
-	foreach($recipients as $to)
-	{
+	foreach($recipients as $to) {
 		$to = trim(htmlentities($to));
 		if($to == "")
 			continue;
 
 		$rUser = Query("select id from {users} where name={0} or displayname={0}", $to);
-		if(NumRows($rUser))
-		{
+		if(NumRows($rUser)) {
 			$user = Fetch($rUser);
 			$id = $user['id'];
 			
 			if(!in_array($id, $recipIDs))
 				$recipIDs[] = $id;
-		}
-		else
+		} else
 			$errors .= format(__("Unknown user \"{0}\""), $to)."<br />";
 	}
 
 	$maxRecips = 5;
 	if(count($recipIDs) > $maxRecips)
 		$errors .= __("Too many recipients.");
-	if($errors != "")
-	{
+	if($errors != "") {
 		Alert($errors);
 		unset($_POST['actionsend']);
 		unset($_POST['actionsave']);
 	}
-}
-else
-{
-	if($_POST['actionsend'] || $_POST['actionsave'])
-	{
+} else {
+	if($_POST['actionsend'] || $_POST['actionsave']) {
 		Alert("Enter a recipient and try again.", "Your PM has no recipient.");
 		unset($_POST['actionsend']);
 		unset($_POST['actionsave']);
 	}
 }
 
-if($_POST['actionsend'] || $_POST['actionsave'])
-{
-	if($_POST['title'])
-	{
+if($_POST['actionsend'] || $_POST['actionsave']) {
+	if($_POST['title']) {
 		$_POST['title'] = $_POST['title'];
 
-		if($_POST['text'])
-		{
+		if($_POST['text']) {
 			$wantDraft = ($_POST['actionsave'] ? 1:0);
+			
+			if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
+				Alert(__("Error: Could not post."), __("Your post is too short."));
+				$rejected = true;
+			}
 
 			$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
 			$post = $_POST['text'];
 			$post = preg_replace("'/me '","[b]* ".htmlspecialchars($loguser['name'])."[/b] ", $post); //to prevent identity confusion
 
-			if($wantDraft)
-			{
-				if ($draftID)
-				{
+			if($wantDraft) {
+				if ($draftID) {
 					Query("UPDATE {pmsgs_text} SET title={0}, text={1} WHERE pid={2}",
 						$_POST['title'], $post, $draftID);
 					Query("UPDATE {pmsgs} SET conv_start={0}, draft_to={1} WHERE id={2} AND drafting=1",
 						$convStart, $_POST['to'], $draftID);
-				}
-				else
-				{
+				} else {
 					Query("insert into {pmsgs_text} (title,text) values ({0}, {1})", 
 						$_POST['title'], $post);
 					$pid = InsertId();
@@ -171,23 +153,17 @@ if($_POST['actionsend'] || $_POST['actionsave'])
 				}
 
 				die(header("Location: ".actionLink("private", "", "show=2")));
-			}
-			else
-			{
-				if ($draftID) 
-				{
+			} else {
+				if ($draftID) {
 					$pid = $draftID;
 					Query("DELETE FROM {pmsgs} WHERE id={0} AND drafting=1", $pid);
-				}
-				else
-				{
+				} else {
 					Query("insert into {pmsgs_text} (title,text) values ({0}, {1})", 
 						$_POST['title'], $post);
 					$pid = InsertId();
 				}
 				
-				foreach($recipIDs as $recipient)
-				{
+				foreach($recipIDs as $recipient) {
 					$cs = ($recipient == $replyTo) ? $convStart : 0;
 					
 					$rPM = Query("insert into {pmsgs} (id, userto, userfrom, conv_start, date, ip, msgread, drafting) values ({0}, {1}, {2}, {3}, {4}, {5}, 0, {6})", 
@@ -198,14 +174,10 @@ if($_POST['actionsend'] || $_POST['actionsave'])
 
 				die(header("Location: ".actionLink("private", "", "show=1")));
 			}
-		} 
-		else
-		{
+		} else {
 			Alert(__("Enter a message and try again."), __("Your PM is empty."));
 		}
-	} 
-	else
-	{
+	} else {
 		Alert(__("Enter a title and try again."), __("Your PM is untitled."));
 	}
 }

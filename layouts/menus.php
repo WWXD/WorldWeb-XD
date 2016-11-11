@@ -3,7 +3,7 @@ if (!defined('BLARG')) die();
 
 $headerlinks = array
 (
-	actionLink('put your links here') => 'Put what you want it to be called here', 
+	actionLink('irc') => 'IRC', 
 );
 
 $sidelinks = array
@@ -34,5 +34,9 @@ $dropdownlinks = array
 		actionLink('search') => 'Search',
 	),
 );
+
+$bucket = "headerlinks"; include(BOARD_ROOT."lib/pluginloader.php");
+$bucket = "sidelinks"; include(BOARD_ROOT."lib/pluginloader.php");
+$bucket = "dropdownlinks"; include(BOARD_ROOT."lib/pluginloader.php");
 
 ?>
