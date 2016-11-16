@@ -4,8 +4,7 @@ if (!defined('BLARG')) die();
 $ishttps = ($_SERVER['SERVER_PORT'] == 443);
 $serverport = ($_SERVER['SERVER_PORT'] == ($ishttps?443:80)) ? '' : ':'.$_SERVER['SERVER_PORT'];
 
-function urlNamify($urlname)
-{
+function urlNamify($urlname) {
 	$urlname = strtolower($urlname);
 	$urlname = str_replace("&", "and", $urlname);
 	$urlname = preg_replace("/[^a-zA-Z0-9]/", "-", $urlname);
@@ -15,8 +14,7 @@ function urlNamify($urlname)
 	return $urlname;
 }
 
-function actionLink($action, $id="", $args="", $urlname="")
-{
+function actionLink($action, $id="", $args="", $urlname="") {
 	$boardroot = URL_ROOT;
 	if($boardroot == "")
 		$boardroot = "./";
@@ -40,26 +38,12 @@ function actionLink($action, $id="", $args="", $urlname="")
 }
 
 
-function actionLinkTag($text, $action, $id='', $args="", $urlname="")
-{
-	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>';
-}
-function actionLinkTagItem($text, $action, $id='', $args="", $urlname="")
-{
-	return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a></li>';
-}
+function actionLinkTag($text, $action, $id='', $args="", $urlname="") { return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>'; }
+function actionLinkTagItem($text, $action, $id='', $args="", $urlname="") { return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a></li>'; }
+function actionLinkTagConfirm($text, $prompt, $action, $id='', $args="") { return '<a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a>'; }
+function actionLinkTagItemConfirm($text, $prompt, $action, $id='', $args="") { return '<li><a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a></li>'; }
 
-function actionLinkTagConfirm($text, $prompt, $action, $id='', $args="")
-{
-	return '<a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a>';
-}
-function actionLinkTagItemConfirm($text, $prompt, $action, $id='', $args="")
-{
-	return '<li><a onclick="return confirm(\''.$prompt.'\'); " href="'.htmlentities(actionLink($action, $id, $args)).'">'.$text.'</a></li>';
-}
-
-function getForm($action, $id='')
-{
+function getForm($action, $id='') {
 	$ret = '<form method="GET"><input type="hidden" name="page" value="'.$action.'">';
 	
 	if ($id != '')
@@ -68,68 +52,52 @@ function getForm($action, $id='')
 	return $ret;
 }
 
-function resourceLink($what)
-{
-	return URL_ROOT.$what;
-}
+function resourceLink($what) { return URL_ROOT.$what; }
 
-function themeResourceLink($what)
-{
+function themeResourceLink($what) {
 	global $theme;
 	return URL_ROOT."themes/$theme/$what";
 }
 
-function getMinipicTag($user)
-{
+function getMinipicTag($user) {
 	if (!$user['minipic']) return '';
 	$pic = str_replace('$root/', DATA_URL, $user['minipic']);
 	$minipic = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\" class=\"minipic\" />&nbsp;";
 	return $minipic;
 }
 
-function prettyRainbow($s)
-{
+function prettyRainbow($s) {
 	$r = mt_rand(0,359);
 	$s = str_replace('&nbsp;', ' ', $s);
 	$s = html_entity_decode($s);
 	$len = strlen($s);
 	$out = '';
-	for ($i = 0; $i < $len;)
-	{
+	for ($i = 0; $i < $len;) {
 		$c = $s[$i++];
 		
-		if ($c == ' ')
-		{
+		if ($c == ' ') {
 			$out .= '&nbsp;';
 			continue;
 		}
 		
 		$ord = ord($c);
-		if ($ord & 0x80)		// UTF8 shiz
-		{
-			if ($ord & 0x40)
-			{
+		if ($ord & 0x80) {		// UTF8 shiz
+			if ($ord & 0x40) {
 				$c .= $s[$i++];
-				if ($ord & 0x20)
-				{
+				if ($ord & 0x20) {
 					$c .= $s[$i++];
-					if ($ord & 0x10)
-					{
+					if ($ord & 0x10) {
 						$c .= $s[$i++];
-						if ($ord & 0x08)
-						{
+						if ($ord & 0x08) {
 							$c .= $s[$i++];
-							if ($ord & 0x04)
-							{
+							if ($ord & 0x04) {
 								$c .= $s[$i++];
 							}
 						}
 					}
 				}
 			}
-		}
-		else 
-		{
+		} else {
 			if ($c == '<') $c = '&lt;';
 			else if ($c == '>') $c = '&gt;';
 		}
@@ -144,14 +112,12 @@ function prettyRainbow($s)
 $poptart = mt_rand(0,359);
 $dorainbow = -1;
 
-function userLink($user, $showMinipic = false, $customID = false)
-{
+function userLink($user, $showMinipic = false, $customID = false) {
 	global $usergroups;
 	global $poptart, $dorainbow, $newToday;
 	global $luckybastards;
 	
-	if ($dorainbow == -1)
-	{
+	if ($dorainbow == -1) {
 		$dorainbow = false;
 		
 		if ($newToday >= 600)
@@ -183,13 +149,10 @@ function userLink($user, $showMinipic = false, $customID = false)
 
 	$bucket = "userLink"; include(__DIR__."/pluginloader.php");
 	
-	if (!$isbanned && $luckybastards && in_array($user['id'], $luckybastards))
-	{
+	if (!$isbanned && $luckybastards && in_array($user['id'], $luckybastards)) {
 		$classing = ' style="text-shadow:0px 0px 4px;"';
 		$fname = prettyRainbow($fname);
-	}
-	else if ($dorainbow)
-	{
+	} else if ($dorainbow) {
 		if (!$isbanned)
 			$classing = ' style="color:hsl('.$poptart.',100%,80.4%);"';
 		$poptart += 31;
@@ -206,12 +169,10 @@ function userLink($user, $showMinipic = false, $customID = false)
 	return actionLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", $user["id"], "", $user["name"]);
 }
 
-function userLinkById($id)
-{
+function userLinkById($id) {
 	global $userlinkCache;
 
-	if(!isset($userlinkCache[$id]))
-	{
+	if(!isset($userlinkCache[$id])) {
 		$rUser = Query("SELECT u.(_userfields) FROM {users} u WHERE u.id={0}", $id);
 		if(NumRows($rUser))
 			$userlinkCache[$id] = getDataPrefix(Fetch($rUser), "u_");
@@ -221,8 +182,7 @@ function userLinkById($id)
 	return UserLink($userlinkCache[$id]);
 }
 
-function makeThreadLink($thread)
-{
+function makeThreadLink($thread) {
 	$tags = ParseThreadTags($thread['title']);
 
 	$link = actionLinkTag($tags[0], 'thread', $thread['id'], '', HasPermission('forum.viewforum',$thread['forum'],true)?$tags[0]:'');
@@ -234,18 +194,16 @@ function makeThreadLink($thread)
 		return $link." ".$tags;
 
 }
-function makeFromUrl($url, $from)
-{
-	if($from == 0)
-	{
+
+function makeFromUrl($url, $from) {
+	if($from == 0) {
 		$url = preg_replace('@(?:&amp;|&|\?)\w+=$@', '', $url);
 		return $url;
 	}
 	else return $url.$from;
 }
 
-function pageLinks($url, $epp, $from, $total)
-{
+function pageLinks($url, $epp, $from, $total) {
 	if ($total <= $epp) return '';
 	
 	$url = htmlspecialchars($url);
@@ -268,8 +226,7 @@ function pageLinks($url, $epp, $from, $total)
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink lastpage\"  href=\"".makeFromUrl($url, $last)."\">&#x00BB;</a>" : "";
 
 	$pageLinks = array();
-	for($p = $page - 5; $p < $page + 5; $p++)
-	{
+	for($p = $page - 5; $p < $page + 5; $p++) {
 		if($p < 1 || $p > $numPages)
 			continue;
 		if($p == $page || ($from == 0 && $p == 1))
@@ -281,8 +238,7 @@ function pageLinks($url, $epp, $from, $total)
 	return $first.$prev.join($pageLinks, "").$next.$last;
 }
 
-function pageLinksInverted($url, $epp, $from, $total)
-{
+function pageLinksInverted($url, $epp, $from, $total) {
 	if ($total <= $epp) return '';
 	
 	$url = htmlspecialchars($url);
@@ -305,8 +261,7 @@ function pageLinksInverted($url, $epp, $from, $total)
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink\"  href=\"".makeFromUrl($url, $last)."\">&#x00AB;</a>" : "";
 
 	$pageLinks = array();
-	for($p = $page + 5; $p >= $page - 5; $p--)
-	{
+	for($p = $page + 5; $p >= $page - 5; $p--) {
 		if($p < 1 || $p > $numPages)
 			continue;
 		if($p == $page || ($from == 0 && $p == 1))
@@ -319,57 +274,33 @@ function pageLinksInverted($url, $epp, $from, $total)
 }
 
 
-function absoluteActionLink($action, $id=0, $args="")
-{
+function absoluteActionLink($action, $id=0, $args="") {
 	global $serverport;
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
 }
 
-function getRequestedURL()
-{
-    return $_SERVER['REQUEST_URI'];
-}
+function getRequestedURL() { return $_SERVER['REQUEST_URI']; }
 
-
-function getServerDomainNoSlash($https = false)
-{
+function getServerDomainNoSlash($https = false) {
 	global $serverport;
 	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport;
 }
 
-function getServerURL($https = false)
-{
-    return getServerURLNoSlash($https)."/";
-}
+function getServerURL($https = false) { return getServerURLNoSlash($https)."/"; }
 
-function getServerURLNoSlash($https = false)
-{
+function getServerURLNoSlash($https = false) {
     global $serverport;
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
 
-function getFullRequestedURL($https = false)
-{
-    return getServerURL($https) . $_SERVER['REQUEST_URI'];
-}
-
-function getFullURL()
-{
-	return getFullRequestedURL();
-}
+function getFullRequestedURL($https = false) { return getServerURL($https) . $_SERVER['REQUEST_URI']; }
+function getFullURL(){ return getFullRequestedURL(); }
 
 // ----------------------------------------------------------------------------
 // --- Smarty interface
 // ----------------------------------------------------------------------------
 
-function smarty_function_actionLink($params, $template)
-{
-	return htmlspecialchars(actionLink($params['page'], ($params['id']?:''), $params['args'], $params['urlname']));
-}
-
-function smarty_function_resourceLink($params, $template)
-{
-	return htmlspecialchars(resourceLink($params['url']));
-}
+function smarty_function_actionLink($params, $template) { return htmlspecialchars(actionLink($params['page'], ($params['id']?:''), $params['args'], $params['urlname'])); }
+function smarty_function_resourceLink($params, $template) { return htmlspecialchars(resourceLink($params['url'])); }
 
 ?>

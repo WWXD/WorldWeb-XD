@@ -173,7 +173,8 @@
 		<table class="layout-table" style="line-height: 1.4em;">
 			<tr>
 			<td style="text-align: left;">
-				{$layout_credits}
+				{$layout_credits}<br>
+				{$board_credits}
 			</td>
 			<td style="text-align: center;">
 				{$perfdata}

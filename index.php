@@ -238,9 +238,8 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 
 $layout_credits =
-'<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter and MaorNinja322<br>
-Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
+'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">Blargboard XD &middot; by MaorNinja322 <a href="'.$_GET["page"] = "credits".'">et al</a><br>
+Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 
 $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
@@ -315,7 +314,8 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_views' => $layout_views,
 		'layout_onlineusers' => $layout_onlineusers,
 		'layout_birthdays' => $layout_birthdays,
-		'layout_credits' => $layout_credits,
+		'board_credits' => $layout_credits,
+		'layout_credits' => parseBBCode(Settings::get('layout_credits')),
 		'mobileswitch' => $mobileswitch,
 		'perfdata' => $perfdata));
 ?>

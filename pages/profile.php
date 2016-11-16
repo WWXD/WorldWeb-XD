@@ -19,8 +19,7 @@ $usgroups = array();
 $res = Query("SELECT groupid FROM {secondarygroups} WHERE userid={0}", $id);
 while ($sg = Fetch($res)) $usgroups[] = $usergroups[$sg['groupid']];
 
-if($id == $loguserid)
-{
+if($id == $loguserid) {
 	Query("update {users} set lastprofileview={1} where id={0}", $loguserid, time());
 	DismissNotification('profilecomment', $loguserid, $loguserid);
 }
@@ -331,8 +330,7 @@ RenderTemplate('profile', array(
 
 	
 
-if (!$mobileLayout)
-{
+if (!$mobileLayout) {
 	$previewPost['text'] = Settings::get("profilePreviewText");
 
 	$previewPost['num'] = 0;
@@ -347,8 +345,7 @@ if (!$mobileLayout)
 
 $links = array();
 
-if (HasPermission('admin.banusers') && $loguserid != $id)
-{
+if (HasPermission('admin.banusers') && $loguserid != $id) {
 	if ($user['primarygroup'] != Settings::get('bannedGroup'))
 		$links[] = actionLinkTag('Ban user', 'banhammer', $id);
 	else

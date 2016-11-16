@@ -119,7 +119,8 @@ input, textarea {
 		<table class="layout-table" style="line-height: 1.4em;">
 			<tr>
 			<td style="text-align: center;">
-				{$layout_credits}<hr><br>
+				{$layout_credits}<br>
+				{$board_credits}<hr><br>
 			</td>
 </tr><tr>
 			<td style="text-align: center;">

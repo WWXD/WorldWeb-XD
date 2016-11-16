@@ -61,6 +61,9 @@ include(__DIR__."/settingsfile.php");
 
 include(__DIR__."/debug.php");
 include(__DIR__."/mysql.php");
+include(__DIR__."/../config/database.php");
+if(!fetch(query("SHOW TABLES LIKE '{misc}'")))
+	die("The boards tables are empty. Please copy the db folder and install.php to your board root and delete the config folder from the root. Overwrite any files if nessesary.");
 include(__DIR__."/settingssystem.php");
 Settings::load();
 Settings::checkPlugin("main");

@@ -26,6 +26,12 @@ if (!defined('BLARG')) die();
 			"name" => "Text in breadcrumbs' first link",
 			'category' => 'Board identity'
 		),
+		"layout_credits" => array (
+			"type" => "text",
+			"default" => "Site ran by [user=1]",
+			"name" => "Custom Credits",
+			'category' => 'Board identity'
+		),
 		
 		
 		"dateformat" => array (
@@ -127,7 +133,7 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		"minwords" => array (
 			"type" => "integer",
 			"default" => "5",
-			"name" => "Minimum post word count"
+			"name" => "Minimum post word count",
 			'category' => 'Functionality'
 		),
 		"viewcountInterval" => array (

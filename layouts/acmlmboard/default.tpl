@@ -105,6 +105,7 @@
 			<tr>
 			<td style="text-align: left;">
 				{$layout_credits}<br>
+				{$board_credits}<br>
 			</td>
 			<td style="text-align: center;">
 			{$perfdata}
