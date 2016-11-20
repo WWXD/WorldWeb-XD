@@ -2,15 +2,11 @@
 if (!defined('BLARG')) die();
 
 if (isset($_GET['id']))
-{
 	$rPost = Query("select id,date,thread from {posts} where id={0}", $_GET['id']);
-}
-else if (isset($_GET['tid']) && isset($_GET['time']))
-{
+else if (isset($_GET['tid']) && isset($_GET['time'])) {
 	$rPost = Query("select id,date,thread from {posts} where thread={0} AND date>{1} ORDER BY date LIMIT 1",
 		$_GET['tid'], $_GET['time']);
-}
-else
+} else
 	Kill('blarg');
 
 if(NumRows($rPost))

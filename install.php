@@ -184,9 +184,9 @@
 		
 		Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
 			1, $boardusername, $sha, $pss, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
-			
+
 		echo '</div></div></div>';
-			
+
 	?>
 		<div class="container">
 			<div class="outline">
@@ -199,7 +199,7 @@
 			</div>
 		</div>
 	<?php
-		
+
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
 	}
@@ -219,8 +219,8 @@
 			</div>
 			<div class="outline">
 				<div class="box cell center">
-					Please note that you are using a version of ABXD obtained from the Git repository.<br />
--					This version of ABXD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
+					Please note that you are using a version of BBXD obtained from the Git repository.<br />
+-					This version of BBXD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
 				</div>
 			</div>
 				<form action="" method="POST">

@@ -59,10 +59,10 @@ $groups = array();
 $r = Query("SELECT id,title FROM {usergroups} WHERE type=0 AND rank<={0} ORDER BY rank", $loguserGroup['rank']);
 while ($g = Fetch($r))
 	$groups[$g['id']] = htmlspecialchars($g['title']);
-	
+
 
 $pltype = Settings::get('postLayoutType');
-	
+
 $epPages = array();
 $epCategories = array();
 $epFields = array();

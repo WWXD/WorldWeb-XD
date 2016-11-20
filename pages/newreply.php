@@ -131,15 +131,14 @@ else if(isset($_POST['actionpost'])) {
 		if($_POST['nopl']) $options |= 1;
 		if($_POST['nosm']) $options |= 2;
 
-		if (HasPermission('mod.closethreads', $forum['id']))
-		{
+		if (HasPermission('mod.closethreads', $forum['id'])) {
 			if($_POST['lock'])
 				$mod.= ", closed = 1";
 			else if($_POST['unlock'])
 				$mod.= ", closed = 0";
 		}
-		if (HasPermission('mod.stickthreads', $forum['id']))
-		{
+		
+		if (HasPermission('mod.stickthreads', $forum['id'])) {
 			if($_POST['stick'])
 				$mod.= ", sticky = 1";
 			else if($_POST['unstick'])
