@@ -348,13 +348,17 @@ function ConstructToolbar()
 		{ separator: true },
  		{ icon: "quote-left", title: "Quote", insert: "quote" },
  		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" }, 
-		{ icon: "fa fa-code", title: "Code", insert: "code" },
+		{ icon: "code", title: "Code", insert: "code" },
 
 	];
 
 	for(var i = 0; i < buttons.length; i++)
 	{
 		var button = buttons[i];
+		if(button.label == "-") {
+			toolbar.innerHTML += " ";
+			continue;
+		}
 		if (button.separator !== undefined && button.separator == true) {
 			toolbar.appendChild(document.createTextNode(" "));
 			continue;
