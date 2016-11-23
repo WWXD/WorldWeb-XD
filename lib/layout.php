@@ -14,10 +14,10 @@ function RenderTemplate($template, $options=null)
 		$plugin = $plugintemplates[$template];
 		$self = $plugins[$plugin];
 		
-		$tplroot = __DIR__.'/../plugins/'.$self['dir'].'/layouts/';
+		$tplroot = BOARD_ROOT.'/plugins/'.$self['dir'].'/layouts/';
 	}
 	else
-		$tplroot = __DIR__.'/../layouts/';
+		$tplroot = BOARD_ROOT.'/layouts/'; 
 	
 	if ($mobileLayout)
 	{

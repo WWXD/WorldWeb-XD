@@ -4,17 +4,18 @@ $title = __("Delete the user");
 
 makeCrumbs(array(actionlink('deleteuser') => __("Delete User")));
 
-/*	Make 12 checks:
+/*	Make 15 checks:
 	1) If the user can edit his own profile: you don't want to be a hypocrite. This one is checked twice, with one of them being a message, while the other is displaying the page.
 	2) If the user can edit other profiles. This is also checked twice, with one of them displaying the page and the other is a message.
 	3) If the user has the delete permission set to on. 
-	4) If the user is above rank ID -1, it'll block it. It'll only delete the user if the user is below rank ID 0. This one is checked four times, twice being a message and the other two being to display the page. You'll need to ban the user before you delete him.
-	5) If the user trying to delete another user is logged in.
-	6) If the user being deleted even exists
-	7) If the user trying to nuke is banned and all the nessesary permissions are deactivated (it should normally be deactivated, but who knows) :P: Just because you're banned doesn't mean you have to go nuts and delete users. It'll be a strongly worded message to put some sence into them. Not like the end user will get some sence due to that user getting banned
+	4) If the user has the ban permission set to on: You need to ban the user in order to delete, so it logical that you need that permission on. This is checked twice, one for the message and one to display the delete page. 
+	5) If the user is above rank ID -1, it'll block it. It'll only delete the user if the user is below rank ID 0. This one is checked four times, twice being a message and the other two being to display the page. You'll need to ban the user before you delete him.
+	6) If the user trying to delete another user is logged in.
+	7) If the user being deleted even exists.
+	8) If the user trying to delete is banned and all the nessesary permissions are deactivated (it should normally be deactivated, but who knows) :P: Just because you're banned doesn't mean you have to go nuts and delete users. It'll be a strongly worded message to put some sence into them. Not like the end user will get some sence due to that user getting banned.
+	9) If the user trying to delete has a lower rank than the one being deleted.
 
-	Yes, I know, its a lot of checks, but you have to be secure. Otherwise, you'll have a destroyed board
-*/
+	Yes, I know, its a lot of checks, but you have to be secure. Otherwise, you'll have a destroyed board: The delete feature is very powerfull. If ever someone got a hold of the nuke plugin pre-security updates with the nuke permission, your board can be done for, especially considering that recalc is only allowed to be ran by owner. (And no, I'm not going to make it being ran by permissions, at least, not right now.) I'm not sure how MyBB does it (and I don't want to know; it doesn't interest me.). */
 
 $uid = (int)$_GET["id"];
 
@@ -23,8 +24,8 @@ $user = fetch(query("select * from {users} where id={0}", $uid));
 if(!$loguserid)
 	Kill(__("You must be logged in to delete a profile."));
 
-if (!HasPermission('admin.editusers') && !HasPermission('admin.userdelete') && !HasPermission('user.editprofile') && $loguser['banned'])
-	Kill(__("You may not use the user nuke due to you being banned. Look, just because your banned doesn't mean you have to ruin it for everyone else who's in your banned user club. Try improving, instead of trying to get revenge on the staff."));
+if (!HasPermission('admin.editusers') && !HasPermission('admin.userdelete') && !HasPermission('user.editprofile') && !HasPermission('admin.banusers') && $loguser['banned'])
+	Kill(__("You may not use the user nuke due to you being banned. Look, just because your banned doesn't mean you have to ruin it for everyone else who's in your banned user club. Try improving, instead of trying to get revenge on the staff like an immature freak."));
 
 if (!HasPermission('user.editprofile'))
 	Kill(__("Don't be such a hypocrite. Before you decide to delete other users, how about check yourself."));
@@ -32,15 +33,21 @@ if (!HasPermission('user.editprofile'))
 if (!HasPermission('admin.editusers'))
 	Kill(__("The deleting function is part of the editing other users function."));
 
+if (!HasPermission('admin.banusers'))
+	Kill(__("You need to be able to ban in order to delete a user."));
+
 if(!$user)
 	Kill(__("You cannot delete a user that doesn't exist."));
+
+if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
+	Kill(__("You may not delete a user whose level is equal to or above yours."));
 
 if($user["primarygroup"] > -1)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
 else if($user["primarygroup"] < 0)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
 
-if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && HasPermission('user.editprofile') && $user["primarygroup"] < 0 && $user["primarygroup"] > -1) {
+if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && HasPermission('admin.banusers') && HasPermission('user.editprofile') && $user["primarygroup"] < 0 && $user["primarygroup"] > -1) {
 	$passwordFailed = false;
 
 	if(isset($_POST["currpassword"])) {
@@ -85,7 +92,7 @@ if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && Has
 					on duplicate key update ip=ip", $user["lastip"], "Deleting ".$user["name"]);
 
 			//Log that the user is deleted: Just a safety check if an admin wants to know what happend to that user, and not make the user dissapear without a trace.
-			Report("".$user["name"]."was deleted.");
+			Report($user["name"]." was deleted.");
 
 			echo "User deleted!<br/>";
 			echo "You will need to ", actionLinkTag("Recalculate statistics now", "recalc");

@@ -15,8 +15,7 @@ require(__DIR__.'/lib/common.php');
 $layout_crumbs = '';
 $layout_actionlinks = '';
 
-if (isset($_GET['forcelayout']))
-{
+if (isset($_GET['forcelayout'])) {
 	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, URL_ROOT, "", false, true);
 	die(header('Location: '.$_SERVER['HTTP_REFERER']));
 }
@@ -39,8 +38,7 @@ header('X-Frame-Options: DENY');
 //Useful to have it disabled when running from the terminal.
 $useBuffering = true;
 //Support for running pages from the terminal.
-if(isset($argv))
-{
+if(isset($argv)) {
 	$_GET = array();
 	$_GET["page"] = $argv[1];
 	
@@ -62,8 +60,7 @@ else
 if(!ctype_alnum($page))
 	$page = MAIN_PAGE;
 
-if($page == $mainPage)
-{
+if($page == $mainPage) {
 	if(isset($_GET['fid']) && (int)$_GET['fid'] > 0 && !isset($_GET['action']))
 		die(header("Location: ".actionLink("forum", (int)$_GET['fid'])));
 	if(isset($_GET['tid']) && (int)$_GET['tid'] > 0)
@@ -83,23 +80,17 @@ if($useBuffering)
 	ob_start();
 
 $fakeerror = false;
-if ($loguser['flags'] & 0x2)
-{
-	if (rand(0,100) <= 75)
-	{
+if ($loguser['flags'] & 0x2) {
+	if (rand(0,100) <= 75) {
 		Alert("Could not load requested page: failed to connect to the database. Try again later.", 'Error');
 		$fakeerror = true;
 	}
 }
 
-if (!$fakeerror)
-{
-	try
-	{
-		try
-		{
-			if(array_key_exists($page, $pluginpages))
-			{
+if (!$fakeerror) {
+	try {
+		try {
+			if(array_key_exists($page, $pluginpages)) {
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
 
@@ -109,32 +100,23 @@ if (!$fakeerror)
 					throw new Exception(404);
 				include($page);
 				unset($self);
-			}
-			else
-			{
+			} else {
 				$page = __DIR__.'/pages/'.$page.'.php';
 				if(!file_exists($page))
 					throw new Exception(404);
 				include($page);
 			}
 		}
-		catch(Exception $e)
-		{
-			if ($e->getMessage() != 404)
-			{
-				throw $e;
-			}
+		catch(Exception $e) {
+			if ($e->getMessage() != 404) { throw $e; }
 			require(__DIR__.'/pages/404.php');
 		}
-	}
-	catch(KillException $e)
-	{
+	} catch(KillException $e) {
 		// Nothing. Just ignore this exception.
 	}
 }
 
-if($ajaxPage)
-{
+if($ajaxPage) {
 	if($useBuffering) {
 		header("Content-Type: text/plain");
 		ob_end_flush();
@@ -239,7 +221,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 
 $layout_credits =
-'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">Blargboard XD &middot; by MaorNinja322 <a href="'.$_GET["page"] = "credits".'">et al</a><br>
+'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">Blargboard XD 0.0.1 &middot; by MaorNinja322 <a href="'.$_GET["page"] = "credits".'">et al</a><br>
 Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 
