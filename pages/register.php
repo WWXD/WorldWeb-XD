@@ -200,11 +200,8 @@ if($_POST['register']) {
 	}
 
 	if($err)
-	{
 		Alert($err, __('Error'));
-	}
-	else
-	{
+	else {
 		$newsalt = Shake();
 		$sha = doHash($_POST['pass'].SALT.$newsalt);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");

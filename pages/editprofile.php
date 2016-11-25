@@ -1,6 +1,9 @@
 <?php
 if (!defined('BLARG')) die();
 
+echo "<script src=\"".resourceLink('js/register.js')."\"></script>
+<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+
 //Check Stuff
 if(!$loguserid)
 	Kill(__("You must be logged in to edit your profile."));
@@ -678,6 +681,11 @@ while ($c = Fetch($countdata))
 	$themes[$c['theme']]['num'] = $c['num'];
 
 asort($themes);
+
+$themeList .= "
+	<div style=\"text-align: right;\">
+		<input type=\"text\" placeholder=\"".__("Search")."\" id=\"search\" onkeydown=\"searchThemes(this.value);\" />
+	</div>";
 
 foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
