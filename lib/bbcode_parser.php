@@ -82,6 +82,7 @@ $TagList = array
 	'[center'	=>	TAG_GOOD,
 
 	'[url'		=>	TAG_GOOD | TAG_NOAUTOLINK,
+	'[urlnf'	=>	TAG_GOOD | TAG_NOAUTOLINK,
 	'[img'		=>	TAG_GOOD | TAG_RAWCONTENTS,
 	'[imgs'		=>	TAG_GOOD | TAG_RAWCONTENTS,
 
