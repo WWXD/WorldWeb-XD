@@ -66,6 +66,8 @@ $permDescs = array
 		'admin.ipsearch' => __('Use IP search'),
 		'admin.adminusercomments' => __('Administrate user comments'),
 		'admin.viewstaffpms' => __('Receive staff PMs'),
+		'admin.userdelete' => __('Delete Users'),
+		'admin.assignbadges' => __('Assign Badges'),
 	),
 );
 

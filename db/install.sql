@@ -32,6 +32,7 @@ INSERT INTO `{$dbpref}usergroups` (`id`, `name`, `title`, `rank`, `type`, `displ
 (5, 'VIP', 'VIP', 50, 0, 0, '#D8E8FE', '#FFB3F3', '#EEB9BA');
 
 INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VALUES
+(0, -1, 'admin.assignbadges', 0, -1),
 (0, -1, 'admin.adminusercomments', 0, -1),
 (0, -1, 'admin.banusers', 0, -1),
 (0, -1, 'admin.editforums', 0, -1),
@@ -78,6 +79,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, -1, 'user.viewhiddenforums', 0, -1),
 (0, -1, 'user.votepolls', 0, -1),
 (0, -1, 'user.voteposts', 0, -1),
+(0, 0, 'admin.assignbadges', 0, -1),
 (0, 0, 'admin.adminusercomments', 0, -1),
 (0, 0, 'admin.banusers', 0, -1),
 (0, 0, 'admin.editforums', 0, -1),
@@ -124,6 +126,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 0, 'user.viewhiddenforums', 0, -1),
 (0, 0, 'user.votepolls', 0, 1),
 (0, 0, 'user.voteposts', 0, 1),
+(0, 1, 'admin.assignbadges', 0, -1),
 (0, 1, 'admin.adminusercomments', 0, -1),
 (0, 1, 'admin.banusers', 0, -1),
 (0, 1, 'admin.editforums', 0, -1),
@@ -162,6 +165,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 1, 'user.viewhiddenforums', 0, -1),
 (0, 1, 'user.votepolls', 0, 1),
 (0, 1, 'user.voteposts', 0, 1),
+(0, 2, 'admin.assignbadges', 0, -1),
 (0, 2, 'admin.adminusercomments', 0, -1),
 (0, 2, 'admin.banusers', 0, 1),
 (0, 2, 'admin.editforums', 0, -1),
@@ -208,6 +212,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 2, 'user.viewhiddenforums', 0, 1),
 (0, 2, 'user.votepolls', 0, 1),
 (0, 2, 'user.voteposts', 0, 1),
+(0, 3, 'admin.assignbadges', 0, 1),
 (0, 3, 'admin.adminusercomments', 0, 1),
 (0, 3, 'admin.banusers', 0, 1),
 (0, 3, 'admin.editforums', 0, 1),
@@ -255,6 +260,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 3, 'user.viewhiddenforums', 0, 1),
 (0, 3, 'user.votepolls', 0, 1),
 (0, 3, 'user.voteposts', 0, 1),
+(0, 4, 'admin.assignbadges', 0, 1),
 (0, 4, 'admin.adminusercomments', 0, 1),
 (0, 4, 'admin.banusers', 0, 1),
 (0, 4, 'admin.editforums', 0, 1),
