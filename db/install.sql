@@ -1,5 +1,5 @@
 /* 
-	Blargboard default data set
+	Blargboard XD default data set
 	
 	* sample category/forum accessible to everyone
 	* usergroups and their permissions
@@ -23,15 +23,16 @@ INSERT INTO `{$dbpref}misc` (`version`, `views`, `hotcount`, `maxusers`, `maxuse
 (1337, 0, 30, 0, 0, '', 0, 0, 0, 0, '');
 
 INSERT INTO `{$dbpref}usergroups` (`id`, `name`, `title`, `rank`, `type`, `display`, `color_male`, `color_female`, `color_unspec`) VALUES
-(-1, 'Banned users', 'Banned', -1000, 0, 0, '#888888', '#888888', '#888888'),
+(-1, 'Banned users', 'Banned', -1000, 0, 0, '#414A67', '#622F4F', '#38225E'),
 (0, 'Normal users', 'Normal user', 0, 0, 0, '#97ACEF', '#F185C9', '#7C60B0'),
 (1, 'Local moderators', 'Local moderator', 100, 0, 1, '#D8E8FE', '#FFB3F3', '#EEB9BA'),
 (2, 'Global moderators', 'Global moderator', 200, 0, 1, '#AFFABE', '#C762F2', '#47B53C'),
 (3, 'Administrators', 'Administrator', 300, 0, 1, '#FFEA95', '#C53A9E', '#F0C413'),
 (4, 'Owners', 'Owner', 1000, 0, 1, '#5555FF', '#FF5588', '#FF55FF'),
-(5, 'VIP', 'VIP', 50, 0, 0, '#D8E8FE', '#FFB3F3', '#EEB9BA');
+(5, 'VIP', 'VIP', 50, 0, 0, '#D8E8FE', '#FFB3F3', '#EEB9BA'); /*i don't see the point of this group -ST65*/
 
 INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VALUES
+(0, -1, 'admin.assignbadges', 0, -1),
 (0, -1, 'admin.adminusercomments', 0, -1),
 (0, -1, 'admin.banusers', 0, -1),
 (0, -1, 'admin.editforums', 0, -1),
@@ -78,6 +79,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, -1, 'user.viewhiddenforums', 0, -1),
 (0, -1, 'user.votepolls', 0, -1),
 (0, -1, 'user.voteposts', 0, -1),
+(0, 0, 'admin.assignbadges', 0, -1),
 (0, 0, 'admin.adminusercomments', 0, -1),
 (0, 0, 'admin.banusers', 0, -1),
 (0, 0, 'admin.editforums', 0, -1),
@@ -124,6 +126,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 0, 'user.viewhiddenforums', 0, -1),
 (0, 0, 'user.votepolls', 0, 1),
 (0, 0, 'user.voteposts', 0, 1),
+(0, 1, 'admin.assignbadges', 0, -1),
 (0, 1, 'admin.adminusercomments', 0, -1),
 (0, 1, 'admin.banusers', 0, -1),
 (0, 1, 'admin.editforums', 0, -1),
@@ -162,6 +165,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 1, 'user.viewhiddenforums', 0, -1),
 (0, 1, 'user.votepolls', 0, 1),
 (0, 1, 'user.voteposts', 0, 1),
+(0, 2, 'admin.assignbadges', 0, -1),
 (0, 2, 'admin.adminusercomments', 0, -1),
 (0, 2, 'admin.banusers', 0, 1),
 (0, 2, 'admin.editforums', 0, -1),
@@ -208,6 +212,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 2, 'user.viewhiddenforums', 0, 1),
 (0, 2, 'user.votepolls', 0, 1),
 (0, 2, 'user.voteposts', 0, 1),
+(0, 3, 'admin.assignbadges', 0, 1),
 (0, 3, 'admin.adminusercomments', 0, 1),
 (0, 3, 'admin.banusers', 0, 1),
 (0, 3, 'admin.editforums', 0, 1),
@@ -255,6 +260,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 3, 'user.viewhiddenforums', 0, 1),
 (0, 3, 'user.votepolls', 0, 1),
 (0, 3, 'user.voteposts', 0, 1),
+(0, 4, 'admin.assignbadges', 0, 1),
 (0, 4, 'admin.adminusercomments', 0, 1),
 (0, 4, 'admin.banusers', 0, 1),
 (0, 4, 'admin.editforums', 0, 1),
@@ -405,7 +411,7 @@ INSERT INTO `{$dbpref}smilies` (`id`, `code`, `image`) VALUES
 (27, '~:o', 'baby.png'),
 (28, ':YES:', 'yes.png'),
 (29, ':NO:', 'no.png'),
-(30, '<3', 'heart.png'),
+(30, ':heart:', 'heart.png'), /*fixed emoticon*/
 (31, ':3', 'colonthree.png'),
 (32, ':up:', 'approve.png'),
 (33, ':down:', 'deny.png'),

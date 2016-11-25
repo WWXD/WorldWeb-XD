@@ -1,34 +1,160 @@
 <?php
-//  AcmlmBoard XD - User account registration page
+//  Blargboard XD - User account registration page
 //  Access: any, but meant for guests.
+//  Extra security by SuperToad65 
 if (!defined('BLARG')) die();
 
-require(BOARD_ROOT.'config/kurikey.php');
-
-
 $title = __("Register");
+
+echo "<script src=\"".resourceLink('js/register.js')."\"></script>
+<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+
+class StopForumSpam {
+    /**
+    * The API key.
+    *
+    * @var string
+    */
+    private $api_key;
+    /**
+    * The base url, for tha API/
+    *
+    * @var string
+    */
+    private $endpoint = 'http://www.stopforumspam.com/';
+    /**
+    * Constructor.
+    *
+    * @param string $api_key Your API Key, optional (unless adding to database).
+    */
+    public function __construct( $api_key = null ) {
+        // store variables
+        $this->api_key = $api_key;
+    }
+    /**
+    * Add to the database
+    *
+    * @param array $args associative array containing email, ip, username and optionally, evidence
+    * e.g. $args = array('email' => 'user@example.com', 'ip_addr' => '8.8.8.8', 'username' => 'Spammer?', 'evidence' => 'My favourite website http://www.example.com' );
+    * @return boolean Was the update succesfull or not.
+    */
+    public function add( $args ) {
+        // check for mandatory arguments
+        if (empty($args['username']) || empty($args['ip_addr']) || empty($args['email']) ) {
+            return false;
+        }
+        // known?
+        $is_spammer = $this->is_spammer($args);
+        if (!$is_spammer || $is_spammer['known']) {
+            return false;
+        }
+        // add api key
+        $args['api_key'] = $this->api_key;
+        // url to poll
+        $url = $this->endpoint.'add.php?'.http_build_query($args, '', '&');
+        // execute
+        $response = file_get_contents($url);
+        return (false == $response ? false : true);
+    }
+    /**
+    * Get record from spammers database.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip.
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return object Response.
+    */
+    public function get( $args ) {
+        // should check first if not already in database
+        // url to poll
+        $url = $this->endpoint.'api?f=json&'.http_build_query($args, '', '&');
+        //
+        return $this->poll_json( $url );
+    }
+    /**
+    * Check if either details correspond to a known spammer. Checking for username is discouraged.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return boolean
+    */
+    public function is_spammer( $args ) {
+        // poll database
+        $record = $this->get( $args );
+        if ( !isset($record->success) ) {
+            return false;
+        }
+        // give the benefit of the doubt
+        $spammer = false;
+        // are all datapoints on SFS?
+        $known = true;
+        // parse database record
+        $datapoint_count = 0;
+        $known_datapoints = 0;
+        foreach( $record as $datapoint ) {
+            // not 'success'
+            if ( isset($datapoint->appears) && $datapoint->appears ) {
+                $datapoint_count++;
+                // are ANY of the datapoints on SFS?
+                if ( $datapoint->appears == true)
+                {
+                    $known_datapoints++;
+                    $spammer = true;
+                }
+            }
+        }
+        // are ANY of the datapoints not on SFS
+        if ( $datapoint_count > $known_datapoints) {
+            $known = false;
+        }
+		return $spammer;
+        return array(
+            'spammer' => $spammer,
+            'known' => $known
+        );
+    }
+    /**
+    * Get json and decode. Currently used for polling the database, but hoping for future
+    * json response support, when adding.
+    *
+    * @param string $url The url to get
+    * @return object Response.
+    */
+    protected static function poll_json( $url )
+    {
+        $json = file_get_contents( $url );
+        $object = json_decode($json);
+        return $object;
+    }
+}
+function IsTorExitPoint(){
+    if (gethostbyname(ReverseIPOctets($_SERVER['REMOTE_ADDR']).".".$_SERVER['SERVER_PORT'].".".ReverseIPOctets($_SERVER['SERVER_ADDR']).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
+        return true;
+    } else {
+       return false;
+    }
+}
+function ReverseIPOctets($inputip){
+    $ipoc = explode(".",$inputip);
+    return $ipoc[3].".".$ipoc[2].".".$ipoc[1].".".$ipoc[0];
+}
+
 MakeCrumbs(array('' => __('Register')));
 
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
-if($_POST['register'])
-{
-	if (IsProxy())
-	{
+if($_POST['register']) {
+	if (IsProxy()) {
 		$adminemail = Settings::get('ownerEmail');
 		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
 		else $halp = '';
 		
 		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
-	}
-	else
-	{
+	} else {
 		$name = trim($_POST['name']);
 		$cname = str_replace(" ","", strtolower($name));
 
 		$rUsers = Query("select name, displayname from {users}");
-		while($user = Fetch($rUsers))
-		{
+		while($user = Fetch($rUsers)) {
 			$uname = trim(str_replace(" ", "", strtolower($user['name'])));
 			if($uname == $cname)
 				break;
@@ -51,14 +177,26 @@ if($_POST['register'])
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
 		else if ($_POST['likesCake'])
 			$err = __("Robots not allowed.");
-		else if(strlen($_POST['pass']) < 4)
-			$err = __("Your password must be at least four characters long.");
+		else if(strlen($_POST['pass']) < 8)
+			$err = __("Your password must be at least eight characters long.");
 		else if ($_POST['pass'] !== $_POST['pass2'])
 			$err = __("The passwords you entered don't match.");
-		else if (preg_match("@^(MKDS|MK7|SM64DS|SMG|NSMB)\d*?@si", $uname))
-			$err = __("Come on, you could be a little more original with your username!");
 		else if(!$_POST['email'])
 			$err = __("You need to specify an email.");
+            
+		$reasons = array();
+		if(IsTorExitPoint()) {
+			$reasons[] = 'tor';
+		}
+		$s = new StopForumSpam($stopForumSpamKey);
+		if($s->is_spammer(array('email' => $_POST['email'], 'ip' => $_SERVER['REMOTE_ADDR'] ))) {
+			$reasons[] = 'sfs';
+		}
+		if(count($reasons)) {
+			$reason = implode(',', $reasons);
+			$bucket = "regfail"; include("lib/pluginloader.php");
+			$err = 'An unknown error occured, please try again.';
+		}
 	}
 
 	if($err)
@@ -81,13 +219,12 @@ if($_POST['register'])
 		$user['rawpass'] = $_POST['pass'];
 
 		$bucket = "newuser"; include(BOARD_ROOT."lib/pluginloader.php");
-		
-		
+
+
 		$rLogUser = Query("select id, pss, password from {users} where 1");
 		$matches = array();
 
-		while($testuser = Fetch($rLogUser))
-		{
+		while($testuser = Fetch($rLogUser)) {
 			if($testuser['id'] == $user['id'])
 				continue;
 
@@ -95,45 +232,28 @@ if($_POST['register'])
 			if($testuser['password'] === $sha)
 				$matches[] = $testuser['id'];
 		}
-		
+
 		if (count($matches) > 0)
 			Query("INSERT INTO {passmatches} (date,ip,user,matches) VALUES (UNIX_TIMESTAMP(),{0},{1},{2})", $_SERVER['REMOTE_ADDR'], $user['id'], implode(',',$matches));
-		
+
 		// mark threads older than 15min as read
 		Query("INSERT INTO {threadsread} (id,thread,date) SELECT {0}, id, {1} FROM {threads} WHERE lastpostdate<={2} ON DUPLICATE KEY UPDATE date={1}", $uid, time(), time()-900);
 
 
-		if($_POST['autologin'])
-		{
+		if($_POST['autologin']) {
 			$sessionID = Shake();
 			setcookie("logsession", $sessionID, 0, URL_ROOT, "", false, true);
 			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], 0);
 			die(header("Location: ".actionLink('profile', $user['id'], '', $user['name'])));
-		}
-		else
+		} else
 			die(header("Location: ".actionLink("login")));
 	}
-}
-else
-{
+} else {
 	$_POST['name'] = '';
 	$_POST['email'] = '';
 	$_POST['sex'] = 2;
 	$_POST['autologin'] = 0;
 }
-
-
-$kuriseed = crc32(KURIKEY.microtime());
-srand($kuriseed);
-$check = time();
-$kurichallenge = "{$kuriseed}|{$check}|".rand(3,12);
-
-$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
-$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-$kurichallenge = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), $kurichallenge, MCRYPT_MODE_ECB, $iv);
-$kurichallenge = base64_encode($kurichallenge);
-$kuridata = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), "{$kuriseed}|{$check}|{$kurichallenge}", MCRYPT_MODE_ECB, $iv);
-$kuridata = base64_encode($kuridata);
 
 $fields = array(
 	'username' => "<input type=\"text\" id=\"un\" name=\"name\" maxlength=20 size=24 autocorrect=off autocapitalize=words value=\"".htmlspecialchars($_POST['name'])."\" class=\"required\">",
@@ -154,8 +274,7 @@ RenderTemplate('form_register', array('fields' => $fields));
 echo "<span style=\"display : none;\"><input type=\"checkbox\" name=\"likesCake\"> I am a robot</span></form>";
 
 
-function MakeOptions($fieldName, $checkedIndex, $choicesList)
-{
+function MakeOptions($fieldName, $checkedIndex, $choicesList) {
 	$checks[$checkedIndex] = " checked=\"checked\"";
 	foreach($choicesList as $key=>$val)
 		$result .= format("
@@ -166,8 +285,7 @@ function MakeOptions($fieldName, $checkedIndex, $choicesList)
 	return $result;
 }
 
-function IsProxy()
-{
+function IsProxy() {
 	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
 		return true;
 		
