@@ -1,19 +1,176 @@
 <?php
-//  AcmlmBoard XD - User account registration page
+//  Ughboard - User account registration page
 //  Access: any, but meant for guests.
 if (!defined('BLARG')) die();
 
 require(BOARD_ROOT.'config/kurikey.php');
 
-
 $title = __("Register");
+class StopForumSpam
+{
+    /**
+    * The API key.
+    *
+    * @var string
+    */
+    private $api_key;
+    /**
+    * The base url, for tha API/
+    *
+    * @var string
+    */
+    private $endpoint = 'http://www.stopforumspam.com/';
+    /**
+    * Constructor.
+    *
+    * @param string $api_key Your API Key, optional (unless adding to database).
+    */
+    public function __construct( $api_key = null ) {
+        // store variables
+        $this->api_key = $api_key;
+    }
+    /**
+    * Add to the database
+    *
+    * @param array $args associative array containing email, ip, username and optionally, evidence
+    * e.g. $args = array('email' => 'user@example.com', 'ip_addr' => '8.8.8.8', 'username' => 'Spammer?', 'evidence' => 'My favourite website http://www.example.com' );
+    * @return boolean Was the update succesfull or not.
+    */
+    public function add( $args )
+    {
+        // check for mandatory arguments
+        if (empty($args['username']) || empty($args['ip_addr']) || empty($args['email']) ) {
+            return false;
+        }
+        // known?
+        $is_spammer = $this->is_spammer($args);
+        if (!$is_spammer || $is_spammer['known']) {
+            return false;
+        }
+        // add api key
+        $args['api_key'] = $this->api_key;
+        // url to poll
+        $url = $this->endpoint.'add.php?'.http_build_query($args, '', '&');
+        // execute
+        $response = file_get_contents($url);
+        return (false == $response ? false : true);
+    }
+    /**
+    * Get record from spammers database.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip.
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return object Response.
+    */
+    public function get( $args )
+    {
+        // should check first if not already in database
+        // url to poll
+        $url = $this->endpoint.'api?f=json&'.http_build_query($args, '', '&');
+        //
+        return $this->poll_json( $url );
+    }
+    /**
+    * Check if either details correspond to a known spammer. Checking for username is discouraged.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return boolean
+    */
+    public function is_spammer( $args )
+    {
+        // poll database
+        $record = $this->get( $args );
+        if ( !isset($record->success) ) {
+            return false;
+        }
+        // give the benefit of the doubt
+        $spammer = false;
+        // are all datapoints on SFS?
+        $known = true;
+        // parse database record
+        $datapoint_count = 0;
+        $known_datapoints = 0;
+        foreach( $record as $datapoint )
+        {
+            // not 'success'
+            if ( isset($datapoint->appears) && $datapoint->appears ) {
+                $datapoint_count++;
+                // are ANY of the datapoints on SFS?
+                if ( $datapoint->appears == true)
+                {
+                    $known_datapoints++;
+                    $spammer = true;
+                }
+            }
+        }
+        // are ANY of the datapoints not on SFS
+        if ( $datapoint_count > $known_datapoints) {
+            $known = false;
+        }
+return $spammer;
+        return array(
+            'spammer' => $spammer,
+            'known' => $known
+        );
+    }
+    /**
+    * Get json and decode. Currently used for polling the database, but hoping for future
+    * json response support, when adding.
+    *
+    * @param string $url The url to get
+    * @return object Response.
+    */
+    protected static function poll_json( $url )
+    {
+        $json = file_get_contents( $url );
+        $object = json_decode($json);
+        return $object;
+    }
+}
+function IsTorExitPoint(){
+    if (gethostbyname(ReverseIPOctets($_SERVER['REMOTE_ADDR']).".".$_SERVER['SERVER_PORT'].".".ReverseIPOctets($_SERVER['SERVER_ADDR']).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
+        return true;
+    } else {
+       return false;
+    }
+}
+function ReverseIPOctets($inputip){
+    $ipoc = explode(".",$inputip);
+    return $ipoc[3].".".$ipoc[2].".".$ipoc[1].".".$ipoc[0];
+}
+
 MakeCrumbs(array('' => __('Register')));
 
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($_POST['register'])
 {
-	if (IsProxy())
+    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+	$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), base64_decode($_POST['kuridata']), MCRYPT_MODE_ECB, $iv);
+	if (!$kuridata) Kill('Hack attempt detected');
+	
+	$kuridata = explode('|', $kuridata);
+	if (count($kuridata) != 3) Kill('Hack attempt detected');
+	$kuriseed = intval($kuridata[0]);
+	$check = intval($kuridata[1]);
+	$kurichallenge = $kuridata[2];
+	$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
+	if (!$kurichallenge) Kill('Hack attempt detected');
+	
+	$kurichallenge = explode('|', $kurichallenge);
+	if (count($kurichallenge) != 3) Kill('Hack attempt detected');
+	if ($kurichallenge[0] != $kuridata[0]) Kill('Hack attempt detected');
+	if ($kurichallenge[1] != $kuridata[1]) Kill('Hack attempt detected');
+	
+	$ngoombas = intval($kurichallenge[2]);
+	
+	if ($check < (time()-300))
+		$err = __('The token has expired. Reload the page and try again.');
+	else if ($ngoombas != (int)$_POST['kurichallenge'])
+		$err = __('You failed the challenge. Look harder.');
+	else if (IsProxy())
 	{
 		$adminemail = Settings::get('ownerEmail');
 		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
@@ -23,8 +180,8 @@ if($_POST['register'])
 	}
 	else
 	{
-		$name = trim($_POST['name']);
-		$cname = str_replace(" ","", strtolower($name));
+		$name = $_POST['name'];
+		$cname = trim(str_replace(" ","", strtolower($name)));
 
 		$rUsers = Query("select name, displayname from {users}");
 		while($user = Fetch($rUsers))
@@ -45,20 +202,34 @@ if($_POST['register'])
 			$err = __('Enter a username and try again.');
 		elseif($uname == $cname)
 			$err = __("This user name is already taken. Please choose another.");
-		elseif($ipKnown >= 1)
+		elseif($ipKnown >= 3)
 			$err = __("Another user is already using this IP address.");
 		else if(!$_POST['readFaq'])
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
 		else if ($_POST['likesCake'])
 			$err = __("Robots not allowed.");
-		else if(strlen($_POST['pass']) < 4)
-			$err = __("Your password must be at least four characters long.");
+		else if(strlen($_POST['pass']) < 8)
+			$err = __("Your password must be at least eight characters long.");
 		else if ($_POST['pass'] !== $_POST['pass2'])
 			$err = __("The passwords you entered don't match.");
 		else if (preg_match("@^(MKDS|MK7|SM64DS|SMG|NSMB)\d*?@si", $uname))
 			$err = __("Come on, you could be a little more original with your username!");
-		else if(!$_POST['email'])
+    else if(!$_POST['email'])
 			$err = __("You need to specify an email.");
+            
+		$reasons = array();
+		if(IsTorExitPoint()) {
+			$reasons[] = 'tor';
+		}
+		$s = new StopForumSpam($stopForumSpamKey);
+		if($s->is_spammer(array('email' => $_POST['email'], 'ip' => $_SERVER['REMOTE_ADDR'] ))) {
+			$reasons[] = 'sfs';
+		}
+		if(count($reasons)) {
+			$reason = implode(',', $reasons);
+			$bucket = "regfail"; include("lib/pluginloader.php");
+			$err = 'An unknown error occured, please try again.';
+		}
 	}
 
 	if($err)
@@ -74,6 +245,9 @@ if($_POST['register'])
 
 		$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
 			$uid, $_POST['name'], $sha, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+
+		//if($uid == 1)
+		//	Query("update {users} set primarygroup = {0} where id = 1", Settings::get('rootGroup'));
 
 		Report("New user: [b]".$_POST['name']."[/] (#".$uid.") -> [g]#HERE#?uid=".$uid);
 
@@ -136,12 +310,15 @@ $kuridata = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), "{$kuriseed}
 $kuridata = base64_encode($kuridata);
 
 $fields = array(
-	'username' => "<input type=\"text\" id=\"un\" name=\"name\" maxlength=20 size=24 autocorrect=off autocapitalize=words value=\"".htmlspecialchars($_POST['name'])."\" class=\"required\">",
-	'password' => "<input type=\"password\" id=\"pw\" name=\"pass\" size=24 class=\"required\">",
-	'password2' => "<input type=\"password\" id=\"pw2\" name=\"pass2\" size=24 class=\"required\">",
-	'email' => "<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($_POST['email'])."\" maxlength=\"60\" size=24 class=\"required\">",
+	'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24 value=\"".htmlspecialchars($_POST['name'])."\" class=\"required\">",
+	'password' => "<input type=\"password\" name=\"pass\" size=24 class=\"required\">",
+	'password2' => "<input type=\"password\" name=\"pass2\" size=24 class=\"required\">",
+	'email' => "<input type=\"email\" name=\"email\" value=\"".htmlspecialchars($_POST['email'])."\" maxlength=\"60\" size=24>",
 	'sex' => MakeOptions("sex",$_POST['sex'],$sexes),
 	'readfaq' => "<label><input type=\"checkbox\" name=\"readFaq\">".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>",
+	'kurichallenge' => "<img src=\"".resourceLink("kurichallenge.php?data=".urlencode($kuridata))."\" alt=\"[reload the page if the image fails to load]\"><br>
+		<input type=\"text\" name=\"kurichallenge\" size=\"10\" maxlength=\"6\" class=\"required\">
+		<input type=\"hidden\" name=\"kuridata\" value=\"".htmlspecialchars($kuridata)."\">",
 	'autologin' => "<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($_POST['autologin']?' checked="checked"':'').">".__("Log in afterwards")."</label>",
 	
 	'btnRegister' => "<input type=\"submit\" name=\"register\" value=\"".__("Register")."\">",
