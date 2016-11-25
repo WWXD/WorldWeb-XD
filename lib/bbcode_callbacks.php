@@ -10,6 +10,7 @@ $bbcodeCallbacks = array
 	"[center" => "bbcodeCenter",
 
 	"[url" => "bbcodeURL",
+	"[urlnf" => "bbcodeURLnf",
 	"[img" => "bbcodeImage",
 	"[imgs" => "bbcodeImageScale",
 
@@ -87,6 +88,16 @@ function bbcodeURL($contents, $arg, $parenttag)
 		$dest = htmlentities($arg);
 
 	return '<a href="'.$dest.'">'.$title.'</a>';
+}
+function bbcodeURLnf($contents, $arg, $parenttag)
+{
+	$dest = htmlentities($contents);
+	$title = $contents;
+
+	if($arg)
+		$dest = htmlentities($arg);
+
+	return '<a href="'.$dest.'" rel="nofollow">'.$title.'</a>';
 }
 
 function bbcodeURLAuto($match)
