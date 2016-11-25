@@ -1,7 +1,7 @@
 <?php
 //  Blargboard XD - User account registration page
 //  Access: any, but meant for guests.
-//  Extra security by SuperToad65 
+//  Extra security by Super-toad 65 
 if (!defined('BLARG')) die();
 
 $title = __("Register");
