@@ -1,4 +1,9 @@
 <?php
+/* ToDo:
+- Redirect the perms editor to editpermisions page, so we won't have to work hard for that -.- 
+- Generally fix the whole page wihout going to edit stuff in the database
+- Fix banned and normal users' groups because of rewritten urls
+- Make a "create new group" button */
 if (!defined('BLARG')) die();
 
 CheckPermission('admin.editgroups');
@@ -51,7 +56,7 @@ if (isset($_GET['id']))
 else
 {
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups')));
-	Alert(__('Select a group above to edit it.'), __('Notice'));
+	Alert(__('Select a group above to edit it. Also blarg, this page is 99% broken'), __('Notice'));
 	return;
 }
 
