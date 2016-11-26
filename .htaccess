@@ -1,7 +1,7 @@
 RewriteEngine on
 RewriteCond		%{REQUEST_FILENAME}				-d
 RewriteCond		%{REQUEST_FILENAME}				!board/?$
-RewriteRule 	.* 								- 									[S=2]
+RewriteRule 	/* 								- 									[S=2]
 RewriteRule 	^(\w+)/(\w+)(?:-[\w-]*)?/?$ 		?page=$1&id=$2&%{QUERY_STRING}		[NC,L]
 RewriteRule 	^(\w+)/?$ 	 					?page=$1&%{QUERY_STRING} 			[NC,L]
 
