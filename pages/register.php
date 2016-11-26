@@ -9,6 +9,119 @@ $title = __("Register");
 echo "<script src=\"".resourceLink('js/register.js')."\"></script>
 <script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 
+//Email Variables starts here
+
+$E001 = "@0815.ru";
+$E002 = "@10minutemail.co.za";
+$E003 = "@10minutemail.com";
+$E004 = "@33mail.com";
+$E005 = "@6ip.us";
+$E006 = "@armyspy.com";
+$E007 = "@binkmail.com";
+$E008 = "@boun.cr";
+$E009 = "@bobmail.info";
+$E010 = "@brennendesreich.de";
+$E011 = "@bund.us";
+$E012 = "@cachedot.net";
+$E013 = "cashforcarsbristol.co.uk";
+$E014 = "@ce.mintemail.com";
+$E015 = "@chammy.info";
+$E016 = "@clrmail.com";
+$E017 = "@cuvox.de";
+$E018 = "@dacoolest.com";
+$E019 = "@dayrep.com";
+$E020 = "@devnullmail.com";
+$E021 = "@discard.email";
+$E022 = "@discardmail.com";
+$E023 = "@discardmail.de";
+$E024 = "@dispomail.eu";
+$E025 = "@dispostable.com";
+$E026 = "@dodgit.com";
+$E027 = "@drdrb.com";
+$E028 = "@eelmail.com";
+$E029 = "@einrot.com";
+$E030 = "@emailproxsy.com";
+$E031 = "@fleckens.hu";
+$E032 = "@getairmail.com";
+$E033 = "@grr.la";
+$E034 = "@guerrillamail.biz";
+$E035 = "@guerrillamail.com";
+$E036 = "@guerrillamail.de";
+$E037 = "@guerrillamail.net";
+$E038 = "@guerrillamail.org";
+$E039 = "@guerrillamailblock.com";
+$E040 = "@gustr.com";
+$E041 = "@harakirimail.com";
+$E042 = "@hulapla.de";
+$E043 = "@hushmail.com";
+$E044 = "@imgof.com";
+$E045 = "@imgv.de";
+$E046 = "@inboxproxy.com";
+$E047 = "@incognitomail.org";
+$E048 = "@jourrapide.com";
+$E049 = "@lags.us";
+$E050 = "@letthemeatspam.com";
+$E051 = "@maildrop.cc";
+$E052 = "@mailforspam.com";
+$E053 = "@mailhub.pw";
+$E054 = "@mailimate.com";
+$E055 = "@mailinator.com";
+$E056 = "@mailinator.net";
+$E057 = "@mailinator2.com";
+$E058 = "@mailnesia.com";
+$E059 = "@mailnull.com";
+$E060 = "@mailproxsy.com";
+$E061 = "@mailtothis.com";
+$E062 = "@meltmail.com";
+$E063 = "@mintemail.com";
+$E064 = "@my10minutemail.com";
+$E065 = "@mynetstore.de";
+$E066 = "@mytrashmail.com";
+$E067 = "@nonspam.eu";
+$E068 = "@nonspammer.de";
+$E069 = "@notmailinator.com";
+$E070 = "@qoika.com";
+$E071 = "@reallymymail.com";
+$E072 = "@reconmail.com";
+$E073 = "@rhyta.com";
+$E074 = "@s0ny.net";
+$E075 = "@safetymail.info";
+$E076 = "@sendspamhere.com";
+$E077 = "@sharedmailbox.org";
+$E078 = "@sharklasers.com";
+$E079 = "@sogetthis.com";
+$E080 = "@soodonims.com";
+$E081 = "@spam4.me";
+$E082 = "@spamavert.com";
+$E083 = "@spambog.com";
+$E084 = "@spambog.de";
+$E085 = "@spambog.ru";
+$E086 = "@spambooger.com";
+$E087 = "@spambox.us";
+$E088 = "@spamgourmet.com";
+$E089 = "@spamherelots.com";
+$E090 = "@spamhereplease.com";
+$E091 = "@spamhole.com";
+$E092 = "@spamstack.net";
+$E093 = "@spamthisplease.com";
+$E094 = "@stonerfans.com";
+$E095 = "@streetwisemail.com";
+$E096 = "@superrito.com";
+$E097 = "@suremail.info";
+$E098 = "@tafmail.com";
+$E099 = "@teewars.org";
+$E100 = "@teleworm.us";
+$E101 = "@thehighlands.co.uk";
+$E102 = "@thisisnotmyrealemail.com";
+$E103 = "@throwawayemailaddress.com";
+$E104 = "@tradermail.info";
+$E105 = "@trbvm.com";
+$E106 = "@value-mycar.co.uk";
+$E107 = "@veryrealemail.com";
+$E108 = "@yopmail.com";
+$E109 = "@zippymail.info";
+$E110 = "@zxcvbnm.co.uk";
+
 class StopForumSpam {
     /**
     * The API key.
@@ -152,8 +265,11 @@ if($_POST['register']) {
 	} else {
 		$name = trim($_POST['name']);
 		$cname = str_replace(" ","", strtolower($name));
+		
+		$email = trim($_POST['email']);
+		$cemail = str_replace(" ","", strtolower($email));
 
-		$rUsers = Query("select name, displayname from {users}");
+		$rUsers = Query("select name, displayname, email from {users}");
 		while($user = Fetch($rUsers)) {
 			$uname = trim(str_replace(" ", "", strtolower($user['name'])));
 			if($uname == $cname)
@@ -161,28 +277,36 @@ if($_POST['register']) {
 			$uname = trim(str_replace(" ", "", strtolower($user['displayname'])));
 			if($uname == $cname)
 				break;
+			
+			$uemail = trim(str_replace(" ", "", strtolower($user['email'])));
+			if($uemail == $cemail)
+				break;
 		}
 
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
-		if (stripos($_POST['email'], '@dispostable.com') !== FALSE)
-			$err = __('Registration failed. Try again later.');
+		if (stripos($cemail, $E001 || $E002 || $E003 || $E004 || $E005 || $E006 || $E007 || $E008 || $E009 || $E010 || $E011 || $E012 || $E013 || $E014 || $E015 || $E016 || $E017 || $E018 || $E019 || $E020 || $E021 || $E022 || $E023 || $E024 || $E025 || $E026 || $E027 || $E028 || $E029 || $E030 || $E031 || $E032 || $E033 || $E034 || $E035 || $E036 || $E037 || $E038 || $E039 ||  $E040 || $E041 || $E042 || $E043 || $E044 || $E045 || $E046 || $E047 || $E048 || $E049 || $E050 || $E051 || $E052 || $E053 || $E054 || $E055 || $E056 || $E057 || $E058 || $E059 || $E060 || $E061 || $E062 || $E063 || $E064 || $E065 || $E066 || $E067 || $E068 || $E069 || $E070 || $E071 || $E072 || $E073 || $E074 || $E075 || $E076 || $E077 || $E078 || $E079 || $E080 || $E081 || $E082 || $E083 || $E084 || $E085 || $E086 || $E087 || $E088 || $E089 || $E090 || $E091 || $E092 || $E093 || $E094 || $E095 || $E096 || $E097 || $E098 || $E099 || $E100 || $E101 || $E102 || $E103 || $E104 || $E105 || $E106 || $E107 || $E108 || $E109 || $E110) !== FALSE)
+			$err = __('You may not register using a temporary email or a spam email. Go away, spammer.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
-		elseif($uname == $cname)
+		else if ($uname == $cname)
 			$err = __("This user name is already taken. Please choose another.");
-		elseif($ipKnown >= 1)
+		else if ($ipKnown >= 1)
 			$err = __("Another user is already using this IP address.");
-		else if(!$_POST['readFaq'])
+		else if (!$_POST['readFaq'])
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
 		else if ($_POST['likesCake'])
 			$err = __("Robots not allowed.");
-		else if(strlen($_POST['pass']) < 8)
+		else if (strlen($_POST['pass']) < 8)
 			$err = __("Your password must be at least eight characters long.");
 		else if ($_POST['pass'] !== $_POST['pass2'])
 			$err = __("The passwords you entered don't match.");
-		else if(!$_POST['email'])
+		else if (!$cemail)
 			$err = __("You need to specify an email.");
+		else if ($_POST['botprot'])
+			$err = __("Go away, spambot.")
+		else if ($uemail == $cemail)
+			$err = __("This email adress is already taken. Go away, rereg.");
             
 		$reasons = array();
 		if(IsTorExitPoint()) {
@@ -257,6 +381,7 @@ $fields = array(
 	'password' => "<input type=\"password\" id=\"pw\" name=\"pass\" size=24 class=\"required\">",
 	'password2' => "<input type=\"password\" id=\"pw2\" name=\"pass2\" size=24 class=\"required\">",
 	'email' => "<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($_POST['email'])."\" maxlength=\"60\" size=24 class=\"required\">",
+	'botprot' => "<input type=\"text\" id=\"botprot\" name=\"botprot\" style=\"display: none;\">",
 	'sex' => MakeOptions("sex",$_POST['sex'],$sexes),
 	'readfaq' => "<label><input type=\"checkbox\" name=\"readFaq\">".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>",
 	'autologin' => "<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($_POST['autologin']?' checked="checked"':'').">".__("Log in afterwards")."</label>",

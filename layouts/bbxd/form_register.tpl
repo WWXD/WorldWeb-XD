@@ -34,6 +34,14 @@
 				{$fields.sex}
 			</td>
 		</tr>
+		<tr style="display:none;">
+			<td class="cell2 center">
+				Bot Protection
+			</td>
+			<td class="cell1">
+				{$fields.botprot}
+			</td>
+		</tr>
 		<tr>
 			<td class="cell2"></td>
 			<td class="cell0">
