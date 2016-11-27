@@ -24,7 +24,8 @@ function actionLink($action, $id="", $args="", $urlname="") {
 
 	// rewritten links
 	if ($action == MAIN_PAGE) $action = '';
-	else $action .= '/';
+	else if ($id) $action .= '/';
+	else $action .= '';
 	
 	if ($id)
 	{
