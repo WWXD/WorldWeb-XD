@@ -200,16 +200,16 @@ function checkForImage(&$image, $external, $file)
 	}
 }
 
-checkForImage($layout_logopic, true, "logos/logo_$theme.png");
-checkForImage($layout_logopic, true, "logos/logo_$theme.jpg");
-checkForImage($layout_logopic, true, "logos/logo_$theme.gif");
-checkForImage($layout_logopic, true, "logos/logo.png");
-checkForImage($layout_logopic, true, "logos/logo.jpg");
-checkForImage($layout_logopic, true, "logos/logo.gif");
-checkForImage($layout_logopic, false, "themes/$theme/logo.png");
-checkForImage($layout_logopic, false, "themes/$theme/logo.jpg");
-checkForImage($layout_logopic, false, "themes/$theme/logo.gif");
-checkForImage($layout_logopic, false, "img/logo.png");
+checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.png'));
+checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.jpg'));
+checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.gif'));
+checkForImage($layout_logopic, true, resourceLink('logos/logo.png'));
+checkForImage($layout_logopic, true, resourceLink('logos/logo.jpg'));
+checkForImage($layout_logopic, true, resourceLink('logos/logo.png'));
+checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.png'));
+checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.jpg'));
+checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.gif'));
+checkForImage($layout_logopic, false, resourceLink('img/logo.png'));
 
 checkForImage($favicon, true, "logos/favicon.gif");
 checkForImage($favicon, true, "logos/favicon.ico");
