@@ -189,10 +189,7 @@ if ($editUserMode || HasPermission('user.editpostlayout'))
 	AddField('layout', 'postlayout', 'signature', __('Signature'), 'textarea', array('rows'=>16));
 	
 	AddField('layout', 'postlayout', 'signsep', __('Show signature separator'), 'checkbox', array('negative'=>true));
-	
-	// TODO make a per-user permission for this one?
-	if ($pltype == 2) 
-		AddField('layout', 'postlayout', 'fulllayout', __('Apply layout to whole post box'), 'checkbox');
+//dumb button nuked ~ST65
 }
 
 // EDITPROFILE TAB -- THEME ---------------------------------------------------
