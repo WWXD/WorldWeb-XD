@@ -191,7 +191,7 @@ if($_POST['register']) {
 		else if (!$cemail)
 			$err = __("You need to specify an email.");
 		else if ($_POST['botprot'])
-			$err = __("Go away, spambot.")
+			$err = __("Go away, spambot.");
 		else if ($uemail == $cemail)
 			$err = __("This email adress is already taken. Go away, rereg.");
             
