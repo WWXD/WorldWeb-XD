@@ -3,13 +3,17 @@
 //  Access: guests
 if (!defined('BLARG')) die();
 
-if($_POST['action'] == "logout") {
+if($_POST['action'] == "logout" && $loguserid) {
 	setcookie("logsession", "", 2147483647, URL_ROOT, "", false, true);
 	Query("UPDATE {users} SET loggedin = 0 WHERE id={0}", $loguserid);
 	Query("DELETE FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT));
 
 	die(header("Location: ".URL_ROOT));
-} elseif(isset($_POST['actionlogin'])) {
+} elseif(!$_POST['action'] == "logout" && $loguserid) {
+	Kill(__("Your already logged in. First log out."));
+} elseif($_POST['action'] == "logout" && !$loguserid) {
+	Kill(__("Why in the world are you trying to log out if your not even logged in?"));
+} elseif(isset($_POST['actionlogin']) && !$_POST['action'] == "logout" && !$loguserid) {
 	$okay = false;
 	$pass = $_POST['pass'];
 
@@ -19,7 +23,7 @@ if($_POST['action'] == "logout") {
 		if($user['password'] === $sha)
 			$okay = true;
 	}
-	
+
 	// auth plugins
 	if (!$okay)
 		{ $bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php'); }

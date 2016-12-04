@@ -28,13 +28,27 @@
 
 <td id="main-page">
 	<table id="page-container" class="layout-table">
-	<tbody>
 	<tr><td class="contents-container">
-		<div id="page_contents">		<table>
-		<tbody><tr class="cell2 center" colspan="3">
+	<table>
+		{if $poratext}<tr class="cell2 left" colspan="3">
+			
+			<td colspan="4"><a href="/"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a></td>
+			<td>
+					<table class="outline" id="headerInfo">
+						<tr class="header1"><th>{$poratitle}</th></tr>
+						<tr>
+							<td class="cell1 center">
+								{$poratext}
+							</td>
+						</tr>
+					</table>
+				</td>
+		</tr>
+		{else}<tr class="cell2 center" colspan="3">
 			
 			<td colspan="4"><a href="/"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a></td>
 		</tr>
+		{/if}
 				<tr>
 			<td class="cell1 center" style="width:75px">{$layout_time}</td>
 			<td class="cell1 center">
@@ -59,22 +73,6 @@
 							{foreach $layout_userpanel as $url=>$text}
 								<span class="navButton"><a href="{$url|escape}">{$text}</a></span> | 
 							{/foreach}
-					{$numnotifs=count($notifications)}
-					{if $numnotifs}
-					<div id="notifMenuContainer" class="dropdownContainer {if $numnotifs}hasNotifs{else}noNotif{/if}">
-						<div id="notifMenuButton" class="navButton">
-							<span id="notifCount">{$numnotifs}</span>
-							<i class="icon-caret-down"></i>
-						</div>
-						<ul id="notifList" class="dropdownMenu">
-						{if $numnotifs}
-							{foreach $notifications as $notif}
-								<li>{$notif.text}<br><small>{$notif.formattedDate}</small>
-							{/foreach}
-						{/if}
-						</ul>
-					</div>
-					{/if}
 							<span class="navButton"><a href="#" onclick="$('#logout').submit(); return false;">Log out</a></span>
 					{else}
 							Guest: <span class="navButton"><a href="{actionLink page='register'}">Register</a></span> | 
@@ -86,6 +84,17 @@
 		<tr class="cell1 center" colspan="3">
 			<td colspan="4">{$layout_onlineusers}</td>
 		</tr>
+		{$numnotifs=count($notifications)}
+		{if $numnotifs}
+		<tr class="cell2 center" colspan="3">
+			<td colspan="4">You have {$numnotifs} new notification:</td>
+		</tr>
+		{foreach $notifications as $notif}
+			<tr class="cell{cycle values='1,2'} center" colspan="3">
+				<td colspan="4">{$notif.text}<br>This was sent on {$notif.formattedDate}</td>
+			</tr>
+		{/foreach}
+		{/if}
 		<tr class="cell2 center" colspan="3">
 			<td colspan="4" class="crumb-container">{$smarty.capture.breadcrumbs}</td>
 		</tr>
@@ -120,12 +129,11 @@
 
 </td>
 </tr>
-	</tbody></table>
+	</table>
 </td>
 </tr>
 	
-			</tbody></table>
-	</div>
+			</table>
 	</td></tr>
 
 </table>

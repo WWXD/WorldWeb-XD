@@ -32,7 +32,7 @@ function UploadFile($file, $parenttype, $parentid, $cap, $description='', $tempo
 		$fullpath = $targetdir.'/'.$pname;
 		copy($temp, $fullpath);
 		file_put_contents($fullpath.'.hash', hash_hmac_file('sha256', $fullpath, SALT));
-		
+
 		Report("[b]".$loguser['name']."[/] uploaded file \"[b]".$filename."[/]\"", false);
 
 		return $randomid;
@@ -48,6 +48,7 @@ function DeleteUpload($path, $userid)
 		@unlink($path);
 		@unlink($path.'.hash');
 	}
+	Report("[b]".$loguser['name']."[/] deleted file \"[b]".$filename."[/]\"", false);
 }
 
 function CleanupUploads()

@@ -9,15 +9,14 @@
 
 INSERT INTO `{$dbpref}categories` (`id`, `name`, `corder`, `board`) VALUES
 (1, 'Sample category', 0, ''),
-(2, 'Staff Corner', -2147483648, ''),
-(3, 'End', 0, '');
+(2, 'End', 0, '');
 
 INSERT INTO `{$dbpref}forums` (`id`, `title`, `description`, `catid`, `numthreads`, `numposts`, `lastpostdate`, `lastpostuser`, `lastpostid`, `hidden`, `forder`, `board`, `l`, `r`, `redirect`, `offtopic`) VALUES
 (1, 'Announcements', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 5, 6, '', 0),
-(4, 'Latest news', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 7, 8, '', 0),
-(5, 'General Chat', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 9, 10, '', 0),
-(6, 'Site Discussion', 'Found a bug? Got a suggestion? Post it here.', 1, 0, 0, 0, 0, 0, 0, 0, '', 11, 12, '', 0),
-(7, 'Trash', '', 3, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0);
+(2, 'Latest news', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 7, 8, '', 0),
+(3, 'General Chat', '', 1, 0, 0, 0, 0, 0, 0, 0, '', 9, 10, '', 0),
+(4, 'Site Discussion', 'Found a bug? Got a suggestion? Post it here.', 1, 0, 0, 0, 0, 0, 0, 0, '', 11, 12, '', 0),
+(5, 'Trash', '', 2, 0, 0, 0, 0, 0, 0, 0, '', 1, 2, '', 0);
 
 INSERT INTO `{$dbpref}misc` (`version`, `views`, `hotcount`, `maxusers`, `maxusersdate`, `maxuserstext`, `maxpostsday`, `maxpostsdaydate`, `maxpostshour`, `maxpostshourdate`, `milestone`) VALUES
 (1337, 0, 30, 0, 0, '', 0, 0, 0, 0, '');
@@ -365,18 +364,18 @@ INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'showPoRA', '0'),
 ('main', 'tagsDirection', 'Right'),
 ('main', 'PoRATitle', 'Blargbox'),
-('main', 'PoRAText', 'Welcome to Blargboard. Edit this.'),
+('main', 'PoRAText', 'Welcome to your new Blargboard XD Board! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br>Enjoy Blargboard XD!'),
 ('main', 'profilePreviewText', 'blah blah sample post'),
 ('main', 'menuMainName', 'Navigation'),
 ('main', 'showGender', '1'),
 ('main', 'nofollow', '0'),
 ('main', 'floodProtectionInterval', '30'),
-('main', 'trashForum', '0'),
+('main', 'trashForum', '5'),
 ('main', 'secretTrashForum', '0'),
 ('main', 'alwaysMinipic', '0'),
 ('main', 'showExtraSidebar', '1'),
-('main', 'anncForum', '0'),
-('main', 'newsForum', '0'),
+('main', 'anncForum', '1'),
+('main', 'newsForum', '2'),
 ('main', 'defaultGroup', '0'),
 ('main', 'rootGroup', '4'),
 ('main', 'bannedGroup', '-1');
@@ -411,7 +410,7 @@ INSERT INTO `{$dbpref}smilies` (`id`, `code`, `image`) VALUES
 (27, '~:o', 'baby.png'),
 (28, ':YES:', 'yes.png'),
 (29, ':NO:', 'no.png'),
-(30, '<3', 'heart.png'),
+(30, ':HEART:', 'heart.png'),
 (31, ':3', 'colonthree.png'),
 (32, ':up:', 'approve.png'),
 (33, ':down:', 'deny.png'),

@@ -1,6 +1,6 @@
 <?php
 //  Blargboard XD - User account registration page
-//  Access: any, but meant for guests.
+//  Access: Guests.
 //  Extra security by Super-toad 65 
 if (!defined('BLARG')) die();
 
@@ -9,138 +9,12 @@ $title = __("Register");
 echo "<script src=\"".resourceLink('js/register.js')."\"></script>
 <script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 
-class StopForumSpam {
-    /**
-    * The API key.
-    *
-    * @var string
-    */
-    private $api_key;
-    /**
-    * The base url, for tha API/
-    *
-    * @var string
-    */
-    private $endpoint = 'http://www.stopforumspam.com/';
-    /**
-    * Constructor.
-    *
-    * @param string $api_key Your API Key, optional (unless adding to database).
-    */
-    public function __construct( $api_key = null ) {
-        // store variables
-        $this->api_key = $api_key;
-    }
-    /**
-    * Add to the database
-    *
-    * @param array $args associative array containing email, ip, username and optionally, evidence
-    * e.g. $args = array('email' => 'user@example.com', 'ip_addr' => '8.8.8.8', 'username' => 'Spammer?', 'evidence' => 'My favourite website http://www.example.com' );
-    * @return boolean Was the update succesfull or not.
-    */
-    public function add( $args ) {
-        // check for mandatory arguments
-        if (empty($args['username']) || empty($args['ip_addr']) || empty($args['email']) ) {
-            return false;
-        }
-        // known?
-        $is_spammer = $this->is_spammer($args);
-        if (!$is_spammer || $is_spammer['known']) {
-            return false;
-        }
-        // add api key
-        $args['api_key'] = $this->api_key;
-        // url to poll
-        $url = $this->endpoint.'add.php?'.http_build_query($args, '', '&');
-        // execute
-        $response = file_get_contents($url);
-        return (false == $response ? false : true);
-    }
-    /**
-    * Get record from spammers database.
-    *
-    * @param array $args associative array containing either one (or all) of these: username / email / ip.
-    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
-    * @return object Response.
-    */
-    public function get( $args ) {
-        // should check first if not already in database
-        // url to poll
-        $url = $this->endpoint.'api?f=json&'.http_build_query($args, '', '&');
-        //
-        return $this->poll_json( $url );
-    }
-    /**
-    * Check if either details correspond to a known spammer. Checking for username is discouraged.
-    *
-    * @param array $args associative array containing either one (or all) of these: username / email / ip
-    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
-    * @return boolean
-    */
-    public function is_spammer( $args ) {
-        // poll database
-        $record = $this->get( $args );
-        if ( !isset($record->success) ) {
-            return false;
-        }
-        // give the benefit of the doubt
-        $spammer = false;
-        // are all datapoints on SFS?
-        $known = true;
-        // parse database record
-        $datapoint_count = 0;
-        $known_datapoints = 0;
-        foreach( $record as $datapoint ) {
-            // not 'success'
-            if ( isset($datapoint->appears) && $datapoint->appears ) {
-                $datapoint_count++;
-                // are ANY of the datapoints on SFS?
-                if ( $datapoint->appears == true)
-                {
-                    $known_datapoints++;
-                    $spammer = true;
-                }
-            }
-        }
-        // are ANY of the datapoints not on SFS
-        if ( $datapoint_count > $known_datapoints) {
-            $known = false;
-        }
-		return $spammer;
-        return array(
-            'spammer' => $spammer,
-            'known' => $known
-        );
-    }
-    /**
-    * Get json and decode. Currently used for polling the database, but hoping for future
-    * json response support, when adding.
-    *
-    * @param string $url The url to get
-    * @return object Response.
-    */
-    protected static function poll_json( $url )
-    {
-        $json = file_get_contents( $url );
-        $object = json_decode($json);
-        return $object;
-    }
-}
-function IsTorExitPoint(){
-    if (gethostbyname(ReverseIPOctets($_SERVER['REMOTE_ADDR']).".".$_SERVER['SERVER_PORT'].".".ReverseIPOctets($_SERVER['SERVER_ADDR']).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
-        return true;
-    } else {
-       return false;
-    }
-}
-function ReverseIPOctets($inputip){
-    $ipoc = explode(".",$inputip);
-    return $ipoc[3].".".$ipoc[2].".".$ipoc[1].".".$ipoc[0];
-}
-
 MakeCrumbs(array('' => __('Register')));
 
 $sexes = array(__("Male"), __("Female"), __("N/A"));
+
+if($loguserid)
+	Kill(__("Why in hell would you try to rereg?"));
 
 if($_POST['register']) {
 	if (IsProxy()) {
@@ -172,7 +46,7 @@ if($_POST['register']) {
 
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
-		if (stripos($cemail, $E001 || $E002 || $E003 || $E004 || $E005 || $E006 || $E007 || $E008 || $E009 || $E010 || $E011 || $E012 || $E013 || $E014 || $E015 || $E016 || $E017 || $E018 || $E019 || $E020 || $E021 || $E022 || $E023 || $E024 || $E025 || $E026 || $E027 || $E028 || $E029 || $E030 || $E031 || $E032 || $E033 || $E034 || $E035 || $E036 || $E037 || $E038 || $E039 ||  $E040 || $E041 || $E042 || $E043 || $E044 || $E045 || $E046 || $E047 || $E048 || $E049 || $E050 || $E051 || $E052 || $E053 || $E054 || $E055 || $E056 || $E057 || $E058 || $E059 || $E060 || $E061 || $E062 || $E063 || $E064 || $E065 || $E066 || $E067 || $E068 || $E069 || $E070 || $E071 || $E072 || $E073 || $E074 || $E075 || $E076 || $E077 || $E078 || $E079 || $E080 || $E081 || $E082 || $E083 || $E084 || $E085 || $E086 || $E087 || $E088 || $E089 || $E090 || $E091 || $E092 || $E093 || $E094 || $E095 || $E096 || $E097 || $E098 || $E099 || $E100 || $E101 || $E102 || $E103 || $E104 || $E105 || $E106 || $E107 || $E108 || $E109 || $E110) !== FALSE)
+		if (stripos($cemail, in_array($emaildomainsblock)) !== FALSE)
 			$err = __('You may not register using a temporary email or a spam email. Go away, spammer.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
@@ -292,20 +166,6 @@ function MakeOptions($fieldName, $checkedIndex, $choicesList) {
 						{3}
 					</label>", $key, $fieldName, $checks[$key], $val);
 	return $result;
-}
-
-function IsProxy() {
-	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
-		return true;
-		
-	$result = QueryURL('http://www.stopforumspam.com/api?ip='.urlencode($_SERVER['REMOTE_ADDR']));
-	if (!$result)
-		return false;
-
-	if (stripos($result, '<appears>yes</appears>') !== FALSE)
-		return true;
-		
-	return false;
 }
 
 ?>

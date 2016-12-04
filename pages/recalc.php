@@ -4,7 +4,7 @@
 if (!defined('BLARG')) die();
 
 if(!$loguser['root'])
-		Kill(__("Staff only, please."));
+		Kill(__("Owner only, please."));
 
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("recalc") => __("Recalculate statistics")));
 

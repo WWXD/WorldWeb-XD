@@ -42,30 +42,26 @@ MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("editfora") => _
 
 $noFooter = true;
 
-function recursionCheck($fid, $cid)
-{
+function recursionCheck($fid, $cid) {
 	if ($cid >= 0) return $cid;
-	
+
 	$check = array();
-	for (;;)
-	{
+	for (;;) {
 		$check[] = -$cid;
 		if ($check[0] == $fid)
 			dieAjax(__('Endless recursion detected; choose another parent for this forum.'));
-		
+
 		$cid = FetchResult("SELECT catid FROM {forums} WHERE id={0}", -$cid);
 		if ($cid >= 0) return $cid;
 	}
 }
 
-if (isset($_REQUEST['action']) && isset($_POST['key']))
-{
+if (isset($_REQUEST['action']) && isset($_POST['key'])) {
 	//Check for the key
 	if ($loguser['token'] != $_POST['key'])
 		Kill(__("No."));
-			
-	switch($_REQUEST['action'])
-	{
+
+	switch($_REQUEST['action']) {
 		case 'updateforum':
 
 			//Get new forum data
@@ -75,24 +71,23 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			$description = $_POST['description'];
 			$category = ($_POST['ptype'] == 0) ? (int)$_POST['category'] : -(int)$_POST['pforum'];
 			$forder = (int)$_POST['forder'];
-			
+
 			$catid = recursionCheck($id, $category);
 			$board = FetchResult("SELECT board FROM {categories} WHERE id={0}", $catid);
-			
+
 			// L/R tree shiz
 			$oldlr = Fetch(Query("SELECT l,r FROM {forums} WHERE id={0}", $id));
 			$diff = $oldlr['r'] - $oldlr['l'] + 1;
-			
+
 			$c = Query("SELECT id FROM {forums} WHERE l>{0} AND r<{1}", $oldlr['l'], $oldlr['r']);
 			$children = array();
 			while ($blarg = Fetch($c)) $children[] = $blarg['id'];
-			
+
 			Query("UPDATE {forums} SET l=l-{0} WHERE l>{1}", $diff, $oldlr['r']);
 			Query("UPDATE {forums} SET r=r-{0} WHERE r>{1}", $diff, $oldlr['r']);
-			
+
 			$l = FetchResult("SELECT MAX(r) FROM {forums} WHERE catid={0} AND (forder<{1} OR (forder={1} AND id<{2}))", $category, $forder, $id);
-			if (!$l || $l == -1)
-			{
+			if (!$l || $l == -1) {
 				if ($category >= 0)
 					$l = 0;
 				else
@@ -100,28 +95,27 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			}
 			$l++;
 			$r = $l + $diff - 1;
-			
-			if (!empty($children))
-			{
+
+			if (!empty($children)) {
 				Query("UPDATE {forums} SET l=l+{0} WHERE l>={1} AND id NOT IN ({2c})", $diff, $l, $children);
 				Query("UPDATE {forums} SET r=r+{0} WHERE r>={1} AND id NOT IN ({2c})", $diff, $l, $children);
 				Query("UPDATE {forums} SET l=l+{0}, r=r+{0} WHERE id IN ({1c})", $l-$oldlr['l'], $children);
-			}
-			else
-			{
+			} else {
 				Query("UPDATE {forums} SET l=l+{0} WHERE l>={1}", $diff, $l);
 				Query("UPDATE {forums} SET r=r+{0} WHERE r>={1}", $diff, $l);
 			}
-			
+
 			//Send it to the DB
 			Query("UPDATE {forums} SET title = {0}, description = {1}, catid = {2}, forder = {3}, hidden={4}, redirect={5}, offtopic={6}, board={8}, l={9}, r={10} WHERE id = {7}", 
 				$title, $description, $category, $forder, (int)$_POST['hidden'], $_POST['redirect'], (int)$_POST['offtopic'], $id, $board, $l, $r);
-				
+
+			Report("[b]".$loguser['name']."[/] edited the forum [b]\"".$title."\"[/] (#".$newID.")");
+
 			SetPerms($id);
-			
+
 			dieAjax('Ok');
 			break;
-			
+
 		case 'updatecategory':
 
 			//Get new cat data
@@ -129,19 +123,21 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			$name = $_POST['name'];
 			if($name == "") dieAjax(__("Name can't be empty."));
 			$corder = (int)$_POST['corder'];
-			
+
 			$board = $_POST['board'];
 			if (!isset($forumBoards[$board])) $board = '';
 
 			//Send it to the DB
 			Query("UPDATE {categories} SET name = {0}, corder = {1}, board={3} WHERE id = {2}", $name, $corder, $id, $board);
-			
+
 			// update boards of forums in this category
 			$blarg = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE catid={0}", $id));
 			Query("UPDATE {forums} SET board={0} WHERE l>={1} AND r<={2}", $board, $blarg['minl'], $blarg['maxr']);
-			
+
+			Report("[b]".$loguser['name']."[/] edited the categorie [b]\"".$name."\"[/] (#".$newID.")");
+
 			// no need to update the L/R tree. Category order doesn't matter.
-			
+
 			dieAjax('Ok');
 			break;
 
@@ -158,14 +154,13 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			//I think it'd be better to use InsertId, but...
 			$newID = FetchResult("SELECT id+1 FROM {forums} WHERE (SELECT COUNT(*) FROM {forums} f2 WHERE f2.id={forums}.id+1)=0 ORDER BY id ASC LIMIT 1");
 			if($newID < 1) $newID = 1;
-			
+
 			$catid = recursionCheck($newID, $category);
 			$board = FetchResult("SELECT board FROM {categories} WHERE id={0}", $catid);
-			
+
 			// L/R tree shiz
 			$l = FetchResult("SELECT MAX(r) FROM {forums} WHERE catid={0} AND (forder<{1} OR (forder={1} AND id<{2}))", $category, $forder, $newID);
-			if (!$l || $l == -1)
-			{
+			if (!$l || $l == -1) {
 				if ($category >= 0)
 					$l = 0;
 				else
@@ -179,7 +174,9 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			//Add the actual forum
 			Query("INSERT INTO {forums} (`id`, `title`, `description`, `catid`, `forder`, `hidden`, `redirect`, `offtopic`, `board`, `l`, `r`) VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})", 
 				$newID, $title, $description, $category, $forder, (int)$_POST['hidden'], $_POST['redirect'], (int)$_POST['offtopic'], $board, $l, $r);
-			
+
+			Report("[b]".$loguser['name']."[/] made a new forum: [b]".$title."[/] (#".$newID.")");
+
 			$id = InsertId();
 			SetPerms($id);
 
@@ -192,15 +189,17 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			$name = $_POST['name'];
 			if($name == "") dieAjax(__("Name can't be empty."));
 			$corder = (int)$_POST['corder'];
-			
+
 			$board = (int)$_POST['board'];
 			if (!isset($forumBoards[$board])) $board = '';
 
 			Query("INSERT INTO {categories} (`name`, `corder`, `board`) VALUES ({0}, {1}, {2})", $name, $corder, $board);
+			
+			Report("[b]".$loguser['name']."[/] made a new categorie: [b]".$name."[/]");
 
 			dieAjax('Ok|'.InsertId());
 			break;
-			
+
 		case 'deleteforum':
 			//Get Forum ID
 			$id = (int)$_POST['id'];
@@ -213,25 +212,25 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			//Check that forum has threads.
 			if (FetchResult("SELECT COUNT(*) FROM {threads} WHERE forum={0}", $id) > 0)
 				dieAjax(__('Cannot delete a forum that contains threads.'));
-				
-			//
-			
+
 			// L/R tree shiz
 			$oldlr = Fetch(Query("SELECT l,r FROM {forums} WHERE id={0}", $id));
 			$diff = $oldlr['r'] - $oldlr['l'] + 1;
-			
+
 			$c = FetchResult("SELECT COUNT(*) FROM {forums} WHERE l>{0} AND r<{1}", $oldlr['l'], $oldlr['r']);
 			if ($c > 0)
 				dieAjax(__('Cannot delete a forum that has subforums. Delete them or move them first.'));
-			
+
 			Query("UPDATE {forums} SET l=l-{0} WHERE l>{1}", $diff, $oldlr['r']);
 			Query("UPDATE {forums} SET r=r-{0} WHERE r>{1}", $diff, $oldlr['r']);
+
+			Report("[b]".$loguser['name']."[/] deleted the forum (#".$id.")");
 
 			//Delete
 			Query("DELETE FROM `{forums}` WHERE `id` = {0}", $id);
 			dieAjax('Ok');
 			break;
-			
+
 		case 'deletecategory':
 			//Get Cat ID
 			$id = (int)$_POST['id'];
@@ -240,21 +239,22 @@ if (isset($_REQUEST['action']) && isset($_POST['key']))
 			$rCat = Query("SELECT id FROM {categories} WHERE id={0}", $id);
 			if (!NumRows($rCat))
 				dieAjax(__("No such category."));
-				
+
 			if (FetchResult("SELECT COUNT(*) FROM {forums} WHERE catid={0}", $id) > 0)
 				dieAjax(__('Cannot delete a category that contains forums.'));
 
 			//Delete
 			Query("DELETE FROM `{categories}` WHERE `id` = {0}", $id);
+
+			Report("[b]".$loguser['name']."[/] deleted a categorie (#".$id.")");
+
 			dieAjax('Ok');
 			break;
 	}
 }
 
-if (isset($_REQUEST['action']))
-{
-	switch ($_REQUEST['action'])
-	{
+if (isset($_REQUEST['action'])) {
+	switch ($_REQUEST['action']) {
 		case 'forumtable':
 			WriteForumTableContents();
 			dieAjax('');
@@ -318,8 +318,7 @@ echo '
 //Helper functions
 
 // $fid == -1 means that a new forum should be made :)
-function WriteForumEditContents($fid)
-{
+function WriteForumEditContents($fid) {
 	global $loguser;
 
 	//Get all categories.
@@ -328,21 +327,19 @@ function WriteForumEditContents($fid)
 	$cats = array();
 	while ($cat = Fetch($rCats))
 		$cats[$cat['id']] = $cat;
-		
+
 	$rFora = Query("SELECT * FROM {forums} ORDER BY l");
 
 	$fora = array();
 	$cid = -1;
-	while ($forum = Fetch($rFora))
-	{
+	while ($forum = Fetch($rFora)) {
 		if ($forum['catid'] >= 0) $cid = $forum['catid'];
 		$fora[$cid][] = $forum;
 	}
 	
 	$g = Query("SELECT id,name,type,color_unspec FROM {usergroups} ORDER BY type, rank");
 	$groups = array();
-	while ($group = Fetch($g))
-	{
+	while ($group = Fetch($g)) {
 		$name = htmlspecialchars($group['name']);
 		if ($group['type'] == 0)
 			$name = '<strong style="color:'.htmlspecialchars($group['color_unspec']).';">'.$name.'</strong>';
@@ -353,8 +350,7 @@ function WriteForumEditContents($fid)
 	if($fid != -1)
 	{
 		$rForum = Query("SELECT * FROM {forums} WHERE id={0}", $fid);
-		if (!NumRows($rForum))
-		{
+		if (!NumRows($rForum)) {
 			Kill(__("Forum not found."));
 		}
 		$forum = Fetch($rForum);
@@ -367,13 +363,13 @@ function WriteForumEditContents($fid)
 		$description = htmlspecialchars($forum['description']);
 		$catselect = MakeCatSelect('cat', $cats, $fora, $forum['catid'], $forum['id']);
 		$forder = $forum['forder'];
-		
+
 		$fperms = GetForumPerms($fid);
 		foreach ($groups as $gid=>$group)
 			$groups[$gid]['permFields'] = PermFields($gid, $fperms[$gid]);
 
 		$boxtitle = __("Editing forum ").$title;
-		
+
 		$fields = array
 		(
 			'title' => '<input type="text" name="title" value="'.$title.'" size=64>',
@@ -388,9 +384,7 @@ function WriteForumEditContents($fid)
 			'btnDelete' => '<button '.($candelete ? 'onclick="deleteForum(); return false;"' : 'disabled="disabled"').'>Delete</button>',
 		);
 		$delMessage = $candelete ? '' : ($c ? __('Before deleting a forum, delete or move its subforums.') : __('Before deleting a forum, remove all threads from it.'));
-	}
-	else
-	{
+	} else {
 		$catselect = MakeCatSelect('cat', $cats, $fora, 1, -1);
 		
 		$fperms = GetForumPerms(0);
@@ -419,9 +413,9 @@ function WriteForumEditContents($fid)
 	<form method=\"post\" id=\"forumform\" action=\"".htmlentities(actionLink("editfora"))."\">
 	<input type=\"hidden\" name=\"key\" value=\"".$loguser['token']."\">
 	<input type=\"hidden\" name=\"id\" value=\"$fid\">";
-	
+
 	RenderTemplate('form_editforum', array('formtitle' => $boxtitle, 'fields' => $fields, 'groups' => $groups, 'delMessage' => $delMessage));
-	
+
 	echo "
 	</form>";
 }
@@ -431,7 +425,7 @@ function WriteForumEditContents($fid)
 function WriteCategoryEditContents($cid)
 {
 	global $loguser, $forumBoards;
-	
+
 	$boardlist = '';
 
 	if($cid != -1)
@@ -442,12 +436,12 @@ function WriteCategoryEditContents($cid)
 			Kill("Category not found.");
 		}
 		$cat = Fetch($rCategory);
-		
+
 		$candelete = FetchResult("SELECT COUNT(*) FROM {forums} WHERE catid={0}", $cid) == 0;
 
 		$name = htmlspecialchars($cat['name']);
 		$corder = $cat['corder'];
-		
+
 		if (count($forumBoards) > 1)
 		{
 			foreach ($forumBoards as $bid=>$bname)
@@ -457,7 +451,7 @@ function WriteCategoryEditContents($cid)
 		}
 
 		$boxtitle = __("Editing category ").$name;
-			
+
 		$fields = array
 		(
 			'name' => '<input type="text" name="name" value="'.$name.'" size=64>',
@@ -478,9 +472,9 @@ function WriteCategoryEditContents($cid)
 				$boardlist .= '<label><input type="radio" name="board" value="'.htmlspecialchars($bid).'"'.($bid=='' ? ' checked="checked"':'').'> '.htmlspecialchars($bname).'</label>';
 			}
 		}
-		
+
 		$boxtitle = __("New category");
-		
+
 		$fields = array
 		(
 			'name' => '<input type="text" name="name" value="" size=64>',

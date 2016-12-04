@@ -38,7 +38,7 @@ if ($_POST['saveaction'])
 				ON DUPLICATE KEY UPDATE value={3}",
 				$perm['arg'], $perm['perm'], $id, $v);
 	}
-	
+
 	die(header('Location: '.actionLink('editforumperms', '', 'fid='.$id)));
 }
 
@@ -79,7 +79,7 @@ echo '
 		</table>
 		<input type="hidden" name="token" value="'.htmlspecialchars($loguser['token']).'">
 	</form>';
-	
+
 
 function PermSwitch($field, $val)
 {

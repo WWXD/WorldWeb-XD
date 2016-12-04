@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - Thread editing page
+//  BlargBoard XD - Thread editing page
 //  Access: moderators
 if (!defined('BLARG')) die();
 
@@ -55,50 +55,36 @@ MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $urlname) 
 
 $ref = $_SERVER['HTTP_REFERER'] ?: actionLink('thread', $tid, '', $urlname);
 
-if($_GET['action']=="close" && $canClose)
-{
+if($_GET['action']=="close" && $canClose) {
 	$rThread = Query("update {threads} set closed=1 where id={0}", $tid);
 	Report("[b]".$loguser['name']."[/] closed thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
-}
-elseif($_GET['action']=="open" && $canClose)
-{
+} elseif($_GET['action']=="open" && $canClose) {
 	$rThread = Query("update {threads} set closed=0 where id={0}", $tid);
 	Report("[b]".$loguser['name']."[/] opened thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
-}
-elseif($_GET['action']=="stick" && $canStick)
-{
+} elseif($_GET['action']=="stick" && $canStick) {
 	$rThread = Query("update {threads} set sticky=1 where id={0}", $tid);
 	Report("[b]".$loguser['name']."[/] stickied thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
-}
-elseif($_GET['action']=="unstick" && $canStick)
-{
+} elseif($_GET['action']=="unstick" && $canStick) {
 	$rThread = Query("update {threads} set sticky=0 where id={0}", $tid);
 	Report("[b]".$loguser['name']."[/] unstuck thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
-}
-elseif(($_GET['action'] == "trash" && HasPermission('mod.trashthreads', $thread['forum']))
-	|| ($_GET['action'] == 'delete' && HasPermission('mod.deletethreads', $thread['forum'])))
-{
-	if ($_GET['action'] == 'delete')
-	{
+} elseif(($_GET['action'] == "trash" && HasPermission('mod.trashthreads', $thread['forum'])) || ($_GET['action'] == 'delete' && HasPermission('mod.deletethreads', $thread['forum']))) {
+	if ($_GET['action'] == 'delete') {
 		$trashid = Settings::get('secretTrashForum');
 		$verb = 'deleted';
-	}
-	else
-	{
+	} elseif ($_GET['action'] == "trash") {
 		$trashid = Settings::get('trashForum');
 		$verb = 'thrashed';
 	}
 	
-	if($trashid > 0)
-	{
+	if($trashid > 0) {
 		$rThread = Query("update {threads} set forum={0}, closed=1 where id={1} limit 1", $trashid, $tid);
 
 		//Tweak forum counters
@@ -174,7 +160,7 @@ elseif($_POST['actionedit'])
 			$thread['title'], $iconurl, $isClosed, $isSticky, $tid);
 
 		Report("[b]".$loguser['name']."[/] edited thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
-		
+
 		$tags = ParseThreadTags($thread['title']);
 		$urlname = $isHidden?'':$tags[0];
 		$ref = $_POST['ref'] ?: actionLink('thread', $tid, '', $urlname);
@@ -188,15 +174,13 @@ elseif($_POST['actionedit'])
 
 $fields = array();
 
-if ($canRename)
-{
+if ($canRename) {
 	$match = array();
 	if (preg_match("@^img/icons/icon(\d+)\..{3,}\$@si", $thread['icon'], $match))
 		$iconid = $match[1];
 	elseif($thread['icon'] == "") //Has no icon
 		$iconid = 0;
-	else //Has custom icon
-	{
+	else { //Has custom icon
 		$iconid = 255;
 		$iconurl = $thread['icon'];
 	}
@@ -205,8 +189,7 @@ if ($canRename)
 
 	$icons = "";
 	$i = 1;
-	while(is_file("img/icons/icon".$i.".png"))
-	{
+	while(is_file("img/icons/icon".$i.".png")) {
 		$check = "";
 		if($iconid == $i) $check = "checked=\"checked\" ";
 		$icons .= "	<label>
@@ -218,8 +201,7 @@ if ($canRename)
 	$check[0] = "";
 	$check[1] = "";
 	if($iconid == 0) $check[0] = "checked=\"checked\" ";
-	if($iconid == 255)
-	{
+	if($iconid == 255) {
 		$check[1] = "checked=\"checked\" ";
 	}
 
@@ -240,9 +222,14 @@ if ($canRename)
 	$fields['icon'] = $iconSettings;
 }
 
-if ($canClose) $fields['closed'] = "<label><input type=\"checkbox\" name=\"isClosed\" ".($thread['closed'] ? " checked=\"checked\"" : "")."> ".__('Closed')."</label>";
-if ($canStick) $fields['sticky'] = "<label><input type=\"checkbox\" name=\"isSticky\" ".($thread['sticky'] ? " checked=\"checked\"" : "")."> ".__('Sticky')."</label>";
-if ($canMove) $fields['forum'] = makeForumList('moveTo', $thread['forum']);
+if ($canClose)
+	$fields['closed'] = "<label><input type=\"checkbox\" name=\"isClosed\" ".($thread['closed'] ? " checked=\"checked\"" : "")."> ".__('Closed')."</label>";
+
+if ($canStick)
+	$fields['sticky'] = "<label><input type=\"checkbox\" name=\"isSticky\" ".($thread['sticky'] ? " checked=\"checked\"" : "")."> ".__('Sticky')."</label>";
+
+if ($canMove)
+	$fields['forum'] = makeForumList('moveTo', $thread['forum']);
 
 $fields['btnEditThread'] = "<input type=\"submit\" name=\"actionedit\" value=\"".__("Edit")."\">";
 

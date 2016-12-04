@@ -11,43 +11,43 @@ if (!$user)
 if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
 	Kill('You may not ban a user whose level is equal to or above yours.');
 
-if ($_POST['ban'])
-{
-	if ($_POST['token'] !== $loguser['token']) Kill('No.');
-	
-	if ($_POST['permanent'] )
-	{
+if ($_POST['ban']) {
+	if ($_POST['token'] !== $loguser['token'])
+		Kill('No.');
+
+	if ($user['u_primarygroup'] = Settings::get('bannedGroup'))
+		Kill(__('This user is already banned.'));
+
+	if ($_POST['permanent'] ) {
 		$time = 0;
 		$expire = 0;
-	}
-	else 
-	{
+	} else  {
 		$time = $_POST['time'] * $_POST['timemult'];
 		$expire = time() + $time;
 	}
 	
 	if ($expire) $bantitle = __('Banned until ').formatdate($expire);
 	else $bantitle = __('Banned permanently');
-	
+
 	if (trim($_POST['reason']))
 		$bantitle .= __(': ').$_POST['reason'];
-	
+
 	Query("update {users} set tempbanpl = {0}, tempbantime = {1}, primarygroup = {4}, title = {3} where id = {2}", 
 		$user['u_primarygroup'], $expire, $id, $bantitle, Settings::get('bannedGroup'));
-	
+
 	Report($loguser['name'].' banned '.$user['u_name'].($expire ? ' for '.TimeUnits($time) : ' permanently').
 		($_POST['reason'] ? ': '.$_POST['reason']:'.'), true);
 
 	die(header('Location: '.actionLink('profile', $id, '', $user['name'])));
-}
-else if ($_POST['unban'])
-{
-	if ($_POST['token'] !== $loguser['token']) Kill('No.');
-	if ($user['u_primarygroup'] != Settings::get('bannedGroup')) Kill(__('This user is not banned.'));
-	
+} else if ($_POST['unban']) {
+	if ($_POST['token'] !== $loguser['token'])
+		Kill('No.');
+	if ($user['u_primarygroup'] != Settings::get('bannedGroup'))
+		Kill(__('This user is not banned.'));
+
 	Query("update {users} set primarygroup = tempbanpl, tempbantime = {0}, title = {1} where id = {2}", 
 		0, '', $id);
-	
+
 	Report($loguser['name'].' unbanned '.$user['u_name'].'.', true);
 
 	die(header('Location: '.actionLink('profile', $id, '', $user['name'])));
@@ -57,14 +57,13 @@ else if ($_POST['unban'])
 if (isset($_GET['unban']))
 {
 	$title = __('Unban user');
-	
+
 	MakeCrumbs(array(actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
 		actionLink('banhammer', $id, 'unban=1') => __('Unban user')));
-		
+
 	$userlink = userLink(getDataPrefix($user, 'u_'));
 	$fields = array(
 		'target' => $userlink,
-		
 		'btnUnbanUser' => '<input type="submit" name="unban" value="Unban user">',
 	);
 	$template = 'form_unbanuser';
@@ -80,6 +79,8 @@ else
 	<label><input type="radio" name="permanent" value="0"> For: </label>
 		<input type="text" name="time" size="4" maxlength="2">
 		<select name="timemult">
+			<option value="1">seconds</option>
+			<option value="60">minutes</option>
 			<option value="3600">hours</option>
 			<option value="86400">days</option>
 			<option value="604800">weeks</option>

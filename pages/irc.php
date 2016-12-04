@@ -1,6 +1,6 @@
 <?php
 if(!$loguserid)
-  Kill(__("You need to be registerd in order to access this page"));
+	Kill(__("You need to be logged in in order to access this page"));
 $title = __("IRC Page");
 // The network hostname of your IRC channel
 $net = Settings::get('ircserver');

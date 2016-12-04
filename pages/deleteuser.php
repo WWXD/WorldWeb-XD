@@ -42,9 +42,9 @@ if(!$user)
 if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
 	Kill(__("You may not delete a user whose level is equal to or above yours."));
 
-if($user["primarygroup"] > -1)
+if($user["primarygroup"] > 0)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
-else if($user["primarygroup"] < 0)
+else if($user["primarygroup"] < 1)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
 
 if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && HasPermission('admin.banusers') && HasPermission('user.editprofile') && $user["primarygroup"] < 0 && $user["primarygroup"] > -1) {
@@ -79,8 +79,11 @@ if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && Has
 					where uid={0} or cid={0}", $uid);
 
 			//Delete the PM's sent to the user or sent by the user
-			query("delete from {pmsgs}
-					where userfrom={0}", $uid);
+			query("delete pt from {pmsgs_text} pt
+				left join {pmsgs} p on pt.pid = p.id
+				where p.userfrom={0} or p.userto={0}", $uid);
+			query("delete p from {pmsgs} p
+				where p.userfrom={0} or p.userto={0}", $uid);
 
 			//Delete THE USER ITSELF
 			query("delete from {users}
@@ -91,8 +94,8 @@ if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && Has
 					values ({0}, {1}, 0)
 					on duplicate key update ip=ip", $user["lastip"], "Deleting ".$user["name"]);
 
-			//Log that the user is deleted: Just a safety check if an admin wants to know what happend to that user, and not make the user dissapear without a trace.
-			Report($user["name"]." was deleted.");
+			//Log that the user is deleted: Just a safety check if an admin wants to know what happend to that user, and not make the user dissapear without a trace. It also now displays his ID (In case the delete function didn't delete something and an account has some problems, you know if its linked or not) and who nuked him.
+			Report("[b]".$loguser['name']."[/] successfully deleted ".$user["name"]." (#".$uid.").");
 
 			echo "User deleted!<br/>";
 			echo "You will need to ", actionLinkTag("Recalculate statistics now", "recalc");
@@ -102,8 +105,11 @@ if (HasPermission('admin.editusers') && HasPermission('admin.userdelete') && Has
 			$passwordFailed = true;
 	}
 
-	if($passwordFailed)
+	if($passwordFailed) {
+		Report("[b]".$loguser['name']."[/] tried to delete ".$user["name"]." (#".$uid.").");
 		Alert("Invalid password. Please try again.");
+	}
+	
 	echo "
 	<form name=\"confirmform\" action=\"".actionLink("deleteuser", $uid)."\" method=\"post\">
 		<table class=\"outline margin width50\">

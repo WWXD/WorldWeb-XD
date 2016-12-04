@@ -1,10 +1,13 @@
 <?php
-//  AcmlmBoard XD - Realtime visitor statistics page
-//  Access: all
+//  BlargBoard XD - Realtime visitor statistics page
+//  Access: Logged in users only
 if (!defined('BLARG')) die();
 
 $title = __("Online users");
 MakeCrumbs(array(actionLink("online") => __("Online users")));
+
+if(!$loguserid)
+	Kill(__("You need to be logged in in order to access this page"));
 
 $showIPs = HasPermission('admin.viewips');
 

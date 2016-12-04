@@ -6,8 +6,7 @@ if (!defined('BLARG')) die();
 if (!$loguserid)
 	Kill(__("You must be logged in to use this feature."));
 
-if ($_GET['action'] == "markasread")
-{
+if ($_GET['action'] == "markasread") {
 	Query("	REPLACE INTO 
 				{threadsread} (id,thread,date) 
 			SELECT 
@@ -18,26 +17,24 @@ if ($_GET['action'] == "markasread")
 		$loguserid, time());
 
 	die(header("Location: ".actionLink("board")));
-}
-else if ($_GET['action'] == 'add' || $_GET['action'] == 'remove')
-{
+} else if ($_GET['action'] == 'add' || $_GET['action'] == 'remove') {
 	if ($_GET['token'] !== $loguser['token'])
 		Kill(__('No.'));
-	
+
 	$tid = (int)$_GET['id'];
 	$thread = Query("SELECT t.forum FROM {threads} t WHERE t.id={0}", $tid);
 	if (!NumRows($thread))
 		Kill(__("Invalid thread ID."));
-	
+
 	$thread = Fetch($thread);
 	if (!HasPermission('forum.viewforum', $thread['forum']))
 		Kill(__("Nice try, hacker kid, but no."));
-	
+
 	if ($_GET['action'] == 'add')
 		Query("INSERT IGNORE INTO {favorites} (user,thread) VALUES ({0},{1})", $loguserid, $tid);
 	else
 		Query("DELETE FROM {favorites} WHERE user={0} AND thread={1}", $loguserid, $tid);
-	
+
 	die(header('Location: '.$_SERVER['HTTP_REFERER']));
 }
 
@@ -79,11 +76,9 @@ $numonpage = NumRows($rThreads);
 
 $pagelinks = PageLinks(actionLink('favorites', '', 'from='), $tpp, $from, $total);
 
-if(NumRows($rThreads))
-{
+if(NumRows($rThreads)) {
 	makeThreadListing($rThreads, $pagelinks, true, true);
-} 
-else
+} else
 	Alert(__("You do not have any favorite threads."), __("Notice"));
 
 ?>

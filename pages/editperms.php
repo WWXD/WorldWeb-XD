@@ -8,14 +8,14 @@ if (isset($_GET['uid']))
 	CheckPermission('admin.editusers');
 	$applyto = 1;
 	$id = (int)$_GET['uid'];
-	
+
 	$user = Fetch(Query("SELECT name,displayname,primarygroup FROM {users} WHERE id={0}", $id));
 	if (!$user) Kill(__('Invalid user ID.'));
 	$targetrank = $usergroups[$user['primarygroup']]['rank'];
-	
+
 	if ($targetrank > $loguserGroup['rank'])
 		Kill(__('You may not edit permissions for this user.'));
-	
+
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
 		'' => __('Edit permissions for user: ').htmlspecialchars($user['displayname']?$user['displayname']:$user['name'])));
 }
@@ -24,13 +24,13 @@ else if (isset($_GET['gid']))
 	CheckPermission('admin.editgroups');
 	$applyto = 0;
 	$id = (int)$_GET['gid'];
-	
+
 	if (!$usergroups[$id]) Kill(__('Invalid group ID.'));
 	$targetrank = $usergroups[$id]['rank'];
-	
+
 	if ($targetrank >= $loguserGroup['rank'] && !$loguser['root'])
 		Kill(__('You may not edit permissions for this group.'));
-	
+
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
 		'' => __('Edit permissions for group: ').htmlspecialchars($usergroups[$id]['name'])));
 }
@@ -46,12 +46,12 @@ if ($_POST['saveaction'] || $_POST['addfpermaction'])
 	if ($_POST['addfpermaction'])
 	{
 		$fid = (int)$_POST['newforumid'];
-		
+
 		foreach ($_POST as $k=>$v)
 		{
 			if (substr($k,0,8) != 'fperm_0_') continue;
 			if ($v == 0) continue;
-			
+
 			$perm = PermData($k);
 			if (!CanEditPerm($perm['perm'], $fid)) continue;
 			Query("INSERT INTO {permissions} (applyto,id,perm,arg,value) VALUES ({0},{1},{2},{3},{4})
@@ -65,7 +65,7 @@ if ($_POST['saveaction'] || $_POST['addfpermaction'])
 		if (substr($k,0,5) != 'perm_' && substr($k,0,6) != 'fperm_') continue;
 		if (substr($k,0,8) == 'fperm_0_') continue;
 		if ($v == $_POST['orig_'.$k]) continue;
-		
+
 		$perm = PermData($k);
 		if (!CanEditPerm($perm['perm'], $perm['arg'])) continue;
 		if ($v == 0)
@@ -76,7 +76,7 @@ if ($_POST['saveaction'] || $_POST['addfpermaction'])
 				ON DUPLICATE KEY UPDATE value={4}",
 				$applyto, $id, $perm['perm'], $perm['arg'], $v);
 	}
-	
+
 	die(header('Location: '.actionLink('editperms', '', ($applyto==0?'gid=':'uid=').$id)));
 }
 
@@ -155,7 +155,7 @@ function PermSwitch($field, $threeway, $_val)
 {
 	$val = $_val;
 	if (!$threeway && $val == 0) $val = -1;
-					
+
 	return '
 		<select class="permselect" name="'.$field.'">
 			<option value="-1" '.($val==-1 ? 'selected="selected"':'').' style="background:#f88;">'.__('Deny').'</option>
@@ -179,19 +179,19 @@ function PermLabel($val)
 function PermTable($cat)
 {
 	global $permlist, $permCats, $permDescs, $applyto, $usergroups, $id;
-	
+
 	echo '
 			<tr class="header0">
 				<th colspan="2">'.htmlspecialchars($permCats[$cat]).'</th>
 			</tr>';
-	
+
 	foreach ($permDescs[$cat] as $permid=>$permname)
 	{
 		if ($permid == 'forum.viewforum') continue;
 		
 		$pkey = 'perm_'.str_replace('.', '_', $permid);
 		$isforumperm = (substr($permid,0,6) == 'forum.' || substr($permid,0,4) == 'mod.');
-		
+
 		echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>
@@ -203,9 +203,8 @@ function PermTable($cat)
 function ForumPermTable($fid, $fpl=array())
 {
 	global $permCats, $permDescs;
-	
-	if (!$fid)
-	{
+
+	if (!$fid) {
 		echo '
 			<tr class="header0">
 				<th colspan="2">'.__('Add permission set').'</th>
@@ -217,16 +216,14 @@ function ForumPermTable($fid, $fpl=array())
 			<tr class="header0">
 				<th colspan="2" style="height:6px;"></th>
 			</tr>';
-	}
-	else
-	{
+	} else {
 		echo '
 			<tr class="header0">
 				<th colspan="2">'.htmlspecialchars($fpl['_ftitle']).'</th>
 			</tr>';
 		unset($fpl['_ftitle']);
 	}
-	
+
 	$lastcat = -1;
 	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
 	foreach ($pd as $cat=>$perms)
@@ -240,7 +237,7 @@ function ForumPermTable($fid, $fpl=array())
 			</tr>';
 			$lastcat = $cat;
 		}
-		
+
 		foreach ($perms as $permid=>$permname)
 		{
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
@@ -253,8 +250,7 @@ function ForumPermTable($fid, $fpl=array())
 		}
 	}
 	
-	if (!$fid)
-	{
+	if (!$fid) {
 		echo '
 			<tr class="header0">
 				<th colspan="2" style="height:6px;"></th>
@@ -266,15 +262,13 @@ function ForumPermTable($fid, $fpl=array())
 	}
 }
 
-function PermData($key)
-{
-	if ($key[0] == 'p')
-	{
+function PermData($key) {
+	if ($key[0] == 'p') {
 		$pname = substr($key, 5);
 		$pname = str_replace('_', '.', $pname);
 		return array('perm' => $pname, 'arg' => 0);
 	}
-	
+
 	$seppos = strpos($key, '_', 6);
 	$arg = intval(substr($key, 6, $seppos));
 	$pname = substr($key, $seppos + 1);

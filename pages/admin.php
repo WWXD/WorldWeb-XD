@@ -1,12 +1,12 @@
 <?php
-//  AcmlmBoard XD - Administration hub page
-//  Access: administrators
+//  BlargBoard XD - Administration hub page
+//  Access: Administrators
 if (!defined('BLARG')) die();
 
 
 CheckPermission('admin.viewadminpanel');
 
-$title = __("Administration");
+$title = __("Administration Panel");
 
 MakeCrumbs(array(actionLink("admin") => __('Admin')));
 
@@ -26,7 +26,7 @@ $adminInfo[__('Last viewcount milestone')] = $misc['milestone'];
 
 $adminLinks = array();
 
-if ($loguser['root']) 				$adminLinks[] = actionLinkTag(__("Recalculate statistics"), "recalc");
+if ($loguser['root']) 						$adminLinks[] = actionLinkTag(__("Recalculate statistics"), "recalc");
 if (HasPermission('admin.manageipbans'))	$adminLinks[] = actionLinkTag(__("Manage IP bans"), "ipbans");
 if (HasPermission('admin.editforums'))		$adminLinks[] = actionLinkTag(__("Manage forum list"), "editfora");
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Manage plugins"), "pluginmanager");
@@ -34,8 +34,8 @@ if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit 
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit Home Page"), "editsettings", '', 'field=homepageText');
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit FAQ"), "editsettings", '', 'field=faqText');
 if (HasPermission('admin.editsmilies'))		$adminLinks[] = actionLinkTag(__("Manage smilies"), "editsmilies");
-if ($loguser['root'])				$adminLinks[] = actionLinkTag(__("Optimize tables"), "optimize");
-if (HasPermission('admin.viewlog'))		$adminLinks[] = actionLinkTag(__("View log"), "log");
+if ($loguser['root'])						$adminLinks[] = actionLinkTag(__("Optimize tables"), "optimize");
+if (HasPermission('admin.viewlog'))			$adminLinks[] = actionLinkTag(__("View log"), "log");
 if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Rereg radar'), 'reregs');
 if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Last Known Browsers'), 'lastknownbrowsers');
 if ($loguser['root'])		                $adminLinks[] = actionLinkTag(__('Edit Groups'), 'editgroups');

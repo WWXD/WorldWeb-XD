@@ -78,7 +78,7 @@ AddCategory('general', 'appearance', __('Appearance'));
 
 if ($editUserMode || HasPermission('user.editdisplayname'))
 	AddField('general', 'appearance', 'displayname', __('Display name'), 'text', array('width'=>24, 'length'=>20, 'hint'=>__('Leave this empty to use your login name.'), 'callback'=>'HandleDisplayname'));
-	
+
 AddField('general', 'appearance', 'rankset', __('Rankset'), 'select', array('options'=>$ranksets));
 
 if ($editUserMode || (HasPermission('user.edittitle') && (HasPermission('user.havetitle') || $user['posts'] >= Settings::get('customTitleThreshold'))))
@@ -121,7 +121,7 @@ AddField('personal', 'personal', 'birthday', __('Birthday'), 'birthday');
 
 if ($editUserMode || HasPermission('user.editbio'))
 	AddField('personal', 'personal', 'bio', __('Bio'), 'textarea');
-	
+
 AddField('personal', 'personal', 'timezone', __('Timezone offset'), 'timezone');
 
 
@@ -158,19 +158,19 @@ AddField('account', 'email', 'showemail', __('Make email address public'), 'chec
 if ($editUserMode)
 {
 	AddCategory('account', 'admin', __('Administrative stuff'));
-	
+
 	if ($isroot)
 		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'label', array('value'=>htmlspecialchars($usergroup['title'])));
 	else
 		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'select', array('options'=>$groups));
-	
+
 	// TODO secondary groups!!
-	
+
 	if ($isbanned && $user['tempbantime'])
 		AddField('account', 'admin', 'dopermaban', __('Make ban permanent'), 'checkbox', array('callback'=>'dummycallback'));
-	
+
 	AddField('account', 'admin', 'globalblock', __('Globally block layout'), 'checkbox');
-	
+
 	$aflags = array(0x1=>__('IP banned'), 0x2=>__('Errorbanned'));
 	AddField('account', 'admin', 'flags', __('Misc. settings'), 'bitmask', array('options'=>$aflags));
 }
@@ -181,15 +181,15 @@ if ($editUserMode || HasPermission('user.editpostlayout'))
 {
 	$pltext = $pltype ? __('Post layout') : __('Signature');
 	AddPage('layout', $pltext);
-	
+
 	AddCategory('layout', 'postlayout', $pltext);
-	
+
 	if ($pltype) 
 		AddField('layout', 'postlayout', 'postheader', __('Post header'), 'textarea', array('rows'=>16));
 	AddField('layout', 'postlayout', 'signature', __('Signature'), 'textarea', array('rows'=>16));
-	
+
 	AddField('layout', 'postlayout', 'signsep', __('Show signature separator'), 'checkbox', array('negative'=>true));
-	
+
 	// TODO make a per-user permission for this one?
 	if ($pltype == 2) 
 		AddField('layout', 'postlayout', 'fulllayout', __('Apply layout to whole post box'), 'checkbox');
@@ -230,7 +230,7 @@ if($_POST['actionsave'])
 		{
 			Query("UPDATE {users} SET primarygroup={0}, title={1} WHERE id={2}",
 				Settings::get('bannedGroup'), 'Spamvertising', $loguserid);
-			
+
 			die(header('Location: '.actionLink('index')));
 		}
 	}
@@ -786,7 +786,7 @@ foreach ($epFields as $catid => $cfields)
 				break;
 				
 			case "password":
-				$output = "<input type=\"password\" name=\"".$field."\" size=24> | ".__("Confirm:")." <input type=\"password\" name=\"repeat".$field."\" size=24>";
+				$output = "<input type=\"password\" id=\"pw\" name=\"".$field."\" size=24> | ".__("Confirm:")." <input type=\"password\" id=\"pw\" name=\"repeat".$field."\" size=24>";
 				break;
 			case "passwordonce":
 				$output = "<input type=\"password\" name=\"".$field."\" id=\"".$field."\" size=24>";
@@ -821,7 +821,7 @@ foreach ($epFields as $catid => $cfields)
 					$item['rows'] = 8;
 				$output .= "<textarea id=\"".$field."\" name=\"".$field."\" rows=\"".$item['rows']."\">\n".htmlspecialchars($item['value'])."</textarea>";
 				break;
-				
+
 			case "checkbox":
 				$output .= "<label><input id=\"".$field."\" name=\"".$field."\" type=\"checkbox\"";
 				if((isset($item['negative']) && !$item['value']) || (!isset($item['negative']) && $item['value']))
@@ -829,7 +829,7 @@ foreach ($epFields as $catid => $cfields)
 				$output .= "> ".$item['caption']."</label>\n";
 				$item['caption'] = '';
 				break;
-				
+
 			case "select":
 				$disabled = isset($item['disabled']) ? $item['disabled'] : false;
 				$disabled = $disabled ? "disabled=\"disabled\" " : "";
@@ -840,25 +840,25 @@ foreach ($epFields as $catid => $cfields)
 					$options .= format("<option value=\"{0}\"{1}>{2}</option>", $key, $checks[$key], $val);
 				$output .= format("<select id=\"{0}\" name=\"{0}\" size=\"1\" {2}>\n{1}\n</select>\n", $field, $options, $disabled);
 				break;
-				
+
 			case "radiogroup":
 				$checks = array();
 				$checks[$item['value']] = " checked=\"checked\"";
 				foreach($item['options'] as $key => $val)
 					$output .= format("<label><input type=\"radio\" name=\"{1}\" value=\"{0}\"{2}>{3}</label>", $key, $field, $checks[$key], $val).' ';
 				break;
-				
+
 			case "displaypic":
 			case "minipic":
 				$output .= "<input type=\"file\" id=\"".$field."\" name=\"".$field."\">\n";
 				$output .= "<label><input type=\"checkbox\" name=\"remove".$field."\"> ".__("Remove")."</label>\n";
 				break;
-				
+
 			case "number":
 				//$output .= "<input type=\"number\" id=\"".$field."\" name=\"".$field."\" value=\"".$item['value']."\" />";
 				$output .= "<input type=\"text\" id=\"".$field."\" name=\"".$field."\" value=\"".$item['value']."\" size=\"6\" maxlength=\"4\">";
 				break;
-				
+
 			case "datetime":
 				$output .= "<input type=\"text\" id=\"".$field."\" name=\"".$field."\" value=\"".$item['value']."\">\n";
 				$output .= __("or preset:")."\n";
@@ -867,27 +867,27 @@ foreach ($epFields as $catid => $cfields)
 					$options .= format("<option value=\"{0}\">{1}</option>", $key, $val);
 				$output .= format("<select id=\"{0}\" name=\"{0}\" size=\"1\" >\n{1}\n</select>\n", $item['presetname'], $options);
 				break;
-				
+
 			case "timezone":
 				$output .= "<input type=\"text\" name=\"".$field."H\" size=\"2\" maxlength=\"3\" value=\"".(int)($item['value']/3600)."\">\n";
 				$output .= ":\n";
 				$output .= "<input type=\"text\" name=\"".$field."M\" size=\"2\" maxlength=\"3\" value=\"".floor(abs($item['value']/60)%60)."\">";
 				break;
-				
+
 			case "bitmask":
 				foreach($item['options'] as $key => $val)
 					$output .= format("<label><input type=\"checkbox\" name=\"{1}[]\" value=\"{0}\"{2}> {3}</label> &nbsp;", 
 						$key, $field, ($item['value'] & $key) ? ' checked="checked"' : '', $val);
 				$item['caption'] = '';
 				break;
-				
+
 			case 'themeselector':
 				$output .= $themeList;
 				break;
 		}
 		if(isset($item['extra']))
 			$output .= " ".$item['extra'];
-			
+
 		$item['html'] = $output;
 		$epFields[$catid][$field] = $item;
 	}
