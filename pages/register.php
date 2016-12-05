@@ -14,10 +14,16 @@ MakeCrumbs(array('' => __('Register')));
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($loguserid)
-	Kill(__("Why in hell would you try to rereg?"));
+	Kill(__("Why in the world are you trying to rereg? Isn't one account enough for you?"));
 
 if($_POST['register']) {
 	if (IsProxy()) {
+		$adminemail = Settings::get('ownerEmail');
+		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
+		else $halp = '';
+		
+		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
+	} else if (IsProxyFSpamList()) {
 		$adminemail = Settings::get('ownerEmail');
 		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
 		else $halp = '';

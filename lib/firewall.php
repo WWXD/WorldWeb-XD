@@ -1272,4 +1272,18 @@ function IsProxy() {
 	return false;
 }
 
+function IsProxyFSpamList() {
+	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
+		return true;
+
+	$result = QueryURL('http://www.fspamlist.com/api.php?key=ba28d1c4aca5&spammer='.$cemail.',Jonson1238,'.urlencode($_SERVER['REMOTE_ADDR']));
+	if (!$result)
+		return false;
+
+	if (stripos($result, '<isspammer>true</isspammer>') !== FALSE)
+		return true;
+
+	return false;
+}
+
 ?>
