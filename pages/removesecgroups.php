@@ -7,7 +7,7 @@ if ($_POST['userid'] && $_POST['groupid']) {
 	Query("DELETE FROM {secondarygroups} (userid,groupid) VALUES ({0},{1})",
 		$_POST['userid'], $_POST['groupid']);
 	Report("[b]".$loguser['name']."[/] successfully removed a secondary group (ID: ".$_POST['groupid'].") from user ID #".$_POST['userid']."", false);
-	Alert(__("Secondary group successfully added."), __("Notice"));
+	Alert(__("Secondary group successfully removed."), __("Notice"));
 } else if (!$_POST['userid'] && $_POST['groupid']) {
 	Report("[b]".$loguser['name']."[/] tried to remove a secondary group (ID: ".$_POST['groupid'].") from user ID #".$_POST['userid']."", false);
 	Alert(__("Please enter a user ID and try again."), __("Notice"));
