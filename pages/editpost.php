@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - Post editing page
+//  BlargBoard XD - Post editing page
 //  Access: users
 if (!defined('BLARG')) die();
 
@@ -20,12 +20,10 @@ $rPost = Query("
 		LEFT JOIN {posts_text} ON {posts_text}.pid = {posts}.id AND {posts_text}.revision = {posts}.currentrevision
 	WHERE id={0}", $pid);
 
-if(NumRows($rPost))
-{
+if(NumRows($rPost)) {
 	$post = Fetch($rPost);
 	$tid = $post['thread'];
-}
-else
+} else
 	Kill(__("Unknown post ID."));
 
 $rUser = Query("select * from {users} where id={0}", $post['user']);
@@ -60,15 +58,14 @@ $isLastPost = ($thread['lastpostid'] == $post['id']);
 if($thread['closed'] && !HasPermission('mod.closethreads', $fid))
 	Kill(__("This thread is closed."));
 
-if((int)$_GET['delete'] == 1)
-{
-	if ($_GET['key'] != $loguser['token']) Kill(__("No."));
-	
+if((int)$_GET['delete'] == 1) {
+	if ($_GET['key'] != $loguser['token'])
+		Kill(__("No."));
+
 	if ($isFirstPost)
 		Kill(__("You may not delete a thread's first post."));
-	
-	if(!HasPermission('mod.deleteposts', $fid))
-	{
+
+	if(!HasPermission('mod.deleteposts', $fid)) {
 		if ($post['user'] != $loguserid || !HasPermission('user.deleteownposts'))
 			Kill(__("You are not allowed to delete this post."));
 		
@@ -77,16 +74,29 @@ if((int)$_GET['delete'] == 1)
 	$rPosts = Query("update {posts} set deleted=1,deletedby={0},reason={1} where id={2} limit 1", $loguserid, $_GET['reason'], $pid);
 
 	die(header("Location: ".actionLink("post", $pid)));
-}
-else if((int)$_GET['delete'] == 2)
-{
-	if ($_GET['key'] != $loguser['token']) Kill(__("No."));
-	
+} else if((int)$_GET['delete'] == 2) {
+	if ($_GET['key'] != $loguser['token'])
+		Kill(__("No."));
+
 	if(!HasPermission('mod.deleteposts', $fid))
 		Kill(__("You're not allowed to undelete posts."));
 	$rPosts = Query("update {posts} set deleted=0 where id={0} limit 1", $pid);
 
 	die(header("Location: ".actionLink("post", $pid)));
+} else if((int)$_GET['delete'] == 3) {
+	if ($_GET['key'] != $loguser['token'])
+		Kill(__("No."));
+
+	if ($isFirstPost)
+		Kill(__("You may not delete a thread's first post."));
+
+	if(!HasPermission('mod.deleteposts', $fid)) {
+		if ($post['user'] != $loguserid || !HasPermission('user.deleteownposts'))
+			Kill(__("You are not allowed to delete this post."));
+		
+		$_GET['reason'] = '';
+	}
+	$rPosts = Query("DELETE FROM {posts} where id={2} limit 1", $pid);
 }
 
 if ($post['deleted'])

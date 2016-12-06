@@ -2,11 +2,9 @@
 //  AcmlmBoard XD support - Post functions
 if (!defined('BLARG')) die();
 
-function ParseThreadTags($title)
-{
+function ParseThreadTags($title) {
 	preg_match_all("/\[(.*?)\]/", $title, $matches);
-	foreach($matches[1] as $tag)
-	{
+	foreach($matches[1] as $tag) {
 		$title = str_replace("[".$tag."]", "", $title);
 		$tag = htmlspecialchars(strtolower($tag));
 
@@ -28,13 +26,11 @@ function ParseThreadTags($title)
 	return array(trim($title), $tags);
 }
 
-function filterPollColors($input)
-{
+function filterPollColors($input) {
 	return preg_replace("@[^#0123456789abcdef]@si", "", $input);
 }
 
-function loadBlockLayouts()
-{
+function loadBlockLayouts( {
 	global $blocklayouts, $loguserid;
 
 	if(isset($blocklayouts))
@@ -47,8 +43,7 @@ function loadBlockLayouts()
 		$blocklayouts[$block['user']] = 1;
 }
 
-function getSyndrome($activity)
-{
+function getSyndrome($activity) {
 	include(__DIR__."/syndromes.php");
 	$soFar = "";
 	foreach($syndromes as $minAct => $syndrome)
@@ -57,8 +52,7 @@ function getSyndrome($activity)
 	return $soFar;
 }
 
-function applyTags($text, $tags)
-{
+function applyTags($text, $tags) {
 	if(!stristr($text, "&"))
 		return $text;
 	$s = $text;
@@ -73,8 +67,7 @@ function applyTags($text, $tags)
 
 
 $activityCache = array();
-function getActivity($id)
-{
+function getActivity($id) {
 	global $activityCache;
 
 	if(!isset($activityCache[$id]))
@@ -83,8 +76,7 @@ function getActivity($id)
 	return $activityCache[$id];
 }
 
-function makePostText($post, $poster)
-{
+function makePostText($post, $poster) {
 	$noSmilies = $post['options'] & 2;
 
 	//Do Ampersand Tags
@@ -103,21 +95,17 @@ function makePostText($post, $poster)
 			$separator = "<br>_________________________<br>";
 		else
 			$separator = "<br>";
-	
+
 	$attachblock = '';
-	if ($post['has_attachments'])
-	{
-		if (isset($post['preview_attachs']))
-		{
+	if ($post['has_attachments']){
+		if (isset($post['preview_attachs'])) {
 			$ispreview = true;
 			$fileids = array_keys($post['preview_attachs']);
 			$attachs = Query("SELECT id,filename,physicalname,description,downloads 
 				FROM {uploadedfiles}
 				WHERE id IN ({0c})",
 				$fileids);
-		}
-		else
-		{
+		} else {
 			$ispreview = false;
 			$attachs = Query("SELECT id,filename,physicalname,description,downloads 
 				FROM {uploadedfiles}
@@ -126,8 +114,7 @@ function makePostText($post, $poster)
 				'post_attachment', $post['id']);
 		}
 		
-		while ($attach = Fetch($attachs))
-		{
+		while ($attach = Fetch($attachs)) {
 			$url = URL_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
 			$linkurl = $ispreview ? '#' : $url;
 			$filesize = filesize(DATA_DIR.'uploads/'.$attach['physicalname']);
@@ -176,31 +163,28 @@ define('POST_SAMPLE', 3);			// sample post box (profile sample post, newreply po
 //		* fid: the ID of the forum the thread containing the post is in (POST_NORMAL and POST_DELETED_SNOOP only)
 // 		* threadlink: if set, a link to the thread is added next to 'Posted on blahblah' (POST_NORMAL and POST_DELETED_SNOOP only)
 //		* noreplylinks: if set, no links to newreply.php (Quote/ID) are placed in the metabar (POST_NORMAL only)
-function makePost($post, $type, $params=array())
-{
+function makePost($post, $type, $params=array()) {
 	global $loguser, $loguserid, $usergroups, $isBot, $blocklayouts;
-	
+
 	$poster = getDataPrefix($post, 'u_');
 	$post['userlink'] = UserLink($poster);
-	
+
 	LoadBlockLayouts();
 	$pltype = Settings::get('postLayoutType');
 	$isBlocked = $poster['globalblock'] || $loguser['blocklayouts'] || $post['options'] & 1 || isset($blocklayouts[$poster['id']]);
-	
+
 	$post['type'] = $type;
 	$post['formattedDate'] = formatdate($post['date']);
-	
+
 	if (!HasPermission('admin.viewips')) $post['ip'] = '';
 	else $post['ip'] = htmlspecialchars($post['ip']); // TODO IP formatting?
 
-	if($post['deleted'] && $type == POST_NORMAL)
-	{
+	if($post['deleted'] && $type == POST_NORMAL) {
 		$post['deluserlink'] = UserLink(getDataPrefix($post, 'du_'));
 		$post['delreason'] = htmlspecialchars($post['reason']);
 
 		$links = array();
-		if (HasPermission('mod.deleteposts', $params['fid']))
-		{
+		if (HasPermission('mod.deleteposts', $params['fid'])) {
 			$links['undelete'] = actionLinkTag(__("Undelete"), "editpost", $post['id'], "delete=2&key=".$loguser['token']);
 			$links['view'] = "<a href=\"#\" onclick=\"replacePost(".$post['id'].",true); return false;\">".__("View")."</a>";
 		}
@@ -212,46 +196,42 @@ function makePost($post, $type, $params=array())
 
 	$links = array();
 
-	if ($type != POST_SAMPLE)
-	{
+	if ($type != POST_SAMPLE) {
 		$forum = $params['fid'];
 		$thread = $params['tid'];
-		
+
 		$notclosed = (!$post['closed'] || HasPermission('mod.closethreads', $forum));
-		
+
 		$extraLinks = array();
 
-		if (!$isBot)
-		{
-			if ($type == POST_DELETED_SNOOP)
-			{
+		if (!$isBot) {
+			if ($type == POST_DELETED_SNOOP) {
 				if ($notclosed && HasPermission('mod.deleteposts', $forum))
 					$links['undelete'] = actionLinkTag(__("Undelete"), "editpost", $post['id'], "delete=2&key=".$loguser['token']);
-				
+
 				$links['close'] = "<a href=\"#\" onclick=\"replacePost(".$post['id'].",false); return false;\">".__("Close")."</a>";
-			}
-			else if ($type == POST_NORMAL)
-			{
-				if ($notclosed)
-				{
+			} else if ($type == POST_NORMAL) {
+				if ($notclosed) {
 					if ($loguserid && HasPermission('forum.postreplies', $forum) && !$params['noreplylinks'])
 						$links['quote'] = actionLinkTag(__("Quote"), "newreply", $thread, "quote=".$post['id']);
 
 					$editrights = 0;
-					if (($poster['id'] == $loguserid && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum))
-					{
+					if (($poster['id'] == $loguserid && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum)) {
 						$links['edit'] = actionLinkTag(__("Edit"), "editpost", $post['id']);
 						$editrights++;
 					}
-					
-					if (($poster['id'] == $loguserid && HasPermission('user.deleteownposts')) || HasPermission('mod.deleteposts', $forum))
-					{
-						if ($post['id'] != $post['firstpostid'])
-						{
+
+					if (($poster['id'] == $loguserid && HasPermission('user.deleteownposts')) || HasPermission('mod.deleteposts', $forum)) {
+						if ($post['id'] != $post['firstpostid']) {
 							$link = htmlspecialchars(actionLink('editpost', $post['id'], 'delete=1&key='.$loguser['token']));
 							$onclick = HasPermission('mod.deleteposts', $forum) ? 
 								" onclick=\"deletePost(this);return false;\"" : ' onclick="if(!confirm(\'Really delete this post?\'))return false;"';
 							$links['delete'] = "<a href=\"{$link}\"{$onclick}>".__('Delete')."</a>";
+
+							$link = htmlspecialchars(actionLink('editpost', $post['id'], 'delete=3&key='.$loguser['token']));
+							$onclick = 
+								" onclick=\"deletePost(this);return false;\"" : ' onclick="if(!confirm(\'Really wipe this post?\'))return false;"';
+							$links['delete'] = "<a href=\"{$link}\"{$onclick}>".__('Wipe')."</a>";
 						}
 						$editrights++;
 					}
@@ -268,21 +248,18 @@ function makePost($post, $type, $params=array())
 		}
 
 		//Threadlinks for listpost.php
-		if ($params['threadlink'])
-		{
+		if ($params['threadlink']) {
 			$thread = array();
 			$thread['id'] = $post['thread'];
 			$thread['title'] = $post['threadname'];
 			$thread['forum'] = $post['fid'];
 
 			$post['threadlink'] = makeThreadLink($thread);
-		}
-		else
+		} else
 			$post['threadlink'] = '';
 
 		//Revisions
-		if($post['revision'])
-		{
+		if($post['revision']) {
 			$ru_link = UserLink(getDataPrefix($post, "ru_"));
 			$revdetail = ' '.format(__('by {0} on {1}'), $ru_link, formatdate($post['revdate']));
 
@@ -293,14 +270,14 @@ function makePost($post, $type, $params=array())
 		}
 		//</revisions>
 	}
-	
+
 	$post['links'] = $links;
 
 
 	// POST SIDEBAR
-	
+
 	$sidebar = array();
-	
+
 	// quit abusing custom syndromes you unoriginal fuckers
 	$poster['title'] = preg_replace('@Affected by \'?.*?Syndrome\'?@si', '', $poster['title']);
 
@@ -313,13 +290,10 @@ function makePost($post, $type, $params=array())
 
 	$sidebar['syndrome'] = GetSyndrome(getActivity($poster['id']));
 
-	if($post['mood'] > 0)
-	{
+	if($post['mood'] > 0) {
 		if(file_exists(DATA_DIR."avatars/".$poster['id']."_".$post['mood']))
 			$sidebar['avatar'] = "<img src=\"".DATA_URL."avatars/".$poster['id']."_".$post['mood']."\" alt=\"\">";
-	}
-	else if ($poster['picture'])
-	{
+	} else if ($poster['picture']) {
 		$pic = str_replace('$root/', DATA_URL, $poster['picture']);
 		$sidebar['avatar'] = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\">";
 	}
@@ -340,20 +314,19 @@ function makePost($post, $type, $params=array())
 
 	if($poster['lastactivity'] > time() - 300)
 		$sidebar['isonline'] = __("User is <strong>online</strong>");
-	
+
 	$sidebarExtra = array();
 	$bucket = "sidebar"; include(__DIR__."/pluginloader.php");
 	$sidebar['extra'] = $sidebarExtra;
-	
+
 	$post['sidebar'] = $sidebar;
 
 	// OTHER STUFF
-	
+
 	$post['haslayout'] = false;
 	$post['fulllayout'] = false;
-	
-	if(!$isBlocked)
-	{
+
+	if(!$isBlocked) {
 		$poster['postheader'] = $pltype ? trim($poster['postheader']) : '';
 		$poster['signature'] = trim($poster['signature']);
 		
@@ -362,9 +335,7 @@ function makePost($post, $type, $params=array())
 		
 		if (!$post['haslayout'] && $poster['signature'])
 			$poster['signature'] = '<div class="signature">'.$poster['signature'].'</div>';
-	}
-	else
-	{
+	} else {
 		$poster['postheader'] = '';
 		$poster['signature'] = '';
 	}
@@ -372,7 +343,7 @@ function makePost($post, $type, $params=array())
 	$post['contents'] = makePostText($post, $poster);
 
 	//PRINT THE POST!
-	
+
 	RenderTemplate('postbox', array('post' => $post));
 }
 
