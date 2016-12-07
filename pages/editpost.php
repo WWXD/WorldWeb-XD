@@ -93,8 +93,6 @@ if((int)$_GET['delete'] == 1) {
 	if(!HasPermission('mod.deleteposts', $fid)) {
 		if ($post['user'] != $loguserid || !HasPermission('user.deleteownposts'))
 			Kill(__("You are not allowed to delete this post."));
-		
-		$_GET['reason'] = '';
 	}
 	$rPosts = Query("DELETE FROM {posts} where id={2} limit 1", $pid);
 }
