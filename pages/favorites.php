@@ -28,7 +28,7 @@ if ($_GET['action'] == "markasread") {
 
 	$thread = Fetch($thread);
 	if (!HasPermission('forum.viewforum', $thread['forum']))
-		Kill(__("Nice try, hacker kid, but no."));
+		Kill(__("You may not view this forum."));
 
 	if ($_GET['action'] == 'add')
 		Query("INSERT IGNORE INTO {favorites} (user,thread) VALUES ({0},{1})", $loguserid, $tid);

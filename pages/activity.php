@@ -16,14 +16,12 @@ $dd2 = mktime(0, 0, 0, substr($vd, 0, 2), substr($vd, 3, 2) + 1, substr($vd, 6, 
 
 $nn = Query("select from_unixtime(date, '%Y%m%d') ymd, floor(date / 86400) d, count(*) c, max(num) m from {posts} where user = {0} group by ymd order by ymd", $u);
 
-while($n = Fetch($nn))
-{
+while($n = Fetch($nn)) {
 	$p[$n[$d]] = $n[c];
 	$t[$n[$d]] = $n[m];
 }
 
-for($i = 0; $dd + $i * 86400 < time(); $i++)
-{
+for($i = 0; $dd + $i * 86400 < time(); $i++) {
 	$ps = Query("select count(*),max(num) from {posts} where user = {3} and date >= {0} + {1} * 86400 and date < {2} + {1} * 86400", $dd, $i, $dd2, $u);
 	$p[$i] = Result($ps, 0, 0);
 	$t[$i] = Result($ps, 0, 1);
@@ -47,16 +45,14 @@ $c['pt'] = imagecolorallocate($img, 250, 190, 40);
 
 imagefill($img, 0, 0, $c['bk']);
 
-for($i = 0; $i < $days; $i++)
-{
+for($i = 0; $i < $days; $i++) {
 	$num = date("m", $dd + $i * 86400) % 2 + 1;
 	if(date("m-d", $dd + $i * 86400) == "01-01")
 		$num = 3;
 	imageline($img, $i, $m, $i, 0, $c['bg'.$num]);
 }
 
-for($i = 0; $i < $days; $i++)
-{
+for($i = 0; $i < $days; $i++) {
 	imageline($img, $i, $m, $i, $m - $p[$i], $c['bar']);
 	imagesetpixel($img, $i, $m - $t[$i] / ($i + 1), $c['pt']);
 }

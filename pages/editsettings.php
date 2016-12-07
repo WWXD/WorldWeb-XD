@@ -13,15 +13,14 @@ if(isset($_GET['id']))
 if(isset($_POST['_plugin']))
 	$plugin = $_POST['_plugin'];
 	
-if (isset($_GET['field']))
-{
+if (isset($_GET['field'])) {
 	$htmlfield = $_GET['field'];
 	if (!isset($settings[$htmlfield])) Kill(__('No.'));
 	if ($settings[$htmlfield]['type'] != 'texthtml') Kill(__('No.'));
-	
+
 	$htmlname = $settings[$htmlfield]['name'];
-}
-else $htmlfield = null;
+} else
+	$htmlfield = null;
 
 if(!ctype_alnum($plugin))
 	Kill(__("No."));
@@ -35,21 +34,19 @@ $settings = Settings::getSettingsFile($plugin);
 $oursettings = Settings::$settingsArray[$plugin];
 $invalidsettings = array();
 
-if(isset($_POST["_plugin"]))
-{
+if(isset($_POST["_plugin"])) {
 	if ($_POST['key'] !== $loguser['token'])
 		Kill(__('No.'));
-		
+
 	//Save the settings.
 	$valid = true;
 
-	foreach($_POST as $key => $value)
-	{
+	foreach($_POST as $key => $value) {
 		if($key == "_plugin") continue;
 
 		//Don't accept unexisting settings.
 		if(!isset($settings[$key])) continue;
-		
+
 		// don't save settings if the user isn't allowed to change them
 		if ($settings[$key]['rootonly'] && !$loguser['root'])
 			continue;
@@ -57,29 +54,23 @@ if(isset($_POST["_plugin"]))
 		//Save the entered settings for re-editing
 		$oursettings[$key] = $value;
 
-		if(!Settings::validate($value, $settings[$key]["type"], $settings[$key]["options"]))
-		{
+		if(!Settings::validate($value, $settings[$key]["type"], $settings[$key]["options"])) {
 			$valid = false;
 			$invalidsettings[$key] = true;
-		}
-		else
+		} else
 			Settings::$settingsArray[$plugin][$key] = $value;
 	}
 
-	if($valid)
-	{
+	if($valid) {
 		Settings::save($plugin);
-		if(isset($_POST["_exit"]))
-		{
+		if(isset($_POST["_exit"])) {
 			if($plugin == "main")
 				die(header("Location: ".actionLink("admin")));
 			else
 				die(header("Location: ".actionLink("pluginmanager")));
-		}
-		else
+		} else
 			Alert(__("Settings were successfully saved!"));
-	}
-	else
+	} else
 		Alert(__("Settings were not saved because there were invalid values. Please correct them and try again."));
 }
 
@@ -92,18 +83,17 @@ echo "
 $settingfields = array();
 $settingfields[''] = ''; // ensures the uncategorized entries come first
 
-foreach($settings as $name => $data)
-{
+foreach($settings as $name => $data) {
 	if ($data['rootonly'] && !$loguser['root'])
 		continue;
-		
+
 	if ($data['type'] == 'texthtml' && $htmlfield == null)
 		continue;
 	if ($htmlfield != null && $htmlfield != $name)
 		continue;
-		
+
 	$sdata = array();
-		
+
 	$sdata['name'] = $name;
 	if(isset($data['name']))
 		$sdata['name'] = $data['name'];
@@ -141,7 +131,7 @@ foreach($settings as $name => $data)
 		$input = makeLayoutList($name, $value);
 	else if($type == "language")
 		$input = makeLangList($name, $value);
-		
+
 	$sdata['field'] = $input;
 
 	if($invalidsettings[$name])
@@ -153,7 +143,8 @@ foreach($settings as $name => $data)
 	$settingfields[$data['category']][] = $sdata;
 }
 
-if (!$settingfields['']) unset($settingfields['']);
+if (!$settingfields[''])
+	unset($settingfields['']);
 
 $fields = array(
 	'btnSaveExit' => "<input type=\"submit\" name=\"_exit\" value=\"".__("Save and Exit")."\">",
@@ -164,11 +155,8 @@ RenderTemplate('form_settings', array('settingfields' => $settingfields, 'htmlfi
 
 echo "
 	</form>";
-	
-	
 
-function makeSelect($fieldName, $checkedIndex, $choicesList, $extras = "")
-{
+function makeSelect($fieldName, $checkedIndex, $choicesList, $extras = "") {
 	$checks[$checkedIndex] = " selected=\"selected\"";
 	foreach($choicesList as $key=>$val)
 		$options .= format("
@@ -180,14 +168,11 @@ function makeSelect($fieldName, $checkedIndex, $choicesList, $extras = "")
 	return $result;
 }
 
-function makeThemeList($fieldname, $value)
-{
+function makeThemeList($fieldname, $value) {
 	$themes = array();
 	$dir = @opendir("themes");
-	while ($file = readdir($dir))
-	{
-		if ($file != "." && $file != "..")
-		{
+	while ($file = readdir($dir)) {
+		if ($file != "." && $file != "..") {
 			$name = explode("\n", @file_get_contents("./themes/".$file."/themeinfo.txt"));
 			$themes[$file] = trim($name[0]);
 		}
@@ -196,8 +181,7 @@ function makeThemeList($fieldname, $value)
 	return makeSelect($fieldname, $value, $themes);
 }
 
-function makeLayoutList($fieldname, $value)
-{
+function makeLayoutList($fieldname, $value) {
 	$layouts = array();
 	$dir = @opendir("layouts");
 	while ($layout = readdir($dir))
@@ -207,15 +191,12 @@ function makeLayoutList($fieldname, $value)
 	return makeSelect($fieldname, $value, $layouts);
 }
 
-function makeLangList($fieldname, $value)
-{
+function makeLangList($fieldname, $value) {
 	$data = array();
 	$dir = @opendir("lib/lang");
-	while ($file = readdir($dir))
-	{
+	while ($file = readdir($dir)) {
 		//print $file;
-		if (endsWith($file, "_lang.php"))
-		{
+		if (endsWith($file, "_lang.php")) {
 			$file = substr($file, 0, strlen($file)-9);
 			$data[$file] = $file;
 		}
@@ -227,21 +208,16 @@ function makeLangList($fieldname, $value)
 
 //From the PHP Manual User Comments
 // ... this is unused?
-function foldersize($path)
-{
+function foldersize($path) {
 	$total_size = 0;
 	$files = scandir($path);
 	$files = array_slice($files, 2);
-	foreach($files as $t)
-	{
-		if(is_dir($t))
-		{
+	foreach($files as $t) {
+		if(is_dir($t)) {
 			//Recurse here
 			$size = foldersize($path . "/" . $t);
 			$total_size += $size;
-		}
-		else
-		{
+		} else {
 			$size = filesize($path . "/" . $t);
 			$total_size += $size;
 		}

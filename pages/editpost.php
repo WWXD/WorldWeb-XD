@@ -68,7 +68,7 @@ if((int)$_GET['delete'] == 1) {
 	if(!HasPermission('mod.deleteposts', $fid)) {
 		if ($post['user'] != $loguserid || !HasPermission('user.deleteownposts'))
 			Kill(__("You are not allowed to delete this post."));
-		
+
 		$_GET['reason'] = '';
 	}
 	$rPosts = Query("update {posts} set deleted=1,deletedby={0},reason={1} where id={2} limit 1", $loguserid, $_GET['reason'], $pid);
@@ -123,7 +123,7 @@ if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
 } else if(isset($_POST['actionpreview'])) {
 	$attachs = HandlePostAttachments(0, false);
-	
+
 	$previewPost['text'] = $_POST['text'];
 	$previewPost['num'] = $post['num'];
 	$previewPost['id'] = 0;
@@ -133,12 +133,13 @@ if (isset($_POST['saveuploads'])) {
 	$previewPost['mood'] = (int)$_POST['mood'];
 	$previewPost['has_attachments'] = !empty($attachs);
 	$previewPost['preview_attachs'] = $attachs;
-	
+
 	foreach($user as $key => $value)
 		$previewPost['u_'.$key] = $value;
 	MakePost($previewPost, POST_SAMPLE);
 } else if(isset($_POST['actionpost'])) {
-	if ($_POST['key'] != $loguser['token']) Kill(__("No."));
+	if ($_POST['key'] != $loguser['token'])
+		Kill(__("No."));
 
 	$rejected = false;
 
@@ -147,23 +148,18 @@ if (isset($_POST['saveuploads'])) {
 		$rejected = true;
 	}
 
-	if(!$rejected)
-	{
+	if(!$rejected) {
 		if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
 			Alert(__("Error: Could not post."), __("Your post is too short."));
 			$rejected = true;
 		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
-	}
 
-	if(!$rejected)
-	{
 		$options = 0;
 		if($_POST['nopl']) $options |= 1;
 		if($_POST['nosm']) $options |= 2;
 
-		if ($_POST['text'] != $post['text'])
-		{
+		if ($_POST['text'] != $post['text']) {
 			$now = time();
 			$rev = fetchResult("select max(revision) from {posts_text} where pid={0}", $pid);
 			$rev++;

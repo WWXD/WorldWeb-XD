@@ -17,8 +17,7 @@ $fparam = $from ? '&from='.$from : '';
 
 $spans = array(3600=>__('1 hour'), 86400=>__('1 day'), 259200=>__('3 days'), 'new'=>__('New posts'));
 $options = array();
-foreach($spans as $span=>$desc)
-{
+foreach($spans as $span=>$desc) {
 	if ($span == $time)
 		$options[] = $desc;
 	else
@@ -35,8 +34,7 @@ $total = FetchResult("SELECT COUNT(".($show=='threads'?'DISTINCT p.thread':'*').
 	(($loguserid&&($time=='new'))?'LEFT JOIN {threadsread} tr ON tr.thread=p.thread AND tr.id={0}':'').
 	" WHERE p.date>{$mindate} AND t.forum IN ({3c})", $loguserid, time()-$time, time()-900, $allowedforums);
 
-if (!$total)
-{
+if (!$total) {
 	Alert($time=='new' ? __('No unread posts.') : __('No posts have been made during this timespan.'), __('Notice'));
 	return;
 }
@@ -44,8 +42,7 @@ if (!$total)
 $perpage = ($show=='posts') ? $loguser['postsperpage'] : $loguser['threadsperpage'];
 $pagelinks = PageLinks(actionLink("lastposts", '', "time={$time}&show={$show}&from="), $perpage, $from, $total);
 
-if ($show == 'threads')
-{
+if ($show == 'threads') {
 	$mindate = ($time=='new') ? ($loguserid ? 'IFNULL(tr.date,0)' : '{2}') : '{1}';
 	$rThreads = Query("	SELECT
 							t.*,
@@ -63,9 +60,7 @@ if ($show == 'threads')
 						ORDER BY t.lastpostdate DESC LIMIT {3u}, {4u}", $loguserid, time()-$time, time()-900, $from, $perpage, $allowedforums);
 
 	makeThreadListing($rThreads, $pagelinks, false, true);
-}
-else
-{
+} else {
 	$mindate = ($time=='new') ? ($loguserid ? 'IFNULL(tr.date,0)' : '{2}') : '{1}';
 	$rPosts = Query("	SELECT
 							p.*,
