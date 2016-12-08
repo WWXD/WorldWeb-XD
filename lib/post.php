@@ -30,7 +30,7 @@ function filterPollColors($input) {
 	return preg_replace("@[^#0123456789abcdef]@si", "", $input);
 }
 
-function loadBlockLayouts( {
+function loadBlockLayouts() {
 	global $blocklayouts, $loguserid;
 
 	if(isset($blocklayouts))
