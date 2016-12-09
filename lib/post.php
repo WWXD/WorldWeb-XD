@@ -230,7 +230,7 @@ function makePost($post, $type, $params=array()) {
 
 							$link = htmlspecialchars(actionLink('editpost', $post['id'], 'delete=3&key='.$loguser['token']));
 							$onclick = 
-								" onclick=\"deletePost(this);return false;\"" : ' onclick="if(!confirm(\'Really wipe this post?\'))return false;"';
+								'onclick="if(!confirm(\'Really delete this post?\'))return false;"';
 							$links['delete'] = "<a href=\"{$link}\"{$onclick}>".__('Wipe')."</a>";
 						}
 						$editrights++;
