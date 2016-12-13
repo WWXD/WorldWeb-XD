@@ -4,8 +4,7 @@ if (!defined('BLARG')) die();
 if(Settings::get("mailResetSender") == "")
 	Kill(__("No sender specified for reset emails."));
 
-if(isset($_GET['key']) && isset($_GET['id']))
-{
+if(isset($_GET['key']) && isset($_GET['id'])) {
 	$user = Query("select pss from {users} where id = {0}", (int)$_GET['id']);
 	if(NumRows($user) == 0)
 		Kill(__("Invalid key."));
@@ -28,15 +27,12 @@ if(isset($_GET['key']) && isset($_GET['id']))
 	Query("update {users} set lostkey = '', password = {0}, pss = {2} where id = {1}", $sha, (int)$_GET['id'], $newsalt);
 	Kill(format(__("Your password has been reset to <strong>{0}</strong>. You can use this password to log in to the board. We suggest you change it as soon as possible."), $newPass), __("Password reset"));
 
-}
-else if(isset($_POST['action']))
-{
+} else if(isset($_POST['action'])) {
 	if($_POST['mail'] != $_POST['mail2'])
 		Kill(__("The e-mail addresses you entered don't match, try again."));
 
 	$user = Query("select id, name, password, email, lostkeytimer, pss from {users} where name = {0} and email = {1}", $_POST['name'], $_POST['mail']);
-	if(NumRows($user) != 0)
-	{
+	if(NumRows($user) != 0) {
 		$user = Fetch($user);
 		if($user['lostkeytimer'] > time() - (60*60)) //wait an hour between attempts
 			Kill(__("To prevent abuse, this function can only be used once an hour."), __("Slow down!"));
@@ -56,14 +52,12 @@ else if(isset($_POST['action']))
 		mail($to, $subject, wordwrap($message, 70), $headers);
 
 		Query("update {users} set lostkey = {0}, lostkeytimer = {1} where id = {2}", $hashedResetKey, time(), $user['id']);
-		
+
 		Kill(__("Check your email in a moment and follow the link found therein."), __("Reset email sent"));
 	}
 	
 	Kill(__('Invalid user name or email address.'));
-}
-else
-{
+} else {
 	$title = __('Request password reset');
 	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));
 	
@@ -86,15 +80,13 @@ else
 
 }
 
-function randomString($len, $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-{
-   $s = "";
-   for ($i = 0; $i < $len; $i++)
-   {
-       $p = rand(0, strlen($chars)-1);
-       $s .= $chars[$p];
-   }
-   return $s;
+function randomString($len, $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") {
+	$s = "";
+	for ($i = 0; $i < $len; $i++) {
+		$p = rand(0, strlen($chars)-1);
+		$s .= $chars[$p];
+	}
+	return $s;
 }
 
 ?>

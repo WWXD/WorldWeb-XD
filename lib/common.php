@@ -25,10 +25,8 @@ if(!is_file(__DIR__.'/../config/database.php'))
 
 
 // Deslash GPC variables if we have magic quotes on
-if (get_magic_quotes_gpc())
-{
-	function AutoDeslash($val)
-	{
+if (get_magic_quotes_gpc()) {
+	function AutoDeslash($val) {
 		if (is_array($val))
 			return array_map('AutoDeslash', $val);
 		else if (is_string($val))
@@ -43,8 +41,7 @@ if (get_magic_quotes_gpc())
 	$_COOKIE = array_map('AutoDeslash', $_COOKIE);
 }
 
-function usectime()
-{
+function usectime() {
 	$t = gettimeofday();
 	return $t['sec'] + ($t['usec'] / 1000000);
 }
@@ -108,7 +105,7 @@ include(__DIR__."/layout.php");
 
 //Classes
 
-include(__DIR__."/smarty/Smarty.class.php");
+include(__DIR__."/templates/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
 $tpl->assign('loguserid', $loguserid);

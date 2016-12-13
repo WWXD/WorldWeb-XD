@@ -14,6 +14,7 @@ if (!$post)
 
 if ($post['user'] == $loguserid && HasPermission('user.deleteownposts'))
 	Alert(__('You are reporting your own posts. If you want your post deleted, you can do it yourself. You should do this only if you want to make sure the information is correct/allowed.'));
+
 if ($post['deleted'])
 	Kill(__('This post is already deleted.'));
 
@@ -24,6 +25,9 @@ $fid = $thread['forum'];
 
 if (!HasPermission('forum.viewforum', $fid))
 	Kill(__('You may not access this forum.'));
+
+if (HasPermission('mod.deleteposts', $forum))
+	Alert(__('If you want the post deleted, you can do it yourself. You should do this only if you want to make sure the information is correct/allowed With your other staff members.'));
 
 $tags = ParseThreadTags($thread['title']);
 $isHidden = !HasPermission('forum.viewforum', $fid, true);

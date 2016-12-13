@@ -1,11 +1,9 @@
 <?php
-//  AcmlmBoard XD - Thread display page
+//  BlargBoard XD - Thread display page
 //  Access: all
 if (!defined('BLARG')) die();
 
-
-if(isset($_GET['pid']))
-{
+if(isset($_GET['pid'])) {
 	header("HTTP/1.1 301 Moved Permanently");
 	header("Status: 301 Moved Permanently");
 	die(header("Location: ".actionLink("post", $_GET["pid"])));
@@ -34,10 +32,9 @@ $threadtags = ParseThreadTags($thread['title']);
 $title = $threadtags[0];
 $urlname = HasPermission('forum.viewforum', $fid, true) ? $title : '';
 
-if(isset($_GET['vote']))
-{
+if(isset($_GET['vote'])) {
 	CheckPermission('user.votepolls');
-	
+
 	if(!$loguserid)
 		Kill(__("You can't vote without logging in."));
 	if($thread['closed'])
@@ -51,37 +48,32 @@ if(isset($_GET['vote']))
 
 	$doublevote = FetchResult("select doublevote from {poll} where id={0}", $thread['poll']);
 	$existing = FetchResult("select count(*) from {pollvotes} where poll={0} and choiceid={1} and user={2}", $thread['poll'], $vote, $loguserid);
-	if($doublevote)
-	{
+	if($doublevote) {
 		//Multivote.
 		if ($existing)
 			Query("delete from {pollvotes} where poll={0} and choiceid={1} and user={2}", $thread['poll'], $vote, $loguserid);
 		else
 			Query("insert into {pollvotes} (poll, choiceid, user) values ({0}, {1}, {2})", $thread['poll'], $vote, $loguserid);
-	}
-	else
-	{
+	} else {
 		//Single vote only?
 		//Remove any old votes by this user on this poll, then add a new one.
 		Query("delete from {pollvotes} where poll={0} and user={1}", $thread['poll'], $loguserid);
 		if(!$existing)
 			Query("insert into {pollvotes} (poll, choiceid, user) values ({0}, {1}, {2})", $thread['poll'], $vote, $loguserid);
 	}
-	
+
 	$ref = $_SERVER['HTTP_REFERER'] ?: actionLink('thread', $tid, '', $urlname);
 	die(header('Location: '.$ref));
 }
 
 $firstpost = FetchResult("SELECT pt.text FROM {posts} p LEFT JOIN {posts_text} pt ON pt.pid=p.id AND pt.revision=p.currentrevision WHERE p.thread={0} AND p.deleted=0 ORDER BY p.date ASC LIMIT 1", $tid);
-if ($firstpost && $firstpost != -1)
-{
+if ($firstpost && $firstpost != -1) {
 	$firstpost = strip_tags($firstpost);
 	$firstpost = preg_replace('@\[.*?\]@s', '', $firstpost);
 	$firstpost = preg_replace('@\s+@', ' ', $firstpost);
 
 	$firstpost = explode(' ', $firstpost);
-	if (count($firstpost) > 30)
-	{
+	if (count($firstpost) > 30) {
 		$firstpost = array_slice($firstpost, 0, 30);
 		$firstpost[29] .= '...';
 	}
@@ -96,19 +88,17 @@ Query("update {threads} set views=views+1 where id={0} limit 1", $tid);
 $isold = (!$thread['sticky'] && Settings::get("oldThreadThreshold") > 0 && $thread['lastpostdate'] < time() - (2592000 * Settings::get("oldThreadThreshold")));
 
 $links = array();
-if ($loguserid)
-{
+if ($loguserid) {
 	$notclosed = (!$thread['closed'] || HasPermission('mod.closethreads', $fid));
-	
-	if (HasPermission('forum.postreplies', $fid))
-	{
+
+	if (HasPermission('forum.postreplies', $fid)) {
 		// allow the user to directly post in a closed thread if they have permission to open it
 		if ($notclosed)
 			$links[] = actionLinkTag(__("Post reply"), "newreply", $tid, '', $urlname);
 		else if ($thread['closed'])
 			$links[] = __("Thread closed");
 	}
-	
+
 	if (FetchResult("SELECT COUNT(*) FROM {favorites} WHERE user={0} AND thread={1}", $loguserid, $tid) > 0)
 		$links[] = actionLinkTag(__('Remove from favorites'), 'favorites', $tid, 'action=remove&token='.$loguser['token']);
 	else
@@ -119,31 +109,27 @@ if ($loguserid)
 		(HasPermission('mod.renamethreads', $fid) || HasPermission('mod.movethreads', $fid))
 		&& $notclosed)
 		$links[] = actionLinkTag(__("Edit"), "editthread", $tid);
-	
-	if (HasPermission('mod.closethreads', $fid))
-	{
+
+	if (HasPermission('mod.closethreads', $fid)) {
 		if($thread['closed'])
 			$links[] = actionLinkTag(__("Open"), "editthread", $tid, "action=open&key=".$loguser['token']);
 		else
 			$links[] = actionLinkTag(__("Close"), "editthread", $tid, "action=close&key=".$loguser['token']);
 	}
-		
-	if (HasPermission('mod.stickthreads', $fid))
-	{
+
+	if (HasPermission('mod.stickthreads', $fid)) {
 		if($thread['sticky'])
 			$links[] = actionLinkTag(__("Unstick"), "editthread", $tid, "action=unstick&key=".$loguser['token']);
 		else
 			$links[] = actionLinkTag(__("Stick"), "editthread", $tid, "action=stick&key=".$loguser['token']);
 	}
 
-	if (HasPermission('mod.trashthreads', $fid) && Settings::get('trashForum'))
-	{
+	if (HasPermission('mod.trashthreads', $fid) && Settings::get('trashForum')) {
 		if($forum['id'] != Settings::get('trashForum'))
 			$links[] = actionLinkTag(__("Trash"), "editthread", $tid, "action=trash&key=".$loguser['token']);
 	}
-	
-	if (HasPermission('mod.deletethreads', $fid) && Settings::get('secretTrashForum'))
-	{
+
+	if (HasPermission('mod.deletethreads', $fid) && Settings::get('secretTrashForum')) {
 		if ($forum['id'] != Settings::get('secretTrashForum'))
 			$links[] = actionLinkTagConfirm(__("Delete"), __("Are you sure you want to just up and delete this whole thread?"), "editthread", $tid, "action=delete&key=".$loguser['token']);
 	}
@@ -154,14 +140,13 @@ LoadPostToolbar();
 
 MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $urlname) => $threadtags[0]), $links);
 
-if($thread['poll'])
-{
+if($thread['poll']) {
 	$poll = Fetch(Query("SELECT p.*,
 							(SELECT COUNT(DISTINCT user) FROM {pollvotes} pv WHERE pv.poll = p.id) as users,
 							(SELECT COUNT(*) FROM {pollvotes} pv WHERE pv.poll = p.id) as votes
 						 FROM {poll} p
 						 WHERE p.id={0}", $thread['poll']));
-						 
+
 	if(!$poll)
 		Kill(__("Poll not found"));
 
@@ -177,15 +162,14 @@ if($thread['poll'])
 	$defaultColors = array(
 				  "#0000B6","#00B600","#00B6B6","#B60000","#B600B6","#B66700","#B6B6B6",
 		"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",);
-		
+
 	$pdata = array();
 	$pdata['question'] = htmlspecialchars($poll['question']);
 	$pdata['options'] = array();
 
-	while($option = Fetch($rOptions))
-	{
+	while($option = Fetch($rOptions)) {
 		$odata = array();
-		
+
 		$odata['color'] = htmlspecialchars($option['color']);
 		if($odata['color'] == '')
 			$odata['color'] = $defaultColors[($option['id'] + 9) % 15];
@@ -197,10 +181,9 @@ if($thread['poll'])
 		else
 			$label = $chosen." ".htmlspecialchars($option['choice']);
 		$odata['label'] = $label;
-			
+
 		$odata['votes'] = $option['votes'];
-		if($totalVotes > 0)
-		{
+		if($totalVotes > 0) {
 			$width = (100 * $odata['votes']) / $totalVotes;
 			$odata['percent'] = sprintf('%.4g', $width);
 		}
@@ -248,10 +231,8 @@ $pagelinks = PageLinks(actionLink("thread", $tid, "from=", $urlname), $ppp, $fro
 
 RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
 
-if(NumRows($rPosts))
-{
-	while($post = Fetch($rPosts))
-	{
+if(NumRows($rPosts)) {
+	while($post = Fetch($rPosts)) {
 		$post['closed'] = $thread['closed'];
 		$post['firstpostid'] = $thread['firstpostid'];
 		MakePost($post, POST_NORMAL, array('tid'=>$tid, 'fid'=>$fid));
@@ -260,22 +241,19 @@ if(NumRows($rPosts))
 
 RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
 
-if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] && !$isold)
-{
+if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] && !$isold) {
 	$ninja = FetchResult("select id from {posts} where thread={0} order by date desc limit 0, 1", $tid);
 
 	$mod_lock = '';
-	if (HasPermission('mod.closethreads', $fid))
-	{
+	if (HasPermission('mod.closethreads', $fid)) {
 		if(!$thread['closed'])
 			$mod_lock = "<label><input type=\"checkbox\" name=\"lock\">&nbsp;".__("Close thread", 1)."</label>\n";
 		else
 			$mod_lock = "<label><input type=\"checkbox\" name=\"unlock\">&nbsp;".__("Open thread", 1)."</label>\n";
 	}
-	
+
 	$mod_stick = '';
-	if (HasPermission('mod.stickthreads', $fid))
-	{
+	if (HasPermission('mod.stickthreads', $fid)) {
 		if(!$thread['sticky'])
 			$mod_stick = "<label><input type=\"checkbox\" name=\"stick\">&nbsp;".__("Sticky", 1)."</label>\n";
 		else
@@ -297,7 +275,7 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 		'nosm' => "<label><input type=\"checkbox\" name=\"nosm\">&nbsp;".__("Disable smilies", 1)."</label>",
 		'lock' => $mod_lock,
 		'stick' => $mod_stick,
-		
+
 		'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
 		'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 	);

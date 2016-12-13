@@ -8,7 +8,7 @@ $user = Fetch(Query("SELECT u.(_userfields) FROM {users} u WHERE u.id={0}", $id)
 if (!$user)
 	Kill('Invalid user ID.');
 
-if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
+if ($targetrank >= $loguserGroup['rank'])
 	Kill('You may not ban a user whose level is equal to or above yours.');
 
 if ($_POST['ban']) {
@@ -25,9 +25,11 @@ if ($_POST['ban']) {
 		$time = $_POST['time'] * $_POST['timemult'];
 		$expire = time() + $time;
 	}
-	
-	if ($expire) $bantitle = __('Banned until ').formatdate($expire);
-	else $bantitle = __('Banned permanently');
+
+	if ($expire)
+		$bantitle = __('Banned until ').formatdate($expire);
+	else
+		$bantitle = __('Banned permanently');
 
 	if (trim($_POST['reason']))
 		$bantitle .= __(': ').$_POST['reason'];
@@ -54,8 +56,7 @@ if ($_POST['ban']) {
 }
 
 
-if (isset($_GET['unban']))
-{
+if (isset($_GET['unban'])) {
 	$title = __('Unban user');
 
 	MakeCrumbs(array(actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
@@ -67,14 +68,12 @@ if (isset($_GET['unban']))
 		'btnUnbanUser' => '<input type="submit" name="unban" value="Unban user">',
 	);
 	$template = 'form_unbanuser';
-}
-else
-{
+} else {
 	$title = __('Ban user');
-	
+
 	MakeCrumbs(array(actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
 		actionLink('banhammer', $id) => __('Ban user')));
-		
+
 	$duration = '
 	<label><input type="radio" name="permanent" value="0"> For: </label>
 		<input type="text" name="time" size="4" maxlength="2">
@@ -93,7 +92,7 @@ else
 		'target' => $userlink,
 		'duration' => $duration,
 		'reason' => '<input type="text" name="reason" size=80 maxlength=200>',
-		
+
 		'btnBanUser' => '<input type="submit" name="ban" value="Ban user">',
 	);
 	$template = 'form_banuser';
@@ -101,7 +100,7 @@ else
 
 echo '
 	<form action="" method="POST">';
-	
+
 RenderTemplate($template, array('fields' => $fields));
 
 echo '

@@ -215,11 +215,8 @@ function makePost($post, $type, $params=array()) {
 					if ($loguserid && HasPermission('forum.postreplies', $forum) && !$params['noreplylinks'])
 						$links['quote'] = actionLinkTag(__("Quote"), "newreply", $thread, "quote=".$post['id']);
 
-					$editrights = 0;
-					if (($poster['id'] == $loguserid && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum)) {
+					if (($poster['id'] == $loguserid && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum))
 						$links['edit'] = actionLinkTag(__("Edit"), "editpost", $post['id']);
-						$editrights++;
-					}
 
 					if (($poster['id'] == $loguserid && HasPermission('user.deleteownposts')) || HasPermission('mod.deleteposts', $forum)) {
 						if ($post['id'] != $post['firstpostid']) {
@@ -227,23 +224,24 @@ function makePost($post, $type, $params=array()) {
 							$onclick = HasPermission('mod.deleteposts', $forum) ? 
 								" onclick=\"deletePost(this);return false;\"" : ' onclick="if(!confirm(\'Really delete this post?\'))return false;"';
 							$links['delete'] = "<a href=\"{$link}\"{$onclick}>".__('Delete')."</a>";
+						}
+					}
 
+					if (HasPermission('mod.deleteposts', $forum) && $post['id'] != $post['firstpostid']) {
 							$link = htmlspecialchars(actionLink('editpost', $post['id'], 'delete=3&key='.$loguser['token']));
 							$onclick = 
-								'onclick="if(!confirm(\'Really delete this post?\'))return false;"';
+								' onclick="if(!confirm(\'Really wipe this post? This action can\'t be undone\'))return false;"';
 							$links['delete'] = "<a href=\"{$link}\"{$onclick}>".__('Wipe')."</a>";
-						}
-						$editrights++;
 					}
-					
-					if ($editrights < 2 && HasPermission('user.reportposts'))
+
+					if (HasPermission('user.reportposts'))
 						$links['report'] = actionLinkTag(__('Report'), 'reportpost', $post['id']);
 				}
-				
+
 				// plugins should add to $extraLinks
 				$bucket = "topbar"; include(__DIR__."/pluginloader.php");
 			}
-			
+
 			$links['extra'] = $extraLinks;
 		}
 
@@ -278,7 +276,7 @@ function makePost($post, $type, $params=array()) {
 
 	$sidebar = array();
 
-	// quit abusing custom syndromes you unoriginal fuckers
+	// quit abusing custom syndromes.
 	$poster['title'] = preg_replace('@Affected by \'?.*?Syndrome\'?@si', '', $poster['title']);
 
 	$sidebar['rank'] = GetRank($poster['rankset'], $poster['posts']);

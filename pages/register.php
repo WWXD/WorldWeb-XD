@@ -17,22 +17,16 @@ if($loguserid)
 	Kill(__("Why in the world are you trying to rereg? Isn't one account enough for you?"));
 
 if($_POST['register']) {
-	if (IsProxy()) {
+	if (IsProxy() || IsProxyFSpamList()) {
 		$adminemail = Settings::get('ownerEmail');
 		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
 		else $halp = '';
-		
-		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
-	} else if (IsProxyFSpamList()) {
-		$adminemail = Settings::get('ownerEmail');
-		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
-		else $halp = '';
-		
+
 		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
 	} else {
 		$name = trim($_POST['name']);
 		$cname = str_replace(" ","", strtolower($name));
-		
+
 		$email = trim($_POST['email']);
 		$cemail = str_replace(" ","", strtolower($email));
 
@@ -44,7 +38,7 @@ if($_POST['register']) {
 			$uname = trim(str_replace(" ", "", strtolower($user['displayname'])));
 			if($uname == $cname)
 				break;
-			
+
 			$uemail = trim(str_replace(" ", "", strtolower($user['email'])));
 			if($uemail == $cemail)
 				break;
@@ -74,7 +68,9 @@ if($_POST['register']) {
 			$err = __("Go away, spambot.");
 		else if ($uemail == $cemail)
 			$err = __("This email adress is already taken. Go away, rereg.");
-            
+		else if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
+			$err = __("This email is invalid.");
+
 		$reasons = array();
 		if(IsTorExitPoint()) {
 			$reasons[] = 'tor';
@@ -152,7 +148,7 @@ $fields = array(
 	'sex' => MakeOptions("sex",$_POST['sex'],$sexes),
 	'readfaq' => "<label><input type=\"checkbox\" name=\"readFaq\">".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>",
 	'autologin' => "<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($_POST['autologin']?' checked="checked"':'').">".__("Log in afterwards")."</label>",
-	
+
 	'btnRegister' => "<input type=\"submit\" name=\"register\" value=\"".__("Register")."\">",
 );
 

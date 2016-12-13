@@ -3,24 +3,21 @@ if (!defined('BLARG')) die();
 
 $title = 'Permissions editor';
 
-if (isset($_GET['uid']))
-{
+if (isset($_GET['uid'])) {
 	CheckPermission('admin.editusers');
 	$applyto = 1;
 	$id = (int)$_GET['uid'];
 
 	$user = Fetch(Query("SELECT name,displayname,primarygroup FROM {users} WHERE id={0}", $id));
-	if (!$user) Kill(__('Invalid user ID.'));
-	$targetrank = $usergroups[$user['primarygroup']]['rank'];
+	if (!$user)
+		Kill(__('Invalid user ID.'));
 
 	if ($targetrank > $loguserGroup['rank'])
 		Kill(__('You may not edit permissions for this user.'));
 
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
 		'' => __('Edit permissions for user: ').htmlspecialchars($user['displayname']?$user['displayname']:$user['name'])));
-}
-else if (isset($_GET['gid']))
-{
+} else if (isset($_GET['gid'])) {
 	CheckPermission('admin.editgroups');
 	$applyto = 0;
 	$id = (int)$_GET['gid'];
@@ -33,22 +30,18 @@ else if (isset($_GET['gid']))
 
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
 		'' => __('Edit permissions for group: ').htmlspecialchars($usergroups[$id]['name'])));
-}
-else
+} else
 	Kill(__('Invalid parameters.'));
 
 
-if ($_POST['saveaction'] || $_POST['addfpermaction'])
-{
+if ($_POST['saveaction'] || $_POST['addfpermaction']) {
 	if ($_POST['token'] !== $loguser['token'])
 		Kill(__('No.'));
 
-	if ($_POST['addfpermaction'])
-	{
+	if ($_POST['addfpermaction']) {
 		$fid = (int)$_POST['newforumid'];
 
-		foreach ($_POST as $k=>$v)
-		{
+		foreach ($_POST as $k=>$v) {
 			if (substr($k,0,8) != 'fperm_0_') continue;
 			if ($v == 0) continue;
 
@@ -60,8 +53,7 @@ if ($_POST['saveaction'] || $_POST['addfpermaction'])
 		}
 	}
 	
-	foreach ($_POST as $k=>$v)
-	{
+	foreach ($_POST as $k=>$v) {
 		if (substr($k,0,5) != 'perm_' && substr($k,0,6) != 'fperm_') continue;
 		if (substr($k,0,8) == 'fperm_0_') continue;
 		if ($v == $_POST['orig_'.$k]) continue;
@@ -119,19 +111,16 @@ echo '
 $fperms = Query("SELECT p.*, f.title ftitle FROM {permissions} p LEFT JOIN {forums} f ON f.id=p.arg
 	WHERE p.applyto={0} AND p.id={1} AND (SUBSTR(p.perm,1,6)={2} OR SUBSTR(p.perm,1,4)={3}) AND p.arg!=0 ORDER BY p.arg, p.perm", 
 	$applyto, $id, 'forum.', 'mod.');
-while ($fperm = Fetch($fperms))
-{
+while ($fperm = Fetch($fperms)) {
 	$fpermlist[$fperm['arg']][$fperm['perm']] = $fperm['value'];
 	if (!$fpermlist[$fperm['arg']]['_ftitle'])
 		$fpermlist[$fperm['arg']]['_ftitle'] = $fperm['ftitle'];
 }
 
-if (!empty($fpermlist))
-{
+if (!empty($fpermlist)) {
 	foreach ($fpermlist as $fid=>$fpl)
 		ForumPermTable($fid, $fpl);
-}
-else
+} else
 	echo '
 			<tr class="cell1"><td>'.__('No permissions.').'</td></tr>';
 
@@ -151,8 +140,7 @@ echo '
 	</form>';
 	
 
-function PermSwitch($field, $threeway, $_val)
-{
+function PermSwitch($field, $threeway, $_val) {
 	$val = $_val;
 	if (!$threeway && $val == 0) $val = -1;
 
@@ -165,10 +153,8 @@ function PermSwitch($field, $threeway, $_val)
 		<input type="hidden" name="orig_'.$field.'" value="'.$_val.'">';
 }
 
-function PermLabel($val)
-{
-	switch ($val)
-	{
+function PermLabel($val) {
+	switch ($val) {
 		case -1: return '<span class="highlight_red">'.__('Deny').'</span>';
 		case 0: return '<span class="highlight_yellow">'.__('Neutral').'</span>';
 		case 1: return '<span class="highlight_green">'.__('Allow').'</span>';
@@ -176,8 +162,7 @@ function PermLabel($val)
 	return '';
 }
 
-function PermTable($cat)
-{
+function PermTable($cat) {
 	global $permlist, $permCats, $permDescs, $applyto, $usergroups, $id;
 
 	echo '
@@ -185,8 +170,7 @@ function PermTable($cat)
 				<th colspan="2">'.htmlspecialchars($permCats[$cat]).'</th>
 			</tr>';
 
-	foreach ($permDescs[$cat] as $permid=>$permname)
-	{
+	foreach ($permDescs[$cat] as $permid=>$permname) {
 		if ($permid == 'forum.viewforum') continue;
 		
 		$pkey = 'perm_'.str_replace('.', '_', $permid);
@@ -200,8 +184,7 @@ function PermTable($cat)
 	}
 }
 
-function ForumPermTable($fid, $fpl=array())
-{
+function ForumPermTable($fid, $fpl=array()) {
 	global $permCats, $permDescs;
 
 	if (!$fid) {
@@ -226,10 +209,8 @@ function ForumPermTable($fid, $fpl=array())
 
 	$lastcat = -1;
 	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
-	foreach ($pd as $cat=>$perms)
-	{
-		if ($lastcat != $cat)
-		{
+	foreach ($pd as $cat=>$perms) {
+		if ($lastcat != $cat) {
 			if ($lastcat != -1)
 				echo '
 			<tr class="header0">
@@ -238,8 +219,7 @@ function ForumPermTable($fid, $fpl=array())
 			$lastcat = $cat;
 		}
 
-		foreach ($perms as $permid=>$permname)
-		{
+		foreach ($perms as $permid=>$permname) {
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
 		
 			echo '
@@ -276,8 +256,7 @@ function PermData($key) {
 	return array('perm' => $pname, 'arg' => $arg);
 }
 
-function CanEditPerm($perm, $arg=0)
-{
+function CanEditPerm($perm, $arg=0) {
 	global $loguser;
 	if ($loguser['root']) return true;
 	return HasPermission($perm, $arg);

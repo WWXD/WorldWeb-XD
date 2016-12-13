@@ -8,9 +8,9 @@ $title = __("Private messages");
 if(!$loguserid)
 	Kill(__("You must be logged in to view your private messages."));
 
-if ($usergroups[$user['u_primarygroup']]['rank'] >= $loguserGroup['rank'])
+if ($targetrank >= $sourcerank)
 	Kill(__("You may not read the PM's of someone who has a higher rank than you."));
-	
+
 $id = (int)$_REQUEST['id'];
 if (!$id) 
 	Kill(__("No PM specified."));
@@ -21,14 +21,12 @@ if (HasPermission('admin.viewstaffpms')) $staffpms = ' OR userto={2}';
 
 $snoop = isset($_GET['snooping']) && HasPermission('admin.viewpms');
 
-if($snoop)
-{
+if($snoop) {
 	$rPM = Query("select * from {pmsgs} left join {pmsgs_text} on pid = {pmsgs}.id where {pmsgs}.id = {0}", $id);
 	Query("INSERT INTO {spieslog} (userid,date,pmid) VALUES ({0},UNIX_TIMESTAMP(),{1})", $loguserid, $id);
-	
+
 	Alert(__("You are snooping."));
-}
-else
+} else
 	$rPM = Query("select * from {pmsgs} left join {pmsgs_text} on pid = {pmsgs}.id where (userto = {1} or userfrom = {1}{$staffpms}) and {pmsgs}.id = {0}", $id, $loguserid, -1);
 
 if(NumRows($rPM))
@@ -44,24 +42,21 @@ if(NumRows($rUser))
 	$user = Fetch($rUser);
 else
 	Kill(__("Unknown user."));
-	
+
 $links = array();
 
-if(!$snoop && $pm['userto'] == $loguserid)
-{
+if(!$snoop && $pm['userto'] == $loguserid) {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
 	DismissNotification('pm', $pm['id'], $loguserid);
-	
+
 	$links[] = actionLinkTag(__("Send reply"), "sendprivate", "", "pid=".$pm['id']);
-}
-else if ($_GET['markread'])
-{
+} else if ($_GET['markread']) {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
 	DismissNotification('pm', $pm['id'], -1);
-	
+
 	die(header('Location: '.actionLink('private')));
 }
-	
+
 
 $pmtitle = htmlspecialchars($pm['title']);
 MakeCrumbs(array(actionLink("private") => __("Private messages"), '' => $pmtitle), $links);

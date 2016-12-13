@@ -21,8 +21,7 @@ function startsWithIns($a, $b){
 
 
 //	Not really much different to kill()
-function Alert($s, $t="")
-{
+function Alert($s, $t="") {
 	if($t=="")
 		$t = __("Notice");
 
@@ -31,16 +30,14 @@ function Alert($s, $t="")
 				'message' => $s));
 }
 
-function Kill($s, $t="")
-{
+function Kill($s, $t="") {
 	if($t=="")
 		$t = __("Error");
 	Alert($s, $t);
 	throw new KillException();
 }
 
-function dieAjax($what)
-{
+function dieAjax($what) {
 	global $ajaxPage;
 
 	echo $what;
@@ -49,10 +46,8 @@ function dieAjax($what)
 }
 
 // returns FALSE if it fails.
-function QueryURL($url)
-{
-	if (function_exists('curl_init'))
-	{
+function QueryURL($url) {
+	if (function_exists('curl_init')) {
 		$page = curl_init($url);
 		if ($page === FALSE)
 			return FALSE;
@@ -65,25 +60,20 @@ function QueryURL($url)
 		$result = curl_exec($page);
 		curl_close($page);
 		return $result;
-	}
-	else if (ini_get('allow_url_fopen'))
-	{
+	} else if (ini_get('allow_url_fopen')) {
 		return file_get_contents($url);
-	}
-	else
+	} else
 		return FALSE;
 }
 
 
-function format()
-{
+function format() {
 	$argc = func_num_args();
 	if($argc == 1)
 		return func_get_arg(0);
 	$args = func_get_args();
 	$output = $args[0];
-	for($i = 1; $i < $argc; $i++)
-	{
+	for($i = 1; $i < $argc; $i++) {
 		// TODO kill that hack
 		$splicethis = preg_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
 		$output = str_replace("{".($i-1)."}", $splicethis, $output);
@@ -92,18 +82,15 @@ function format()
 }
 
 // TODO NUKE
-function write()
-{
+function write() {
 	$argc = func_num_args();
-	if($argc == 1)
-	{
+	if($argc == 1) {
 		echo func_get_arg(0);
 		return;
 	}
 	$args = func_get_args();
 	$output = $args[0];
-	for($i = 1; $i < $argc; $i++)
-	{
+	for($i = 1; $i < $argc; $i++) {
 		// TODO kill that hack
 		$splicethis = preg_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
 		$output = str_replace("{".($i-1)."}", $splicethis, $output);
@@ -111,15 +98,17 @@ function write()
 	echo $output;
 }
 
+$sourcerank = $loguserGroup['rank'];
+$targetrank = $usergroups[$user['primarygroup']]['rank'];
+$isroot = $loguser['root'];
+$isbanned = $loguser['banned'];
 
-function OptimizeLayouts($text)
-{
+function OptimizeLayouts($text) {
 	$bucket = array();
 
 	// Save the tags in the temp array and remove them from where they were originally
 	$regexps = array("@<style(.*?)</style(.*?)>(\r?\n?)@si", "@<link(.*?)>(\r?\n?)@si", "@<script(.*?)</script(.*?)>(\r?\n?)@si");
-	foreach ($regexps as $regexp)
-	{
+	foreach ($regexps as $regexp) {
 		preg_match_all($regexp, $text, $temp, PREG_PATTERN_ORDER);
 		$text = preg_replace($regexp, "", $text);
 		$bucket = array_merge($bucket, $temp[0]);
@@ -136,15 +125,13 @@ function OptimizeLayouts($text)
 }
 
 
-function LoadPostToolbar()
-{
+function LoadPostToolbar() {
 	echo "<script type=\"text/javascript\">window.addEventListener(\"load\", hookUpControls, false);</script>";
 }
 
 
 
-function TimeUnits($sec)
-{
+function TimeUnits($sec) {
 	if($sec <    60) return "$sec sec.";
 	if($sec <  3600) return floor($sec/60)." min.";
 	if($sec < 86400) return floor($sec/3600)." hour".($sec >= 7200 ? "s" : "");
@@ -152,48 +139,24 @@ function TimeUnits($sec)
 }
 
 
-// TODO remove
-function RecalculateKarma($uid)
-{
-	$karma = 100;
-	$karmaWeights = array(5, 10, 10, 15, 15);
-	$rKarma = Query("select powerlevel, up from {uservotes} left join {users} on id=voter where uid={0} and powerlevel > -1", $uid);
-	while($k = Fetch($rKarma))
-	{
-		if($k['up'])
-			$karma += $karmaWeights[$k['powerlevel']];
-		else
-			$karma -= $karmaWeights[$k['powerlevel']];
-	}
-	Query("update {users} set karma={0} where id={1}", $karma, $uid);
-	return $karma;
-}
-
-
-function cdate($format, $date = 0)
-{
+function cdate($format, $date = 0) {
 	global $loguser;
 	if($date == 0) $date = time();
 	return gmdate($format, $date+$loguser['timezone']);
 }
 
-function Report($stuff, $hidden = 0, $severity = 0)
-{
+function Report($stuff, $hidden = 0, $severity = 0) {
 	$full = GetFullURL();
 	$here = substr($full, 0, strrpos($full, "/"))."/";
 
-	/*if ($severity == 2)
-		$req = base64_encode(serialize($_REQUEST));
-	else*/
-		$req = 'NULL';
+	$req = 'NULL';
 
 	Query("insert into {reports} (ip,user,time,text,hidden,severity,request)
 		values ({0}, {1}, {2}, {3}, {4}, {5}, {6})", $_SERVER['REMOTE_ADDR'], (int)$loguserid, time(), str_replace("#HERE#", $here, $stuff), $hidden, $severity, $req);
 	Query("delete from {reports} where time < {0}", (time() - (60*60*24*30)));
 }
 
-function Shake()
-{
+function Shake() {
 	$cset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
 	$salt = "";
 	$chct = strlen($cset) - 1;
@@ -202,12 +165,10 @@ function Shake()
 	return $salt;
 }
 
-function IniValToBytes($val)
-{
+function IniValToBytes($val) {
 	$val = trim($val);
 	$last = strtolower($val[strlen($val)-1]);
-	switch($last)
-	{
+	switch($last) {
 		case 'g':
 			$val *= 1024;
 		case 'm':
@@ -219,12 +180,10 @@ function IniValToBytes($val)
 	return $val;
 }
 
-function BytesToSize($size, $retstring = '%01.2f&nbsp;%s')
-{
+function BytesToSize($size, $retstring = '%01.2f&nbsp;%s') {
 	$sizes = array('B', 'KiB', 'MiB');
 	$lastsizestring = end($sizes);
-	foreach($sizes as $sizestring)
-	{
+	foreach($sizes as $sizestring) {
 		if($size < 1024)
 			break;
 		if($sizestring != $lastsizestring)
@@ -235,16 +194,13 @@ function BytesToSize($size, $retstring = '%01.2f&nbsp;%s')
 	return sprintf($retstring, $size, $sizestring);
 }
 
-function makeThemeArrays()
-{
+function makeThemeArrays() {
 	global $themes, $themefiles;
 	$themes = array();
 	$themefiles = array();
 	$dir = @opendir("themes");
-	while ($file = readdir($dir))
-	{
-		if ($file != "." && $file != "..")
-		{
+	while ($file = readdir($dir)) {
+		if ($file != "." && $file != "..") {
 			$themefiles[] = $file;
 			$name = explode("\n", @file_get_contents("./themes/".$file."/themeinfo.txt"));
 			$themes[] = trim($name[0]);
@@ -253,8 +209,7 @@ function makeThemeArrays()
 	closedir($dir);
 }
 
-function getdateformat()
-{
+function getdateformat() {
 	global $loguserid, $loguser;
 
 	if($loguserid)
@@ -263,16 +218,13 @@ function getdateformat()
 		return Settings::get("dateformat");
 }
 
-function formatdate($date)
-{
+function formatdate($date) {
 	return cdate(getdateformat(), $date);
 }
-function formatdatenow()
-{
+function formatdatenow() {
 	return cdate(getdateformat());
 }
-function relativedate($date)
-{
+function relativedate($date) {
 	$diff = time() - $date;
 	if ($diff < 1) return 'right now';
 	if ($diff >= 3*86400) return formatdate($date);
@@ -285,8 +237,7 @@ function relativedate($date)
 	return $num.' '.$unit.($num>1?'s':'').' ago';
 }
 
-function formatBirthday($b)
-{
+function formatBirthday($b) {
 	return format("{0} ({1} old)", date("F j, Y", $b), Plural(floor((time() - $b) / 86400 / 365.2425), "year"));
 }
 
@@ -300,8 +251,7 @@ function getSexName($sex) {
 	return $sexes[$sex];
 }
 
-function formatIP($ip)
-{
+function formatIP($ip) {
 	global $loguser;
 
 	$res = $ip;
@@ -313,14 +263,12 @@ function formatIP($ip)
 		return $res;
 }
 
-function ip2long_better($ip)
-{ 
+function ip2long_better($ip) {
 	$v = explode('.', $ip); 
 	return ($v[0]*16777216)+($v[1]*65536)+($v[2]*256)+$v[3];
 }
 //TODO: Optimize it so that it can be made with a join in online.php and other places.
-function IP2C($ip)
-{
+function IP2C($ip) {
 	global $dblink;
 	//This nonsense is because ips can be greater than 2^31, which will be interpreted as negative numbers by PHP.
 	$ipl = ip2long($ip);
@@ -337,8 +285,7 @@ function IP2C($ip)
 		return "";
 }
 
-function getBirthdaysText($ret = true)
-{
+function getBirthdaysText($ret = true) {
 	global $luckybastards, $loguser;
 	
 	$luckybastards = array();
@@ -346,14 +293,11 @@ function getBirthdaysText($ret = true)
 	
 	$rBirthdays = Query("select u.birthday, u.(_userfields) from {users} u where u.birthday > 0 and u.primarygroup!={0} order by u.name", Settings::get('bannedGroup'));
 	$birthdays = array();
-	while($user = Fetch($rBirthdays))
-	{
+	while($user = Fetch($rBirthdays)) {
 		$b = $user['birthday'];
-		if(gmdate("m-d", $b) == $today)
-		{
+		if(gmdate("m-d", $b) == $today) {
 			$luckybastards[] = $user['u_id'];
-			if ($ret)
-			{
+			if ($ret) {
 				$y = gmdate("Y") - gmdate("Y", $b);
 				$birthdays[] = UserLink(getDataPrefix($user, 'u_'))." (".$y.")";
 			}
@@ -368,20 +312,18 @@ function getBirthdaysText($ret = true)
 		return "";
 }
 
-function getKeywords($stuff)
-{
+function getKeywords($stuff) {
 	$common = array('the', 'and', 'that', 'have', 'for', 'not', 'this');
-	
+
 	$stuff = strtolower($stuff);
 	$stuff = str_replace('\'s', '', $stuff);
 	$stuff = preg_replace('@[^\w\s]+@', '', $stuff);
 	$stuff = preg_replace('@\s+@', ' ', $stuff);
-	
+
 	$stuff = explode(' ', $stuff);
 	$stuff = array_unique($stuff);
 	$finalstuff = '';
-	foreach ($stuff as $word)
-	{
+	foreach ($stuff as $word) {
 		if (strlen($word) < 3 && !is_numeric($word)) continue;
 		if (in_array($word, $common)) continue;
 		
@@ -391,8 +333,7 @@ function getKeywords($stuff)
 	return substr($finalstuff,0,-1);
 }
 
-function forumRedirectURL($redir)
-{
+function forumRedirectURL($redir) {
 	if ($redir[0] == ':')
 	{
 		$redir = explode(':', $redir);
@@ -403,7 +344,6 @@ function forumRedirectURL($redir)
 }
 
 
-function smarty_function_plural($params, $template)
-{
+function smarty_function_plural($params, $template) {
 	return Plural($params['num'], $params['what']);
 }
