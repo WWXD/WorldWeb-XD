@@ -105,11 +105,11 @@ include(__DIR__."/layout.php");
 
 //Classes
 
-include(__DIR__."/templates/smarty/Smarty.class.php");
+include(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
 $tpl->assign('loguserid', $loguserid);
-include("./class/PipeMenuBuilder.php");
+include(__DIR__."/../class/PipeMenuBuilder.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 
