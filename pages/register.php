@@ -65,9 +65,9 @@ if($_POST['register']) {
 		else if (!$cemail)
 			$err = __("You need to specify an email.");
 		else if ($_POST['botprot'])
-			$err = __("Go away, spambot.");
+			$err = __("An error occured during the regitration process. Please try again later."); //more effective message
 		else if ($uemail == $cemail)
-			$err = __("This email adress is already taken. Go away, rereg.");
+			$err = __("This email is invalid"); //and what? that would make the user create another mail
 		else if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
 			$err = __("This email is invalid.");
 
@@ -82,7 +82,7 @@ if($_POST['register']) {
 		if(count($reasons)) {
 			$reason = implode(',', $reasons);
 			$bucket = "regfail"; include("lib/pluginloader.php");
-			$err = 'An unknown error occured, please try again.';
+			$err = 'An error occured during the registration process. Please try again later.'; //keep banging spammer -.-
 		}
 	}
 
