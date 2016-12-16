@@ -8,15 +8,13 @@ loadRanksets();
 if(count($ranksetData) == 0)
 	Kill(__("No ranksets have been defined."));
 
-if(!isset($_GET['id']))
-{
+if(!isset($_GET['id'])) {
 	$rankset = $loguser['rankset'];
-	if(!$rankset || !isset($ranksetData[$rankset]))
-	{
+	if(!$rankset || !isset($ranksetData[$rankset])) {
 		$rankset = array_keys($ranksetData);
 		$rankset = $rankset[0];
 	}
-	
+
 	die(header("Location: ".actionLink("ranks", $rankset)));
 }
 
@@ -25,8 +23,7 @@ if(!isset($ranksetData[$rankset]))
 	Kill(__("Rankset not found."));
 
 $ranksets = array();
-foreach($ranksetNames as $name => $title)
-{
+foreach($ranksetNames as $name => $title) {
 	if($name == $rankset)
 		$ranksets[] = $title;
 	else
@@ -42,19 +39,16 @@ while($user = Fetch($rUsers))
 $ranks = $ranksetData[$rankset];
 
 $ranklist = array();
-for($i = 0; $i < count($ranks); $i++)
-{
+for($i = 0; $i < count($ranks); $i++) {
 	$rdata = array();
-	
+
 	$rank = $ranks[$i];
 	$nextRank = $ranks[$i+1];
 	if($nextRank['num'] == 0)
 		$nextRank['num'] = $ranks[$i]['num'] + 1;
 	$members = array(); $inactive = 0; $total = 0;
-	foreach($users as $user)
-	{
-		if($user['posts'] >= $rank['num'] && $user['posts'] < $nextRank['num'])
-		{
+	foreach($users as $user) {
+		if($user['posts'] >= $rank['num'] && $user['posts'] < $nextRank['num']) {
 			$total++;
 			if ($user['lastposttime'] > time() - 2592000)
 				$members[] = UserLink($user);
@@ -64,7 +58,7 @@ for($i = 0; $i < count($ranks); $i++)
 	}
 	if ($inactive)
 		$members[] = $inactive.' inactive';
-	
+
 	$showRank = HasPermission('admin.viewallranks') || $loguser['posts'] >= $rank['num'] || count($members) > 0;
 	if($showRank)
 		$rdata['rank'] = getRankHtml($rankset, $rank);
@@ -75,9 +69,9 @@ for($i = 0; $i < count($ranks); $i++)
 		$members = '&nbsp;';
 	else
 		$members = join(', ', $members);
-		
+
 	$rdata['posts'] = $showRank ? $rank['num'] : '???';
-		
+
 	$rdata['numUsers'] = $total;
 	$rdata['users'] = $members;
 

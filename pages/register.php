@@ -47,7 +47,7 @@ if($_POST['register']) {
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
 		if (stripos($cemail, in_array($emaildomainsblock)) !== FALSE)
-			$err = __('You may not register using a temporary email or a spam email. Go away, spammer.');
+			$err = __('An unknown error occured, please try again.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
 		else if ($uname == $cname)
@@ -57,7 +57,7 @@ if($_POST['register']) {
 		else if (!$_POST['readFaq'])
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
 		else if ($_POST['likesCake'])
-			$err = __("Robots not allowed.");
+			$err = __("An unknown error occured, please try again.");
 		else if (strlen($_POST['pass']) < 8)
 			$err = __("Your password must be at least eight characters long.");
 		else if ($_POST['pass'] !== $_POST['pass2'])
@@ -65,11 +65,11 @@ if($_POST['register']) {
 		else if (!$cemail)
 			$err = __("You need to specify an email.");
 		else if ($_POST['botprot'])
-			$err = __("Go away, spambot.");
+			$err = __("An unknown error occured, please try again.");
 		else if ($uemail == $cemail)
-			$err = __("This email adress is already taken. Go away, rereg.");
+			$err = __("An unknown error occured, please try again.");
 		else if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
-			$err = __("This email is invalid.");
+			$err = __("An unknown error occured, please try again.");
 
 		$reasons = array();
 		if(IsTorExitPoint()) {

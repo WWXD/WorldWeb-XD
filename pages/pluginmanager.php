@@ -77,8 +77,7 @@ foreach($disabledplugins as $plugin => $pluginname)
 RenderTemplate('pluginlist', array('enabledPlugins' => $ep, 'disabledPlugins' => $dp));
 
 
-function listPlugin($plugin, $plugindata)
-{
+function listPlugin($plugin, $plugindata) {
 	global $plugins, $loguser;
 	
 	$pdata = $plugindata;

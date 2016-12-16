@@ -13,14 +13,12 @@ $dblink->set_charset('utf8');
 
 mysqli_query($dblink, 'SET SESSION sql_mode = "MYSQL40"');
 
-function SqlEscape($text)
-{
+function SqlEscape($text) {
 	global $dblink;
 	return $dblink->real_escape_string($text);
 }
 
-function Query_ExpandFieldLists($match)
-{
+function Query_ExpandFieldLists($match) {
 	$ret = array();
 	$prefix = $match[1];
 	$fields = preg_split('@\s*,\s*@', $match[2]);
@@ -31,13 +29,11 @@ function Query_ExpandFieldLists($match)
 	return implode(',', $ret);
 }
 
-function Query_AddUserInput($match)
-{
+function Query_AddUserInput($match) {
 	global $args;
 	$match = $match[1];
 	$format = 's';
-	if(preg_match("/^\d+\D$/", $match))
-	{
+	if(preg_match("/^\d+\D$/", $match)) {
 		$format = substr($match, strlen($match)-1, 1);
 		$match = substr($match, 0, strlen($match)-1);
 	}
@@ -45,9 +41,8 @@ function Query_AddUserInput($match)
 	$var = $args[$match+1];
 
 	if ($var === NULL) return 'NULL';
-			
-	if ($format == 'c')
-	{
+
+	if ($format == 'c') {
 		if (empty($var)) return 'NULL';
 		$final = '';
 		foreach ($var as $v) $final .= '\''.SqlEscape($v).'\',';
@@ -56,8 +51,7 @@ function Query_AddUserInput($match)
 
 	if($format == "i") return (string)((int)$var);
 	if($format == "u") return (string)max((int)$var, 0);
-	if($format == "l") 
-	{
+	if($format == "l")  {
 		//This is used for storing integers using the full 32bit range.
 		//TODO: add code to emulate the 32bit overflow on 64bit.
 		return (string)((int)$var);
@@ -76,8 +70,7 @@ function Query_AddUserInput($match)
  * {table} syntax allows for flexible manipulation of table names (namely, adding a DB prefix)
  *
  */
-function query()
-{
+function query() {
 	global $dbpref, $args, $fieldLists;
 	$args = func_get_args();
 	if (is_array($args[0])) $args = $args[0];
@@ -98,8 +91,7 @@ function query()
 	return RawQuery($query);
 }
 
-function rawQuery($query)
-{
+function rawQuery($query) {
 	global $queries, $querytext, $loguser, $dblink, $debugMode, $logSqlErrors, $dbpref, $loguserid, $mysqlCellClass;
 
 //	if($debugMode)
@@ -107,12 +99,10 @@ function rawQuery($query)
 
 	$res = @$dblink->query($query);
 
-	if(!$res)
-	{
+	if(!$res) {
 		$theError = $dblink->error;
 		
-		if($logSqlErrors)
-		{
+		if($logSqlErrors) {
 			$thequery = sqlEscape($query);
 			$ip = sqlEscape($_SERVER["REMOTE_ADDR"]);
 			$time = time();
@@ -124,28 +114,22 @@ function rawQuery($query)
 			$logQuery = "INSERT INTO {$dbpref}queryerrors (`user`,`ip`,`time`,`query`,`get`,`post`,`cookie`, `error`) VALUES ($loguserid, '$ip', $time, '$thequery', '$get', '$post', '$cookie', '$theError')";
 			$res = @$dblink->query($logQuery);
 		}
-		if($debugMode)
-		{
+
+		if($debugMode) {
 			$bt = "";
 			if(function_exists("backTrace"))
 				$bt = backTrace();
 			die(nl2br($bt).
 				"<br /><br />".htmlspecialchars($theError).
 				"<br /><br />Query was: <code>".htmlspecialchars($query)."</code>");
-/*				<br />This could have been caused by a database layout change in a recent git revision. Try running the installer again to fix it. <form action=\"install/doinstall.php\" method=\"POST\"><br />
-			<input type=\"hidden\" name=\"action\" value=\"Install\" />
-			<input type=\"hidden\" name=\"existingSettings\" value=\"true\" />
-			<input type=\"submit\" value=\"Click here to re-run the installation script\" /></form>");*/
-		}
-		else
+		} else
 				trigger_error("MySQL Error.", E_USER_ERROR);
 		die("MySQL Error.");
 	}
 
 	$queries++;
 
-	if($debugMode)
-	{
+	if($debugMode) {
 		$mysqlCellClass = ($mysqlCellClass+1)%2;
 		$querytext .= "<tr class=\"cell$mysqlCellClass\"><td><pre style=\"white-space:pre-wrap;\">".htmlspecialchars(preg_replace('/^\s*/m', "", $query))."</pre></td><td>";
 		if(function_exists("backTrace"))
@@ -155,51 +139,43 @@ function rawQuery($query)
 	return $res;
 }
 
-function fetch($result)
-{
+function fetch($result) {
 	return $result->fetch_assoc();
 }
 
-function fetchRow($result)
-{
+function fetchRow($result) {
 	return $result->fetch_row();
 }
 
-function fetchResult()
-{
+function fetchResult() {
 	$res = Query(func_get_args());
 	if($res->num_rows == 0) return -1;
 	return Result($res, 0, 0);
 }
 
 // based on http://stackoverflow.com/a/3779460/736054
-function result($res, $row = 0, $field = 0)
-{
+function result($res, $row = 0, $field = 0) {
 	$res->data_seek($row);
 	$ceva = array_values($res->fetch_assoc());
 	$rasp = $ceva[$field];
 	return $rasp;
 }
 
-function numRows($result)
-{
+function numRows($result) {
 	return $result->num_rows;
 }
 
-function insertId()
-{
+function insertId() {
 	global $dblink;
 	return $dblink->insert_id;
 }
 
-function affectedRows()
-{
+function affectedRows() {
 	global $dblink;
 	return $dblink->affected_rows;
 }
 
-function getDataPrefix($data, $pref)
-{
+function getDataPrefix($data, $pref) {
 	$res = array();
 
 	foreach($data as $key=>$val)
@@ -214,8 +190,7 @@ $fieldLists = array(
 	"userfields" => "id,name,displayname,primarygroup,sex,minipic"
 );
 
-function loadFieldLists()
-{
+function loadFieldLists() {
 	global $fieldLists;
 
 	//Allow plugins to add their own!

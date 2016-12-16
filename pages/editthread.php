@@ -102,21 +102,18 @@ if($_GET['action']=="close" && $canClose) {
 		$forumname = '';
 		if (HasPermission('forum.viewforum', $thread['forum'], true))
 			$forumname = FetchResult("SELECT title FROM {forums} WHERE id={0}", $thread['forum']);
-			
+
 		die(header("Location: ".actionLink("forum", $thread['forum'], '', $forumname)));
 	}
 	else
 		Kill(__("No trash forum set. Check board settings."));
-}
-elseif($_POST['actionedit'])
-{
-	if($thread['forum'] != $_POST['moveTo'] && $canMove)
-	{
+} elseif($_POST['actionedit']) {
+	if($thread['forum'] != $_POST['moveTo'] && $canMove) {
 		$moveto = (int)$_POST['moveTo'];
 		$dest = Fetch(Query("select * from {forums} where id={0}", $moveto));
 		if(!$dest)
 			Kill(__("Unknown forum ID."));
-			
+
 		$isHidden = HasPermission('forum.viewforum', $moveto, true);
 
 		//Tweak forum counters
@@ -138,22 +135,18 @@ elseif($_POST['actionedit'])
 	$isSticky = $canStick ? (isset($_POST['isSticky']) ? 1 : 0) : $thread['sticky'];
 
 	$trimmedTitle = $canRename ? trim(str_replace('&nbsp;', ' ', $_POST['title'])) : 'lolnotempty';
-	if($trimmedTitle != "")
-	{
-		if ($canRename)
-		{
+	if($trimmedTitle != "") {
+		if ($canRename) {
 			$thread['title'] = $_POST['title'];
-			
-			if($_POST['iconid'])
-			{
+
+			if($_POST['iconid']) {
 				$_POST['iconid'] = (int)$_POST['iconid'];
 				if($_POST['iconid'] < 255)
 					$iconurl = "img/icons/icon".$_POST['iconid'].".png";
 				else
 					$iconurl = $_POST['iconurl'];
 			}
-		}
-		else
+		} else
 			$iconurl = $thread['icon'];
 
 		$rThreads = Query("update {threads} set title={0}, icon={1}, closed={2}, sticky={3} where id={4} limit 1", 
@@ -166,8 +159,7 @@ elseif($_POST['actionedit'])
 		$ref = $_POST['ref'] ?: actionLink('thread', $tid, '', $urlname);
 
 		die(header("Location: ".$ref));
-	}
-	else
+	} else
 		Alert(__("Your thread title is empty. Enter a title and try again."));
 }
 

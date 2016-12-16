@@ -20,8 +20,7 @@ $rBots = Query("select * from {guests} where date > {0} and bot = 1 order by dat
 
 $spans = array(60, 300, 900, 3600, 86400);
 $spanList = array();
-foreach($spans as $span)
-{
+foreach($spans as $span) {
 	$spanList[] = ($span==$time) ? timeunits($span) : actionLinkTag(timeunits($span), "online", "", "time=$span");
 }
 
@@ -60,16 +59,14 @@ RenderTemplate('onlinelist', array(
 	'bots' => $botList));
 
 
-function FilterURL($url)
-{
+function FilterURL($url) {
 	//$url = str_replace('_', ' ', urldecode($url)); // what?
 	$url = htmlspecialchars($url);
 	$url = preg_replace("@(&amp;)?(key|token)=[0-9a-f]{40,64}@i", '', $url);
 	return $url;
 }
 
-function listGuests($rGuests)
-{
+function listGuests($rGuests) {
 	global $showIPs;
 	
 	$guestList = array();

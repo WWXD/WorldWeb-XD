@@ -21,10 +21,8 @@ echo "<h3>Users with this IP</h3>";
 $userList = "";
 $ipBanComment = "";
 $i = 1;
-if(NumRows($rUsers))
-{
-	while($user = Fetch($rUsers))
-	{
+if(NumRows($rUsers)) {
+	while($user = Fetch($rUsers)) {
 		$ipBanComment .= $user["name"]." ";
 		$cellClass = ($cellClass+1) % 2;
 		if($user['lasturl'])

@@ -124,7 +124,6 @@
 						</div>
 						<ul class="dropdownMenu">
 							<li><a href="{actionLink page='board'}">BlargBoard</a>
-							<li><a href="{actionLink page='board1'}">AcmlmBoard</a>
 							<li><a href="{actionLink page='board2'}">RHCafe</a>
 						</ul>
 					</div>

@@ -9,23 +9,19 @@ CheckPermission('admin.manageipbans');
 
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("ipbans") => __("IP ban manager")));
 
-if(isset($_POST['actionadd']))
-{
+if(isset($_POST['actionadd'])) {
 	//This doesn't allow you to ban IP ranges...
 	//if(!filter_var($_POST['ip'], FILTER_VALIDATE_IP))
 	//	Alert("Invalid IP");
 	//else
 	if(isIPBanned($_POST['ip']))
 		Alert("Already banned IP!");
-	else
-	{
+	else {
 		$whitelist = $_POST['whitelisted'] ? 'TRUE' : 'FALSE';
 		$rIPBan = Query("insert into {ipbans} (ip, reason, date, whitelisted) values ({0}, {1}, {2}, $whitelist)", $_POST['ip'], $_POST['reason'], ((int)$_POST['days'] > 0 ? time() + ((int)$_POST['days'] * 86400) : 0));
 		Alert(__("Added."), __("Notice"));
 	}
-}
-elseif($_GET['action'] == "delete")
-{
+} elseif($_GET['action'] == "delete") {
 	$rIPBan = Query("delete from {ipbans} where ip={0} limit 1", $_GET['ip']);
 	Alert(__("Removed."), __("Notice"));
 }
@@ -33,8 +29,7 @@ elseif($_GET['action'] == "delete")
 $rIPBan = Query("select * from {ipbans} order by date desc, ip asc");
 
 $banList = "";
-while($ipban = Fetch($rIPBan))
-{
+while($ipban = Fetch($rIPBan)) {
 	$cellClass = ($cellClass+1) % 2;
 	if($ipban['date'])
 		$date = formatdate($ipban['date'])." (".TimeUnits($ipban['date']-time())." left)";

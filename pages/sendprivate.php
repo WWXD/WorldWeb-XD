@@ -73,8 +73,7 @@ if($uid && !$_POST['to']) {
 }
 
 
-if ($_POST['actiondelete'] && $draftID)
-{
+if ($_POST['actiondelete'] && $draftID) {
 	Query("DELETE FROM {pmsgs} WHERE id={0} AND drafting=1", $draftID);
 	Query("DELETE FROM {pmsgs_text} WHERE pid={0}", $draftID);
 
@@ -147,7 +146,7 @@ if($_POST['actionsend'] || $_POST['actionsave']) {
 					Query("insert into {pmsgs_text} (title,text) values ({0}, {1})", 
 						$_POST['title'], $post);
 					$pid = InsertId();
-					
+
 					Query("insert into {pmsgs} (id, userto, userfrom, conv_start, date, ip, drafting, draft_to) values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", 
 						$pid, 0, $loguserid, $convStart, time(), $_SERVER['REMOTE_ADDR'], 1, $_POST['to']);
 				}
@@ -182,8 +181,11 @@ if($_POST['actionsend'] || $_POST['actionsave']) {
 	}
 }
 
-if($_POST['text']) $prefill = $_POST['text'];
-if($_POST['title']) $trefill = $_POST['title'];
+if($_POST['text'])
+	$prefill = $_POST['text'];
+
+if($_POST['title'])
+	$trefill = $_POST['title'];
 
 if($_POST['actionpreview'] || $draftID) {
 	if($prefill) {
@@ -204,7 +206,7 @@ $fields = array(
 	'to' => "<input type=\"text\" name=\"to\" size=40 maxlength=\"128\" value=\"".htmlspecialchars($_POST['to'])."\">",
 	'title' => "<input type=\"text\" name=\"title\" size=80 maxlength=\"60\" value=\"".htmlspecialchars($trefill)."\">",
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n".htmlspecialchars($prefill)."</textarea>",
-	
+
 	'btnSend' => "<input type=\"submit\" name=\"actionsend\" value=\"".__("Send")."\">",
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 	'btnSaveDraft' => "<input type=\"submit\" name=\"actionsave\" value=\"".__("Save draft")."\">",

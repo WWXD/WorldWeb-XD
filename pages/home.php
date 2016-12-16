@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
-	
+
 $homepage = Settings::get('homepageText');
 $homepage = parseBBCode($homepage);
 
@@ -20,9 +20,8 @@ $lastposts = Query("	SELECT
 						WHERE f.id IN ({0c}) AND f.offtopic=0
 						ORDER BY t.lastpostdate DESC
 						LIMIT {1u}", $viewableforums, $maxitems);
-						
-while ($lp = Fetch($lastposts))
-{
+
+while ($lp = Fetch($lastposts)) {
 	$user = getDataPrefix($lp, 'u_');
 	$tags = ParseThreadTags($lp['t_title']);
 	
@@ -41,8 +40,7 @@ RenderTemplate('homepage', array('homepage' => $homepage, 'lastactivity' => $las
 	
 
 $rFora = Query("select * from {forums} where id = {0}", Settings::get('newsForum'));
-if(NumRows($rFora))
-{
+if(NumRows($rFora)) {
 	$forum = Fetch($rFora);
 	if(!HasPermission('forum.viewforum', $forum['id']))
 		return;
@@ -88,15 +86,14 @@ $pagelinks = PageLinks(actionLink('home', '', 'from='), $tpp, $from, $total);
 
 RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
 
-while($thread = Fetch($rThreads))
-{
+while($thread = Fetch($rThreads)) {
 	$pdata = array();
-	
+
 	$starter = getDataPrefix($thread, 'su_');
 	$last = getDataPrefix($thread, 'lu_');
 
 	$tags = ParseThreadTags($thread['title']);
-	
+
 	$pdata['title'] = $tags[0];
 	$pdata['formattedDate'] = formatdate($thread['date']);
 	$pdata['userlink'] = UserLink($starter);
@@ -117,7 +114,7 @@ while($thread = Fetch($rThreads))
 	else
 		$newreply = actionLinkTag(__("Post a comment"), "newreply", $thread['id']);
 	$pdata['replylink'] = $newreply;
-	
+
 	$modlinks = array();
 	if (($loguserid == $starter['id'] && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum['id']))
 		$modlinks['edit'] = actionLinkTag(__('Edit'), 'editpost', $thread['pid']);

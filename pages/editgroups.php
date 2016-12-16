@@ -17,8 +17,7 @@ $gdisplays = array(
 	1 => __('Staff')
 );
 
-if (!$_POST['saveaction'])
-{
+if (!$_POST['saveaction']) {
 	$groups = Query("SELECT * FROM {usergroups} WHERE rank<={0} ORDER BY type, rank", $loguserGroup['rank']);
 	$gdata = array();
 		
