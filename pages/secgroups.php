@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 if (!$loguserid)
-	Kill(__('You must be logged in to add/remove a secondary group.'))
+	Kill(__('You must be logged in to add/remove a secondary group.'));
 
 CheckPermission('admin.editusers');
 ?>
