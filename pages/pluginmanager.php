@@ -8,8 +8,7 @@ CheckPermission('admin.editsettings');
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("pluginmanager") => __("Plugin Manager")));
 
 
-if($_REQUEST['action'] == "enable")
-{
+if($_REQUEST['action'] == "enable") {
 	if($_REQUEST['key'] != $loguser['token'])
 		Kill("No.");
 
@@ -18,14 +17,22 @@ if($_REQUEST['action'] == "enable")
 	Upgrade();
 
 	die(header("location: ".actionLink("pluginmanager")));
-}
-if($_REQUEST['action'] == "disable")
-{
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Make a new file for easier detecting that it is enabled
+	file_put_contents($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
+} else if($_REQUEST['action'] == "disable") {
 	if($_REQUEST['key'] != $loguser['token'])
 		Kill("No.");
 
 	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
 	die(header("location: ".actionLink("pluginmanager")));
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Delete the enabled text.
+	unlink($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
 }
 
 
@@ -79,33 +86,31 @@ RenderTemplate('pluginlist', array('enabledPlugins' => $ep, 'disabledPlugins' =>
 
 function listPlugin($plugin, $plugindata) {
 	global $plugins, $loguser;
-	
+
 	$pdata = $plugindata;
-	
+
 	$hasperms = false;
 	if (!isset($plugins[$plugin]) && file_exists(BOARD_ROOT.'plugins/'.$plugin.'/permStrings.php'))
 		$hasperms = true;
-		
+
 	if ($hasperms)
 		$pdata['description'] .= '<br><strong>This plugin has permissions. After enabling it, make sure to configure them properly.</strong>';
 
-		
+
 	$text = __("Enable");
 	$act = "enable";
-	if(isset($plugins[$plugin]))
-	{
+	if(isset($plugins[$plugin])) {
 		$text = __("Disable");
 		$act = "disable";
 	}
 	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "pluginmanager", $plugin, "action=".$act."&key=".$loguser['token']);
 
-	if(in_array("settingsfile", $plugindata['buckets']))
-	{
+	if(in_array("settingsfile", $plugindata['buckets'])) {
 		if(isset($plugins[$plugin]))
 			$pdata['actions'] .= actionLinkTagItem(__("Settings&hellip;"), "editsettings", $plugin);
 	}
 	$pdata['actions'] .= '</ul>';
-	
+
 	return $pdata;
 }
 

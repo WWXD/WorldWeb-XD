@@ -221,7 +221,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 
 $layout_credits =
-'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">Blargboard XD 0.0.1 &middot; by MaorNinja322 <a href="'.$_GET["page"] = "credits".'">et al</a><br>
+'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322 <a href="'.$_GET["page"] = "credits".'">et al</a><br>
 Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 
@@ -280,27 +280,51 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	if (Settings::get('maintenance'))
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';
 
-	RenderTemplate('default', array(
-		'layout_contents' => $layout_contents,
-		'layout_crumbs' => $layout_crumbs,
-		'layout_actionlinks' => $layout_actionlinks,
-		'headerlinks' => $headerlinks,
-		'dropdownlinks' => $dropdownlinks,
-		'sidelinks' => $sidelinks,
-		'layout_userpanel' => $layout_userpanel,
-		'notifications' => $notifications,
-		'boardname' => Settings::get('boardname'),
-		'poratitle' => Settings::get('PoRATitle'),
-		'poratext' => parseBBCode(Settings::get('PoRAText')),
-		'layout_logopic' => $layout_logopic,
-		'layout_time' => $layout_time,
-		'layout_views' => $layout_views,
-		'layout_onlineusers' => $layout_onlineusers,
-		'layout_birthdays' => $layout_birthdays,
-		'board_credits' => $layout_credits,
-		'layout_credits' => parseBBCode(Settings::get('layout_credits')),
-		'mobileswitch' => $mobileswitch,
-		'perfdata' => $perfdata));
+	if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+		RenderTemplate('defaultboard', array(
+			'layout_contents' => $layout_contents,
+			'layout_crumbs' => $layout_crumbs,
+			'layout_actionlinks' => $layout_actionlinks,
+			'headerlinks' => $headerlinks,
+			'dropdownlinks' => $dropdownlinks,
+			'sidelinks' => $sidelinks,
+			'layout_userpanel' => $layout_userpanel,
+			'notifications' => $notifications,
+			'boardname' => Settings::get('boardname'),
+			'poratitle' => Settings::get('PoRATitle'),
+			'poratext' => parseBBCode(Settings::get('PoRAText')),
+			'layout_logopic' => $layout_logopic,
+			'layout_time' => $layout_time,
+			'layout_views' => $layout_views,
+			'layout_onlineusers' => $layout_onlineusers,
+			'layout_birthdays' => $layout_birthdays,
+			'board_credits' => $layout_credits,
+			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
+			'mobileswitch' => $mobileswitch,
+			'perfdata' => $perfdata));
+	} else {
+		RenderTemplate('default', array(
+			'layout_contents' => $layout_contents,
+			'layout_crumbs' => $layout_crumbs,
+			'layout_actionlinks' => $layout_actionlinks,
+			'headerlinks' => $headerlinks,
+			'dropdownlinks' => $dropdownlinks,
+			'sidelinks' => $sidelinks,
+			'layout_userpanel' => $layout_userpanel,
+			'notifications' => $notifications,
+			'boardname' => Settings::get('boardname'),
+			'poratitle' => Settings::get('PoRATitle'),
+			'poratext' => parseBBCode(Settings::get('PoRAText')),
+			'layout_logopic' => $layout_logopic,
+			'layout_time' => $layout_time,
+			'layout_views' => $layout_views,
+			'layout_onlineusers' => $layout_onlineusers,
+			'layout_birthdays' => $layout_birthdays,
+			'board_credits' => $layout_credits,
+			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
+			'mobileswitch' => $mobileswitch,
+			'perfdata' => $perfdata));
+	}
 ?>
 </body>
 </html>

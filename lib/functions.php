@@ -129,15 +129,12 @@ function LoadPostToolbar() {
 	echo "<script type=\"text/javascript\">window.addEventListener(\"load\", hookUpControls, false);</script>";
 }
 
-
-
 function TimeUnits($sec) {
 	if($sec <    60) return "$sec sec.";
 	if($sec <  3600) return floor($sec/60)." min.";
 	if($sec < 86400) return floor($sec/3600)." hour".($sec >= 7200 ? "s" : "");
 	return floor($sec/86400)." day".($sec >= 172800 ? "s" : "");
 }
-
 
 function cdate($format, $date = 0) {
 	global $loguser;
@@ -153,7 +150,6 @@ function Report($stuff, $hidden = 0, $severity = 0) {
 
 	Query("insert into {reports} (ip,user,time,text,hidden,severity,request)
 		values ({0}, {1}, {2}, {3}, {4}, {5}, {6})", $_SERVER['REMOTE_ADDR'], (int)$loguserid, time(), str_replace("#HERE#", $here, $stuff), $hidden, $severity, $req);
-	Query("delete from {reports} where time < {0}", (time() - (60*60*24*30)));
 }
 
 function Shake() {

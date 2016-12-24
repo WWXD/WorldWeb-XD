@@ -104,6 +104,29 @@
 				</div>
 				<div id="navMenuContainer">
 					<span class="navButton"><a href="{actionLink page='home'}">Home</a></span>
+					<div id="userMenuContainer" class="dropdownContainer">
+						<div id="userMenuButton" class="navButton">
+							<a href="{actionLink page='board'}">Forums</a>
+							<i class="icon-caret-down"></i>
+						</div>
+						<ul class="dropdownMenu">
+							{foreach $dropdownlinks as $cat=>$links}
+								{foreach $links as $url=>$text}
+									<li><a href="{$url|escape}">{$text}</a>
+								{/foreach}
+							{/foreach}
+						</ul>
+					</div>
+					<div id="userMenuContainer" class="dropdownContainer">
+						<div id="userMenuButton" class="navButton">
+							<a href="{actionLink page='boardlistlayout'}">Board Listing</a>
+							<i class="icon-caret-down"></i>
+						</div>
+						<ul class="dropdownMenu">
+							<li><a href="{actionLink page='board'}">BlargBoard</a>
+							<li><a href="{actionLink page='board2'}">RHCafe</a>
+						</ul>
+					</div>
 					{foreach $headerlinks as $url=>$text}
 						<span class="navButton"><a href="{$url|escape}">{$text}</a></span>
 					{/foreach}

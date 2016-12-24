@@ -10,7 +10,7 @@ if(NumRows($rUser))
 	$user = Fetch($rUser);
 else
 	Kill(__("Unknown user ID."));
-	
+
 $uname = $user['displayname'] ?: $user['name'];
 
 $ugroup = $usergroups[$user['primarygroup']];
@@ -27,10 +27,8 @@ if($id == $loguserid) {
 $canDeleteComments = ($id == $loguserid && HasPermission('user.deleteownusercomments')) || HasPermission('admin.adminusercomments');
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
 
-if($loguserid && $_REQUEST['token'] == $loguser['token'])
-{
-	if(isset($_GET['block']))
-	{
+if($loguserid && $_REQUEST['token'] == $loguser['token']) {
+	if(isset($_GET['block'])) {
 		$block = (int)$_GET['block'];
 		$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 		$isBlocked = NumRows($rBlock);
@@ -40,14 +38,12 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 			$rBlock = Query("delete from {blockedlayouts} where user={0} and blockee={1} limit 1", $id, $loguserid);
 		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 	}
-	if($_GET['action'] == "delete")
-	{
+
+	if($_GET['action'] == "delete") {
 		$postedby = FetchResult("SELECT cid FROM {usercomments} WHERE uid={0} AND id={1}", $id, (int)$_GET['cid']);
-		if ($canDeleteComments || ($postedby == $loguserid && HasPermission('user.deleteownusercomments')))
-		{
+		if ($canDeleteComments || ($postedby == $loguserid && HasPermission('user.deleteownusercomments'))) {
 			Query("delete from {usercomments} where uid={0} and id={1}", $id, (int)$_GET['cid']);
-			if ($loguserid != $id)
-			{
+			if ($loguserid != $id) {
 				// dismiss any new comment notification that has been sent to that user, unless there are still new comments
 				$lastcmt = FetchResult("SELECT date FROM {usercomments} WHERE uid={0} ORDER BY date DESC LIMIT 1", $id);
 				if ($lastcmt < $user['lastprofileview'])
@@ -57,11 +53,9 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		}
 	}
 
-	if(isset($_POST['actionpost']) && !IsReallyEmpty($_POST['text']) && $canComment)
-	{
+	if(isset($_POST['actionpost']) && !IsReallyEmpty($_POST['text']) && $canComment) {
 		$rComment = Query("insert into {usercomments} (uid, cid, date, text) values ({0}, {1}, {2}, {3})", $id, $loguserid, time(), $_POST['text']);
-		if($loguserid != $id)
-		{
+		if($loguserid != $id) {
 			SendNotification('profilecomment', $id, $id);
 		}
 		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
@@ -70,19 +64,15 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 
 
 
-if($loguserid)
-{
-	if (Settings::get('postLayoutType'))
-	{
+if($loguserid) {
+	if (Settings::get('postLayoutType')) {
 		$blocktext = __('Block layout');
 		$unblocktext = __('Unblock layout');
-	}
-	else
-	{
+	} else {
 		$blocktext = __('Block signature');
 		$unblocktext = __('Unblock signature');
 	}
-	
+
 	$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 	$isBlocked = NumRows($rBlock);
 	if($isBlocked)
@@ -94,18 +84,19 @@ if($loguserid)
 $daysKnown = (time()-$user['regdate'])/86400;
 if (!$daysKnown) $daysKnown = 1;
 
-$posts = FetchResult("select count(*) from {posts} where user={0}", $id);
-$threads = FetchResult("select count(*) from {threads} where user={0}", $id);
-$averagePosts = sprintf("%1.02f", $user['posts'] / $daysKnown);
-$averageThreads = sprintf("%1.02f", $threads / $daysKnown);
-//$deletedposts = FetchResult("SELECT COUNT(*) FROM {posts} p WHERE p.user={0} AND p.deleted!=0 AND p.deletedby!={0}", $id);
-//$score = 1000 + (10 * $user['postplusones']) - (20 * $deletedposts);
+if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+	$posts = FetchResult("select count(*) from {posts} where user={0}", $id);
+	$threads = FetchResult("select count(*) from {threads} where user={0}", $id);
+	$averagePosts = sprintf("%1.02f", $user['posts'] / $daysKnown);
+	$averageThreads = sprintf("%1.02f", $threads / $daysKnown);
+	//$deletedposts = FetchResult("SELECT COUNT(*) FROM {posts} p WHERE p.user={0} AND p.deleted!=0 AND p.deletedby!={0}", $id);
+	//$score = 1000 + (10 * $user['postplusones']) - (20 * $deletedposts);
+}
 
 $minipic = getMinipicTag($user);
 
 
-if($user['rankset'])
-{
+if($user['rankset']) {
 	$currentRank = GetRank($user["rankset"], $user["posts"]);
 	$toNextRank = GetToNextRank($user["rankset"], $user["posts"]);
 	if($toNextRank)
@@ -114,8 +105,7 @@ if($user['rankset'])
 if($user['title'])
 	$title = preg_replace('@<br.*?>\s*(\S)@i', ' &bull; $1', strip_tags(CleanUpPost($user['title'], "", true), "<b><strong><i><em><span><s><del><img><a><br><br/><small>"));
 
-if($user['homepageurl'])
-{
+if($user['homepageurl']) {
 	$nofollow = "";
 	if(Settings::get("nofollow"))
 		$nofollow = "rel=\"nofollow\"";
@@ -142,64 +132,62 @@ $temp = array();
 $temp[__("Name")] = $minipic . htmlspecialchars($user['displayname'] ? $user['displayname'] : $user['name']) . ($user['displayname'] ? " (".htmlspecialchars($user['name']).")" : "");
 if($title)
 	$temp[__("Title")] = $title;
-	
+
 $glist = '<strong class="userlink" style="color: '.htmlspecialchars($ugroup['color_unspec']).';">'.htmlspecialchars($ugroup['name']).'</strong>';
-foreach ($usgroups as $sgroup)
-{
+foreach ($usgroups as $sgroup) {
 	if ($sgroup['display'] > -1)
 		$glist .= ', '.htmlspecialchars($sgroup['name']);
 }
 $temp[__("Groups")] = $glist;
 
-if($currentRank)
-	$temp[__("Rank")] = $currentRank;
-if($toNextRank)
-	$temp[__("To next rank")] = $toNextRank;
-
-$temp[__("Total posts")] = format("{0} ({1} per day)", $posts, $averagePosts);
-$temp[__("Total threads")] = format("{0} ({1} per day)", $threads, $averageThreads);
 $temp[__("Registered on")] = format("{0} ({1} ago)", formatdate($user['regdate']), TimeUnits($daysKnown*86400));
 
-$lastPost = Fetch(Query("
-	SELECT
-		p.id as pid, p.date as date,
-		{threads}.title AS ttit, {threads}.id AS tid,
-		{forums}.title AS ftit, {forums}.id AS fid
-	FROM {posts} p
-		LEFT JOIN {users} u on u.id = p.user
-		LEFT JOIN {threads} on {threads}.id = p.thread
-		LEFT JOIN {forums} on {threads}.forum = {forums}.id
-	WHERE p.user={0}
-	ORDER BY p.date DESC
-	LIMIT 0, 1", $user["id"]));
+if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+	if($currentRank)
+		$temp[__("Rank")] = $currentRank;
+	if($toNextRank)
+		$temp[__("To next rank")] = $toNextRank;
 
-if($lastPost)
-{
-	$thread = array();
-	$thread['title'] = $lastPost['ttit'];
-	$thread['id'] = $lastPost['tid'];
-	$thread['forum'] = $lastPost['fid'];
-	$tags = ParseThreadTags($thread['title']);
+	$temp[__("Total posts")] = format("{0} ({1} per day)", $posts, $averagePosts);
+	$temp[__("Total threads")] = format("{0} ({1} per day)", $threads, $averageThreads);
 
-	if(!HasPermission('forum.viewforum', $lastPost['fid']))
-		$place = __("a restricted forum");
-	else
-	{
-		$ispublic = HasPermission('forum.viewforum', $lastPost['fid'], true);
-		$pid = $lastPost['pid'];
-		$place = actionLinkTag($tags[0], 'post', $pid)." (".actionLinkTag($lastPost['ftit'], 'forum', $lastPost['fid'], '', $ispublic?$lastPost['ftit']:'').")";
-	}
-	$temp[__("Last post")] = format("{0} ({1} ago)", formatdate($lastPost['date']), TimeUnits(time() - $lastPost['date'])) .
-								"<br>".__("in")." ".$place;
+	$lastPost = Fetch(Query("
+		SELECT
+			p.id as pid, p.date as date,
+			{threads}.title AS ttit, {threads}.id AS tid,
+			{forums}.title AS ftit, {forums}.id AS fid
+		FROM {posts} p
+			LEFT JOIN {users} u on u.id = p.user
+			LEFT JOIN {threads} on {threads}.id = p.thread
+			LEFT JOIN {forums} on {threads}.forum = {forums}.id
+		WHERE p.user={0}
+		ORDER BY p.date DESC
+		LIMIT 0, 1", $user["id"]));
+
+	if($lastPost) {
+		$thread = array();
+		$thread['title'] = $lastPost['ttit'];
+		$thread['id'] = $lastPost['tid'];
+		$thread['forum'] = $lastPost['fid'];
+		$tags = ParseThreadTags($thread['title']);
+
+		if(!HasPermission('forum.viewforum', $lastPost['fid']))
+			$place = __("a restricted forum");
+		else {
+			$ispublic = HasPermission('forum.viewforum', $lastPost['fid'], true);
+			$pid = $lastPost['pid'];
+			$place = actionLinkTag($tags[0], 'post', $pid)." (".actionLinkTag($lastPost['ftit'], 'forum', $lastPost['fid'], '', $ispublic?$lastPost['ftit']:'').")";
+		}
+		$temp[__("Last post")] = format("{0} ({1} ago)", formatdate($lastPost['date']), TimeUnits(time() - $lastPost['date'])) .
+									"<br>".__("in")." ".$place;
+	} else
+		$temp[__("Last post")] = __("Never");
 }
-else
-	$temp[__("Last post")] = __("Never");
 
 $temp[__("Last view")] = format("{0} ({1} ago)", formatdate($user['lastactivity']), TimeUnits(time() - $user['lastactivity']));
 //$temp[__("Score")] = $score;
 
-if(HasPermission('admin.viewips'))
-{
+if(HasPermission('admin.viewips')) {
 	$temp[__("Last user agent")] = htmlspecialchars($user['lastknownbrowser']);
 	$temp[__("Last IP address")] = formatIP($user['lastip']);
 }
@@ -222,9 +210,7 @@ if(file_exists($infofile))
 	
 	$themename = trim($themeinfo[0]);
 	$themeauthor = trim($themeinfo[1]);
-}
-else
-{
+} else {
 	$themename = $user['theme'];
 	$themeauthor = "";
 }
@@ -247,8 +233,7 @@ if ($user['bio'])
 	$profileParts[__('Bio')] = CleanUpPost($user['bio']);
 
 $badgersR = Query("select * from {badges} where owner={0} order by color", $id);
-if(NumRows($badgersR))
-{
+if(NumRows($badgersR)) {
 	$badgers = "";
 	$colors = array("bronze", "silver", "gold", "platinum");
 	while($badger = Fetch($badgersR))
@@ -272,8 +257,7 @@ if(!isset($_GET["from"]))
 	$from = 0;
 $realFrom = $total-$from-$cpp;
 $realLen = $cpp;
-if($realFrom < 0)
-{
+if($realFrom < 0) {
 	$realLen += $realFrom;
 	$realFrom = 0;
 }
@@ -307,8 +291,7 @@ while($comment = Fetch($rComments))
 }
 
 $commentField = '';
-if($canComment)
-{
+if($canComment) {
 	$commentField = "
 		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\">
 			<input type=\"hidden\" name=\"id\" value=\"$id\">
@@ -328,7 +311,6 @@ RenderTemplate('profile', array(
 	'commentField' => $commentField,
 	'pagelinks' => $pagelinks));	
 
-	
 
 if (!$mobileLayout) {
 	$previewPost['text'] = Settings::get("profilePreviewText");

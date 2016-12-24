@@ -14,7 +14,7 @@ MakeCrumbs(array('' => __('Register')));
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($loguserid)
-	Kill(__("Why in the world are you trying to rereg? Isn't one account enough for you?"));
+	Kill(__("An unknown error occured, please try again."));
 
 if($_POST['register']) {
 	if (IsProxy() || IsProxyFSpamList()) {
@@ -70,6 +70,8 @@ if($_POST['register']) {
 			$err = __("An unknown error occured, please try again.");
 		else if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
 			$err = __("An unknown error occured, please try again.");
+		else if ($_POST['pass'] == $cname)
+			$err = __("Don't put your username as your password. You'll impose high risk to your account");
 
 		$reasons = array();
 		if(IsTorExitPoint()) {

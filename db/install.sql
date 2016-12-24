@@ -347,9 +347,9 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 5, 'user.voteposts', 0, 1);
 
 INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
-('main', 'boardname', 'Blargboard'),
-('main', 'metaDescription', 'Blargboard, the best board software ever.'),
-('main', 'metaTags', 'blargboard blarg board'),
+('main', 'boardname', 'WorldWeb XD'),
+('main', 'metaDescription', 'WorldWeb XD, the best website maker ever.'),
+('main', 'metaTags', 'WorldWeb World Web'),
 ('main', 'dateformat', 'm-d-y, h:i a'),
 ('main', 'customTitleThreshold', '100'),
 ('main', 'oldThreadThreshold', '2'),
@@ -364,7 +364,7 @@ INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'showPoRA', '0'),
 ('main', 'tagsDirection', 'Right'),
 ('main', 'PoRATitle', 'Blargbox'),
-('main', 'PoRAText', 'Welcome to your new Blargboard XD Board! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br>Enjoy Blargboard XD!'),
+('main', 'PoRAText', 'Welcome to your new WorldWeb XD Website! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br>Enjoy WorldWeb XD!'),
 ('main', 'profilePreviewText', 'blah blah sample post'),
 ('main', 'menuMainName', 'Navigation'),
 ('main', 'showGender', '1'),

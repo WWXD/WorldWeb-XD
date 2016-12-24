@@ -4,19 +4,19 @@ if (!defined('BLARG')) die();
 	$settings = array(
 		"boardname" => array (
 			"type" => "text",
-			"default" => "Blargboard",
+			"default" => "WorldWeb XD",
 			"name" => "Board name",
 			'category' => 'Board identity'
 		),
 		"metaDescription" => array (
 			"type" => "text",
-			"default" => "A Blargboard board",
+			"default" => "A WorldWeb XD",
 			"name" => "Meta description",
 			'category' => 'Board identity'
 		),
 		"metaTags" => array (
 			"type" => "text",
-			"default" => "blargboard blarg board",
+			"default" => "WorldWeb, World, Web",
 			"name" => "Meta tags",
 			'category' => 'Board identity'
 		),
@@ -181,8 +181,8 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			'category' => 'Functionality',
 			'rootonly' => 1,
 		),
-		
-		
+
+
 		"ircserver" => array (
 			"type" => "text",
 			"default" => "irc.fortytwo.tech",
@@ -195,8 +195,8 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Channel",
 			'category' => 'IRC'
 		),
-		
-		
+
+
 		'PoRATitle' => array(
 			'type' => 'text',
 			'default' => 'Blargbox',
@@ -221,8 +221,8 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "RSS feed description",
 			'category' => 'Information',
 		),
-		
-		
+
+
 		'newsForum' => array(
 			'type' => 'forum',
 			'default' => '0',
@@ -247,8 +247,8 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Deleted threads forum",
 			'category' => 'Forum settings',
 		),
-		
-		
+
+
 		'defaultGroup' => array (
 			'type' => 'group',
 			'default' => 0,
@@ -270,17 +270,17 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			'category' => 'Group settings',
 			'rootonly' => 1,
 		),
-		
-		
+
+
 		'homepageText' => array(
 			'type' => 'texthtml',
-			'default' => 'Welcome to Blargboard.<br><br>Fill this with relevant info.',
+			'default' => 'Welcome to WorldWeb XD.<br><br>Fill this with relevant info.',
 			'name' => 'Homepage contents',
 			'category' => 'Homepage contents',
 		),
 		'faqText' => array(
 			'type' => 'texthtml',
-			'default' => 'Blargboard FAQ. Put your rules and stuff here.',
+			'default' => 'WorldWeb XD FAQ. Put your rules and stuff here.',
 			'name' => 'FAQ contents',
 			'category' => 'FAQ contents',
 		),
