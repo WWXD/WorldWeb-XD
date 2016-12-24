@@ -62,6 +62,10 @@ function LoadGroups() {
 
 	$loguser['banned'] = ($loguserGroup['id'] == Settings::get('bannedGroup'));
 	$loguser['root'] = ($loguserGroup['id'] == Settings::get('rootGroup'));
+	$myrank = $loguserGroup['rank'];
+	$targetrank = $usergroups[$user['primarygroup']]['rank'];
+	$Iamroot = ($loguserGroup['id'] == Settings::get('rootGroup'));
+	$Iambanned = ($loguserGroup['id'] == Settings::get('rootGroup'));
 }
 
 function HasPermission($perm, $arg=0, $guest=false) {

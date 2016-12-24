@@ -44,10 +44,10 @@ if (!HasPermission('admin.banusers'))
 if(!$user)
 	Kill(__("You cannot delete a user that doesn't exist."));
 
-if ($targetrank >= $sourcerank)
+if ($targetrank >= $myrank)
 	Kill(__("You may not delete a user whose level is equal to or above yours."));
 
-if($sourcerank =< $targetrank)
+if($myrank =< $targetrank)
 	Kill(__("You may not delete a user whose level is equal to or above yours."));
 
 if($user["primarygroup"] > 0)
@@ -56,7 +56,7 @@ if($user["primarygroup"] > 0)
 if($user["primarygroup"] < 1)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
 
-if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 && $sourcerank >= $targetrank && $targetrank =< $sourcerank) {
+if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 && $myrank >= $targetrank && $targetrank =< $myrank) {
 	$passwordFailed = false;
 
 	if(isset($_POST["currpassword"])) {

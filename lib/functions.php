@@ -98,11 +98,6 @@ function write() {
 	echo $output;
 }
 
-$sourcerank = $loguserGroup['rank'];
-$targetrank = $usergroups[$user['primarygroup']]['rank'];
-$isroot = $loguser['root'];
-$isbanned = $loguser['banned'];
-
 function OptimizeLayouts($text) {
 	$bucket = array();
 
