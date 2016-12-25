@@ -8,34 +8,6 @@ CheckPermission('admin.editsettings');
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("pluginmanager") => __("Plugin Manager")));
 
 
-if($_REQUEST['action'] == "enable") {
-	if($_REQUEST['key'] != $loguser['token'])
-		Kill("No.");
-
-	Query("insert into {enabledplugins} values ({0})", $_REQUEST['id']);
-	require(BOARD_ROOT.'db/functions.php');
-	Upgrade();
-
-	die(header("location: ".actionLink("pluginmanager")));
-
-	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
-
-	//Make a new file for easier detecting that it is enabled
-	file_put_contents($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
-} else if($_REQUEST['action'] == "disable") {
-	if($_REQUEST['key'] != $loguser['token'])
-		Kill("No.");
-
-	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
-	die(header("location: ".actionLink("pluginmanager")));
-
-	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
-
-	//Delete the enabled text.
-	unlink($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
-}
-
-
 $cell = 0;
 $pluginsDir = @opendir(BOARD_ROOT."plugins");
 
@@ -43,19 +15,14 @@ $enabledplugins = array();
 $disabledplugins = array();
 $pluginDatas = array();
 
-if($pluginsDir !== FALSE)
-{
-	while(($plugin = readdir($pluginsDir)) !== FALSE)
-	{
+if($pluginsDir !== FALSE) {
+	while(($plugin = readdir($pluginsDir)) !== FALSE) {
 		if($plugin == "." || $plugin == "..") continue;
-		if(is_dir(BOARD_ROOT."plugins/".$plugin))
-		{
-			try
-			{
+		if(is_dir(BOARD_ROOT."plugins/".$plugin)) {
+			try {
 				$plugindata = getPluginData($plugin, false);
 			}
-			catch(BadPluginException $e)
-			{
+			catch(BadPluginException $e) {
 				continue;
 			}
 
@@ -112,6 +79,35 @@ function listPlugin($plugin, $plugindata) {
 	$pdata['actions'] .= '</ul>';
 
 	return $pdata;
+}
+
+if($_REQUEST['action'] == "enable") {
+	if($_REQUEST['key'] != $loguser['token'])
+		Kill("No.");
+
+	Query("insert into {enabledplugins} values ({0})", $_REQUEST['id']);
+	require(BOARD_ROOT.'db/functions.php');
+	Upgrade();
+
+	die(header("location: ".actionLink("pluginmanager")));
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Make a new file for easier detecting that it is enabled
+	file_put_contents($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
+}
+
+if($_REQUEST['action'] == "disable") {
+	if($_REQUEST['key'] != $loguser['token'])
+		Kill("No.");
+
+	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
+	die(header("location: ".actionLink("pluginmanager")));
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Delete the enabled text.
+	unlink($pluginsDir.$plugin'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
 }
 
 ?>
