@@ -12,34 +12,27 @@ CheckPermission('user.editavatars');
 MakeCrumbs(array(actionLink('profile', $loguserid, '', $loguser['name']) => htmlspecialchars($loguser['displayname']?$loguser['displayname']:$loguser['name']),
 	actionLink("editavatars") => __("Mood avatars")));
 
-if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POST['actionadd']))
-{
+if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POST['actionadd'])) {
 	$mid = (int)$_POST['mid'];
-	if($_POST['actionrename'])
-	{
+	if($_POST['actionrename']) {
 		Query("update {moodavatars} set name={0} where mid={1} and uid={2}", $_POST['name'], $mid, $loguserid);
 		
 		die(header('Location: '.actionLink('editavatars')));
-	}
-	else if($_POST['actiondelete'])
-	{
+	} else if($_POST['actiondelete']) {
 		Query("delete from {moodavatars} where uid={0} and mid={1}", $loguserid, $mid);
 		Query("update {posts} set mood=0 where user={0} and mood={1}", $loguserid, $mid);
 		if(file_exists(DATA_DIR."avatars/".$loguserid."_".$mid))
 			unlink(DATA_DIR."avatars/".$loguserid."_".$mid);
 			
 		die(header('Location: '.actionLink('editavatars')));
-	}
-	else if($_POST['actionadd'])
-	{
+	} else if($_POST['actionadd']) {
 		$highest = FetchResult("select mid from {moodavatars} where uid={0} order by mid desc limit 1", $loguserid);
 		if($highest < 1)
 			$highest = 1;
 		$mid = $highest + 1;
 
 		//Begin copypasta from edituser/editprofile_avatar...
-		if($fname = $_FILES['picture']['name'])
-		{
+		if($fname = $_FILES['picture']['name']) {
 			$fext = strtolower(substr($fname,-4));
 			$error = "";
 
@@ -52,8 +45,7 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 
 			$validext = false;
 			$extlist = "";
-			foreach($exts as $ext)
-			{
+			foreach($exts as $ext) {
 				if($fext == $ext)
 				$validext = true;
 				$extlist .= ($extlist ? ", " : "").$ext;
@@ -61,8 +53,7 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 			if(!$validext)
 				$error.="<li>".__("Invalid file type, must be one of:")." ".$extlist."</li>";
 
-			if(!$error)
-			{
+			if(!$error) {
 				$tmpfile = $_FILES['picture']['tmp_name'];
 				$file = DATA_DIR."avatars/".$loguserid."_".$mid;
 
@@ -79,15 +70,12 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 
 				if($width <= $dimx && $height <= $dimy && $type<=3)
 					copy($tmpfile,$file);
-				elseif($type <= 3)
-				{
+				elseif($type <= 3) {
 					$r = imagesx($img1) / imagesy($img1);
-					if($r > 1)
-					{
+					if($r > 1) {
 						$img2=imagecreatetruecolor($dimx,floor($dimy / $r));
 						imagecopyresampled($img2,$img1,0,0,0,0,$dimx,$dimy/$r,imagesx($img1),imagesy($img1));
-					} else
-					{
+					} else {
 						$img2=imagecreatetruecolor(floor($dimx * $r), $dimy);
 						imagecopyresampled($img2,$img1,0,0,0,0,$dimx*$r,$dimy,imagesx($img1),imagesy($img1));
 					}
@@ -106,8 +94,7 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 
 $moodRows = array();
 $rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid asc", $loguserid);
-while($mood = Fetch($rMoods))
-{
+while($mood = Fetch($rMoods)) {
 	$row = array();
 	
 	$row['avatar'] = "<img src=\"".DATA_URL."avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";

@@ -36,9 +36,9 @@ if(isset($_GET['vote'])) {
 	CheckPermission('user.votepolls');
 
 	if(!$loguserid)
-		Kill(__("You can't vote without logging in."));
+		Alert(__("You can't vote without logging in."));
 	if($thread['closed'])
-		Kill(__("Poll's closed!"));
+		Alert(__("Poll's closed!"));
 	if(!$thread['poll'])
 		Kill(__("This is not a poll."));
 	if ($loguser['token'] != $_GET['token'])
@@ -192,7 +192,7 @@ if($thread['poll']) {
 
 		$pdata['options'][] = $odata;
 	}
-	
+
 	$pdata['multivote'] = $poll['doublevote'];
 	$pdata['votes'] = $poll['votes'];
 	$pdata['voters'] = $totalVotes;
@@ -259,7 +259,7 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 		else
 			$mod_stick = "<label><input type=\"checkbox\" name=\"unstick\">&nbsp;".__("Unstick", 1)."</label>\n";
 	}
-	
+
 	$moodOptions = "<option selected=\"selected\" value=\"0\">".__("[Default avatar]")."</option>\n";
 	$rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid asc", $loguserid);
 	while($mood = Fetch($rMoods))
@@ -283,7 +283,7 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 	echo "
 	<form action=\"".htmlentities(actionLink("newreply", $tid))."\" method=\"post\">
 		<input type=\"hidden\" name=\"ninja\" value=\"{$ninja}\">";
-	
+
 	RenderTemplate('form_quickreply', array('fields' => $fields));
 
 	echo "

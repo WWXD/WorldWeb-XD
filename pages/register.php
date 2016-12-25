@@ -14,7 +14,7 @@ MakeCrumbs(array('' => __('Register')));
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($loguserid)
-	Kill(__("An unknown error occured, please try again."));
+	Kill(__("An unknown error occured, please try again later."));
 
 if($_POST['register']) {
 	if (IsProxy() || IsProxyFSpamList()) {
@@ -51,9 +51,9 @@ if($_POST['register']) {
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
 		else if ($uname == $cname)
-			$err = __("This user name is already taken. Please choose another.");
+			$err = __("This user name is already taken by someone else. Please choose another one.");
 		else if ($ipKnown >= 1)
-			$err = __("Another user is already using this IP address.");
+			$err = __("An unknown error occured, please try again.");
 		else if (!$_POST['readFaq'])
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
 		else if ($_POST['likesCake'])
