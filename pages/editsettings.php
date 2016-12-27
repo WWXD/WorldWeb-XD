@@ -184,9 +184,11 @@ function makeThemeList($fieldname, $value) {
 function makeLayoutList($fieldname, $value) {
 	$layouts = array();
 	$dir = @opendir("layouts");
-	while ($layout = readdir($dir))
-		if(!endsWith($layout, ".php") && $layout != "." && $layout != "..")
+	while ($layout = readdir($dir)) {
+		if(!endsWith($layout, ".php") && $layout != "." && $layout != "..") {
 			$layouts[$layout] = @file_get_contents("./layouts/".$layout."/info.txt");
+		}
+	}
 	closedir($dir);
 	return makeSelect($fieldname, $value, $layouts);
 }

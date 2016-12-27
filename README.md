@@ -1,25 +1,20 @@
-# Blargboard XD
+# WorldWeb XD
 
-https://www.3dshacks.xyz/forum/1-support/
+https://maorninja.h05t.gq/
 
 -------------------------------------------------------------------------------
 
-Board software written in PHP. Uses MySQL for storage.
-
-This is the software that powers 3DS Hacks (https://www.3dshacks.xyz), well,
-excluding the 3DS Hacks-specific modifications.
+WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage
 
 It is based off ABXD. ABXD is made by Dirbaio, Nina, GlitchMr & co, and was originally
 Kawa's project. See http://abxd.dirbaio.net/ for more details.
 
-It uses Smarty for its templates, and Font Awesome. And possibly some other funny things 
+It uses Smarty for its templates, Font Awesome for the icons and jQuery. And possibly some other funny things 
 I forgot about.
-
-This board follows the Acmlmboard concept. If you don't know Acmlmboard, you don't know what you're missing.
 
 ## Requirements
 
-Blargboard XD requires PHP 5.3. You also need the mcrypt extension.
+WorldWeb XD requires PHP 5.3. You also need the mcrypt extension.
 
 There is no exact requirement for MySQL, but make sure to have a recent version.
 
@@ -27,32 +22,30 @@ Everything else is provided in the package.
 
 ## How to install and use
 
-PHP and MySQL knowledge isn't required to use Blargboard XD but is a plus.
+PHP and MySQL knowledge isn't required to use WorldWeb XD but is a plus.
 
-Get a webserver. Upload the Blargboard XD codebase to it. Create an empty MySQL database.
+Get a webserver. Upload the WorldWeb XD codebase to it. Create an empty MySQL database.
 
-Browse to your board's install.php (http://my.board.for.example/install.php) and follow the instructions.
+Browse to your websites's link and follow the instructions.
 
 If everything went fine, browse to your freshly installed board and configure it. If not, let us know.
 
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
 
-If you want plugins, they're here: https://github.com/Blargboard-XD/Plugins      
-If you want themes, they're here: https://github.com/Blargboard-XD/Themes     
-If you want ranksets, they're here: https://github.com/Blargboard-XD/Ranksets
+If you can't make a board banner, delete img/logo.png to have a text banner.
 
-## How to update your board
+If you want plugins, they're here: https://github.com/WorldWeb-XD/Plugins      
+If you want themes, they're here: https://github.com/WorldWeb-XD/Themes     
+If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets
 
-Download the most recent Blargboard package (be it an official release or a Git package).
+## How to update your website
 
-Copy the files over your existing board's files.
-
-Make sure to not overwrite/delete the config directory, especially config/salt.php! Lose that one and you'll have fun resetting everyone's passwords.
-Everything else is safe to overwrite. Be careful to not lose any changes you have made, though.
-
-Once that is done, run update.php (http://my.board.for.example/update.php) to update the board's database structure.
-
-Depending on the versions, your update may involve running extra scripts to fix certain things. Make sure to follow those instructions.
+1. Download the most recent Blargboard package (be it an official release or a Git package).
+2. Copy the files over your existing board's files.
+WARNING: Make sure to not overwrite/delete the config directory, especially config/salt.php! Lose that one and you'll have fun resetting everyone's passwords.
+Everything else is safe to overwrite.
+3. Check your original install.sql and the new one.
+4. Make the nessesary changes on phpmyadmin accordingly
 
 ## Features
 
@@ -65,19 +58,6 @@ Depending on the versions, your update may involve running extra scripts to fix 
  * typical messageboard features
  * Smiley Box.
  * Instameme (thanks Jon)
-
--------------------------------------------------------------------------------
-
-Coders and such, who like to hack new features in their software, may think that the use
-of templates in Blargboard XD gets in their way. Well uh, can't please everybody. I tried to
-do my best at separating logic and presentation. Besides, the use of templates actually
-makes the code nicer. Just look at the first few revisions and see how much duplicate logic
-is powering the mobile layout, for example. Templates allowed to get rid of all that madness.
-
-As of now, there are no official releases for this, and the ABXD database installer hasn't
-been adapted to Blargboard XD's database structure yet. Thus, when updating your Blargboard XD
-copy, you need to check for changes to database.sql and modify your database's structure
-accordingly.
 
 ## Board owner's tips
 
@@ -95,64 +75,33 @@ How to add groups: add to the usergroups table via PMA
  * rank: a user may not mess with users of higher ranks no matter his permissions
 
  
-How to add/remove secondary groups to someone: add to/remove from the secondarygroups table via PMA (or use ?page=secgroups for adding)
+How to add/remove secondary groups to someone: add to/remove from the secondarygroups table via PMA
  * userid: the user's ID
  * groupid: the group's ID. Do not use the ID of a primary group!
- 
-WARNING: when banning someone, make sure that the secondary groups' permissions won't override the banned group's permissions. If that happens, you'll need to delete the secondarygroups assignments for the user.
 
+WARNING: when banning someone, make sure that the secondary groups' permissions won't override the banned group's permissions. If that happens, you'll need to delete the secondarygroups assignments for the user.
 
 How to (insert action): first look into your board's admin panel, settings panel, etc... then if you still can't find, ask us. But please don't be a noob and ask us about every little thing.
 
 ## Support, troubleshooting, etc
 
-The Blargboard help forum is at 3DS Hacks: http://3dshacks.xyz/forum/1-support/
+The WorldWen help forum is at my devboard: http://maorninja.h05t.gq
 
-If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
+If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail.
 
 If the error is a 'MySQL Error', to get a detailed report, you need to open config/database.php in a text editor, find `$debugMode = 0;` and replace it with `$debugMode = 1;`. 
-This will make the board give you the MySQL error message and the query which went wrong. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.
+This will make the board give you the MySQL error message and the query which went wrong. After that, report the error to us and we'll fix it. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.
 
 YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING YOUR BOARD.
 
 ## TODO list
 
-(no particular order there)
-
- * Display Thread Description
- * Make Favorites & userlinks usable 
- * Multiple Board layouts
- * Switch from logo to text anytime
- * Make filter posts anytime without editing the lib folder
- * Add multiple 'boards'
- * Add categories in the categories uploader without SQL
- * Add events in the calendar
- * Add "moderation" like style for normal users.
- * Add friends/foes list (for automatically setting above)
- * PM thread
- * Quick quote
- * RPG/Item Shop/Battle.
- * Port ABXD link feature.
- * Others here
+https://github.com/WWXD/WorldWeb-XD/projects/1
  
 ## Credits
 
- * *StapleButter* - Original Blargboard we all love.
- * *Maorninja* - Leader, coder.
- * *Mariogamer* - Uploading original Blargboard.
- * *Phase* - JSON ranksets, animation mobile, fix MySQL5.7 support and Gist tab.
- * *JeDa* - Plugins, coding.
- * *LifeMushroom* - Themes.
+http://maorninja.h05t.gq/credits
 
 -------------------------------------------------------------------------------
 
-Blargboard XD is provided as-is, with no guarantee that it'll be useful or even work. I'm not
-responsible if it explodes in your face. Use that thing at your own risk.
-
-Oh well, it should work rather well. See 3DS Hacks. But uh, we never know.
-
--------------------------------------------------------------------------------
-
-Have fun.
-
-blarg
+Have fun. Thanks for using WorldWeb XD.

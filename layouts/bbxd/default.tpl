@@ -31,7 +31,7 @@
 				<table class="layout-table">
 				<tr>
 				<td>
-					<a href="{actionLink page='home'}"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a>
+					<a href="{actionLink page='home'}">{$logo}</a>
 				</td>
 				<td>
 					<table class="outline" id="headerInfo">

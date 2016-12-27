@@ -1,6 +1,6 @@
 <?php
+if (!defined('BLARG')) die();
 
-require 'wikilib.php';
 require 'lib/diff/Diff.php';
 require 'lib/diff/Diff/Renderer/inline.php';
 

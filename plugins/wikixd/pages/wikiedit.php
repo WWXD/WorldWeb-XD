@@ -1,6 +1,5 @@
 <?php
-
-require 'wikilib.php';
+if (!defined('BLARG')) die();
 
 if (isset($_GET['createnew']))
 {

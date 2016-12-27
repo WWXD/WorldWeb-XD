@@ -1,6 +1,5 @@
 <?php
-
-require 'wikilib.php';
+if (!defined('BLARG')) die();
 
 $title = 'Wiki &raquo; Recent changes';
 MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wikichanges') => 'Recent changes'), $links);

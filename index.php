@@ -94,7 +94,7 @@ if (!$fakeerror) {
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
 
-				$page = __DIR__.'./plugins/'.$self['dir']."/page_".$page.".php";
+				$page = __DIR__.'/plugins/'.$self['dir']."/page_".$page.".php";
 				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
 				if(!file_exists($page))
 					throw new Exception(404);
@@ -174,6 +174,8 @@ $layout_time = formatdatenow();
 $layout_onlineusers = getOnlineUsersText();
 $layout_birthdays = getBirthdaysText();
 $layout_views = '<span id="viewCount">'.number_format($misc['views']).'</span> '.__('views');
+$layout_description = htmlspecialchars(Settings::get('metaDescription'));
+$layout_boardtitle = htmlspecialchars(Settings::get('boardname'));
 
 $layout_title = htmlspecialchars(Settings::get('boardname'));
 if($title != '')
@@ -183,33 +185,25 @@ if($title != '')
 //=======================
 // Board logo and theme
 
-
-function checkForImage(&$image, $external, $file)
-{
-	global $dataDir, $dataUrl;
-	if($image) return;
-	if($external)
-	{
-		if(file_exists($dataDir.$file))
-			$image = $dataUrl.$file;
-	}
-	else
-	{
-		if(file_exists($file))
-			$image = resourceLink($file);
-	}
+if (file_exists(resourceLink('themes/$theme/logo.png'))) {
+	$logo = print '<img id="theme_banner" src="$logos/logo_$theme.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists(resourceLink('themes/$theme/logo.jpg'))) {
+	$logo = '<img id="theme_banner" src="$logos/logo_$theme.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists(resourceLink('themes/$theme/logo.jpeg'))) {
+	$logo = '<img id="theme_banner" src="$logos/logo_$theme.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists(resourceLink('themes/$theme/logo.gif'))) {
+	$logo = '<img id="theme_banner" src="$logos/logo_$theme.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists('img/logo.png')) {
+	$logo = '<img id="theme_banner" src="img/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists('img/logo.jpg')) {
+	$logo = '<img id="theme_banner" src="img/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists('img/logo.jpeg')) {
+	$logo = '<img id="theme_banner" src="img/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists('img/logo.gif')) {
+	$logo = '<img id="theme_banner" src="img/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else {
+	$logo = '<h1>'.$layout_boardtitle.'</h1><h3>'.$layout_description.'</h3>';
 }
-
-checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.png'));
-checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.jpg'));
-checkForImage($layout_logopic, true, resourceLink('logos/logo_$theme.gif'));
-checkForImage($layout_logopic, true, resourceLink('logos/logo.png'));
-checkForImage($layout_logopic, true, resourceLink('logos/logo.jpg'));
-checkForImage($layout_logopic, true, resourceLink('logos/logo.png'));
-checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.png'));
-checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.jpg'));
-checkForImage($layout_logopic, false, resourceLink('themes/$theme/logo.gif'));
-checkForImage($layout_logopic, false, "img/logo.png");
 
 checkForImage($favicon, true, "logos/favicon.gif");
 checkForImage($favicon, true, "logos/favicon.ico");
@@ -321,6 +315,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 			'layout_onlineusers' => $layout_onlineusers,
 			'layout_birthdays' => $layout_birthdays,
 			'board_credits' => $layout_credits,
+			'logo' => $logo,
 			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
 			'mobileswitch' => $mobileswitch,
 			'perfdata' => $perfdata));
