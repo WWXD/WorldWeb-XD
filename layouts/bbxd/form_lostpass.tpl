@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td class="cell1 smallFonts" colspan=2>
-				If automated password reset fails, you can try contacting one of the board's administrators.
+				If this password reset method fails, you can still get back on your account. Try contacting one of the board's administrators.
 			</td>
 		</tr>
 	</table>

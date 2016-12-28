@@ -29,13 +29,13 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 
 } else if(isset($_POST['action'])) {
 	if($_POST['mail'] != $_POST['mail2'])
-		Kill(__("The e-mail addresses you entered don't match, try again."));
+		Alert(__("The e-mail addresses you entered don't match, try again."));
 
 	$user = Query("select id, name, password, email, lostkeytimer, pss from {users} where name = {0} and email = {1}", $_POST['name'], $_POST['mail']);
 	if(NumRows($user) != 0) {
 		$user = Fetch($user);
 		if($user['lostkeytimer'] > time() - (60*60)) //wait an hour between attempts
-			Kill(__("To prevent abuse, this function can only be used once an hour."), __("Slow down!"));
+			Alert(__("To prevent abuse, this function can only be used once an hour."), __("Slow down!"));
 
 		//Make a RANDOM reset key.
 		$resetKey = Shake();
@@ -53,25 +53,25 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 
 		Query("update {users} set lostkey = {0}, lostkeytimer = {1} where id = {2}", $hashedResetKey, time(), $user['id']);
 
-		Kill(__("Check your email in a moment and follow the link found therein."), __("Reset email sent"));
+		Kill(__("Check your email in a moment and follow the link."), __("Reset email sent"));
 	}
-	
+
 	Kill(__('Invalid user name or email address.'));
 } else {
 	$title = __('Request password reset');
 	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));
-	
+
 	echo "
 	<form action=\"".htmlentities(actionLink("lostpass"))."\" method=\"post\">";
-	
+
 	$fields = array(
 		'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24>",
 		'email' => "<input type=\"text\" name=\"mail\" maxlength=60 size=24>",
 		'email2' => "<input type=\"text\" name=\"mail2\" maxlength=60 size=24>",
-		
+
 		'btnSendReset' => "<input type=\"submit\" name=\"action\" value=\"".__("Send reset email")."\">",
 	);
-	
+
 	RenderTemplate('form_lostpass', array('fields' => $fields));
 
 	echo "

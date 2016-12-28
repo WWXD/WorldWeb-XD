@@ -19,11 +19,11 @@ if ($_POST['submit']) {
 		Report("[b]".$loguser['name']."[/] tried to add a secondary group.", false);
 		Alert(__("Please enter a Group ID and a User ID and try again."), __("Notice"));
 	}
-} else if (!$_POST['submit']) {
+} else {
 	Alert(__("Please enter a Group ID and a User ID."), __("Notice"));
 }
-
-?><table class="outline"><tr class="header1"><th colspan="2" class="center">Add secondary groups</th></tr>
+?>
+<table class="outline"><tr class="header1"><th colspan="2" class="center">Add secondary groups</th></tr>
 <form action="" method="POST">
 <tr class="cell2"><td>User ID</td><td><input type="text" name="userid"></td></tr>
 <tr class="cell1"><td>Group ID</td><td><input type="text" name="groupid"></td></tr>

@@ -118,7 +118,7 @@ if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 &
 		Report("[b]".$loguser['name']."[/] tried to delete ".$user["name"]." (#".$uid.").");
 		Alert("Invalid password. Please try again.");
 	}
-	
+
 	echo "
 	<form name=\"confirmform\" action=\"".actionLink("deleteuser", $uid)."\" method=\"post\">
 		<table class=\"outline margin width50\">
