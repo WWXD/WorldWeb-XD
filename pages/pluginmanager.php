@@ -90,6 +90,11 @@ if($_REQUEST['action'] == "enable") {
 	Upgrade();
 
 	die(header("location: ".actionLink("pluginmanager")));
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Make a new file for easier detecting that it is enabled
+	file_put_contents($pluginsDir.$plugin.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
 }
 
 if($_REQUEST['action'] == "disable") {
@@ -98,4 +103,9 @@ if($_REQUEST['action'] == "disable") {
 
 	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
 	die(header("location: ".actionLink("pluginmanager")));
+
+	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
+
+	//Delete the enabled text.
+	unlink($pluginsDir.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
 }

@@ -94,7 +94,6 @@ if (!$fakeerror) {
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
 
-				$page = __DIR__.'/plugins/'.$self['dir']."/page_".$page.".php";
 				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
 				if(!file_exists($page))
 					throw new Exception(404);
