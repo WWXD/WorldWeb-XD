@@ -5,44 +5,37 @@ if (!defined('BLARG')) die();
 // --- General layout functions
 // ----------------------------------------------------------------------------
 
-function RenderTemplate($template, $options=null)
-{
+function RenderTemplate($template, $options=null) {
 	global $tpl, $mobileLayout, $plugintemplates, $plugins;
-	
-	if (array_key_exists($template, $plugintemplates))
-	{
+
+	if (array_key_exists($template, $plugintemplates)) {
 		$plugin = $plugintemplates[$template];
 		$self = $plugins[$plugin];
-		
+
 		$tplroot = BOARD_ROOT.'/plugins/'.$self['dir'].'/layouts/';
-	}
-	else
+	} else
 		$tplroot = BOARD_ROOT.'/layouts/'; 
-	
-	if ($mobileLayout)
-	{
+
+	if ($mobileLayout) {
 		$tplname = $tplroot.'mobile/'.$template.'.tpl';
 		if (!file_exists($tplname)) 
 			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
-	}
-	else
+	} else {
 		$tplname = $tplroot.Settings::get('defaultLayout').$template.'.tpl';
 		if (!file_exists($tplname)) 
 			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
-	
+	}
+
 	if ($options)
 		$tpl->assign($options);
-	
+
 	$tpl->display($tplname);
 }
 
-
-function mfl_forumBlock($fora, $catid, $selID, $indent)
-{
+function mfl_forumBlock($fora, $catid, $selID, $indent) {
 	$ret = '';
 	
-	foreach ($fora[$catid] as $forum)
-	{
+	foreach ($fora[$catid] as $forum) {
 		$ret .=
 '				<option value="'.$forum['id'].'"'.($forum['id'] == $selID ? ' selected="selected"':'').'>'
 	.str_repeat('&nbsp; &nbsp; ', $indent).htmlspecialchars($forum['title'])
@@ -51,20 +44,19 @@ function mfl_forumBlock($fora, $catid, $selID, $indent)
 		if (!empty($fora[-$forum['id']]))
 			$ret .= mfl_forumBlock($fora, -$forum['id'], $selID, $indent+1);
 	}
-	
+
 	return $ret;
 }
 
-function makeForumList($fieldname, $selectedID, $allowNone=false)
-{
+function makeForumList($fieldname, $selectedID, $allowNone=false) {
 	global $loguserid, $loguser, $forumBoards;
 
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 	$viewhidden = HasPermission('user.viewhiddenforums');
-	
+
 	$noneOption = '';
 	if ($allowNone) $noneOption = '<option value=0>'.__('(none)').'</option>';
-	
+
 	$rCats = Query("SELECT id, name, board FROM {categories} ORDER BY board, corder, id");
 	$cats = array();
 	while ($cat = Fetch($rCats))
@@ -76,14 +68,13 @@ function makeForumList($fieldname, $selectedID, $allowNone=false)
 							{forums} f
 						WHERE f.id IN ({0c})".(!$viewhidden ? " AND f.hidden=0" : '')." AND f.redirect=''
 						ORDER BY f.forder, f.id", $viewableforums);
-						
+
 	$fora = array();
 	while($forum = Fetch($rFora))
 		$fora[$forum['catid']][] = $forum;
 
 	$theList = '';
-	foreach ($cats as $cid=>$cat)
-	{
+	foreach ($cats as $cid=>$cat) {
 		if (empty($fora[$cid]))
 			continue;
 			
@@ -100,19 +91,17 @@ function makeForumList($fieldname, $selectedID, $allowNone=false)
 	return "<select id=\"$fieldname\" name=\"$fieldname\">$noneOption$theList</select>";
 }
 
-function forumCrumbs($forum)
-{
+function forumCrumbs($forum) {
 	global $forumBoards;
 	$ret = array(actionLink('board') => __('Forums'));
-	
+
 	if ($forum['board'] != '')
 		$ret[actionLink('board', $forum['board'])] = $forumBoards[$forum['board']];
-	
+
 	if (!$forum['id']) return $ret;
 	
 	$parents = Query("SELECT id,title FROM {forums} WHERE l<{0} AND r>{1} ORDER BY l", $forum['l'], $forum['r']);
-	while ($p = Fetch($parents))
-	{
+	while ($p = Fetch($parents)) {
 		$public = HasPermission('forum.viewforum', $p['id'], true);
 		$ret[actionLink('forum', $p['id'], '', $public?$p['title']:'')] = $p['title'];
 	}
@@ -122,23 +111,20 @@ function forumCrumbs($forum)
 	return $ret;
 }
 
-function makeForumCrumbs($crumbs, $forum)
-{
-	while(true)
-	{
+function makeForumCrumbs($crumbs, $forum) {
+	while(true) {
 		$crumbs->addStart(new PipeMenuLinkEntry($forum['title'], "forum", $forum["id"]));
 		if($forum["catid"] >= 0) break;
 		$forum = Fetch(Query("SELECT * from {forums} WHERE id={0}", -$forum["catid"]));
 	}
 }
 
-function doThreadPreview($tid, $maxdate=0)
-{
+function doThreadPreview($tid, $maxdate=0) {
 	global $loguser;
-	
+
 	$review = array();
 	$ppp = $loguser['postsperpage'] ?: 20;
-	
+
 	$rPosts = Query("
 		select
 			{posts}.id, {posts}.date, {posts}.num, {posts}.deleted, {posts}.options, {posts}.mood, {posts}.ip,
@@ -149,44 +135,40 @@ function doThreadPreview($tid, $maxdate=0)
 		left join {users} u on u.id = {posts}.user
 		where thread={0} and deleted=0".($maxdate?' AND {posts}.date<={1}':'')."
 		order by date desc limit 0, {2u}", $tid, $maxdate, $ppp);
-		
-	while ($post = Fetch($rPosts))
-	{
+
+	while ($post = Fetch($rPosts)) {
 		$pdata = array('id' => $post['id']);
-		
+
 		$poster = getDataPrefix($post, 'u_');
 		$pdata['userlink'] = UserLink($poster);
-		
+
 		$pdata['posts'] = $post['num'].'/'.$poster['posts'];
-		
+
 		$nosm = $post['options'] & 2;
 		$pdata['contents'] = CleanUpPost($post['text'], $poster['name'], $nosm);
-		
+
 		$review[] = $pdata;
 	}
-	
+
 	RenderTemplate('threadreview', array('review' => $review));
 }
 
-function makeCrumbs($path, $links='')
-{
+function makeCrumbs($path, $links='') {
 	global $layout_crumbs, $layout_actionlinks;
 
-	if(count($path) != 0)
-	{
+	if(count($path) != 0) {
 		$pathPrefix = array(actionLink(0) => Settings::get("breadcrumbsMainName"));
 
 		$bucket = "breadcrumbs"; include(__DIR__."/pluginloader.php");
 
 		$path = $pathPrefix + $path;
 	}
-	
+
 	$layout_crumbs = $path;
 	$layout_actionlinks = $links;
 }
 
-function makeBreadcrumbs($path)
-{
+function makeBreadcrumbs($path) {
 	global $layout_crumbs;
 	$path->addStart(new PipeMenuLinkEntry(Settings::get("breadcrumbsMainName"), "board"));
 	$path->setClass("breadcrumbs");
@@ -194,10 +176,9 @@ function makeBreadcrumbs($path)
 	$layout_crumbs = $path;
 }
 
-function makeForumListinglol($parent, $boardlol='')
-{
+function makeForumListinglol($parent, $boardlol='') {
 	global $loguserid, $loguser, $usergroups;
-		
+
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 	$viewhidden = HasPermission('user.viewhiddenforums');
 	$rFora = Query("	SELECT f.*,
@@ -215,9 +196,9 @@ function makeForumListinglol($parent, $boardlol='')
 						$loguserid, $viewableforums, $boardlol, -$parent);
 	if (!NumRows($rFora))
 		return;
-		
+
 	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $boardlol, -$parent));
-						
+
 	$rSubfora = Query("	SELECT f.*,
 							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
 							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
@@ -230,7 +211,7 @@ function makeForumListinglol($parent, $boardlol='')
 	$subfora = array();
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
-	
+
 	$rMods = Query("	SELECT 
 							p.(arg, applyto, id),
 							u.(_userfields)
@@ -245,30 +226,26 @@ function makeForumListinglol($parent, $boardlol='')
 	while($mod = Fetch($rMods))
 		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
 	$categories = array();
-	while($forum = Fetch($rFora))
-	{
+	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
 		if($skipThisOne)
 			continue;
-			
+
 		if (!$categories[$forum['catid']])
 			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
-			
+
 		$fdata = array('id' => $forum['id']);
-			
-		if ($forum['redirect'])
-		{
+
+		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
-			if ($redir[0] == ':')
-			{
+			if ($redir[0] == ':') {
 				$redir = explode(':', $redir);
 				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
 				$forum['numthreads'] = '-';
 				$forum['numposts'] = '-';
-				
-				if ($redir[1] == 'board')
-				{
+
+				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
 					
@@ -284,8 +261,7 @@ function makeForumListinglol($parent, $boardlol='')
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 										WHERE f.l>={1} AND f.r<={2}", 
 										$loguserid, $f['minl'], $f['maxr']);
-					while ($sforum = Fetch($sforums))
-					{
+					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
 						$forum['numposts'] += $sforum['numposts'];
 						
@@ -295,24 +271,20 @@ function makeForumListinglol($parent, $boardlol='')
 						if (!$sforum['ignored'])
 							$forum['numnew'] += $sforum['numnew'];
 						
-						if ($sforum['lastpostdate'] > $forum['lastpostdate'])
-						{
+						if ($sforum['lastpostdate'] > $forum['lastpostdate']) {
 							$forum['lastpostdate'] = $sforum['lastpostdate'];
 							$forum['lastpostid'] = $sforum['lastpostid'];
 							$forum['lastpostuser'] = $sforum['lastpostuser'];
-							foreach ($sforum as $key=>$val)
-							{
+							foreach ($sforum as $key=>$val) {
 								if (substr($key,0,3) != 'lu_') continue;
 								$forum[$key] = $val;
 							}
 						}
 					}
 				}
-			}
-			else
+			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
-		}
-		else
+		} else
 			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
 				
@@ -325,10 +297,8 @@ function makeForumListinglol($parent, $boardlol='')
 			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
 			
 		$fdata['description'] = $forum['description'];
-		if (isset($mods[$forum['id']]))
-		{
-			foreach($mods[$forum['id']] as $user)
-			{
+		if (isset($mods[$forum['id']])) {
+			foreach($mods[$forum['id']] as $user) {
 				if ($user['groupid'])
 					$localMods .= htmlspecialchars($usergroups[$user['groupid']]['name']).', ';
 				else
@@ -338,10 +308,8 @@ function makeForumListinglol($parent, $boardlol='')
 		if($localMods)
 			$fdata['localmods'] = substr($localMods,0,-2);
 			
-		if (isset($subfora[$forum['id']]))
-		{
-			foreach ($subfora[$forum['id']] as $subforum)
-			{
+		if (isset($subfora[$forum['id']])) {
+			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
 				
@@ -353,32 +321,29 @@ function makeForumListinglol($parent, $boardlol='')
 				$subforaList .= $link.', ';
 			}
 		}
-			
+
 		if($subforaList)
 			$fdata['subforums'] = substr($subforaList,0,-2);
-			
+
 		$fdata['threads'] = $forum['numthreads'];
 		$fdata['posts'] = $forum['numposts'];
-		if($forum['lastpostdate'])
-		{
+		if($forum['lastpostdate']) {
 			$user = getDataPrefix($forum, "lu_");
 			$fdata['lastpostdate'] = formatdate($forum['lastpostdate']);
 			$fdata['lastpostuser'] = UserLink($user);
 			$fdata['lastpostlink'] = actionLink('post', $forum['lastpostid']);
-		}
-		else
+		} else
 			$fdata['lastpostdate'] = 0;
-			
+
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 	
 	RenderTemplate('forumlist1', array('categories' => $categories));
 }
 
-function makeForumListingmeh($parent, $boardmeh='')
-{
+function makeForumListingmeh($parent, $boardmeh='') {
 	global $loguserid, $loguser, $usergroups;
-		
+
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 	$viewhidden = HasPermission('user.viewhiddenforums');
 	$rFora = Query("	SELECT f.*,
@@ -396,9 +361,9 @@ function makeForumListingmeh($parent, $boardmeh='')
 						$loguserid, $viewableforums, $boardmeh, -$parent);
 	if (!NumRows($rFora))
 		return;
-		
+
 	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $boardmeh, -$parent));
-						
+
 	$rSubfora = Query("	SELECT f.*,
 							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
 							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
@@ -411,7 +376,7 @@ function makeForumListingmeh($parent, $boardmeh='')
 	$subfora = array();
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
-	
+
 	$rMods = Query("	SELECT 
 							p.(arg, applyto, id),
 							u.(_userfields)
@@ -426,33 +391,29 @@ function makeForumListingmeh($parent, $boardmeh='')
 	while($mod = Fetch($rMods))
 		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
 	$categories = array();
-	while($forum = Fetch($rFora))
-	{
+	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
 		if($skipThisOne)
 			continue;
-			
+
 		if (!$categories[$forum['catid']])
 			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
-			
+
 		$fdata = array('id' => $forum['id']);
-			
-		if ($forum['redirect'])
-		{
+
+		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
-			if ($redir[0] == ':')
-			{
+			if ($redir[0] == ':') {
 				$redir = explode(':', $redir);
 				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
 				$forum['numthreads'] = '-';
 				$forum['numposts'] = '-';
 				
-				if ($redir[1] == 'board')
-				{
+				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
-					
+
 					$forum['numthreads'] = 0;
 					$forum['numposts'] = 0;
 					$sforums = Query("	SELECT f.id, f.numthreads, f.numposts, f.lastpostid, f.lastpostuser, f.lastpostdate,
@@ -465,38 +426,33 @@ function makeForumListingmeh($parent, $boardmeh='')
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 										WHERE f.l>={1} AND f.r<={2}", 
 										$loguserid, $f['minl'], $f['maxr']);
-					while ($sforum = Fetch($sforums))
-					{
+					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
 						$forum['numposts'] += $sforum['numposts'];
-						
+
 						if (!HasPermission('forum.viewforum', $sforum['id']))
 							continue;
-						
+
 						if (!$sforum['ignored'])
 							$forum['numnew'] += $sforum['numnew'];
-						
-						if ($sforum['lastpostdate'] > $forum['lastpostdate'])
-						{
+
+						if ($sforum['lastpostdate'] > $forum['lastpostdate']) {
 							$forum['lastpostdate'] = $sforum['lastpostdate'];
 							$forum['lastpostid'] = $sforum['lastpostid'];
 							$forum['lastpostuser'] = $sforum['lastpostuser'];
-							foreach ($sforum as $key=>$val)
-							{
+							foreach ($sforum as $key=>$val) {
 								if (substr($key,0,3) != 'lu_') continue;
 								$forum[$key] = $val;
 							}
 						}
 					}
 				}
-			}
-			else
+			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
-		}
-		else
+		} else
 			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
-				
+
 		$fdata['ignored'] = $forum['ignored'];
 		$newstuff = 0;
 		$localMods = '';
@@ -504,12 +460,10 @@ function makeForumListingmeh($parent, $boardmeh='')
 		$newstuff = $forum['ignored'] ? 0 : $forum['numnew'];
 		if ($newstuff > 0)
 			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
-			
+
 		$fdata['description'] = $forum['description'];
-		if (isset($mods[$forum['id']]))
-		{
-			foreach($mods[$forum['id']] as $user)
-			{
+		if (isset($mods[$forum['id']])) {
+			foreach($mods[$forum['id']] as $user) {
 				if ($user['groupid'])
 					$localMods .= htmlspecialchars($usergroups[$user['groupid']]['name']).', ';
 				else
@@ -519,13 +473,11 @@ function makeForumListingmeh($parent, $boardmeh='')
 		if($localMods)
 			$fdata['localmods'] = substr($localMods,0,-2);
 			
-		if (isset($subfora[$forum['id']]))
-		{
-			foreach ($subfora[$forum['id']] as $subforum)
-			{
+		if (isset($subfora[$forum['id']])) {
+			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
-				
+
 				if ($subforum['ignored'])
 					$link = '<span class="ignored">'.$link.'</span>';
 				else if ($subforum['numnew'] > 0)
@@ -534,34 +486,31 @@ function makeForumListingmeh($parent, $boardmeh='')
 				$subforaList .= $link.', ';
 			}
 		}
-			
+
 		if($subforaList)
 			$fdata['subforums'] = substr($subforaList,0,-2);
-			
+
 		$fdata['threads'] = $forum['numthreads'];
 		$fdata['posts'] = $forum['numposts'];
-		if($forum['lastpostdate'])
-		{
+		if($forum['lastpostdate']) {
 			$user = getDataPrefix($forum, "lu_");
 			$fdata['lastpostdate'] = formatdate($forum['lastpostdate']);
 			$fdata['lastpostuser'] = UserLink($user);
 			$fdata['lastpostlink'] = actionLink('post', $forum['lastpostid']);
-		}
-		else
+		} else
 			$fdata['lastpostdate'] = 0;
-			
+
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
-	
+
 	RenderTemplate('forumlist2', array('categories' => $categories));
 }
 
 
 // parent=0: index listing
-function makeForumListing($parent, $board='')
-{
+function makeForumListing($parent, $board='') {
 	global $loguserid, $loguser, $usergroups;
-		
+
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 	$viewhidden = HasPermission('user.viewhiddenforums');
 
@@ -580,9 +529,9 @@ function makeForumListing($parent, $board='')
 						$loguserid, $viewableforums, $board, -$parent);
 	if (!NumRows($rFora))
 		return;
-		
+
 	$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE ".($parent==0 ? 'board={0}' : 'catid={1}'), $board, -$parent));
-						
+
 	$rSubfora = Query("	SELECT f.*,
 							".($loguserid ? "(NOT ISNULL(i.fid))" : "0")." ignored,
 							(SELECT COUNT(*) FROM {threads} t".($loguserid ? " LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={0}" : "")."
@@ -596,7 +545,7 @@ function makeForumListing($parent, $board='')
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
-	
+
 	$rMods = Query("	SELECT 
 							p.(arg, applyto, id),
 							u.(_userfields)
@@ -612,30 +561,26 @@ function makeForumListing($parent, $board='')
 		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
 
 	$categories = array();
-	while($forum = Fetch($rFora))
-	{
+	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
 		if($skipThisOne)
 			continue;
-			
+
 		if (!$categories[$forum['catid']])
 			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
-			
+
 		$fdata = array('id' => $forum['id']);
-			
-		if ($forum['redirect'])
-		{
+
+		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
-			if ($redir[0] == ':')
-			{
+			if ($redir[0] == ':') {
 				$redir = explode(':', $redir);
 				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
 				$forum['numthreads'] = '-';
 				$forum['numposts'] = '-';
-				
-				if ($redir[1] == 'board')
-				{
+
+				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
 					
@@ -651,8 +596,7 @@ function makeForumListing($parent, $board='')
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 										WHERE f.l>={1} AND f.r<={2}", 
 										$loguserid, $f['minl'], $f['maxr']);
-					while ($sforum = Fetch($sforums))
-					{
+					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
 						$forum['numposts'] += $sforum['numposts'];
 						
@@ -662,8 +606,7 @@ function makeForumListing($parent, $board='')
 						if (!$sforum['ignored'])
 							$forum['numnew'] += $sforum['numnew'];
 						
-						if ($sforum['lastpostdate'] > $forum['lastpostdate'])
-						{
+						if ($sforum['lastpostdate'] > $forum['lastpostdate']) {
 							$forum['lastpostdate'] = $sforum['lastpostdate'];
 							$forum['lastpostid'] = $sforum['lastpostid'];
 							$forum['lastpostuser'] = $sforum['lastpostuser'];
@@ -675,14 +618,12 @@ function makeForumListing($parent, $board='')
 						}
 					}
 				}
-			}
-			else
+			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
-		}
-		else
+		} else
 			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
-				
+
 		$fdata['ignored'] = $forum['ignored'];
 
 		$newstuff = 0;
@@ -695,10 +636,8 @@ function makeForumListing($parent, $board='')
 			
 		$fdata['description'] = $forum['description'];
 
-		if (isset($mods[$forum['id']]))
-		{
-			foreach($mods[$forum['id']] as $user)
-			{
+		if (isset($mods[$forum['id']])) {
+			foreach($mods[$forum['id']] as $user) {
 				if ($user['groupid'])
 					$localMods .= htmlspecialchars($usergroups[$user['groupid']]['name']).', ';
 				else
@@ -708,14 +647,12 @@ function makeForumListing($parent, $board='')
 
 		if($localMods)
 			$fdata['localmods'] = substr($localMods,0,-2);
-			
-		if (isset($subfora[$forum['id']]))
-		{
-			foreach ($subfora[$forum['id']] as $subforum)
-			{
+
+		if (isset($subfora[$forum['id']])) {
+			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
-				
+
 				if ($subforum['ignored'])
 					$link = '<span class="ignored">'.$link.'</span>';
 				else if ($subforum['numnew'] > 0)
@@ -724,41 +661,37 @@ function makeForumListing($parent, $board='')
 				$subforaList .= $link.', ';
 			}
 		}
-			
+
 		if($subforaList)
 			$fdata['subforums'] = substr($subforaList,0,-2);
-			
+
 		$fdata['threads'] = $forum['numthreads'];
 		$fdata['posts'] = $forum['numposts'];
 
-		if($forum['lastpostdate'])
-		{
+		if($forum['lastpostdate']) {
 			$user = getDataPrefix($forum, "lu_");
 
 			$fdata['lastpostdate'] = formatdate($forum['lastpostdate']);
 			$fdata['lastpostuser'] = UserLink($user);
 			$fdata['lastpostlink'] = actionLink('post', $forum['lastpostid']);
-		}
-		else
+		} else
 			$fdata['lastpostdate'] = 0;
-			
+
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
-	
+
 	RenderTemplate('forumlist', array('categories' => $categories));
 }
 
-function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum = false)
-{
+function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum = false) {
 	global $loguserid, $loguser, $misc;
 
 	$threadlist = array();
-	while ($thread = Fetch($threads))
-	{
+	while ($thread = Fetch($threads)) {
 		$tdata = array('id' => $thread['id']);
 		$starter = getDataPrefix($thread, 'su_');
 		$last = getDataPrefix($thread, 'lu_');
-		
+
 		$ispublic = HasPermission('forum.viewforum', $thread['forum'], true);
 		$tags = ParseThreadTags($thread['title']);
 		$urlname = $ispublic ? $tags[0] : '';
@@ -769,17 +702,15 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 
 		$NewIcon = '';
 		$tdata['gotonew'] = '';
-		
+
 		if($thread['closed'])
 			$NewIcon = 'off';
 		if($thread['replies'] >= $misc['hotcount'])
 			$NewIcon .= 'hot';
 		if((!$loguserid && $thread['lastpostdate'] > time() - 900) ||
-			($loguserid && $thread['lastpostdate'] > $thread['readdate']))
-		{
+			($loguserid && $thread['lastpostdate'] > $thread['readdate'])) {
 			$NewIcon .= 'new';
-			if ($loguserid)
-			{
+			if ($loguserid) {
 				$tdata['gotonew'] = actionLinkTag('<img src="'.resourceLink('img/gotounread.png').'" alt="[go to first unread post]">',
 					'post', '', 'tid='.$thread['id'].'&time='.(int)$thread['readdate']);
 			}
@@ -791,17 +722,15 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 			$tdata['new'] = '<div class="statusIcon '.$NewIcon.'"></div>';
 		else
 			$tdata['new'] = '';
-			
+
 		$tdata['sticky'] = $thread['sticky'];
 
-		if($thread['icon'])
-		{
+		if($thread['icon']) {
 			//This is a hack, but given how icons are stored in the DB, I can do nothing about it without breaking DB compatibility.
 			if(startsWith($thread['icon'], "img/"))
 				$thread['icon'] = resourceLink($thread['icon']);
 			$tdata['icon'] = "<img src=\"".htmlspecialchars($thread['icon'])."\" alt=\"\" class=\"smiley\" style=\"max-width:32px; max-height:32px;\">";
-		}
-		else
+		} else
 			$tdata['icon'] = '';
 
 		$tdata['poll'] = ($thread['poll'] ? "<img src=\"".resourceLink("img/poll.png")."\" alt=\"[poll]\">" : "");
@@ -815,13 +744,10 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 
 		$numpages = floor($total / $ppp);
 		$pl = '';
-		if($numpages <= $n * 2)
-		{
+		if($numpages <= $n * 2) {
 			for($i = 1; $i <= $numpages; $i++)
 				$pl .= " ".actionLinkTag($i+1, "thread", $thread['id'], "from=".($i * $ppp), $urlname);
-		}
-		else
-		{
+		} else {
 			for($i = 1; $i < $n; $i++)
 			$pl .= " ".actionLinkTag($i+1, "thread", $thread['id'], "from=".($i * $ppp), $urlname);
 			$pl .= " &hellip; ";
@@ -832,32 +758,30 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 			$tdata['pagelinks'] = actionLinkTag(1, "thread", $thread['id'], '', $urlname).$pl;
 		else
 			$tdata['pagelinks'] = '';
-			
+
 		if ($showforum)
 			$tdata['forumlink'] = actionLinkTag(htmlspecialchars($thread["f_title"]), "forum", $thread["f_id"], "", $ispublic?$thread["f_title"]:'');
-			
+
 		$tdata['startuser'] = UserLink($starter);
-		
+
 		$tdata['replies'] = $thread['replies'];
 		$tdata['views'] = $thread['views'];
 
 		$tdata['lastpostdate'] = formatdate($thread['lastpostdate']);
 		$tdata['lastpostuser'] = UserLink($last);
 		$tdata['lastpostlink'] = actionLink("post", $thread['lastpostid']);
-		
+
 		$threadlist[$tdata['id']] = $tdata;
 	}
-	
+
 	RenderTemplate('threadlist', array('threads' => $threadlist, 'pagelinks' => $pagelinks, 'dostickies' => $dostickies, 'showforum' => $showforum));
 }
 
-function makeAnncBar()
-{
+function makeAnncBar() {
 	global $loguserid;
-	
+
 	$anncforum = Settings::get('anncForum');
-	if ($anncforum > 0)
-	{
+	if ($anncforum > 0) {
 		$annc = Query("	SELECT 
 							t.id, t.title, t.icon, t.poll, t.forum,
 							t.date anncdate,
@@ -869,27 +793,24 @@ function makeAnncBar()
 							LEFT JOIN {users} u ON u.id=t.user
 						WHERE forum={0}
 						ORDER BY anncdate DESC LIMIT 1", $anncforum, $loguserid);
-								
-		if ($annc && NumRows($annc))
-		{
+
+		if ($annc && NumRows($annc)) {
 			$annc = Fetch($annc);
 			$adata = array();
-			
+
 			$adata['new'] = '';
 			if ((!$loguserid && $annc['anncdate'] > (time()-900)) ||
 				($loguserid && $annc['anncdate'] > $annc['readdate']))
 				$adata['new'] = "<div class=\"statusIcon new\"></div>";
-			
+
 			$adata['poll'] = ($annc['poll'] ? "<img src=\"".resourceLink('img/poll.png')."\" alt=\"Poll\"/> " : '');
 			$adata['link'] = MakeThreadLink($annc);
-			
+
 			$user = getDataPrefix($annc, 'u_');
 			$adata['user'] = UserLink($user);
 			$adata['date'] = formatdate($annc['anncdate']);
-			
+
 			RenderTemplate('anncbar', array('annc' => $adata));
 		}
 	}
 }
-
-?>

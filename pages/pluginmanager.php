@@ -94,7 +94,7 @@ if($_REQUEST['action'] == "enable") {
 	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
 
 	//Make a new file for easier detecting that it is enabled
-	file_put_contents($pluginsDir.$plugin.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
+	file_put_contents($pluginsDir.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
 }
 
 if($_REQUEST['action'] == "disable") {
