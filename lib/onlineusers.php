@@ -70,6 +70,8 @@ function getOnlineUsersText() {
 
 	$onlineUsers = OnlineUsers($OnlineUsersFid);
 
-	return "<a href=\"/online/\"><div style=\"min-height:16px;\" id=\"onlineUsers\">$onlineUsers</div>$refreshCode</a>";
+	if($loguserid)
+		return "<a href=\"/online/\"><div style=\"min-height:16px;\" id=\"onlineUsers\">$onlineUsers</div>$refreshCode</a>";
+	else
+		return "<div style=\"min-height:16px;\" id=\"onlineUsers\">$onlineUsers</div>$refreshCode";
 }
-?>
