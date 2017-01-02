@@ -113,7 +113,7 @@ function makePostText($post, $poster) {
 				ORDER BY filename",
 				'post_attachment', $post['id']);
 		}
-		
+
 		while ($attach = Fetch($attachs)) {
 			$url = URL_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
 			$linkurl = $ispreview ? '#' : $url;
@@ -122,24 +122,21 @@ function makePostText($post, $poster) {
 			$attachblock .= '<br><div class="post_attachment">';
 			
 			$fext = strtolower(substr($attach['filename'], -4));
-			if ($fext == '.png' || $fext == '.jpg' || $fext == 'jpeg' || $fext == '.gif')
-			{
+			if ($fext == '.png' || $fext == '.jpg' || $fext == 'jpeg' || $fext == '.gif') {
 				$alt = htmlspecialchars($attach['filename']).' &mdash; '.BytesToSize($filesize).', viewed '.Plural($attach['downloads'], 'time');
-				
+
 				$attachblock .= '<a href="'.$linkurl.'"><img src="'.$url.'" alt="'.$alt.'" title="'.$alt.'" style="max-width:300px; max-height:300px;"></a>';
-			}
-			else
-			{
+			} else {
 				$link = '<a href="'.$linkurl.'">'.htmlspecialchars($attach['filename']).'</a>';
-				
+
 				$desc = htmlspecialchars($attach['description']);
 				if ($desc) $desc .= '<br>';
-				
+
 				$attachblock .= '<strong>'.__('Attachment: ').$link.'</strong><br>';
 				$attachblock .= '<div class="smallFonts">'.$desc;
 				$attachblock .= BytesToSize($filesize).__(' &mdash; Downloaded ').Plural($attach['downloads'], 'time').'</div>';
 			}
-			
+
 			$attachblock .= '</div>';
 		}
 	}
@@ -147,7 +144,7 @@ function makePostText($post, $poster) {
 	$postText = $poster['postheader'].$post['text'].$attachblock.$separator.$poster['signature'];
 	$postText = ApplyTags($postText, $tags);
 	$postText = CleanUpPost($postText, $noSmilies, false);
-	
+
 	return $postText;
 }
 
@@ -176,8 +173,10 @@ function makePost($post, $type, $params=array()) {
 	$post['type'] = $type;
 	$post['formattedDate'] = formatdate($post['date']);
 
-	if (!HasPermission('admin.viewips')) $post['ip'] = '';
-	else $post['ip'] = htmlspecialchars($post['ip']); // TODO IP formatting?
+	if (!HasPermission('admin.viewips'))
+		$post['ip'] = '';
+	else
+		$post['ip'] = htmlspecialchars($post['ip']); // TODO IP formatting?
 
 	if($post['deleted'] && $type == POST_NORMAL) {
 		$post['deluserlink'] = UserLink(getDataPrefix($post, 'du_'));
@@ -189,7 +188,7 @@ function makePost($post, $type, $params=array()) {
 			$links['view'] = "<a href=\"#\" onclick=\"replacePost(".$post['id'].",true); return false;\">".__("View")."</a>";
 		}
 		$post['links'] = $links;
-		
+
 		RenderTemplate('postbox_deleted', array('post' => $post));
 		return;
 	}

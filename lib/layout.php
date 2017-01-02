@@ -312,12 +312,12 @@ function makeForumListinglol($parent, $boardlol='') {
 			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
-				
+
 				if ($subforum['ignored'])
 					$link = '<span class="ignored">'.$link.'</span>';
 				else if ($subforum['numnew'] > 0)
 					$link = '<div class="statusIcon new"></div> '.$link;
-					
+
 				$subforaList .= $link.', ';
 			}
 		}
@@ -337,7 +337,7 @@ function makeForumListinglol($parent, $boardlol='') {
 
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
-	
+
 	RenderTemplate('forumlist1', array('categories' => $categories));
 }
 
@@ -409,7 +409,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 				$fdata['link'] = actionLinkTag($forum['title'], $redir[1], $redir[2], $redir[3], $redir[4]);
 				$forum['numthreads'] = '-';
 				$forum['numposts'] = '-';
-				
+
 				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
@@ -472,7 +472,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 		}
 		if($localMods)
 			$fdata['localmods'] = substr($localMods,0,-2);
-			
+
 		if (isset($subfora[$forum['id']])) {
 			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
@@ -482,7 +482,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 					$link = '<span class="ignored">'.$link.'</span>';
 				else if ($subforum['numnew'] > 0)
 					$link = '<div class="statusIcon new"></div> '.$link;
-					
+
 				$subforaList .= $link.', ';
 			}
 		}
@@ -583,7 +583,7 @@ function makeForumListing($parent, $board='') {
 				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
-					
+
 					$forum['numthreads'] = 0;
 					$forum['numposts'] = 0;
 					$sforums = Query("	SELECT f.id, f.numthreads, f.numposts, f.lastpostid, f.lastpostuser, f.lastpostdate,
@@ -599,19 +599,18 @@ function makeForumListing($parent, $board='') {
 					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
 						$forum['numposts'] += $sforum['numposts'];
-						
+
 						if (!HasPermission('forum.viewforum', $sforum['id']))
 							continue;
-						
+
 						if (!$sforum['ignored'])
 							$forum['numnew'] += $sforum['numnew'];
-						
+
 						if ($sforum['lastpostdate'] > $forum['lastpostdate']) {
 							$forum['lastpostdate'] = $sforum['lastpostdate'];
 							$forum['lastpostid'] = $sforum['lastpostid'];
 							$forum['lastpostuser'] = $sforum['lastpostuser'];
-							foreach ($sforum as $key=>$val)
-							{
+							foreach ($sforum as $key=>$val) {
 								if (substr($key,0,3) != 'lu_') continue;
 								$forum[$key] = $val;
 							}
@@ -633,7 +632,7 @@ function makeForumListing($parent, $board='') {
 		$newstuff = $forum['ignored'] ? 0 : $forum['numnew'];
 		if ($newstuff > 0)
 			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
-			
+
 		$fdata['description'] = $forum['description'];
 
 		if (isset($mods[$forum['id']])) {
@@ -657,7 +656,7 @@ function makeForumListing($parent, $board='') {
 					$link = '<span class="ignored">'.$link.'</span>';
 				else if ($subforum['numnew'] > 0)
 					$link = '<div class="statusIcon new"></div> '.$link;
-					
+
 				$subforaList .= $link.', ';
 			}
 		}
@@ -714,8 +713,7 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 				$tdata['gotonew'] = actionLinkTag('<img src="'.resourceLink('img/gotounread.png').'" alt="[go to first unread post]">',
 					'post', '', 'tid='.$thread['id'].'&time='.(int)$thread['readdate']);
 			}
-		}
-		else if(!$thread['closed'] && !$thread['sticky'] && Settings::get("oldThreadThreshold") > 0 && $thread['lastpostdate'] < time() - (2592000 * Settings::get("oldThreadThreshold")))
+		} else if(!$thread['closed'] && !$thread['sticky'] && Settings::get("oldThreadThreshold") > 0 && $thread['lastpostdate'] < time() - (2592000 * Settings::get("oldThreadThreshold")))
 			$NewIcon = 'old';
 
 		if($NewIcon)

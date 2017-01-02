@@ -25,7 +25,7 @@ if($id == $loguserid) {
 }
 
 $canDeleteComments = ($id == $loguserid && HasPermission('user.deleteownusercomments')) || HasPermission('admin.adminusercomments');
-$canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
+$canComment = (HasPermission('user.postusercomments')) || HasPermission('admin.adminusercomments');
 
 if($loguserid && $_REQUEST['token'] == $loguser['token']) {
 	if(isset($_GET['block'])) {
@@ -269,24 +269,28 @@ $rComments = Query("SELECT
 		WHERE uc.uid={0}
 		ORDER BY uc.date ASC LIMIT {1u},{2u}", $id, $realFrom, $realLen);
 
+if (!HasPermission('user.postusercomments') && $user['primarygroup'] == Settings::get('bannedGroup'))
+	$profilecommenterror = 'You may not post profile comments here because you are banned.';
+else
+	$profilecommenterror = 'You may not post profile comments here.';
+
 $pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']), $cpp, $from, $total);
 
 $comments = array();
-while($comment = Fetch($rComments))
-{
+while($comment = Fetch($rComments)) {
 	$cmt = array();
 	
 	$deleteLink = '';
 	if($canDeleteComments || ($comment['cid'] == $loguserid && HasPermission('user.deleteownusercomments')))
 		$deleteLink = "<small style=\"float: right; margin: 0px 4px;\">".
 			actionLinkTag("&#x2718;", "profile", $id, "action=delete&cid=".$comment['id']."&token={$loguser['token']}")."</small>";
-			
+
 	$cmt['deleteLink'] = $deleteLink;
-	
+
 	$cmt['userlink'] = UserLink(getDataPrefix($comment, 'u_'));
 	$cmt['formattedDate'] = relativedate($comment['date']);
 	$cmt['text'] = CleanUpPost($comment['text']);
-	
+
 	$comments[] = $cmt;
 }
 
@@ -309,6 +313,8 @@ RenderTemplate('profile', array(
 	'profileParts' => $profileParts,
 	'comments' => $comments,
 	'commentField' => $commentField,
+	'profilecommenterror' => $profilecommenterror,
+	
 	'pagelinks' => $pagelinks));	
 
 
