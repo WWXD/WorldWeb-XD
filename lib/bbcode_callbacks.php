@@ -30,6 +30,7 @@ $bbcodeCallbacks = array
 	"[td" => "bbcodeTableCell",
 
 	'[youtube' => 'bbcodeYoutube',
+	'[vidmeo' => 'bbcodeVidmeo',
     '[gist' => 'bbcodeGist',
 
 	"[instameme" => "bbcodeMeme",
@@ -293,6 +294,39 @@ function bbcodeYoutube($contents, $arg, $parenttag)
 		return "[Invalid youtube video ID]";
 
 	return '[youtube]'.$contents.'[/youtube]';
+}
+
+function getVimeoIdFromUrl($url)
+{
+    $pattern =
+        '%^# Match any youtube URL
+        (?:https?://)?	# Optional scheme. Either http or https
+        (?:www\.)?		# Optional www subdomain
+        vimeo.com/		# The host,
+          (?:			# Group path alternatives
+            /video/		# either /v/
+          | /			# or the root
+          )				# End path alternatives.
+        ([\w-]{8,10})	# Allow 8-10 for 9 char vimeo id.
+        $%x'
+        ;
+    $result = preg_match($pattern, $url, $matches);
+    if (false !== $result) {
+        return $matches[1];
+    }
+    return false;
+}
+
+function bbcodeVimeo($contents, $arg, $parenttag) {
+	$contents = trim($contents);
+	$id = getVimeoIdFromUrl($contents);
+	if($id)
+		$contents = $id;
+
+	if(!preg_match("/^[\-0-9_a-zA-Z]+$/", $contents))
+		return "[Invalid vimeo video ID]";
+
+	return '[vimeo]'.$contents.'[/vimeo]';
 }
 
 function bbcodeGist($contents, $arg) {

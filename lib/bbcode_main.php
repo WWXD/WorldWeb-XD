@@ -97,6 +97,10 @@ function securityPostFilter($s)
 	$s = preg_replace('@\[youtube\]([a-zA-Z0-9-_]{11})\[/youtube\]@i', 
 		'<iframe width="560" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>', $s);
 
+	// Now do the same for vimeo
+	$s = preg_replace('@\[vimeo\]([a-zA-Z0-9-_]{9})\[/vimeo\]@i', 
+		'<iframe width="560" height="315" src="//player.vimeo.com/video/$1?portrait=0&color=333" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>', $s);
+
 	$s = preg_replace("'-moz-binding'si"," -mo<em></em>z-binding", $s);
 	//$s = preg_replace("'filter:'si","filter<em></em>:>", $s);
 	//$s = preg_replace("'javascript:'si","javascript<em></em>:>", $s);

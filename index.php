@@ -204,6 +204,18 @@ if (file_exists(resourceLink('themes/$theme/logo.png'))) {
 	$logo = '<h1>'.$layout_boardtitle.'</h1><h3>'.$layout_description.'</h3>';
 }
 
+function checkForImage(&$image, $external, $file) {
+	global $dataDir, $dataUrl;
+	if($image) return;
+	if($external) {
+		if(file_exists($dataDir.$file))
+			$image = $dataUrl.$file;
+	} else {
+		if(file_exists($file))
+			$image = resourceLink($file);
+	}
+}
+
 checkForImage($favicon, true, "logos/favicon.gif");
 checkForImage($favicon, true, "logos/favicon.ico");
 checkForImage($favicon, false, "img/favicon.ico");
