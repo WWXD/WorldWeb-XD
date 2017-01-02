@@ -6,7 +6,7 @@
 		</tr>
 		<tr>
 			<td class="cell2 center" style="width:20%;">
-				User name
+				User name or Email
 			</td>
 			<td class="cell0">
 				{$fields.username}

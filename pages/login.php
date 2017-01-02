@@ -17,7 +17,7 @@ if($_POST['action'] == "logout" && $loguserid) {
 	$okay = false;
 	$pass = $_POST['pass'];
 
-	$user = Fetch(Query("select * from {users} where name={0}", $_POST['name']));
+	$user = Fetch(Query("select * from {users} where name={0} or email={0}", $_POST['name']));
 	if($user) {
 		$sha = doHash($pass.SALT.$user['pss']);
 		if($user['password'] === $sha)
@@ -25,12 +25,11 @@ if($_POST['action'] == "logout" && $loguserid) {
 	}
 
 	// auth plugins
-	if (!$okay)
-		{ $bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php'); }
 
 	if(!$okay) {
 		Report("A visitor from [b]".$_SERVER['REMOTE_ADDR']."[/] tried to log in as [b]".$user['name']."[/].", 1);
 		Alert(__("Invalid user name or password."));
+		$bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php');
 	} else {
 		//TODO: Tie sessions to IPs if user has enabled it (or probably not)
 
@@ -39,7 +38,7 @@ if($_POST['action'] == "logout" && $loguserid) {
 		Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], $_POST['session']?1:0);
 
 		Report("[b]".$user['name']."[/] logged in from [b]".$_SERVER['REMOTE_ADDR']."[/].", 1);
-		
+
 		$rLogUser = Query("select id, pss, password from {users} where 1");
 		$matches = array();
 
@@ -68,7 +67,7 @@ if(Settings::get("mailResetSender") != "")
 	$forgotPass = "<button onclick=\"document.location = '".htmlentities(actionLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
 	
 $fields = array(
-	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=20>",
+	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",
 	'password' => "<input type=\"password\" name=\"pass\" size=24>",
 	'session' => "<label><input type=\"checkbox\" name=\"session\">".__("This session only")."</label>",
 
@@ -84,5 +83,3 @@ echo "</form>
 	<script type=\"text/javascript\">
 		document.loginform.name.focus();
 	</script>";
-
-?>

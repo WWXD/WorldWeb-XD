@@ -185,20 +185,20 @@ if($title != '')
 // Board logo and theme
 
 if (file_exists(resourceLink('themes/$theme/logo.png'))) {
-	$logo = print '<img id="theme_banner" src="$logos/logo_$theme.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+	$logo = '<img id="theme_banner" src="themes/$theme/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else if (file_exists(resourceLink('themes/$theme/logo.jpg'))) {
-	$logo = '<img id="theme_banner" src="$logos/logo_$theme.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else if (file_exists(resourceLink('themes/$theme/logo.jpeg'))) {
-	$logo = '<img id="theme_banner" src="$logos/logo_$theme.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else if (file_exists(resourceLink('themes/$theme/logo.gif'))) {
-	$logo = '<img id="theme_banner" src="$logos/logo_$theme.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists('img/logo.png')) {
+	$logo = '<img id="theme_banner" src="themes/$theme/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
+} else if (file_exists(resourceLink('img/logo.png'))) {
 	$logo = '<img id="theme_banner" src="img/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists('img/logo.jpg')) {
+} else if (file_exists(resourceLink('img/logo.jpg'))) {
 	$logo = '<img id="theme_banner" src="img/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists('img/logo.jpeg')) {
+} else if (file_exists(resourceLink('img/logo.jpeg'))) {
 	$logo = '<img id="theme_banner" src="img/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists('img/logo.gif')) {
+} else if (file_exists(resourceLink('img/logo.gif'))) {
 	$logo = '<img id="theme_banner" src="img/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else {
 	$logo = '<h1>'.$layout_boardtitle.'</h1><h3>'.$layout_description.'</h3>';
