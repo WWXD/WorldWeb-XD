@@ -15,7 +15,7 @@ if ($show != 'threads' && $show != 'posts') $show = 'threads';
 $from = (int)$_GET['from'];
 $fparam = $from ? '&from='.$from : '';
 
-$spans = array(3600=>__('1 hour'), 86400=>__('1 day'), 259200=>__('3 days'), 'new'=>__('New posts'));
+$spans = array(3600=>__('1 hour'), 86400=>__('1 day'), 259200=>__('3 days'), 604800=>__('1 week'), 'new'=>__('New posts'));
 $options = array();
 foreach($spans as $span=>$desc) {
 	if ($span == $time)

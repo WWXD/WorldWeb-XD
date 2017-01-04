@@ -94,13 +94,10 @@ function getPluginData($plugin, $load = true)
 	}
 	closedir($pdir);
 	
-	if (is_dir($dir.'/pages'))
-	{
+	if (is_dir($dir.'/pages')) {
 		$pdir = @opendir($dir.'/pages');
-		while($f = readdir($pdir))
-		{
-			if(substr($f, -4) == ".php")
-			{
+		while($f = readdir($pdir)) {
+			if(substr($f, -4) == ".php") {
 				$pagename = substr($f, 0, -4);
 				$plugindata['pages'][] = $pagename;
 				if($load) $pluginpages[$pagename] = $plugindata['dir'];
@@ -109,13 +106,10 @@ function getPluginData($plugin, $load = true)
 		closedir($pdir);
 	}
 	
-	if (is_dir($dir.'/templates'))
-	{
-		$pdir = @opendir($dir.'/templates');
-		while($f = readdir($pdir))
-		{
-			if(substr($f, -4) == ".tpl")
-			{
+	if (is_dir($dir.'/layouts')) {
+		$pdir = @opendir($dir.'/layouts');
+		while($f = readdir($pdir)) {
+			if(substr($f, -4) == ".tpl") {
 				$tplname = substr($f, 0, -4);
 				$plugindata['templates'][] = $tplname;
 				if($load) $plugintemplates[$tplname] = $plugindata['dir'];
@@ -129,16 +123,13 @@ function getPluginData($plugin, $load = true)
 
 $rPlugins = Query("select * from {enabledplugins}");
 
-while($plugin = Fetch($rPlugins))
-{
+while($plugin = Fetch($rPlugins)) {
 	$plugin = $plugin["plugin"];
 
-	try
-	{
+	try {
 		$plugins[$plugin] = getPluginData($plugin);
 	}
-	catch(BadPluginException $e)
-	{
+	catch(BadPluginException $e) {
 		Report(Format("Disabled plugin \"{0}\" -- {1}", $plugin, $e->getMessage()));
 		Query("delete from {enabledplugins} where plugin={0}", $plugin);
 	}
