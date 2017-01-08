@@ -248,7 +248,7 @@ function makeForumListinglol($parent, $boardlol='') {
 				if ($redir[1] == 'board') {
 					$tboard = $redir[2];
 					$f = Fetch(Query("SELECT MIN(l) minl, MAX(r) maxr FROM {forums} WHERE board={0}", $tboard));
-					
+
 					$forum['numthreads'] = 0;
 					$forum['numposts'] = 0;
 					$sforums = Query("	SELECT f.id, f.numthreads, f.numposts, f.lastpostid, f.lastpostuser, f.lastpostdate,
@@ -264,13 +264,13 @@ function makeForumListinglol($parent, $boardlol='') {
 					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
 						$forum['numposts'] += $sforum['numposts'];
-						
+
 						if (!HasPermission('forum.viewforum', $sforum['id']))
 							continue;
-						
+
 						if (!$sforum['ignored'])
 							$forum['numnew'] += $sforum['numnew'];
-						
+
 						if ($sforum['lastpostdate'] > $forum['lastpostdate']) {
 							$forum['lastpostdate'] = $sforum['lastpostdate'];
 							$forum['lastpostid'] = $sforum['lastpostid'];
@@ -287,7 +287,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		} else
 			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
-				
+
 		$fdata['ignored'] = $forum['ignored'];
 		$newstuff = 0;
 		$localMods = '';
@@ -307,7 +307,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		}
 		if($localMods)
 			$fdata['localmods'] = substr($localMods,0,-2);
-			
+
 		if (isset($subfora[$forum['id']])) {
 			foreach ($subfora[$forum['id']] as $subforum) {
 				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
@@ -338,7 +338,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist1', array('categories' => $categories));
+	RenderTemplate('forumlist1', array(parseBBCode('categories' => $categories)));
 }
 
 function makeForumListingmeh($parent, $boardmeh='') {
@@ -503,7 +503,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist2', array('categories' => $categories));
+	RenderTemplate('forumlist2', array(parseBBCode('categories' => $categories)));
 }
 
 
@@ -679,7 +679,7 @@ function makeForumListing($parent, $board='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist', array('categories' => $categories));
+	RenderTemplate('forumlist', array(parseBBCode('categories' => $categories)));
 }
 
 function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum = false) {

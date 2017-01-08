@@ -25,6 +25,9 @@ if (HasPermission('admin.editusers')) {
 	$editUserMode = false;
 }
 
+if (!HasPermission('admin.editusers') && !HasPermission('user.editprofile') && $loguser['banned'])
+	Kill(__("You may not edit your profile because you are banned."));
+
 $user = Fetch(Query("select * from {users} where id={0}", $userid));
 $usergroup = $usergroups[$user['primarygroup']];
 
@@ -216,7 +219,7 @@ if($_POST['actionsave']) {
 	// catch spamvertisers early
 	if ((time() - $user['regdate']) < 300 && preg_match('@^\w+\d+$@', $user['name'])) {
 		$lolbio = strtolower($_POST['bio']);
-		
+
 		if ((substr($lolbio,0,7) == 'http://'
 				|| substr($lolbio,0,12) == '[url]http://'
 				|| substr($lolbio,0,12) == '[url=http://')
@@ -229,8 +232,8 @@ if($_POST['actionsave']) {
 			die(header('Location: '.actionLink('index')));
 		}
 	}
-	
-	
+
+
 	$passwordEntered = false;
 
 	if($_POST['currpassword'] != "") {
@@ -308,8 +311,7 @@ if($_POST['actionsave']) {
 						$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
 					break;
 				case "birthday":
-					if($_POST[$field.'M'] && $_POST[$field.'D'] && $_POST[$field.'Y'])
-					{
+					if($_POST[$field.'M'] && $_POST[$field.'D'] && $_POST[$field.'Y']) {
 						$val = @mktime(0, 0, 0, (int)$_POST[$field.'M'], (int)$_POST[$field.'D'], (int)$_POST[$field.'Y']);
 						if($val > time())
 							$val = 0;
@@ -356,7 +358,7 @@ if($_POST['actionsave']) {
 						}
 					}
 					break;
-				
+
 				case "bitmask":
 					$val = 0;
 					if ($_POST[$field]) {
@@ -367,7 +369,7 @@ if($_POST['actionsave']) {
 					$sets[] = $field." = ".(int)$val;
 					break;
 			}
-			
+
 			$epFields[$catid][$field] = $item;
 		}
 	}
@@ -435,7 +437,7 @@ function dummycallback($field, $item) {
 
 function HandlePicture($field, $type, &$usepic) {
 	global $userid;
-	
+
 	if($type == 0) {
 		$extensions = array(".png",".jpg",".jpeg",".gif");
 		$maxDim = 200;
@@ -478,7 +480,7 @@ function HandlePicture($field, $type, &$usepic) {
 			$ext = '.png';
 			break;
 	}
-	
+
 	$randomcrap = '_'.time();
 	$targetFile = false;
 
@@ -511,10 +513,10 @@ function HandlePicture($field, $type, &$usepic) {
 		} else
 			copy($tempFile, DATA_DIR.$targetFile);
 	}
-	
+
 	// file created to verify that the avatar was created here
 	file_put_contents(DATA_DIR.$targetFile.'.internal', hash_hmac_file('sha256', DATA_DIR.$targetFile, $userid.SALT));
-	
+
 	$usepic = '$root/'.$targetFile;
 	return true;
 }
@@ -871,6 +873,17 @@ function AddField($page, $cat, $id, $label, $type, $misc=null) {
 	$epFields[$page.'.'.$cat][$id] = $field;
 }
 
+if (!$mobileLayout) {
+	$previewPost['text'] = Settings::get("profilePreviewText");
+
+	$previewPost['num'] = 0;
+	$previewPost['id'] = 0;
+
+	foreach($user as $key => $value)
+		$previewPost['u_'.$key] = $value;
+
+	MakePost($previewPost, POST_SAMPLE);
+}
 ?>
 <script type="text/javascript">
 var homepagename = "<?php echo addslashes($epFields['personal.contact']['homepagename']['value']); ?>";

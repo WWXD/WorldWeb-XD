@@ -12,16 +12,12 @@ function registerSetting($settingname, $label, $check = false)
     // TODO: Make this function.
 }
 
-function getSetting($settingname, $useUser = false)
-{
+function getSetting($settingname, $useUser = false) {
 	global $pluginSettings, $user;
-	if(!$useUser) //loguser
-	{
+	if(!$useUser) //loguser {
 		if(array_key_exists($settingname, $pluginSettings))
 			return $pluginSettings[$settingname]["value"];
-	}
-	else if($user['pluginsettings'] != "");
-	{
+	} else if($user['pluginsettings'] != ""); {
 		$settings = unserialize($user['pluginsettings']);
 		if(!is_array($settings))
 			return "";
@@ -34,8 +30,7 @@ function getSetting($settingname, $useUser = false)
 class BadPluginException extends Exception { }
 
 // TODO cache all those data so we don't have to scan directories at each run
-function getPluginData($plugin, $load = true)
-{
+function getPluginData($plugin, $load = true) {
 	global $pluginpages, $pluginbuckets, $plugintemplates, $misc, $abxd_version;
 
 	if(!is_dir(__DIR__."/../plugins/".$plugin))
@@ -50,8 +45,7 @@ function getPluginData($plugin, $load = true)
 
 	$settingsFile = file_get_contents(__DIR__."/../plugins/".$plugin."/plugin.settings");
 	$settings = explode("\n", $settingsFile);
-	foreach($settings as $setting)
-	{
+	foreach($settings as $setting) {
 		$setting = trim($setting);
 		if($setting == "") continue;
 		$setting = explode("=", $setting);
@@ -77,10 +71,8 @@ function getPluginData($plugin, $load = true)
 
 	$dir = __DIR__."/../plugins/".$plugindata['dir'];
 	$pdir = @opendir($dir);
-	while($f = readdir($pdir))
-	{
-		if(substr($f, -4) == ".php")
-		{
+	while($f = readdir($pdir)) {
+		if(substr($f, -4) == ".php") {
 			if(substr($f, 0, 5) == "page_") {
 				$pagename = substr($f, 5, strlen($f) - 4 - 5);
 				$plugindata["pages"][] = $pagename;
@@ -139,8 +131,7 @@ while($plugin = Fetch($rPlugins)) {
 
 
 
-if($loguser['pluginsettings'] != "")
-{
+if($loguser['pluginsettings'] != "") {
 	$settings = unserialize($loguser['pluginsettings']);
 	if(!is_array($settings))
 		$settings = array();
