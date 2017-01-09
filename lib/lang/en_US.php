@@ -34,8 +34,7 @@ $days = array(
 	"Saturday",
 );
 
-function Plural($i, $s)
-{
+function Plural($i, $s) {
 	if($i == 1) //For 1, just return that.
 		return $i." ".$s;
 
@@ -49,8 +48,7 @@ function Plural($i, $s)
 	return $i." ".$s;
 }
 
-function HisHer($user)
-{
+function HisHer($user) {
 	if($user['sex'] == 0)
 		return "his";
 	if($user['sex'] == 1)

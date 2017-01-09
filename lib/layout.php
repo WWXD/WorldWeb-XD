@@ -338,7 +338,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist1', array(parseBBCode('categories' => $categories)));
+	RenderTemplate('forumlist1', array('categories' => parseBBCode($categories)));
 }
 
 function makeForumListingmeh($parent, $boardmeh='') {
@@ -503,7 +503,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist2', array(parseBBCode('categories' => $categories)));
+	RenderTemplate('forumlist2', array('categories' => parseBBCode($categories)));
 }
 
 
@@ -679,7 +679,7 @@ function makeForumListing($parent, $board='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist', array(parseBBCode('categories' => $categories)));
+	RenderTemplate('forumlist', array('categories' => parseBBCode($categories)));
 }
 
 function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum = false) {
