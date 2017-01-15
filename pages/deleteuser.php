@@ -16,8 +16,6 @@ makeCrumbs(array(actionlink('deleteuser') => __("Delete User")));
 	9) If the user trying to delete has a lower rank than the one being deleted. This is checked 4 times, twice being the message, while the other two is displaying the nuke page.
 
 	Yes, I know, its a lot of checks, but you have to be secure. Otherwise, you'll have a destroyed board: The delete feature is very powerfull. If ever someone got a hold of the nuke plugin pre-security updates with the nuke permission, your board can be done for, especially considering that recalc is only allowed to be ran by owner. (And no, I'm not going to make it being ran by permissions, at least, not right now.) I'm not sure how MyBB does it (and I don't want to know; it doesn't interest me.).
-
-	ToDo: Make it that you can't delete a temp banned user.
 	*/
 
 $uid = (int)$_GET["id"];
@@ -55,6 +53,9 @@ if($user["primarygroup"] > 0)
 
 if($user["primarygroup"] < 1)
 	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
+
+if($user['tempbantime'])
+	Kill(__('You can\'t delete a temporarely banned user.'))
 
 if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 && $myrank >= $targetrank && $targetrank =< $myrank) {
 	$passwordFailed = false;
