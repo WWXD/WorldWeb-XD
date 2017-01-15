@@ -65,14 +65,9 @@ if($_GET['action']=="close" && $canClose) {
 	Report("[b]".$loguser['name']."[/] opened thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
-} elseif($_GET['action']=="stick" && $canStick) {
-	$rThread = Query("update {threads} set sticky=1 where id={0}", $tid);
-	Report("[b]".$loguser['name']."[/] stickied thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
-
-	die(header("Location: ".$ref));
-} elseif($_GET['action']=="unstick" && $canStick) {
-	$rThread = Query("update {threads} set sticky=0 where id={0}", $tid);
-	Report("[b]".$loguser['name']."[/] unstuck thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
+} elseif($_GET['action']=="bump" && $canStick) {
+	$rThread = Query("UPDATE {threads} SET lastpostdate={0} WHERE id={1}", $now, $thread['id']) && Query("UPDATE {forums} SET lastpostdate={0} WHERE id={1}", $now, $fid);
+	Report("[b]".$loguser['name']."[/] bumped thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
 
 	die(header("Location: ".$ref));
 } elseif(($_GET['action'] == "trash" && HasPermission('mod.trashthreads', $thread['forum'])) || ($_GET['action'] == 'delete' && HasPermission('mod.deletethreads', $thread['forum']))) {
@@ -218,7 +213,7 @@ if ($canClose)
 	$fields['closed'] = "<label><input type=\"checkbox\" name=\"isClosed\" ".($thread['closed'] ? " checked=\"checked\"" : "")."> ".__('Closed')."</label>";
 
 if ($canStick)
-	$fields['sticky'] = "<label><input type=\"checkbox\" name=\"isSticky\" ".($thread['sticky'] ? " checked=\"checked\"" : "")."> ".__('Sticky')."</label>";
+	$fields['sticky'] = "".__('Level')." <input type=\"text\" name=\"isSticky\" size=3 value=\"".htmlspecialchars($thread['sticky'])."\"> ".__('Sticky')."";
 
 if ($canMove)
 	$fields['forum'] = makeForumList('moveTo', $thread['forum']);

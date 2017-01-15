@@ -82,12 +82,12 @@ if ($show == 'threads') {
 							LEFT JOIN {categories} c ON c.id=f.catid
 						WHERE p.date>{$mindate} AND f.id IN ({5c})
 						ORDER BY date DESC LIMIT {3u}, {4u}", $loguserid, time()-$time, time()-900, $from, $perpage, $allowedforums);
-				
+
 	RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
-	
+
 	while($post = Fetch($rPosts))
 		MakePost($post, POST_NORMAL, array('threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1));
-		
+
 	RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
 }
 

@@ -61,7 +61,7 @@ if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
 } else if(isset($_POST['actionpreview'])) {
 	$attachs = HandlePostAttachments(0, false);
-	
+
 	$previewPost['text'] = $_POST["text"];
 	$previewPost['num'] = $loguser['posts']+1;
 	$previewPost['posts'] = $loguser['posts']+1;
@@ -72,15 +72,14 @@ if (isset($_POST['saveuploads'])) {
 	$previewPost['mood'] = (int)$_POST['mood'];
 	$previewPost['has_attachments'] = !empty($attachs);
 	$previewPost['preview_attachs'] = $attachs;
-	
+
 	foreach($loguser as $key => $value)
 		$previewPost['u_'.$key] = $value;
-		
+
 	$previewPost['u_posts']++;
 
 	MakePost($previewPost, POST_SAMPLE);
-}
-else if(isset($_POST['actionpost'])) {
+} else if(isset($_POST['actionpost'])) {
 	//Now check if the post is acceptable.
 	$rejected = false;
 
@@ -114,17 +113,13 @@ else if(isset($_POST['actionpost'])) {
 			Alert(__("You got ninja'd. You might want to review the post made while you were typing before you submit yours."));
 			$rejected = true;
 		}
-	}
 
-	if(!$rejected) {
 		if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
 			Alert(__("Error: Could not post."), __("Your post is too short."));
 			$rejected = true;
 		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
-	}
 
-	if(!$rejected) {
 		$post = $_POST['text'];
 
 		$options = 0;
@@ -137,14 +132,6 @@ else if(isset($_POST['actionpost'])) {
 			else if($_POST['unlock'])
 				$mod.= ", closed = 0";
 		}
-		
-		if (HasPermission('mod.stickthreads', $forum['id'])) {
-			if($_POST['stick'])
-				$mod.= ", sticky = 1";
-			else if($_POST['unstick'])
-				$mod.= ", sticky = 0";
-		}
-
 
 		$now = time();
 
@@ -163,7 +150,7 @@ else if(isset($_POST['actionpost'])) {
 
 		$rThreads = Query("update {threads} set lastposter={0}, lastpostdate={1}, replies=replies+1, lastpostid={2}".$mod." where id={3} limit 1",
 			$loguserid, $now, $pid, $tid);
-			
+
 		$attachs = HandlePostAttachments($pid, true);
 		Query("UPDATE {posts} SET has_attachments={0} WHERE id={1}", (!empty($attachs))?1:0, $pid);
 
@@ -197,7 +184,7 @@ if($_GET['quote']) {
 			$quote['poster'] = 'Access Denied.';
 			$quote['text'] = __('You may not get the contents of this post.');
 		}
-			
+
 		if ($quote['deleted'])
 			$quote['text'] = __('(deleted post)');
 
@@ -236,12 +223,6 @@ if (HasPermission('mod.closethreads', $fid)) {
 }
 
 $mod_stick = '';
-if (HasPermission('mod.stickthreads', $fid)) {
-	if(!$thread['sticky'])
-		$mod_stick = "<label><input type=\"checkbox\" ".getCheck("stick")."  name=\"stick\">&nbsp;".__("Sticky", 1)."</label>\n";
-	else
-		$mod_stick = "<label><input type=\"checkbox\" ".getCheck("unstick")."  name=\"unstick\">&nbsp;".__("Unstick", 1)."</label>\n";
-}
 
 $fields = array(
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n$prefill</textarea>",
@@ -249,8 +230,7 @@ $fields = array(
 	'nopl' => "<label><input type=\"checkbox\" ".getCheck('nopl')." name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
 	'nosm' => "<label><input type=\"checkbox\" ".getCheck('nosm')." name=\"nosm\">&nbsp;".__("Disable smilies", 1)."</label>",
 	'lock' => $mod_lock,
-	'stick' => $mod_stick,
-	
+
 	'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 );
@@ -258,7 +238,7 @@ $fields = array(
 echo "
 	<form name=\"postform\" action=\"".htmlentities(actionLink("newreply", $tid))."\" method=\"post\" enctype=\"multipart/form-data\">
 		<input type=\"hidden\" name=\"ninja\" value=\"$ninja\">";
-					
+
 RenderTemplate('form_newreply', array('fields' => $fields));
 
 PostAttachForm($attachs);

@@ -32,8 +32,7 @@ foreach($sexes as $ss)
 		{0}
 	</th>
 ", $ss);
-foreach($gcolors as $g)
-{
+foreach($gcolors as $g) {
 	$cellClass = ($cellClass+1) % 2;
 	$items = "";
 	foreach($sexes as $sn => $ss)
@@ -78,22 +77,21 @@ $finaltlist = '
 			<th style="width:16.67%;">$theme</th><th style="width:16.67%;">Name</th>
 			<th style="width:16.67%;">$theme</th><th style="width:16.67%;">Name</th>
 		</tr>';
-	
+
 $i = 0;
-foreach ($themelist as $tid=>$tname)
-{
+foreach ($themelist as $tid=>$tname) {
 	if (($i % 3) == 0)
 		$finaltlist .= '
 		<tr class="cell0">';
-	
+
 	$finaltlist .= '
 			<td class="center"><code>'.htmlspecialchars($tid).'</code></td>
 			<td class="cell1 center">'.htmlspecialchars($tname).'</td>';
-	
+
 	if (($i % 3) == 2)
 		$finaltlist .= '
 		</tr>';
-	
+
 	$i++;
 }
 
@@ -124,8 +122,7 @@ $faq = parseBBCode($faq);
 
 echo $faq;
 
-function DoGeshi($code)
-{
+function DoGeshi($code) {
 	return "<code>".htmlspecialchars($code)."</code>";
 }
 

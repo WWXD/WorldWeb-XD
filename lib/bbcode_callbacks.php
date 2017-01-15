@@ -399,11 +399,11 @@ function bbcodeBan($contents, $arg, $parenttag)
 
 function bbcodeColor($contents, $arg, $parenttag)
 {
-	return "<div style=\"color: $arg;\">$contents</div>";
+	return "<div style=\"color: ".htmlspecialchars($arg).";\">$contents</div>";
 }
 function bbcodeColour($contents, $arg, $parenttag)
 {
-	return "<div style=\"color: $arg;\">$contents</div>";
+	return "<div style=\"color: ".htmlspecialchars($arg).";\">$contents</div>";
 }
 function bbcodeColorred($contents, $arg, $parenttag)
 {

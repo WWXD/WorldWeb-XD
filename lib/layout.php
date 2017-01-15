@@ -18,11 +18,11 @@ function RenderTemplate($template, $options=null) {
 
 	if ($mobileLayout) {
 		$tplname = $tplroot.'mobile/'.$template.'.tpl';
-		if (!file_exists($tplname)) 
+		if (!file_exists($tplname))
 			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	} else {
 		$tplname = $tplroot.Settings::get('defaultLayout').$template.'.tpl';
-		if (!file_exists($tplname)) 
+		if (!file_exists($tplname))
 			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
 	}
 
@@ -34,7 +34,7 @@ function RenderTemplate($template, $options=null) {
 
 function mfl_forumBlock($fora, $catid, $selID, $indent) {
 	$ret = '';
-	
+
 	foreach ($fora[$catid] as $forum) {
 		$ret .=
 '				<option value="'.$forum['id'].'"'.($forum['id'] == $selID ? ' selected="selected"':'').'>'

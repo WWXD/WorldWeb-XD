@@ -56,7 +56,7 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 		Kill(__("Check your email in a moment and follow the link."), __("Reset email sent"));
 	}
 
-	Kill(__('Invalid user name or email address.'));
+	Alert(__('Invalid user name or email address.'));
 } else {
 	$title = __('Request password reset');
 	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));

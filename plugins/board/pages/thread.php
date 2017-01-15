@@ -118,10 +118,7 @@ if ($loguserid) {
 	}
 
 	if (HasPermission('mod.stickthreads', $fid)) {
-		if($thread['sticky'])
-			$links[] = actionLinkTag(__("Unstick"), "editthread", $tid, "action=unstick&key=".$loguser['token']);
-		else
-			$links[] = actionLinkTag(__("Stick"), "editthread", $tid, "action=stick&key=".$loguser['token']);
+		$links[] = actionLinkTag(__("Bump"), "editthread", $tid, "action=bump&key=".$loguser['token']);
 	}
 
 	if (HasPermission('mod.trashthreads', $fid) && Settings::get('trashForum')) {
@@ -252,13 +249,7 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 			$mod_lock = "<label><input type=\"checkbox\" name=\"unlock\">&nbsp;".__("Open thread", 1)."</label>\n";
 	}
 
-	$mod_stick = '';
-	if (HasPermission('mod.stickthreads', $fid)) {
-		if(!$thread['sticky'])
-			$mod_stick = "<label><input type=\"checkbox\" name=\"stick\">&nbsp;".__("Sticky", 1)."</label>\n";
-		else
-			$mod_stick = "<label><input type=\"checkbox\" name=\"unstick\">&nbsp;".__("Unstick", 1)."</label>\n";
-	}
+	$mod_stick = ''; //Leaving this in so it doesn't crash
 
 	$moodOptions = "<option selected=\"selected\" value=\"0\">".__("[Default avatar]")."</option>\n";
 	$rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid asc", $loguserid);
@@ -274,7 +265,6 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 		'nopl' => "<label><input type=\"checkbox\" name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
 		'nosm' => "<label><input type=\"checkbox\" name=\"nosm\">&nbsp;".__("Disable smilies", 1)."</label>",
 		'lock' => $mod_lock,
-		'stick' => $mod_stick,
 
 		'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
 		'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",

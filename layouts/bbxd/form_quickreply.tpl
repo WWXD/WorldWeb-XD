@@ -15,7 +15,6 @@
 				{$fields.nopl}
 				{$fields.nosm}
 				{$fields.lock}
-				{$fields.stick}
 			</td>
 		</tr>
 	</table>
