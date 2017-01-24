@@ -8,7 +8,7 @@ $title = __("Private messages");
 if(!$loguserid)
 	Kill(__("You must be logged in to view your private messages."));
 
-if ($targetrank >= $myrank)
+if ($targetrank >= $myrank && $snoop)
 	Kill(__("You may not read the PM's of someone who has a higher rank than you."));
 
 $id = (int)$_REQUEST['id'];
