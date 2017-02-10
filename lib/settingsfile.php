@@ -223,52 +223,6 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		),
 
 
-		"email" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Email Verification (Verification part not working just yet)",
-			'category' => 'RegistrationSec'
-		),
-		"math" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Math question",
-			'category' => 'RegistrationSec'
-		),
-		"RegWordsetting" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Registration Word Setting",
-			'category' => 'RegistrationSec'
-		),
-		"RegWordKey" => array (
-			"type" => "text",
-			"default" => "",
-			"name" => "Registration Key",
-			"help" => "If you have the Registration word setting enabled, this is the actual key used.",
-			'category' => 'RegistrationSec'
-		),
-		"Captcha" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Captcha",
-			"help" => "You'll need to download Securimage from http://www.phpcaptcha.org and extract it into a /securimage folder.",
-			'category' => 'RegistrationSec'
-		),
-		"AdminVer" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Admin Verification",
-			'category' => 'RegistrationSec'
-		),
-		"DisReg" => array (
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Turns off registration. Usefull when your site is hit with a spam attack.",
-			'category' => 'RegistrationSec'
-		),
-
-
 		'newsForum' => array(
 			'type' => 'forum',
 			'default' => '0',

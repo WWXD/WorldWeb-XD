@@ -177,7 +177,8 @@ if ($editUserMode)
 
 
 // EDITPROFILE TAB -- LAYOUT --------------------------------------------------
-if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt') && ($editUserMode || HasPermission('user.editpostlayout'))) {
+if ($editUserMode || HasPermission('user.editpostlayout'))
+{
 	$pltext = $pltype ? __('Post layout') : __('Signature');
 	AddPage('layout', $pltext);
 

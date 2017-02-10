@@ -50,7 +50,7 @@
 						</td>
 					</tr>
 					{/if}
-
+					
 					{foreach $comments as $cmt}
 					<tr class="cell{cycle values='0,1'}">
 						<td class="cell2" style="vertical-align:top; width:20%;">
@@ -69,7 +69,7 @@
 						</td>
 					</tr>
 					{/foreach}
-
+					
 					{if $pagelinks}
 					<tr class="cell1">
 						<td colspan=2>

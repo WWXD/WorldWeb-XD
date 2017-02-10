@@ -1,5 +1,5 @@
 <?php
-//  WorldWeb XD - 404
+//  AcmlmBoard XD - 404
 //  Access: all
 if (!defined('BLARG')) die();
 

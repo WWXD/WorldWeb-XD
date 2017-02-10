@@ -232,14 +232,16 @@ function bbcodeTable($contents, $arg, $parenttag)
 
 $bbcodeCellClass = 0;
 
-function bbcodeTableCell($contents, $arg, $parenttag) {
+function bbcodeTableCell($contents, $arg, $parenttag)
+{
 	if($parenttag == '[trh')
 		return "<th>$contents</th>";
 	else
 		return "<td>$contents</td>";
 }
 
-function bbcodeTableRow($contents, $arg, $parenttag) {
+function bbcodeTableRow($contents, $arg, $parenttag)
+{
 	global $bbcodeCellClass;
 	$bbcodeCellClass++;
 	$bbcodeCellClass %= 2;
@@ -247,7 +249,8 @@ function bbcodeTableRow($contents, $arg, $parenttag) {
 	return "<tr class=\"cell$bbcodeCellClass\">$contents</tr>";
 }
 
-function bbcodeTableRowHeader($contents, $arg, $parenttag) {
+function bbcodeTableRowHeader($contents, $arg, $parenttag)
+{
 	global $bbcodeCellClass;
 	$bbcodeCellClass++;
 	$bbcodeCellClass %= 2;
@@ -346,7 +349,8 @@ function bbcodeGist($contents, $arg) {
     }
 }
 
-function bbcodeMeme($contents, $arg, $parenttag) {
+function bbcodeMeme($contents, $arg, $parenttag)
+{
 	//Detecting what meme to use
 	if ($arg == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme1.jpg" alt="Instameme1"/>';
@@ -384,8 +388,8 @@ function bbcodeMeme($contents, $arg, $parenttag) {
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/insta404.jpg" alt="Instameme404"/>';
 }
-
-function bbcodeBan($contents, $arg, $parenttag) {
+function bbcodeBan($contents, $arg, $parenttag)
+{
 	//Put this here for a 100% true statement to run code under it
 	if ('1' == '1')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';

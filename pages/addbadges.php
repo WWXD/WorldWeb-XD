@@ -1,12 +1,7 @@
 <?php
-// WorldWeb XD: Add badges to user
-// Access: Mainly admins
 if (!defined('BLARG')) die();
-
 CheckPermission('admin.assignbadges');
-
 $title = __("Badge Manager");
-
 if($_POST['action'] == __("Add")) {
 	if($_POST['color'] == -1 || empty($_POST['userid']) || empty($_POST['name']))
 		Kill(__("Please review your settings before adding a user badge."));

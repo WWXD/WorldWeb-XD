@@ -8,8 +8,10 @@ function resourceLink(url)
 
 // collapsible categories
 // code inspired from Neritic Net
-function setCookie(name,value,days) {
-	if (days) {
+function setCookie(name,value,days)
+{
+	if (days)
+	{
 		var date = new Date();
 		date.setTime(date.getTime()+(days*24*60*60*1000));
 		var expires = "; expires="+date.toGMTString();
@@ -18,23 +20,57 @@ function setCookie(name,value,days) {
 	document.cookie = name+"="+value+expires+"; path=/";
 }
 
-function toggleCat(id) {
+function toggleCat(id)
+{
 	$('#cat_'+id).toggle();
 	$('#cat_'+id+'_lolz').toggle();
 	setCookie('catstate['+id+']', $('#cat_'+id).is(':hidden')?1:0, 9999);
 }
 
+// autoshrinking breadcrumb action links
+
+/*function breadcrumbShrink()
+{
+	$('.breadcrumbs th').each(function()
+	{
+		var children = $(this).children();
+		if (children.length < 2) return;
+		
+		var crumbs = $(children[1]);
+		var links = $(children[0]);
+		
+		links.removeClass('dropdownContainer');
+		var lchildren = links.children();
+		$(lchildren[0]).hide();
+		$(lchildren[1]).removeClass('dropdownMenu').addClass('pipemenu');
+		
+		if (crumbs.position().left + crumbs.width() + 10 > links.position().left)
+		{
+			links.addClass('dropdownContainer');
+			$(lchildren[0]).show().css('display', 'block');
+			$(lchildren[1]).removeClass('pipemenu').addClass('dropdownMenu');
+		}
+	});
+}
+
+$(window).resize(breadcrumbShrink);
+$(window).load(breadcrumbShrink);*/
+
 //Spoiler buttons
 
-function toggleSpoiler() {
+function toggleSpoiler()
+{
 	var button = this.parentNode.children[0];
 	var div = this.parentNode.children[1];
 
-	if(div.className == "spoiled") {
+	if(div.className == "spoiled")
+	{
 		if(button.className != "spoilerbutton named")
 			button.textContent = "Show spoiler";
 		div.className = "spoiled hidden";
-	} else {
+	}
+	else
+	{
 		if(button.className != "spoilerbutton named")
 			button.textContent = "Hide spoiler";
 		div.className = "spoiled";
@@ -47,8 +83,10 @@ function toggleSpoiler() {
    -------------
    Thanks to Mega-Mario for the idea
  */
-function insertQuote(pid) {
-	$.get(boardroot+"ajaxcallbacks.php", "a=q&id="+pid, function(data) {
+function insertQuote(pid)
+{
+	$.get(boardroot+"ajaxcallbacks.php", "a=q&id="+pid, function(data)
+	{
 		var editor = $("#text")[0]; //we want the HTMLTextElement kthx
 		editor.focus();
 		if (document.selection)
@@ -59,7 +97,8 @@ function insertQuote(pid) {
 	});
 }
 
-function insertChanLink(pid) {
+function insertChanLink(pid)
+{
 	var editor = document.getElementById("text");
 	var linkText = ">>" + pid + "\r\n";
 	editor.focus();
@@ -81,38 +120,50 @@ function insertChanLink(pid) {
 var smiliesOpened = false;
 var usingSmilies = false;
  
-function insertSmiley(smileyCode) {
+function insertSmiley(smileyCode)
+{
 	var editor = document.getElementById("text");
 	editor.focus();
-	if (document.selection) {
+	if (document.selection)
+	{
 		document.selection.createRange().text += " " + smileyCode;
-	} else {
+	}
+	else
+	{
 		editor.value = editor.value.substring(0, editor. selectionEnd) + smileyCode + editor.value.substring(editor.selectionEnd, editor.value.length);
 	}
 	editor.scrollTop = editor.scrollHeight;
 }
-
-function expandSmilies() {
+function expandSmilies()
+{
 	var button = document.getElementById("smiliesExpand");
 	var expandedSet = $("#expandedSet");
-	if(expandedSet.is(":hidden")) {
-		expandedSet.slideDown(200, function() {
+	if(expandedSet.is(":hidden"))
+	{
+		expandedSet.slideDown(200, function()
+		{
 			button.textContent = String.fromCharCode(0x25B2);
 		});
-	} else {
-		expandedSet.slideUp(200, function() {
+	}
+	else
+	{
+		expandedSet.slideUp(200, function()
+		{
 			button.textContent = String.fromCharCode(0x25BC);
 		});
 	}
 }
 
-function hideSmiliesBox() {
+function hideSmiliesBox()
+{
 	$('#smilies').hide();
 	smiliesOpened = false;
 }
 
-function showSmiliesBox(btn) {
-	if (smiliesOpened) {
+function showSmiliesBox(btn)
+{
+	if (smiliesOpened)
+	{
 		hideSmiliesBox();
 		return;
 	}
@@ -123,16 +174,22 @@ function showSmiliesBox(btn) {
 	smiliesOpened = true;
 }
 
-function expandPostHelp() {
+function expandPostHelp()
+{
 	var button = document.getElementById("postHelpExpand");
 	var expandedSet = $("#expandedHelp");
 
-	if(expandedSet.is(":hidden")) {
-		expandedSet.slideDown(700, function() {
+	if(expandedSet.is(":hidden"))
+	{
+		expandedSet.slideDown(700, function()
+		{
 			button.textContent = String.fromCharCode(0x25B2);
 		});
-	} else {
-		expandedSet.slideUp(700, function() {
+	}
+	else
+	{
+		expandedSet.slideUp(700, function()
+		{
 			button.textContent = String.fromCharCode(0x25BC);
 		});
 	}
@@ -147,7 +204,8 @@ function expandPostHelp() {
 var xmlHttp = null; //Cache our request object
 
 // is this really used anymore now that we mostly use jQuery?
-function GetXmlHttpObject() {
+function GetXmlHttpObject()
+{
 	//If we already have one, just return that.
 	if (xmlHttp != null) return xmlHttp;
 	xmlHttp = new XMLHttpRequest();
@@ -156,7 +214,8 @@ function GetXmlHttpObject() {
 
 
 
-function startPoraUpdate() {
+function startPoraUpdate()
+{
 	var ta = document.getElementById("editbox");
 	var tt = document.getElementById("title");
 	var prt = document.getElementById("previewtext");
@@ -170,7 +229,8 @@ function startPoraUpdate() {
 
 var onlineFID = 0;
 
-function startOnlineUsers() {
+function startOnlineUsers()
+{
 	//onlineFID = fid;
 	//setTimeout("getOnlineUsers()", 10000);
 	//var onlineUsersBar = $('.header0').get(1);
@@ -178,7 +238,8 @@ function startOnlineUsers() {
 	var tmrid = window.setInterval("getOnlineUsers();", 10000);
 
 	$(window).blur(function() {
-		if (tmrid != -9999) {
+		if (tmrid != -9999)
+		{
 			window.clearInterval(tmrid);
 			tmrid = -9999;
 		}
@@ -191,36 +252,43 @@ function startOnlineUsers() {
 	});
 }
 
-function getOnlineUsers() {
+function getOnlineUsers()
+{
 	// view count
-	$.get(boardroot+"ajaxcallbacks.php", "a=vc", function(data) {
-		var viewCount = $("#viewCount");
-		var oldCount = viewCount[0].innerHTML;
-		if(oldCount != data){
+	$.get(boardroot+"ajaxcallbacks.php", "a=vc", function(data)
+	{
+	    var viewCount = $("#viewCount");
+	    var oldCount = viewCount[0].innerHTML;
+	    if(oldCount != data)
+	    {
 			viewCount.html(data);
 		}
 	});
-
+	
 	// online users
-	$.get(boardroot+"ajaxcallbacks.php", "a=ou&f=" + onlineFID, function(data) {
-		var onlineUsers = $("#onlineUsers");
-		var oldOnline = onlineUsers[0].innerHTML;
-		if(oldOnline != data) {
+	$.get(boardroot+"ajaxcallbacks.php", "a=ou&f=" + onlineFID, function(data)
+	{
+	    var onlineUsers = $("#onlineUsers");
+	    var oldOnline = onlineUsers[0].innerHTML;
+	    if(oldOnline != data)
+	    {
 			onlineUsers.html(data);
 		}
 	});
-
+	
 	// notifications
-	$.getJSON(boardroot+"ajaxcallbacks.php", "a=no", function(data) {
+	$.getJSON(boardroot+"ajaxcallbacks.php", "a=no", function(data)
+	{
 	    var notiflist = '';
 		for (var i=0; i < data.length; i++)
 			notiflist += '<li>' + data[i].text + '<br><small>' + data[i].formattedDate + '</small>';
-
+		
 		$('#notifList').html(notiflist);
-
-		if ($('#notifCount').html() != data.length) {
+		
+		if ($('#notifCount').html() != data.length)
+		{
 			$('#notifCount').html(data.length);
-
+			
 			$('#notifMenuContainer').removeClass('noNotif hasNotifs');
 			if (data.length)
 				setTimeout(function(){$('#notifMenuContainer').addClass('hasNotifs');},20); // need to do it later so the CSS animation plays
@@ -231,7 +299,8 @@ function getOnlineUsers() {
 }
 
 
-function showEditProfilePart(newId) {
+function showEditProfilePart(newId)
+{
 	var tables = document.getElementsByClassName('eptable');
 	for (var i=0;i<tables.length;i++) {
 		tables[i].style.display = "none";
@@ -245,19 +314,22 @@ function showEditProfilePart(newId) {
 }
 
 var textEditor;
-function hookUpControls() {
+function hookUpControls()
+{
 	//Now functional!
 	textEditor = document.getElementById("text");
 	textEditor.addEventListener("keypress", HandleKey, true);
 	ConstructToolbar();
 }
 
-function ConstructToolbar() {
+function ConstructToolbar()
+{
 	var smilbox = document.getElementById('smilies');
 	var toolbar = document.createElement("DIV");
 	toolbar.className = "postToolbar";
 
-	var buttons = [
+	var buttons =
+	[
 		{ icon: "bold", title: "Bold", insert: "b" }, 
 		{ icon: "italic", title: "Italic", insert: "i" }, 
 		{ icon: "underline", title: "Underlined", insert: "u" }, 
@@ -280,13 +352,13 @@ function ConstructToolbar() {
 
 	];
 
-	for(var i = 0; i < buttons.length; i++) {
+	for(var i = 0; i < buttons.length; i++)
+	{
 		var button = buttons[i];
 		if(button.label == "-") {
 			toolbar.innerHTML += " ";
 			continue;
 		}
-
 		if (button.separator !== undefined && button.separator == true) {
 			toolbar.appendChild(document.createTextNode(" "));
 			continue;

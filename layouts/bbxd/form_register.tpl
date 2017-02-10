@@ -1,3 +1,4 @@
+	<table class="outline margin form form_register">
 		<tr class="header1">
 			<th colspan=2>Register</th>
 		</tr>
@@ -50,7 +51,7 @@
 		<tr class="cell2">
 			<td></td>
 			<td>
-				{$fields.btnReg}
+				{$fields.btnRegister}
 				{$fields.autologin}
 			</td>
 		</tr>
@@ -60,3 +61,6 @@
 			</td>
 		</tr>
 	</table>
+
+	<script src=\"".resourceLink('js/register.js')."\"></script>
+<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>

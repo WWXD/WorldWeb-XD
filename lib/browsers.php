@@ -76,15 +76,17 @@ $mobileLayout = false;
 
 $ua = $_SERVER['HTTP_USER_AGENT'];
 
-foreach($knownBrowsers as $code => $name) {
-	if (strpos($ua, $code) !== FALSE) {
+foreach($knownBrowsers as $code => $name)
+{
+	if (strpos($ua, $code) !== FALSE)
+	{
 		$versionStart = strpos($ua, $code) + strlen($code);
 		if ($code != "dwb") $version = GetVersion($ua, $versionStart);
 
 		//Opera Mini wasn't detected properly because of the Opera 10 hack.
 		if (strpos($ua, "Opera/9.80") !== FALSE && $code != "Opera Mini" || $code == "Safari" && strpos($ua, "Version/") !== FALSE)
 			$version = substr($ua, strpos($ua, "Version/") + 8);
-
+			
 		if (in_array($code, $mobileBrowsers)) $mobileLayout = true;
 
 		$lastKnownBrowser = $name." ".$version;
@@ -92,10 +94,8 @@ foreach($knownBrowsers as $code => $name) {
 	}
 }
 
-if ($_COOKIE['forcelayout'] == 1)
-	$mobileLayout = true;
-else if ($_COOKIE['forcelayout'] == -1)
-	$mobileLayout = false;
+if ($_COOKIE['forcelayout'] == 1) $mobileLayout = true;
+else if ($_COOKIE['forcelayout'] == -1) $mobileLayout = false;
 
 $oldAndroid = false;
 if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;
@@ -104,12 +104,15 @@ $browserName = $name;
 $browserVers = (float)$version;
 
 $os = "";
-foreach($knownOSes as $code => $name) {
+foreach($knownOSes as $code => $name)
+{
 	if (strpos($ua, "X11")) $suffix = " (X11)";
 	else if (strpos($ua, "textmode")) $suffix = " (text mode)";
-	if (strpos($ua, $code) !== FALSE) {
+	if (strpos($ua, $code) !== FALSE)
+	{
 		$os = $name;
-		if(strpos($name, "%") !== FALSE) {
+		if(strpos($name, "%") !== FALSE)
+		{
 			$versionStart = strpos($ua, $code) + strlen($code);
 			$version = GetVersion($ua, $versionStart);
 			$os = str_replace("%", $version, $os);
@@ -118,8 +121,7 @@ foreach($knownOSes as $code => $name) {
 		$lkbhax = explode(' ', $lastKnownBrowser);
 		if ($lkbhax[0] == "Android") break;
 		if (isset($suffix)) $os = $os . $suffix;
-		if (in_array($code, $mobileBrowsers))
-			$mobileLayout = true;
+		if (in_array($code, $mobileBrowsers)) $mobileLayout = true;
 		$lastKnownBrowser = format(__("{0} on {1}"), $lastKnownBrowser, $os);
 		break;
 	}
@@ -127,7 +129,8 @@ foreach($knownOSes as $code => $name) {
 
 $lastKnownBrowser = $ua;
 
-function GetVersion($ua, $versionStart) {
+function GetVersion($ua, $versionStart)
+{
 	$numDots = 0;
 	$version = "";
 	if (strpos($ua, "Linux")) {
@@ -137,13 +140,15 @@ function GetVersion($ua, $versionStart) {
 			else if ($ua[$i] != ";") $version .= $ua[$i];
 		}
 	} else {
-		for($i = $versionStart; $i < strlen($ua); $i++) {
+		for($i = $versionStart; $i < strlen($ua); $i++)
+		{
 			$ch = $ua[$i];
 			if($ch == ';')
 				break;
 			if($ch == '_' && strpos($ua, "Mac OS X"))
 				$ch = '.';
-			if($ch == '.') {
+			if($ch == '.')
+			{
 				$numDots++;
 				if($numDots == 3)
 					break;
@@ -153,10 +158,12 @@ function GetVersion($ua, $versionStart) {
 				$version .= $ch;
 			else if(strpos(":/", $ch) !== FALSE)
 				continue;
-			else if(!$numDots) {
+			else if(!$numDots)
+			{
 				preg_match('/\G\w+/', $ua, $matches, 0, $versionStart + 1);
 				return $matches[0];
-			} else
+			}
+			else
 				break;
 		}
 	}

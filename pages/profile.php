@@ -32,24 +32,10 @@ if($loguserid && $_REQUEST['token'] == $loguser['token']) {
 		$block = (int)$_GET['block'];
 		$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 		$isBlocked = NumRows($rBlock);
-		if($block && !$isBlocked && $loguserid != $id) {
+		if($block && !$isBlocked && $loguserid != $id)
 			$rBlock = Query("insert into {blockedlayouts} (user, blockee) values ({0}, {1})", $id, $loguserid);
-			if(Settings::get('postLayoutType'))
-				Alert(__("You've successfully blocked this users layout."), __('Block successfull'));
-			else
-				Alert(__("You've successfully blocked this users signature."), __('Block successfull'));
-		} elseif($block && !$isBlocked && $loguserid == $id) { //This will never actually be ran, but just in case the link is there...
-			if(Settings::get('postLayoutType'))
-				Alert(__("You can't block your own layout."), __('Block failed'));
-			else
-				Alert(__("You can't block your own signature."), __('Block failed'));
-		} elseif(!$block && $isBlocked) {
+		elseif(!$block && $isBlocked)
 			$rBlock = Query("delete from {blockedlayouts} where user={0} and blockee={1} limit 1", $id, $loguserid);
-			if(Settings::get('postLayoutType'))
-				Alert(__("You've successfully unblocked this users layout."), __('Block successfull'));
-			else
-				Alert(__("You've successfully unblocked this users signature."), __('Block successfull'));
-		}
 		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 	}
 
@@ -123,7 +109,7 @@ if($user['homepageurl']) {
 	$nofollow = "";
 	if(Settings::get("nofollow"))
 		$nofollow = "rel=\"nofollow\"";
-
+			
 	if($user['homepagename'])
 		$homepage = "<a $nofollow target=\"_blank\" href=\"".htmlspecialchars($user['homepageurl'])."\">".htmlspecialchars($user['homepagename'])."</a> - ".htmlspecialchars($user['homepageurl']);
 	else
@@ -293,19 +279,17 @@ $pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']
 $comments = array();
 while($comment = Fetch($rComments)) {
 	$cmt = array();
-
-	if($canDeleteComments || ($comment['cid'] == $loguserid && HasPermission('user.deleteownusercomments'))) {
+	
+	$deleteLink = '';
+	if($canDeleteComments || ($comment['cid'] == $loguserid && HasPermission('user.deleteownusercomments')))
 		$deleteLink = "<small style=\"float: right; margin: 0px 4px;\">".
 			actionLinkTag("&#x2718;", "profile", $id, "action=delete&cid=".$comment['id']."&token={$loguser['token']}")."</small>";
-	} else {
-		$deleteLink = '';
-	}
 
 	$cmt['deleteLink'] = $deleteLink;
 
 	$cmt['userlink'] = UserLink(getDataPrefix($comment, 'u_'));
 	$cmt['formattedDate'] = relativedate($comment['date']);
-	$cmt['text'] = htmlspecialchars(nl2br(CleanUpPost($comment['text'])));
+	$cmt['text'] = CleanUpPost($comment['text']);
 
 	$comments[] = $cmt;
 }
@@ -330,7 +314,7 @@ RenderTemplate('profile', array(
 	'comments' => $comments,
 	'commentField' => $commentField,
 	'profilecommenterror' => $profilecommenterror,
-
+	
 	'pagelinks' => $pagelinks));	
 
 
