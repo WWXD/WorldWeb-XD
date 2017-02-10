@@ -3,8 +3,7 @@ if (!defined('BLARG')) die();
 
 // Misc things that get replaced in text.
 
-function loadSmilies()
-{
+function loadSmilies() {
 	global $smilies, $smiliesReplaceOrig, $smiliesReplaceNew;
 
 	$rSmilies = Query("select * from {smilies} order by length(code) desc");
@@ -14,8 +13,7 @@ function loadSmilies()
 		$smilies[] = $smiley;
 
 	$smiliesReplaceOrig = $smiliesReplaceNew = array();
-	for ($i = 0; $i < count($smilies); $i++)
-	{
+	for ($i = 0; $i < count($smilies); $i++) {
 		$smiliesReplaceOrig[] = "/(?<!\w)".preg_quote($smilies[$i]['code'], "/")."(?!\w)/";
 		$smiliesReplaceNew[] = "<img class=\"smiley\" alt=\"\" src=\"".resourceLink("img/smilies/".$smilies[$i]['image'])."\" />";
 	}
@@ -48,20 +46,18 @@ function rainbowify($s)
 }
 
 //Main post text replacing.
-function postDoReplaceText($s, $parentTag, $parentMask)
-{
+function postDoReplaceText($s, $parentTag, $parentMask) {
 	global $postNoSmilies, $postPoster, $smiliesReplaceOrig, $smiliesReplaceNew;
 
 	if($postPoster)
 		$s = preg_replace("'/me '","<b>* ".htmlspecialchars($postPoster)."</b> ", $s);
-		
+
 	// silly filters
 	//$s = preg_replace_callback('@\._+\.@', 'funhax', $s);
 	//$s = str_replace(':3', ':3 '.rainbowify('ALL THE INSULTS I JUST SAID NOW BECOME LITTLE COLOURFUL FLOWERS'), $s);
 
 	//Smilies
-	if(!$postNoSmilies)
-	{
+	if(!$postNoSmilies) {
 		if(!isset($smiliesReplaceOrig))
 			LoadSmilies();
 		$s = preg_replace($smiliesReplaceOrig, $smiliesReplaceNew, $s);

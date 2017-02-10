@@ -12,11 +12,13 @@ if(isset($_GET['id']))
 	$plugin = $_GET['id'];
 if(isset($_POST['_plugin']))
 	$plugin = $_POST['_plugin'];
-	
+
 if (isset($_GET['field'])) {
 	$htmlfield = $_GET['field'];
-	if (!isset($settings[$htmlfield])) Kill(__('No.'));
-	if ($settings[$htmlfield]['type'] != 'texthtml') Kill(__('No.'));
+	if (!isset($settings[$htmlfield]))
+		Kill(__('No.'));
+	if ($settings[$htmlfield]['type'] != 'texthtml')
+		Kill(__('No.'));
 
 	$htmlname = $settings[$htmlfield]['name'];
 } else
@@ -42,10 +44,12 @@ if(isset($_POST["_plugin"])) {
 	$valid = true;
 
 	foreach($_POST as $key => $value) {
-		if($key == "_plugin") continue;
+		if($key == "_plugin")
+			continue;
 
 		//Don't accept unexisting settings.
-		if(!isset($settings[$key])) continue;
+		if(!isset($settings[$key]))
+			continue;
 
 		// don't save settings if the user isn't allowed to change them
 		if ($settings[$key]['rootonly'] && !$loguser['root'])

@@ -4,16 +4,14 @@
 var fid = 0;
 var hint = true;
 
-function geteditforaurl()
-{
+function geteditforaurl() {
 	if((document.location+"").indexOf("?") == -1) 
 		return document.location + "?action=";
 	else
 		return document.location + "&action=";
 }
 
-function dopermselects()
-{
+function dopermselects() {
 	$('.permselect').change(function() { this.style.background = this.selectedOptions[0].style.background; }).change();
 }
 
@@ -41,13 +39,11 @@ function pickCategory(id) {
 	fid = id;
 }
 
-function changeForumInfo(id)
-{
+function changeForumInfo(id) {
 	var postdata = $("#forumform").serialize();
 	$.post(geteditforaurl()+"updateforum", postdata, function(data) {
 		data = $.trim(data);
-		if(data == "Ok")
-		{
+		if(data == "Ok") {
 			$("#flist").load(geteditforaurl()+"forumtable", '',
 				function(){$("#forum"+id).addClass("fe_selected");});
 			
@@ -60,13 +56,11 @@ function changeForumInfo(id)
 }
 
 
-function changeCategoryInfo(id)
-{
+function changeCategoryInfo(id) {
 	var postdata = $("#forumform").serialize();
 	$.post(geteditforaurl()+"updatecategory", postdata, function(data) {
 		data = $.trim(data);
-		if(data == "Ok")
-		{
+		if(data == "Ok") {
 			$("#flist").load(geteditforaurl()+"forumtable", '', 
 				function(){$("#cat"+id).addClass("fe_selected");});
 				
@@ -78,50 +72,43 @@ function changeCategoryInfo(id)
 	});
 }
 
-function addForum()
-{
+function addForum() {
 	var postdata = $("#forumform").serialize();
 
 	$.post(geteditforaurl()+"addforum", postdata, function(data) {
 		data = $.trim(data);
-		if(data.substring(0,2) == "Ok")
-		{
+		if(data.substring(0,2) == "Ok") {
 			var id = parseInt(data.substring(3));
-			
+
 			$("#flist").load(geteditforaurl()+"forumtable", '',
 				function(){$("#forum"+id).addClass("fe_selected");});
-			
+
 			$("#editcontent").load(geteditforaurl()+'editforum&fid='+id, '',
 				function(){$('#status').html('Forum saved!').show().animate({opacity: 0}, 2000, 'linear', function(){$('#status').hide();});dopermselects();});
-		}
-		else
+		} else
 			alert("Error: "+data);
 	});
 }
 
-function addCategory()
-{
+function addCategory() {
 	var postdata = $("#forumform").serialize();
 
 	$.post(geteditforaurl()+"addcategory", postdata, function(data) {
 		data = $.trim(data);
-		if(data.substring(0,2) == "Ok")
-		{
+		if(data.substring(0,2) == "Ok") {
 			var id = parseInt(data.substring(3));
-			
+
 			$("#flist").load(geteditforaurl()+"forumtable", '', 
 				function(){$("#cat"+id).addClass("fe_selected");});
-				
+
 			$("#editcontent").load(geteditforaurl()+'editcategory&cid='+id, '',
 				function(){$('#status').html('Category saved!').show().animate({opacity: 0}, 2000, 'linear', function(){$('#status').hide();});});
-		}
-		else
+		} else
 			alert("Error: "+data);
 	});
 }
 
-function deleteForum()
-{
+function deleteForum() {
 	var postdata = $("#forumform").serialize();
 
 	if(!confirm("Are you sure that you want to delete the forum?"))
@@ -129,19 +116,16 @@ function deleteForum()
 
 	$.post(geteditforaurl()+"deleteforum", postdata, function(data) {
 		data = $.trim(data);
-		if(data == "Ok")
-		{
+		if(data == "Ok") {
 			$("#flist").load(geteditforaurl()+"forumtable");
 			$("#editcontent").html("");
-		}
-		else
+		} else
 			alert("Error: "+data);
 	});
 }
 
 
-function deleteCategory()
-{
+function deleteCategory() {
 	var postdata = $("#forumform").serialize();
 
 	if(!confirm("Are you sure that you want to delete the category?"))
@@ -149,35 +133,29 @@ function deleteCategory()
 
 	$.post(geteditforaurl()+"deletecategory", postdata, function(data) {
 		data = $.trim(data);
-		if(data == "Ok")
-		{
+		if(data == "Ok") {
 			$("#flist").load(geteditforaurl()+"forumtable");
 			$("#editcontent").html("");
-		}
-		else
+		} else
 			alert("Error: "+data);
 	});
 }
 
-function newForum()
-{
+function newForum() {
 	$('#editcontent').load(geteditforaurl()+'editforumnew', '', function(){dopermselects();});
 	$(".f, .c").removeClass("fe_selected");
 }
 
-function newCategory()
-{
+function newCategory() {
 	$('#editcontent').load(geteditforaurl()+'editcategorynew');
 	$(".f, .c").removeClass("fe_selected");
 }
 
-function showDeleteForum()
-{
+function showDeleteForum() {
 	$("#deleteforum").slideDown("slow");
 }
 
-function hideDeleteForum()
-{
+function hideDeleteForum() {
 	$("#deleteforum").slideUp("slow");
 }
 
