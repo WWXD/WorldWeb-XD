@@ -1,5 +1,4 @@
 before_script:
-  - phpenv config-rm xdebug.ini
 language: php
 php:
   - '5.4'
