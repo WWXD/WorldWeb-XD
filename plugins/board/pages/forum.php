@@ -16,7 +16,7 @@ if(NumRows($rFora))
 	$forum = Fetch($rFora);
 else
 	Kill(__("Unknown forum ID."));
-	
+
 if ($forum['redirect'])
 	die(header('Location: '.forumRedirectURL($forum['redirect'])));
 	
@@ -25,7 +25,7 @@ if($loguserid) {
 		Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, {threads}.id, {1} FROM {threads} WHERE {threads}.forum={2}",
 			$loguserid, time(), $fid);
 
-		die(header("Location: ".actionLink("board", $forum['board'])));
+		die(header("Location: ".$_SERVER['HTTP_REFERER']));
 	}
 
 	$isIgnored = FetchResult("select count(*) from {ignoredforums} where uid={0} and fid={1}", $loguserid, $fid) == 1;

@@ -50,7 +50,7 @@
 						</td>
 					</tr>
 					{/if}
-					
+
 					{foreach $comments as $cmt}
 					<tr class="cell{cycle values='0,1'}">
 						<td class="cell2" style="vertical-align:top; width:20%;">
@@ -69,7 +69,7 @@
 						</td>
 					</tr>
 					{/foreach}
-					
+
 					{if $pagelinks}
 					<tr class="cell1">
 						<td colspan=2>
@@ -82,6 +82,12 @@
 					<tr class="cell2">
 						<td colspan=2>
 							{$commentField}
+						</td>
+					</tr>
+					{else if !$loguserid}
+					<tr class="cell2">
+						<td colspan=2>
+							You need to be logged in to post profile comments here.
 						</td>
 					</tr>
 					{else}

@@ -10,10 +10,6 @@ CheckPermission('admin.manageipbans');
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("ipbans") => __("IP ban manager")));
 
 if(isset($_POST['actionadd'])) {
-	//This doesn't allow you to ban IP ranges...
-	//if(!filter_var($_POST['ip'], FILTER_VALIDATE_IP))
-	//	Alert("Invalid IP");
-	//else
 	if(isIPBanned($_POST['ip']))
 		Alert("Already banned IP!");
 	else {

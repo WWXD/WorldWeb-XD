@@ -59,7 +59,7 @@ $attachs = array();
 
 if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
-} else if(isset($_POST['actionpreview'])) {
+} else if(isset($_POST['actionpreview']) && trim($_POST['text'])) {
 	$attachs = HandlePostAttachments(0, false);
 
 	$previewPost['text'] = $_POST["text"];
@@ -189,7 +189,7 @@ if($_GET['quote']) {
 			$quote['text'] = __('(deleted post)');
 
 		$prefill = "[quote=\"".htmlspecialchars($quote['poster'])."\" id=\"".$quote['id']."\"]".htmlspecialchars($quote['text'])."[/quote]";
-		$prefill = str_replace("/me", "[b]* ".htmlspecialchars(htmlspecialchars($quote['poster']))."[/b]", $prefill);
+		$prefill = str_replace("/me ", "[b]* ".htmlspecialchars(htmlspecialchars($quote['poster']))."[/b]", $prefill);
 	}
 }
 
