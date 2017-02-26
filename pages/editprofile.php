@@ -652,7 +652,7 @@ foreach($themes as $themeKey => $themeData) {
 		$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">"; 
 
 	if($themeAuthor)
-		$byline = "<br>".nl2br($themeAuthor);
+		$byline = "<br/>".nl2br($themeAuthor);
 	else
 		$byline = "";
 

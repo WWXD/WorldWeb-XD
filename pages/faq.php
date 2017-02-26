@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - Frequently Asked Questions page
+//  WorldWeb XD - Frequently Asked Questions page
 //  Access: all
 if (!defined('BLARG')) die();
 

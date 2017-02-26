@@ -37,7 +37,7 @@ krsort($lastActivity);
 $lastActivity = array_slice($lastActivity, 0, $maxitems);
 
 RenderTemplate('homepage', array('homepage' => $homepage, 'lastactivity' => $lastActivity));
-	
+
 
 $rFora = Query("select * from {forums} where id = {0}", Settings::get('newsForum'));
 if(NumRows($rFora)) {
@@ -58,7 +58,6 @@ else
 
 $tpp = 5;
 
-//echo '<br>';
 $links = array('<a href="'.URL_ROOT.'rss.php">'.__('RSS feed').'</a>');
 if (HasPermission('forum.postthreads', $forum['id']))
 	$links[] = actionLinkTag(__('Post new'), 'newthread', $forum['id']);

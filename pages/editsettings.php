@@ -142,7 +142,7 @@ foreach($settings as $name => $data) {
 		$sdata['name'] = "<span style=\"color: #f44;\">{$sdata['name']} (invalid)</span>";
 
 	if($help)
-		$sdata['name'] .= "<br><small>$help</small>";
+		$sdata['name'] .= "<br/><small>$help</small>";
 
 	$settingfields[$data['category']][] = $sdata;
 }

@@ -314,7 +314,7 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 
 		'homepageText' => array(
 			'type' => 'texthtml',
-			'default' => 'Welcome to WorldWeb XD.<br><br>Fill this with relevant info.',
+			'default' => 'Welcome to WorldWeb XD.<br/><br/>Fill this with relevant info.',
 			'name' => 'Homepage contents',
 			'category' => 'Homepage contents',
 		),

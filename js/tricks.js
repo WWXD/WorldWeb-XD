@@ -214,7 +214,7 @@ function getOnlineUsers() {
 	$.getJSON(boardroot+"ajaxcallbacks.php", "a=no", function(data) {
 	    var notiflist = '';
 		for (var i=0; i < data.length; i++)
-			notiflist += '<li>' + data[i].text + '<br><small>' + data[i].formattedDate + '</small>';
+			notiflist += '<li>' + data[i].text + '<br/><small>' + data[i].formattedDate + '</small>';
 
 		$('#notifList').html(notiflist);
 

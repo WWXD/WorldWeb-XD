@@ -15,18 +15,17 @@ $stuff = Query("	SELECT
 					ORDER BY (deletedposts / totalposts) DESC",
 					Settings::get('bannedGroup'));
 					
-echo '
+?>
 	<table class="outline margin">
 		<tr class="cell0">
 			<td colspan="5" class="center">
-				<br>
-				This page shows, for each user, how many of their posts were deleted by the staff.<br>
-				(users with less than 2% of deleted posts aren\'t shown)<br>
-				<br>
-				If you are in the green part, you are fine, but try to be a little careful.<br>
-				If you are in the orange part, you should really improve the quality of your posts.<br>
-				If you are in the red part, you are walking on thin ice, and should think twice before posting again.<br>
-				<br>
+				<br/>
+				This page shows, for each user, how many of their posts were deleted by the staff.<br/>
+				(users with less than 2% of deleted posts aren\'t shown)<br/>
+				<br/>
+				If you are in the green part, you are fine, but try to be a little careful.<br/>
+				If you are in the orange part, you should really improve the quality of your posts.<br/>
+				If you are in the red part, you are walking on thin ice, and should think twice before posting again.
 			</td>
 		</tr>
 		<tr class="header1">
@@ -35,7 +34,9 @@ echo '
 			<th>Deleted</th>
 			<th>Ratio</th>
 			<th style="width:120px;">&nbsp;</th>
-		</tr>';
+		</tr>
+
+<?php
 					
 $c = 1;
 while ($user = Fetch($stuff))

@@ -20,46 +20,41 @@ $gdisplays = array(
 if (!$_POST['saveaction']) {
 	$groups = Query("SELECT * FROM {usergroups} WHERE rank<={0} ORDER BY type, rank", $loguserGroup['rank']);
 	$gdata = array();
-		
-	while ($group = Fetch($groups))
-	{
+
+	while ($group = Fetch($groups)) {
 		$gtitle = htmlspecialchars($group['title']);
 		if (!$group['type'])
 			$gtitle = '<span class="userlink" style="color:'.htmlspecialchars($group['color_unspec']).';">'.$gtitle.'</span>';
-		
+
 		$gdata[] = actionLinkTag($gtitle, 'editgroups', $group['id']);
 	}
-	
+
 	RenderTemplate('grouplist', array('groups' => $gdata));
 }
 
-if (isset($_GET['id']))
-{
+if (isset($_GET['id'])) {
 	$gid = (int)$_GET['id'];
 	$group = Fetch(Query("SELECT * FROM {usergroups} WHERE id={0}", $gid));
 	if (!$group)
 		Kill(__('Invalid group ID.'));
-		
+
 	if ($group['rank'] > $loguserGroup['rank'])
 		Kill(__('You may not edit this group.'));
-	
+
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups'), '' => htmlspecialchars($group['title'])));
-	
+
 	$canPromoteHigher = $loguser['root'] && ($gid == $loguserGroup['id']);
-}
-else
-{
+} else {
 	MakeCrumbs(array(actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups')));
 	Alert(__('Select a group above to edit it.'), __('Notice'));
 	return;
 }
 
 $error = '';
-if ($_POST['saveaction'])
-{
+if ($_POST['saveaction']) {
 	if ($_POST['token'] !== $loguser['token'])
 		Kill(__('No.'));
-	
+
 	// save shit
 }
 else
@@ -134,19 +129,16 @@ echo '
 $fperms = Query("SELECT p.*, f.title ftitle FROM {permissions} p LEFT JOIN {forums} f ON f.id=p.arg
 	WHERE p.applyto=0 AND p.id={0} AND (SUBSTR(p.perm,1,6)={1} OR SUBSTR(p.perm,1,4)={2}) AND p.arg!=0 ORDER BY p.arg, p.perm", 
 	$gid, 'forum.', 'mod.');
-while ($fperm = Fetch($fperms))
-{
+while ($fperm = Fetch($fperms)) {
 	$fpermlist[$fperm['arg']][$fperm['perm']] = $fperm['value'];
 	if (!$fpermlist[$fperm['arg']]['_ftitle'])
 		$fpermlist[$fperm['arg']]['_ftitle'] = $fperm['ftitle'];
 }
 
-if (!empty($fpermlist))
-{
+if (!empty($fpermlist)) {
 	foreach ($fpermlist as $fid=>$fpl)
 		ForumPermTable($fid, $fpl);
-}
-else
+} else
 	echo '
 			<tr class="cell1"><td>'.__('No permissions.').'</td></tr>';
 
@@ -262,7 +254,7 @@ function PermTable($cat)
 function ForumPermTable($fid, $fpl=array())
 {
 	global $permCats, $permDescs;
-	
+
 	if (!$fid)
 	{
 		echo '
@@ -285,7 +277,7 @@ function ForumPermTable($fid, $fpl=array())
 			</tr>';
 		unset($fpl['_ftitle']);
 	}
-	
+
 	$lastcat = -1;
 	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
 	foreach ($pd as $cat=>$perms)
@@ -299,7 +291,7 @@ function ForumPermTable($fid, $fpl=array())
 			</tr>';
 			$lastcat = $cat;
 		}
-		
+
 		foreach ($perms as $permid=>$permname)
 		{
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
@@ -311,7 +303,7 @@ function ForumPermTable($fid, $fpl=array())
 			</tr>';
 		}
 	}
-	
+
 	if (!$fid)
 	{
 		echo '

@@ -96,13 +96,13 @@ $moodRows = array();
 $rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid asc", $loguserid);
 while($mood = Fetch($rMoods)) {
 	$row = array();
-	
+
 	$row['avatar'] = "<img src=\"".DATA_URL."avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";
-	
+
 	$row['field'] = "
 				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\">
 					<input type=\"hidden\" name=\"mid\" value=\"{$mood['mid']}\">
-					<input type=\"text\" id=\"name{$mood['mid']}\" name=\"name\" size=80 maxlength=60 value=\"".htmlspecialchars($mood['name'])."\"><br>
+					<input type=\"text\" id=\"name{$mood['mid']}\" name=\"name\" size=80 maxlength=60 value=\"".htmlspecialchars($mood['name'])."\"><br/>
 					<input type=\"submit\" name=\"actionrename\" value=\"".__("Rename")."\">
 					<input type=\"submit\" name=\"actiondelete\" value=\"".__("Delete")."\" 
 						onclick=\"if(!confirm('".__('Really delete this avatar? All posts using it will be changed to use your default avatar.')."'))return false;\">
@@ -113,8 +113,8 @@ while($mood = Fetch($rMoods)) {
 
 $newField = "
 				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\" enctype=\"multipart/form-data\">
-					".__("Name:")." <input type=\"text\" id=\"newName\" name=\"name\" size=80 maxlength=60><br>
-					".__("Image:")." <input type=\"file\" id=\"pic\" name=\"picture\"><br>
+					".__("Name:")." <input type=\"text\" id=\"newName\" name=\"name\" size=80 maxlength=60><br/>
+					".__("Image:")." <input type=\"file\" id=\"pic\" name=\"picture\"><br/>
 					<input type=\"submit\" name=\"actionadd\" value=\"".__("Add")."\">
 				</form>";
 				

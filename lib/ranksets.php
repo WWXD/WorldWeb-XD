@@ -62,7 +62,7 @@ function getRankHtml($rankset, $rank) {
 	$img = '';
 	if ($rank['image']) {
 		$img = htmlspecialchars(resourceLink("ranksets/".$rankset."/".$rank["image"]));
-		$img = "<img src=\"$img\" alt=\"\" /><br>";
+		$img = "<img src=\"$img\" alt=\"\" /><br/>";
 	}
 	return $img.$text;
 }

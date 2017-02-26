@@ -84,7 +84,7 @@ if (isset($_GET['unban'])) {
 			<option value="86400">days</option>
 			<option value="604800">weeks</option>
 		</select>
-		<br>
+		<br/>
 	<label><input type="radio" name="permanent" value="1" checked="checked"> Permanent</label>';
 
 	$userlink = userLink(getDataPrefix($user, 'u_'));

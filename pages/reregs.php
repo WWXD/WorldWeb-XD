@@ -35,14 +35,13 @@ while ($match = Fetch($passm))
 		</tr>
 		<tr class="cell2 center">
 			<td>
-				<br>
-				This page lists users with matching IPs or passwords.<br>
-				<br>
+				<br/>
+				This page lists users with matching IPs or passwords.<br/>
+				<br/>
 				The information isn't necessarily a proof that two users are the same person, 
-				but can be used to confirm suspicions.<br>
-				<br>
-				Note: password matches are only checked when users register or log in.<br>
-				<br>
+				but can be used to confirm suspicions.<br/>
+				<br/>
+				Note: password matches are only checked when users register or log in.
 			</td>
 		</tr>
 	</table>

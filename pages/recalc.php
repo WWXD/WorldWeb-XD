@@ -1,10 +1,10 @@
 <?php
-//  AcmlmBoard XD - Report/content mismatch fixing utility
-//  Access: staff
+//  WorldWeb XD - Report/content mismatch fixing utility
+//  Access: Owner
 if (!defined('BLARG')) die();
 
 if(!$loguser['root'])
-		Kill(__("Owner only, please."));
+	Kill(__("Owner only, please."));
 
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("recalc") => __("Recalculate statistics")));
 

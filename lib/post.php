@@ -48,7 +48,7 @@ function getSyndrome($activity) {
 	$soFar = "";
 	foreach($syndromes as $minAct => $syndrome)
 		if($activity >= $minAct)
-			$soFar = "<em style=\"color: ".$syndrome[1].";\">".$syndrome[0]."</em><br>";
+			$soFar = "<em style=\"color: ".$syndrome[1].";\">".$syndrome[0]."</em><br/>";
 	return $soFar;
 }
 
@@ -92,9 +92,9 @@ function makePostText($post, $poster) {
 
 	if($poster['signature'])
 		if(!$poster['signsep'])
-			$separator = "<br>_________________________<br>";
+			$separator = "<br/>_________________________<br/>";
 		else
-			$separator = "<br>";
+			$separator = "<br/>";
 
 	$attachblock = '';
 	if ($post['has_attachments']){
@@ -119,7 +119,7 @@ function makePostText($post, $poster) {
 			$linkurl = $ispreview ? '#' : $url;
 			$filesize = filesize(DATA_DIR.'uploads/'.$attach['physicalname']);
 			
-			$attachblock .= '<br><div class="post_attachment">';
+			$attachblock .= '<br/><div class="post_attachment">';
 			
 			$fext = strtolower(substr($attach['filename'], -4));
 			if ($fext == '.png' || $fext == '.jpg' || $fext == 'jpeg' || $fext == '.gif') {
@@ -130,9 +130,9 @@ function makePostText($post, $poster) {
 				$link = '<a href="'.$linkurl.'">'.htmlspecialchars($attach['filename']).'</a>';
 
 				$desc = htmlspecialchars($attach['description']);
-				if ($desc) $desc .= '<br>';
+				if ($desc) $desc .= '<br/>';
 
-				$attachblock .= '<strong>'.__('Attachment: ').$link.'</strong><br>';
+				$attachblock .= '<strong>'.__('Attachment: ').$link.'</strong><br/>';
 				$attachblock .= '<div class="smallFonts">'.$desc;
 				$attachblock .= BytesToSize($filesize).__(' &mdash; Downloaded ').Plural($attach['downloads'], 'time').'</div>';
 			}

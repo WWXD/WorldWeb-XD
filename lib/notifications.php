@@ -6,6 +6,8 @@ $NotifFormat = array
 (
 	'pm' => 'FormatNotif_PM',
 	'profilecomment' => 'FormatNotif_ProfileComment',
+	'usermention' => 'FormatNotif_mention',
+	'favorites' => 'FormatNotif_favorites',
 );
 
 // plugins should use an init hook to extend $NotifFormat
@@ -64,7 +66,7 @@ function GetNotifications() {
 			$ndesc = htmlspecialchars($n['type'].':'.$n['id']);
 
 		$ts = '<span class="nobr">'; $te = '</span>';
-		$ndesc = $ts.str_replace("\n", $te.'<br>'.$ts, $ndesc).$te;
+		$ndesc = $ts.str_replace("\n", $te.'<br/>'.$ts, $ndesc).$te;
 
 		$notifs[] = array
 		(

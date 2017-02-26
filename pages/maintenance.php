@@ -1,5 +1,5 @@
 <?php
-	if (Settings::get('maintenance') && !$loguser['root'] && (!isset($_GET['page']) || $_GET['page'] != 'login')) {
+	if (Settings::get('maintenance') && !$loguser['root']) {
 ?>
 <table class="outline margin center" style="width: 60%; overflow: auto; margin: auto; margin-top: 40px; margin-bottom: 40px;">
 <tr><td class="cell0" style="padding:30px">

@@ -364,7 +364,7 @@ INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'showPoRA', '0'),
 ('main', 'tagsDirection', 'Right'),
 ('main', 'PoRATitle', 'Blargbox'),
-('main', 'PoRAText', 'Welcome to your new WorldWeb XD Website! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br>Enjoy WorldWeb XD!'),
+('main', 'PoRAText', 'Welcome to your new WorldWeb XD Website! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br/>Enjoy WorldWeb XD!'),
 ('main', 'profilePreviewText', 'blah blah sample post'),
 ('main', 'menuMainName', 'Navigation'),
 ('main', 'showGender', '1'),

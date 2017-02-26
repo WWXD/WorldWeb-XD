@@ -17,13 +17,16 @@ if($loguserid)
 	Kill(__("An unknown error occured, please try again later."));
 
 if(Settings::get('DisReg'))
-	Kill(__("Registering is currently disabled. Please try again later."))
+	Kill(__("Registering is currently disabled. Please try again later."));
 
 if($_POST['register']) {
 	if (IsProxy() || IsProxyFSpamList()) {
 		$adminemail = Settings::get('ownerEmail');
-		if ($adminemail) $halp = '<br><br>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
-		else $halp = '';
+		
+		if ($adminemail)
+			$halp = '<br/><br/>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
+		else
+			$halp = '';
 
 		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
 	} else {
@@ -51,8 +54,6 @@ if($_POST['register']) {
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
 		//This makes testing faster.
-		//This is utterly useless ~Shibboleet
-		//Its actually usefull for testing how it works in the localhost. ~MaorNinja
 		if($_SERVER['REMOTE_ADDR'] == "127.0.0.1")
 			$ipKnown = 0;
 
@@ -130,7 +131,7 @@ if($_POST['register']) {
 				$uid, $_POST['name'], $sha, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
 		} else {
 			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-				$uid, $_POST['name'], $sha, $newsalt, -2, time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+				$uid, $_POST['name'], $sha, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
 		}
 
 		Report("New user: [b]".$_POST['name']."[/] (#".$uid.") -> [g]#HERE#?uid=".$uid);
@@ -218,7 +219,7 @@ print "
 				Gender
 			</td>
 			<td class=\"cell1\">
-				"MakeOptions("sex",$_POST['sex'],$sexes)"
+				".MakeOptions("sex",$_POST['sex'],$sexes)."
 			</td>
 		</tr>
 		<tr style=\"display:none;\">
@@ -289,11 +290,14 @@ print "
 			<td colspan=\"2\" class=\"cell0 smallFonts\" style=\"padding:0.7em;\">";
 
 if (Settings::get('email'))
-	print "Specifying an email address is a requirement. By default, your email is made private.";
+	print "Specifying an email address is a requirement. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 else
-	print "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private.";
+	print "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 
-echo "		</td>
+print "		</td>
+			<td colspan=\"2\" class=\"cell1 smallFonts\" style=\"padding:0.7em;\">
+				Do you already have an account? Log into it <a href=\"/login/\">here</a>.
+			</td>
 		</tr>
 	</table>";
 

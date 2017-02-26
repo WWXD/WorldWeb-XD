@@ -569,7 +569,7 @@ function MakeCatSelect($i, $cats, $fora, $v, $fid)
 			</select>';
 			
 	$r .= '
-			<br>
+			<br/>
 			<label><input type="radio" name="ptype" value="1"'.($v<0 ? ' checked="checked"':'').'>Forum:</label>
 			<select name="pforum">';
 			

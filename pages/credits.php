@@ -10,7 +10,7 @@ $credits = ('
 		<li>Maorninja322 — Created Blargboard XD (a fork of Blargboard), coder</li>
 		<li>JeDaYoshi — Ported all the Acmlmboard XD plugins to BBXD, coder</li>
 		<li>Phase — Added compatibility to 5.7 MYSQL databases, JSON ranksets, etc...</li>
-		<li>Super-toad 65 — Hyper-sticky, no follow BBCode, Register page extra security, etc...</li>
+		<li>SuperToad - (TBH: I don\'t know exactly what he did and what he didn\'t so I\'ll just leave it like this).
 		<li>LifeMushroom — Themes</li>
 		<li>Everyone behind <a href="https://fortawesome.github.io/Font-Awesome/">Font Awesome</a>, <a href="https://jquery.com/">jQuery</a>, Smarty, and any other libraries this software uses</li>
 	</ul>');

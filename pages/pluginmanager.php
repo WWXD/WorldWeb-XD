@@ -1,15 +1,15 @@
 <?php
 if (!defined('BLARG')) die();
 
-$title = "Plugin Manager";
+$title = "Add-on Manager";
 
 CheckPermission('admin.editsettings');
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("pluginmanager") => __("Plugin Manager")));
+MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("addonmanager") => __("Add-on Manager")));
 
 
 $cell = 0;
-$pluginsDir = @opendir(BOARD_ROOT."plugins");
+$pluginsDir = @opendir(BOARD_ROOT."add-ons");
 
 $enabledplugins = array();
 $disabledplugins = array();
@@ -18,7 +18,7 @@ $pluginDatas = array();
 if($pluginsDir !== FALSE) {
 	while(($plugin = readdir($pluginsDir)) !== FALSE) {
 		if($plugin == "." || $plugin == "..") continue;
-		if(is_dir(BOARD_ROOT."plugins/".$plugin)) {
+		if(is_dir(BOARD_ROOT."add-ons/".$plugin)) {
 			try {
 				$plugindata = getPluginData($plugin, false);
 			}
@@ -81,6 +81,8 @@ function listPlugin($plugin, $plugindata) {
 	return $pdata;
 }
 
+$enabledfile = BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt';
+
 if($_REQUEST['action'] == "enable") {
 	if($_REQUEST['key'] != $loguser['token'])
 		Kill("No.");
@@ -91,10 +93,10 @@ if($_REQUEST['action'] == "enable") {
 
 	die(header("location: ".actionLink("pluginmanager")));
 
-	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
-
 	//Make a new file for easier detecting that it is enabled
-	file_put_contents($pluginsDir.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
+	if (file_put_contents($enabledfile, 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.')){
+		
+	}
 }
 
 if($_REQUEST['action'] == "disable") {
@@ -107,5 +109,7 @@ if($_REQUEST['action'] == "disable") {
 	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
 
 	//Delete the enabled text.
-	unlink($pluginsDir.'/enabled.txt', 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.');
+	if (file_exists(BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt')) {
+		
+	}
 }
