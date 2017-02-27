@@ -123,16 +123,22 @@
 
 	if (file_exists(__DIR__.'/config/database.php'))
 		die($header.'The website is already installed.'.$footer);
-		
+
 	$footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></div></div></body></html>';
 
 	if (version_compare(PHP_VERSION, '5.3.0') < 0)
 		die($header.'Sorry, Blargboard XD requires PHP 5.3 or above.'.$footer);
-		
+
 	if (!is_dir(__DIR__.'/config'))
 		if (!mkdir(__DIR__.'/config'))
 			die($header.'Failed to create the config directory. Check the permissions of the user running PHP.'.$footer);
-		
+
+	//Make all the data folders...
+	@mkdir(__DIR__.'/data');
+	@mkdir(__DIR__.'/data/avatars');
+	@mkdir(__DIR__.'/data/minipics');
+	@mkdir(__DIR__.'/data/uploads');
+
 	@mkdir(__DIR__.'/templates_c');
 
 	if ($_POST['submit']) {

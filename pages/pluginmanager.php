@@ -57,7 +57,7 @@ function listPlugin($plugin, $plugindata) {
 	$pdata = $plugindata;
 
 	$hasperms = false;
-	if (!isset($plugins[$plugin]) && file_exists(BOARD_ROOT.'plugins/'.$plugin.'/permStrings.php'))
+	if (!isset($plugins[$plugin]) && file_exists(BOARD_ROOT.'add-ons/'.$plugin.'/permStrings.php'))
 		$hasperms = true;
 
 	if ($hasperms)
@@ -94,8 +94,12 @@ if($_REQUEST['action'] == "enable") {
 	die(header("location: ".actionLink("pluginmanager")));
 
 	//Make a new file for easier detecting that it is enabled
-	if (file_put_contents($enabledfile, 'This is a holdertext file that signifies that this plugin is enabled. Don\'t delete this file.')){
-		
+	if (!file_put_contents($enabledfile, 'This is a holdertext file that signifies that this add-on is enabled. Don\'t delete this file.')){
+		Report("[b]".$loguser['name']."[/] tried to add a add-on called "$_REQUEST['id']" but failed.", false);
+		Alert(__("Sorry, but the add-on couldn't be added by our file detection usage. Please report this to the website's owner."), __("Error"));
+	} else {
+		Report("[b]".$loguser['name']."[/] successfully added an add-on called "$_REQUEST['id']".", false);
+		Alert(__("You have successfully added the add-on."), __("Success"));
 	}
 }
 
@@ -109,7 +113,13 @@ if($_REQUEST['action'] == "disable") {
 	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
 
 	//Delete the enabled text.
-	if (file_exists(BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt')) {
-		
+	if (file_exists($enabledfile)) {
+		if(!unlink(__DIR__.'/install.php')) {
+			Report("[b]".$loguser['name']."[/] tried to remove a add-on called "$_REQUEST['id']" but failed.", false);
+			Alert(__("Sorry, but the add-on couldn't be removed by our file detection usage. Please report this to the website's owner."), __("Error"));
+		} else {
+			Report("[b]".$loguser['name']."[/] successfully removed an add-on called "$_REQUEST['id']".", false);
+			Alert(__("You have successfully removed the add-on."), __("Success"));
+		}
 	}
 }
