@@ -18,7 +18,7 @@ $pluginDatas = array();
 if($pluginsDir !== FALSE) {
 	while(($plugin = readdir($pluginsDir)) !== FALSE) {
 		if($plugin == "." || $plugin == "..") continue;
-		if(is_dir(BOARD_ROOT."add-ons/".$plugin)) {
+		if(is_dir(BOARD_ROOT."plugins/".$plugin)) {
 			try {
 				$plugindata = getPluginData($plugin, false);
 			}
@@ -57,7 +57,7 @@ function listPlugin($plugin, $plugindata) {
 	$pdata = $plugindata;
 
 	$hasperms = false;
-	if (!isset($plugins[$plugin]) && file_exists(BOARD_ROOT.'add-ons/'.$plugin.'/permStrings.php'))
+	if (!isset($plugins[$plugin]) && file_exists(BOARD_ROOT.'plugins/'.$plugin.'/permStrings.php'))
 		$hasperms = true;
 
 	if ($hasperms)
@@ -114,7 +114,7 @@ if($_REQUEST['action'] == "disable") {
 
 	//Delete the enabled text.
 	if (file_exists($enabledfile)) {
-		if(!unlink(__DIR__.'/install.php')) {
+		if(!unlink($enabledfile)) {
 			Report("[b]".$loguser['name']."[/] tried to remove a add-on called "$_REQUEST['id']" but failed.", false);
 			Alert(__("Sorry, but the add-on couldn't be removed by our file detection usage. Please report this to the website's owner."), __("Error"));
 		} else {
