@@ -13,10 +13,10 @@ MakeCrumbs(array('register' => __('Register')));
 
 $sexes = array(__("Male"), __("Female"), __("N/A"));
 
-if($loguserid)
+if($loguserid && !$loguser['root'])
 	Kill(__("An unknown error occured, please try again later."));
 
-if(Settings::get('DisReg'))
+if(Settings::get('DisReg') && !$loguser['root'])
 	Kill(__("Registering is currently disabled. Please try again later."));
 
 if($_POST['register']) {
@@ -45,7 +45,6 @@ if($_POST['register']) {
 			if($uname == $cname)
 				break;
 
-
 			$uemail = trim(str_replace(" ", "", strtolower($user['email'])));
 			if($uemail == $cemail)
 				break;
@@ -54,7 +53,7 @@ if($_POST['register']) {
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
 		//This makes testing faster.
-		if($_SERVER['REMOTE_ADDR'] == "127.0.0.1")
+		if($_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $loguser['root'])
 			$ipKnown = 0;
 
 		if (stripos(in_array($cemail, $emaildomainsblock)) !== FALSE)
@@ -176,9 +175,12 @@ if($_POST['register']) {
 	$_POST['autologin'] = 0;
 }
 
-print "<script src=\"".resourceLink('js/register.js')."\"></script>
-<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>
-<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\">
+if(Settings::get('PassChecker')) {
+	print "<script src=\"".resourceLink('js/register.js')."\"></script>
+			<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+}
+
+print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\">
 	<table class=\"outline margin form form_register\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">

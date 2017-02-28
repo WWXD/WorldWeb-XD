@@ -255,10 +255,18 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Admin Verification",
 			'category' => 'RegistrationSec'
 		),
+		"PassChecker" => array (
+			"type" => "boolean",
+			"default" => "0",
+			"name" => "A Password checker.",
+			"help" => "Straitly ported from ABXD.",
+			'category' => 'RegistrationSec'
+		),
 		"DisReg" => array (
 			"type" => "boolean",
 			"default" => "0",
-			"name" => "Turns off registration. Usefull when your site is hit with a spam attack.",
+			"name" => "Turn off registration",
+			"help" => "Usefull when your site is hit with a spam attack.",
 			'category' => 'RegistrationSec'
 		),
 
