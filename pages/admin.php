@@ -28,7 +28,7 @@ $adminLinks = array();
 
 if ($loguser['root'])						$adminLinks[] = actionLinkTag(__("Recalculate statistics"), "recalc");
 if (HasPermission('admin.manageipbans'))	$adminLinks[] = actionLinkTag(__("Manage IP bans"), "ipbans");
-if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Manage plugins"), "pluginmanager");
+if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Manage Add-ons"), "addonmanager");
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit Settings"), "editsettings");
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit Home Page"), "editsettings", '', 'field=homepageText');
 if (HasPermission('admin.editsettings'))	$adminLinks[] = actionLinkTag(__("Edit FAQ"), "editsettings", '', 'field=faqText');
