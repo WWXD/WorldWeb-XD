@@ -126,8 +126,8 @@
 
 	$footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></div></div></body></html>';
 
-	if (version_compare(PHP_VERSION, '5.3.0') < 0)
-		die($header.'Sorry, Blargboard XD requires PHP 5.3 or above.'.$footer);
+	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.4', '>='))
+		die($header.'Sorry, WorldWeb XD requires PHP version 5.4 or above, while you are currently running '. PHP_VERSION .'.'.$footer);
 
 	if (!is_dir(__DIR__.'/config'))
 		if (!mkdir(__DIR__.'/config'))
@@ -202,7 +202,7 @@
 					Congratulations!
 				</div>
 				<div class="box cell center">
-					The WorldWeb XD installation was successful. You may now <a href="./login/">proceed to your website and login</a>. Make sure you edit the website's setting. Thanks for choosing Blargboard XD!
+					The WorldWeb XD installation was successful. You may now <a href="./login/">proceed to your website and login</a>. Make sure you edit the website's setting. Thanks for choosing WorldWeb XD!
 				</div>
 			</div>
 		</div>
