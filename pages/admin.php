@@ -45,5 +45,3 @@ $bucket = "adminpanel"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
 RenderTemplate('adminpanel', array('adminInfo' => $adminInfo, 'adminLinks' => $adminLinks));
-
-?>

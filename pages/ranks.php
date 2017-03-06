@@ -79,5 +79,3 @@ for($i = 0; $i < count($ranks); $i++) {
 }
 
 RenderTemplate('ranks', array('ranksets' => $ranksets, 'ranks' => $ranklist));
-
-?>

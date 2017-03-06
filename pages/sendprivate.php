@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - Private message sending/previewing page
+//  WorldWeb XD - Private message sending/previewing page
 //  Access: user
 if (!defined('BLARG')) die();
 
@@ -226,5 +226,3 @@ echo "
 		document.postform.text.focus();
 	</script>
 ";
-
-?>

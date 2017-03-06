@@ -1261,5 +1261,3 @@ function IsProxyFSpamList() {
 
 	return false;
 }
-
-?>

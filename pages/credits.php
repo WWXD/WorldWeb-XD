@@ -16,5 +16,3 @@ $credits = ('
 	</ul>');
 
 RenderTemplate('credits', array('credits' => $credits));
-
-?>

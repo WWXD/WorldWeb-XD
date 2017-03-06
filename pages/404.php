@@ -13,4 +13,3 @@ $title = __("404 - Not found");
 
 Kill(__('The page you are looking for was not found.').'<br /><br />
 	<a href="../">'.__('Return to the board index').'</a>', __("404 - Not found"));
-?>

@@ -386,5 +386,3 @@ function parseBBCode($text) {
 
 	return $outputstack[$si]['contents'];
 }
-
-?>

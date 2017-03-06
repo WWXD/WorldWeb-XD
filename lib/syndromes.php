@@ -5,8 +5,7 @@ if (!defined('BLARG')) die();
 
 $aff = "Affected by ";
 
-$syndromes = array
-(
+$syndromes = array (
 
 	10 => array("Actually active", "#53C373"),
 	20 => array("$aff'Activity Syndrome'", "#69D989"),
@@ -55,5 +54,3 @@ $syndromes = array
 */
 
 );
-
-?>

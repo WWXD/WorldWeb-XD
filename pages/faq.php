@@ -125,5 +125,3 @@ echo $faq;
 function DoGeshi($code) {
 	return "<code>".htmlspecialchars($code)."</code>";
 }
-
-?>

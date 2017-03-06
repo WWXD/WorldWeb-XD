@@ -6,15 +6,13 @@ WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storag
 
 ## Requirements
 
-PHP version (minimum): 5.4. It will work on 7.0, but its better to use PHP 5.4. To see if WorldWeb XD is compiling well, check this image: [![Build Status](https://travis-ci.org/WWXD/WorldWeb-XD.svg?branch=master)](https://travis-ci.org/WWXD/WorldWeb-XD)
+PHP version (minimum): 5.4. It will work on 7.0, but its better to use PHP 5.4.
 PHP extentions: mcrypt 
 MySQL: None, but you should have a recent version.
 
-Knowledge on coding: No, but if you do, you can add your own nifty features. Just be sure to send in a pull request, so other users can use it as well.
+Knowledge in PHP: No, but if you do, you can add your own nifty features. Just be sure to send in a pull request, so other users can use it as well.
 
 ## How to install and use
-
-PHP and MySQL knowledge isn't required to use WorldWeb XD but is a plus.
 
 1. Go to http://h05t.gq/ and sign up. You should be getting an email with CPanel info.
 2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
@@ -22,9 +20,9 @@ PHP and MySQL knowledge isn't required to use WorldWeb XD but is a plus.
 4. Make a MySQL database, and take notes of needed info.
 5. Go to your domain and it'll tell you what you need.
 
-If everything went fine, browse to your freshly installed board and configure it. If not, let us know.
+If everything went fine, browse to your freshly installed website and configure it. If not, let us know.
 
-We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
+We recommend you take some time and make your own website themes and banner to give your board a truly unique feel.
 
 If you want to have a image logo, just be sure to put it in the `img` directory, under the name `logo.png`.
 
@@ -34,7 +32,7 @@ If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets
 
 ## How to update your website
 
-1. Download the most recent Blargboard package (be it an official release or a Git package).
+1. Download the most recent WorldWeb XD package (be it an official release or a Git package).
 2. Copy the files over your existing board's files.
 WARNING: Make sure to not overwrite/delete the config directory, especially config/salt.php! Lose that one and you'll have fun resetting everyone's passwords.
 Everything else is safe to overwrite.

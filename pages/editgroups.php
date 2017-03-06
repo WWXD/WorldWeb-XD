@@ -316,5 +316,3 @@ function ForumPermTable($fid, $fpl=array())
 			</tr>';
 	}
 }
-
-?>

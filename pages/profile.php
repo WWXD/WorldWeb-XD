@@ -243,7 +243,7 @@ if($user['birthday'])
 if(count($temp))
 	$profileParts[__("Personal information")] = $temp;
 
-if ($user['bio'])
+if ($user['bio'] && $mobileLayout)
 	$profileParts[__('Bio')] = CleanUpPost($user['bio']);
 
 $badgersR = Query("select * from {badges} where owner={0} order by color", $id);
@@ -334,16 +334,28 @@ RenderTemplate('profile', array(
 	'pagelinks' => $pagelinks));	
 
 
-if (!$mobileLayout && file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
-	$previewPost['text'] = Settings::get("profilePreviewText");
+if (!$mobileLayout) {
+	if ($user['bio']) {
+		$previewPost['text'] = CleanUpPost($user['bio']);
 
-	$previewPost['num'] = 0;
-	$previewPost['id'] = 0;
+		$previewPost['num'] = 0;
+		$previewPost['id'] = 0;
 
-	foreach($user as $key => $value)
-		$previewPost['u_'.$key] = $value;
+		foreach($user as $key => $value)
+			$previewPost['u_'.$key] = $value;
 
-	MakePost($previewPost, POST_SAMPLE);
+		MakePost($previewPost, POST_PROFILE);
+	} else if (!$user['bio'] && file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+		$previewPost['text'] = Settings::get("profilePreviewText");
+
+		$previewPost['num'] = 0;
+		$previewPost['id'] = 0;
+
+		foreach($user as $key => $value)
+			$previewPost['u_'.$key] = $value;
+
+		MakePost($previewPost, POST_SAMPLE);
+	}
 }
 
 
@@ -382,11 +394,7 @@ MakeCrumbs(array(actionLink("profile", $id, '', $user['name']) => htmlspecialcha
 
 $title = format(__("Profile for {0}"), htmlspecialchars($uname));
 
-function IsReallyEmpty($subject)
-{
+function IsReallyEmpty($subject) {
 	$trimmed = trim(preg_replace("/&.*;/", "", $subject));
 	return strlen($trimmed) == 0;
 }
-
-
-?>

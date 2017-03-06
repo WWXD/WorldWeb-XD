@@ -59,5 +59,3 @@ for($i = 0; $i < $days; $i++) {
 
 imagepng($img);
 imagedestroy($img);
-
-?>

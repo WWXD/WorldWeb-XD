@@ -247,5 +247,3 @@ function GetUserPermissions($users, $perms=null) {
 
 LoadGroups();
 $loguser['powerlevel'] = -1; // safety
-
-?>

@@ -106,5 +106,3 @@ RenderTemplate($template, array('fields' => $fields));
 echo '
 		<input type="hidden" name="token" value="'.$loguser['token'].'">
 	</form>';
-
-?>

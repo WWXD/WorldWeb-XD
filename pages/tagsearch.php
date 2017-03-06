@@ -47,5 +47,3 @@ if(NumRows($rThreads))
 } 
 else
 	Alert(format(__("Tag {0} was not found in any thread."), htmlspecialchars($tag)), __("No threads found."));
-
-?>

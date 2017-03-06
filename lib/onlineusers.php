@@ -1,8 +1,7 @@
 <?php
 if (!defined('BLARG')) die();
 
-function OnlineUsers($forum = 0, $update = true)
-{
+function OnlineUsers($forum = 0, $update = true) {
 	global $loguserid;
 	$forumClause = "";
 	$browseLocation = __("online");

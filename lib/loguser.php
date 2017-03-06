@@ -123,8 +123,7 @@ $rOnlineUsers = Query("select id from {users} where lastactivity > {0} or lastpo
 $_qRecords = "";
 $onlineUsers = "";
 $onlineUserCt = 0;
-while($onlineUser = Fetch($rOnlineUsers))
-{
+while($onlineUser = Fetch($rOnlineUsers)) {
 	$onlineUsers .= ":".$onlineUser["id"];
 	$onlineUserCt++;
 }
@@ -164,20 +163,18 @@ Query("delete from {ipbans} where date != 0 and date < {0}", time());
 //Delete expired sessions
 Query("delete from {sessions} where expiration != 0 and expiration < {0}", time());
 
-function isIPBanned($ip)
-{
+function isIPBanned($ip) {
 	$rIPBan = Query("select * from {ipbans} where instr({0}, ip)=1", $ip);
 	
 	$result = false;
-	while ($ipban = Fetch($rIPBan))
-	{
+	while ($ipban = Fetch($rIPBan)) {
 		// check if this IP ban is actually good
 		// if the last character is a number, IPs have to match precisely
 		if (ctype_alnum(substr($ipban['ip'],-1)) && ($ip !== $ipban['ip']))
 			continue;
-		
+
 		return $ipban;
-		
+
 		if (IPMatches($ip, $ipban['ip']))
 			if ($ipban['whitelisted'])
 				return false;
@@ -203,43 +200,36 @@ function doHash($data)
 
 $loguser = NULL;
 
-if($_COOKIE['logsession'] && !$ipban)
-{
+if($_COOKIE['logsession'] && !$ipban) {
 	$session = Fetch(Query("SELECT * FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT)));
-	if($session)
-	{
+	if($session) {
 		$loguser = Fetch(Query("SELECT * FROM {users} WHERE id={0}", $session["user"]));
 		if($session["autoexpire"])
 			Query("UPDATE {sessions} SET expiration={0} WHERE id={1}", time()+10*60, $session["id"]); //10 minutes
 	}
 }
 
-if($loguser)
-{
+if($loguser) {
 	$loguser['token'] = hash('sha1', "{$loguser['id']},{$loguser['pss']},".SALT.",dr567hgdf546guol89ty896rd7y56gvers9t");
 	$loguserid = $loguser["id"];
-	
+
 	$sessid = doHash($_COOKIE['logsession'].SALT);
 	Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
 	Query("DELETE FROM {sessions} WHERE user={0} AND lasttime<={1}", $loguserid, time()-2592000);
-}
-else
-{
+} else {
 	$loguser = array("name"=>"", "primarygroup"=>Settings::get('defaultGroup'), "threadsperpage"=>50, "postsperpage"=>20, "theme"=>Settings::get("defaultTheme"),
 		"dateformat"=>"m-d-y", "timeformat"=>"h:i A", "fontsize"=>80, "timezone"=>0, "blocklayouts"=>!Settings::get("guestLayouts"),
 		'token'=>hash('sha1', rand()));
 	$loguserid = 0;
 }
 
-if ($loguser['flags'] & 0x1)
-{
+if ($loguser['flags'] & 0x1) {
 	Query("INSERT INTO {ipbans} (ip,reason,date) VALUES ({0},{1},0)",
 		$_SERVER['REMOTE_ADDR'], '['.htmlspecialchars($loguser['name']).'] Account IP-banned');
 	die(header('Location: '.$_SERVER['REQUEST_URI']));
 }
 
-if ($mobileLayout)
-{
+if ($mobileLayout) {
 	$loguser['blocklayouts'] = 1;
 	$loguser['fontsize'] = 80;
 	//$loguser['dateformat'] = 'm/d/y';
@@ -271,5 +261,3 @@ function setLastActivity() {
 			time(), $_SERVER['REMOTE_ADDR'], $url, $lastKnownBrowser, $loguserid);
 	}
 }
-
-?>

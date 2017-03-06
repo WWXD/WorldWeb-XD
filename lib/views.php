@@ -23,5 +23,3 @@ if(!$isBot)
 		Query("update {misc} set milestone = {0}", 'View '.$misc['views'].' reached by '.$who);
 	}
 }
-
-?>

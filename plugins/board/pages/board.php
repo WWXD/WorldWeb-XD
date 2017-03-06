@@ -40,5 +40,3 @@ if ($board == '') {
 
 makeAnncBar();
 makeForumListing(0, $board);
-
-?>

@@ -5,11 +5,10 @@ $board = $_GET['id'];
 if (!$boardmeh) $boardmeh = '';
 if (!isset($forumBoards[$boardmeh])) $boardmeh = '';
 
-if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread")
-{
+if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread") {
 	Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, t.id, {1} FROM {threads} t".($boardmeh!='' ? ' LEFT JOIN {forums} f ON f.id=t.forum WHERE f.board={2}' : ''), 
 		$loguserid, time(), $boardmeh);
-		
+
 	die(header("Location: ".actionLink("board2", $boardmeh)));
 }
 
@@ -19,8 +18,7 @@ if($loguserid)
 
 MakeCrumbs(forumCrumbs(array('board' => $board)), $links);
 
-if ($board == '')
-{
+if ($board == '') {
 	$statData = Fetch(Query("SELECT
 		(SELECT COUNT(*) FROM {threads}) AS numThreads,
 		(SELECT COUNT(*) FROM {posts}) AS numPosts,
@@ -32,8 +30,7 @@ if ($board == '')
 
 	$statData['pctActive'] = $statData['numUsers'] ? ceil((100 / $statData['numUsers']) * $statData['numActive']) : 0;
 	$lastUser = Query("select u.(_userfields) from {users} u order by u.regdate desc limit 1");
-	if(numRows($lastUser))
-	{
+	if(numRows($lastUser)) {
 		$lastUser = getDataPrefix(Fetch($lastUser), "u_");
 		$statData['lastUserLink'] = UserLink($lastUser);
 	}
@@ -43,5 +40,3 @@ if ($board == '')
 
 makeAnncBar();
 makeForumListingmeh(0, $boardmeh);
-
-?>

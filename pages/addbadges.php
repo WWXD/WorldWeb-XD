@@ -107,4 +107,3 @@ write("
 	</table>
 </form>
 ", $badgeList, $userID);
-?>

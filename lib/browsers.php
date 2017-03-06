@@ -3,8 +3,7 @@ if (!defined('BLARG')) die();
 
 $lastKnownBrowser = "blarg";
 
-$knownBrowsers = array
-(
+$knownBrowsers = [
 	"MSIE" => "Internet Explorer",
 	"IE" => "Internet Explorer",
 	"Edge" => "Microsoft Edge",
@@ -38,8 +37,7 @@ $knownBrowsers = array
 	"Lynx" => "Lynx",
 	"ELinks" => "ELinks",
 	"Links" => "Links",
-	"Nokia" => "Nokia mobile",
-);
+	"Nokia" => "Nokia mobile"];
 
 $knownOSes = array
 (
@@ -162,5 +160,3 @@ function GetVersion($ua, $versionStart) {
 	}
 	return $version;
 }
-
-?>

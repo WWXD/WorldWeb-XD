@@ -119,5 +119,3 @@ $newField = "
 				</form>";
 				
 RenderTemplate('moodavatars', array('avatars' => $moodRows, 'newField' => $newField));
-
-?>

@@ -103,8 +103,15 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Post preview text",
 			'category' => 'Presentation'
 		),
-		
-		
+
+
+		"Syndrones" => array (
+			"type" => "options",
+			"options" => array('0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net'),
+			"default" => '1',
+			"name" => "Syndrones",
+			'category' => 'Functionality'
+		),
 		"postLayoutType" => array (
 			"type" => "options",
 			"options" => array('0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'),
@@ -333,4 +340,3 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			'category' => 'FAQ contents',
 		),
 	);
-?>

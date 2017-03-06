@@ -5,11 +5,10 @@ $boardlol = $_GET['id'];
 if (!$boardlol) $boardlol = '';
 if (!isset($forumBoards[$boardlol])) $boardlol = '';
 
-if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread")
-{
+if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread") {
 	Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, t.id, {1} FROM {threads} t".($boardlol!='' ? ' LEFT JOIN {forums} f ON f.id=t.forum WHERE f.board={2}' : ''), 
 		$loguserid, time(), $board);
-		
+
 	die(header("Location: ".actionLink("board1", $boardlol)));
 }
 
@@ -19,8 +18,7 @@ if($loguserid)
 
 MakeCrumbs(forumCrumbs(array('board1' => $boardlol)), $links);
 
-if ($board == '')
-{
+if ($board == '') {
 	$statData = Fetch(Query("SELECT
 		(SELECT COUNT(*) FROM {threads}) AS numThreads,
 		(SELECT COUNT(*) FROM {posts}) AS numPosts,
@@ -43,5 +41,3 @@ if ($board == '')
 
 makeAnncBar();
 makeForumListinglol(0, $boardlol);
-
-?>

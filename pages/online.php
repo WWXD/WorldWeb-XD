@@ -93,5 +93,3 @@ function listGuests($rGuests) {
 	
 	return $guestList;
 }
-
-?>

@@ -230,8 +230,7 @@ echo '
 
 $tc = 1;
 $end = floor(time() / 86400);
-for ($d = floor($timewarp / 86400); $d <= $end; $d++)
-{
+for ($d = floor($timewarp / 86400); $d <= $end; $d++) {
 	if (!isset($stats[$d])) continue;
 	
 	$date = gmdate($mydatefmt, $d*86400);
@@ -261,8 +260,6 @@ echo '
 </table>';
 
 
-function sp($sz)
-{
+function sp($sz) {
 	return number_format($sz,0,'.',',');
 }
-?>

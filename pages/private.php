@@ -173,5 +173,3 @@ echo "
 ";
 
 RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
-
-?>

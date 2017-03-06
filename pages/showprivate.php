@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - Private message display page
+//  WorldWeb XD - Private message display page
 //  Access: user, specifically the sender or receiver.
 if (!defined('BLARG')) die();
 
@@ -69,5 +69,3 @@ foreach($user as $key => $value)
 	$pm['u_'.$key] = $value;
 
 MakePost($pm, POST_PM);
-
-?>

@@ -101,7 +101,7 @@ function rawQuery($query) {
 
 	if(!$res) {
 		$theError = $dblink->error;
-		
+
 		if($logSqlErrors) {
 			$thequery = sqlEscape($query);
 			$ip = sqlEscape($_SERVER["REMOTE_ADDR"]);
@@ -196,5 +196,3 @@ function loadFieldLists() {
 	//Allow plugins to add their own!
 	$bucket = "fieldLists"; include(__DIR__."/pluginloader.php");
 }
-
-?>

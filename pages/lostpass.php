@@ -88,5 +88,3 @@ function randomString($len, $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") {
 	}
 	return $s;
 }
-
-?>

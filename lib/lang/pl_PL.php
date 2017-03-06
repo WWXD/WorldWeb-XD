@@ -8,7 +8,7 @@ $dateformats = array("", "m-d-y", "d-m-y", "y-m-d", "Y-m-d", "m/d/Y", "d.m.y", "
 $timeformats = array("", "h:i A", "h:i:s A", "H:i", "H:i:s");
 
 // yay for mega insane months array :P
-$months = array(
+$months = [
 	'',
 	'Styczeń',
 	'Luty',
@@ -34,25 +34,9 @@ $months = array(
 	'Września',
 	'Października',
 	'Listopada',
-	'Grudnia',
-	
-	// and for English - because of ABXD bug in editprofile.php
-	
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December',
-);
+	'Grudnia'];
 
-$days = array(
+$days = [
 	"",
 	"Niedziela",
 	"Poniedziałek",
@@ -60,47 +44,47 @@ $days = array(
 	"Środa",
 	"Czwartek",
 	"Piątek",
-	"Sobota",
-);
+	"Sobota"];
 
 
-function Plural($i, $s)
-{
-$wordto2=array(
-	'użytkownik'=>'użytkowników',
-	'godziny'=>'godzin',
-	'użytkownika'=>'użytkowników',
-	'prywatną wiadomość'=>'prywatne wiadomości',
-	'post'=>'posty',
-	'temat'=>'tematy',
-	'plik'=>'pliki',
-	'MySQL query'=>'MySQL queries',
-	// hardcoding filename, because to plural form already with link goes - making things
-	// hard with not English based language
-	'nową <a href="' . actionLink("private") . '">prywatną wiadomość'=>'nowe <a href="' . actionLink("private") . '">prywatne wiadomości',
-	'gość'=>'gości',
-	'bot'=>'boty',
-	'nowy post'=>'nowe posty',
-	'year'=>'years',
-	'zapytanie MySQL'=>'zapytania MySQL',
-);
-$wordto5=array(
-	'użytkownik'=>'użytkowników',
-	'godziny'=>'godzin',
-	'użytkownika'=>'użytkowników',
-	'post'=>'postów',
-	'temat'=>'tematów',
-	'prywatną wiadomość'=>'prywatnych wiadomości',
-	'plik'=>'plików',
-	'MySQL query'=>'MySQL queries',
-	'nową <a href="private.php">prywatną wiadomość'=>'nowych <a href="private.php">prywatnych wiadomości',
-	'gość'=>'gości',
-	'bot'=>'botów',
-	'nowy post'=>'nowe postów',
-	'year'=>'years',
-	'zapytanie MySQL'=>'zapytań MySQL',
-);
-	if($i>1&&$i<5){ // from two to four
+function Plural($i, $s) {
+	$wordto2 = array(
+		'użytkownik'=>'użytkowników',
+		'godziny'=>'godzin',
+		'użytkownika'=>'użytkowników',
+		'prywatną wiadomość'=>'prywatne wiadomości',
+		'post'=>'posty',
+		'temat'=>'tematy',
+		'plik'=>'pliki',
+		'MySQL query'=>'MySQL queries',
+		// hardcoding filename, because to plural form already with link goes - making things
+		// hard with not English based language
+		'nową <a href="' . actionLink("private") . '">prywatną wiadomość'=>'nowe <a href="' . actionLink("private") . '">prywatne wiadomości',
+		'gość'=>'gości',
+		'bot'=>'boty',
+		'nowy post'=>'nowe posty',
+		'year'=>'years',
+		'zapytanie MySQL'=>'zapytania MySQL',
+	);
+
+	$wordto5 = array(
+		'użytkownik'=>'użytkowników',
+		'godziny'=>'godzin',
+		'użytkownika'=>'użytkowników',
+		'post'=>'postów',
+		'temat'=>'tematów',
+		'prywatną wiadomość'=>'prywatnych wiadomości',
+		'plik'=>'plików',
+		'MySQL query'=>'MySQL queries',
+		'nową <a href="private.php">prywatną wiadomość'=>'nowych <a href="private.php">prywatnych wiadomości',
+		'gość'=>'gości',
+		'bot'=>'botów',
+		'nowy post'=>'nowe postów',
+		'year'=>'years',
+		'zapytanie MySQL'=>'zapytań MySQL',
+	);
+
+	if($i>1&&$i<5) { // from two to four
 		if(isset($wordto2[$s]))
 			$s=$wordto2[$s];
 	}
@@ -110,8 +94,7 @@ $wordto5=array(
 	return $i." ".$s;
 }
 
-function HisHer($user)
-{
+function HisHer($user) {
 	// Why I bother with it, as software doesn't use this function EVEN once...
 	if($user['sex'] == 1)
 		return "jej";
@@ -120,18 +103,15 @@ function HisHer($user)
 				   // (it's always on safer site to consider unknown gender to be male)
 }
 
-function stringtotimestamp($str)
-{
+function stringtotimestamp($str) {
 	global $months;
 	$parts = explode(" ", $str);
 	$day = (int)$parts[0];
 	$month = $parts[1];
 	$month = str_replace(",", "", $month);
 	$year = (int)$parts[2];
-	for($m = 0; $m <= 35; $m++)
-	{
-		if(strcasecmp($month, $months[$m]) == 0)
-		{
+	for($m = 0; $m <= 35; $m++) {
+		if(strcasecmp($month, $months[$m]) == 0) {
 			$m%=12;
 			$month = $m;
 			break;
@@ -145,8 +125,7 @@ function stringtotimestamp($str)
 	return $value;
 }
 
-function timestamptostring($t)
-{
+function timestamptostring($t) {
 	if($t == 0)
 		return "";
 	return strftime("%#d %B, %Y", $t);

@@ -100,6 +100,3 @@ print "
 		</tr>
 	</table>
 </form>";
-
-
-?>

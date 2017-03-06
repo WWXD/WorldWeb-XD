@@ -144,4 +144,3 @@ class Settings {
 		return self::$settingsArray[$plugin][$name];
 	}
 }
-?>

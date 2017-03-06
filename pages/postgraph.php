@@ -69,7 +69,3 @@ if(isset($_GET['gfx']))
 	imagepng($im);
 	imagedestroy($im);
 }
-
-
-
-?>

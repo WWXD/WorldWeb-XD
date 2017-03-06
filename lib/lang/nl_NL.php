@@ -4,7 +4,7 @@ setlocale(LC_ALL, "nl_NL", "nld_nld");
 
 $birthdayExample = "26 juni, 1983";
 
-$months = array(
+$months = [
 	"",
 	"Januari",
 	"Februari",
@@ -17,10 +17,9 @@ $months = array(
 	"September",
 	"Oktober",
 	"November",
-	"December",
-);
+	"December"];
 
-$days = array(
+$days = [
 	"",
 	"Zondag",
 	"Maandag",
@@ -28,11 +27,9 @@ $days = array(
 	"Woensdag",
 	"Donderdag",
 	"Vrijdag",
-	"Zaterdag",
-);
+	"Zaterdag"];
 
-function Plural($i, $s)
-{
+function Plural($i, $s) {
 	if($i == 1)
 		return $i." ".$s;
 
@@ -42,8 +39,7 @@ function Plural($i, $s)
 		$f = "s";
 	elseif(strrpos($s, "jaar") !== false)
 		$f = "";
-	elseif(substr($s, -1) == "y")
-	{
+	elseif(substr($s, -1) == "y") {
 		$s = substr($s, 0, -1); //query -> queries
 		$f = "ies";
 	}
@@ -55,8 +51,7 @@ function Plural($i, $s)
 	return $i." ".$s.$f;
 }
 
-function HisHer($user)
-{
+function HisHer($user) {
 	if($user['sex'] == 0)
 		return "zijn";
 	if($user['sex'] == 1)
@@ -64,18 +59,15 @@ function HisHer($user)
 	return "diens";
 }
 
-function stringtotimestamp($str)
-{
+function stringtotimestamp($str) {
 	global $months;
 	$parts = explode(" ", $str);
 	$day = (int)$parts[0];
 	$month = $parts[1];
 	$month = str_replace(",", "", $month);
 	$year = (int)$parts[2];
-	for($m = 1; $m <= 12; $m++)
-	{
-		if(strcasecmp($month, $months[$m]) == 0)
-		{
+	for($m = 1; $m <= 12; $m++) {
+		if(strcasecmp($month, $months[$m]) == 0) {
 			$month = $m;
 			break;
 		}
@@ -85,8 +77,7 @@ function stringtotimestamp($str)
 	return mktime(12,0,0, $month, $day, $year);
 }
 
-function timestamptostring($t)
-{
+function timestamptostring($t) {
 	if($t == 0)
 		return "";
 	return strftime("%#d %B, %Y", $t);

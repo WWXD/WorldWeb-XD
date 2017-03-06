@@ -53,11 +53,7 @@ $pagelinks = PageLinks(actionLink("listthreads", $uid, "from=", $user['name']), 
 $ppp = $loguser['postsperpage'];
 if(!$ppp) $ppp = 20;
 
-if(NumRows($rThreads))
-{
+if(NumRows($rThreads)) {
 	makeThreadListing($rThreads, $pagelinks, false, true);
-}
-else
+} else
 	Alert(__("No threads found."), __("Notice"));
-
-?>

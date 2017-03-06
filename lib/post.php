@@ -80,8 +80,7 @@ function makePostText($post, $poster) {
 	$noSmilies = $post['options'] & 2;
 
 	//Do Ampersand Tags
-	$tags = array
-	(
+	$tags = array (
 		"postnum" => $post['num'],
 		"postcount" => $poster['posts'],
 		"numdays" => floor((time()-$poster['regdate'])/86400),
@@ -152,6 +151,7 @@ define('POST_NORMAL', 0);			// standard post box
 define('POST_PM', 1);				// PM post box
 define('POST_DELETED_SNOOP', 2);	// post box with close/undelete (for mods 'view deleted post' feature)
 define('POST_SAMPLE', 3);			// sample post box (profile sample post, newreply post preview, etc)
+define('POST_PROFILE', 4);          // profile about box. This is going to replace the bio field
 
 // $post: post data (typically returned by SQL queries or forms)
 // $type: one of the POST_XXX constants
@@ -199,7 +199,7 @@ function makePost($post, $type, $params=array()) {
 
 	$links = array();
 
-	if ($type != POST_SAMPLE) {
+	if ($type != POST_SAMPLE || $type != POST_PROFILE) {
 		$forum = $params['fid'];
 		$thread = $params['tid'];
 
@@ -346,5 +346,3 @@ function makePost($post, $type, $params=array()) {
 
 	RenderTemplate('postbox', array('post' => $post));
 }
-
-?>

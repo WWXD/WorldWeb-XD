@@ -76,5 +76,3 @@ function postDoReplaceText($s, $parentTag, $parentMask) {
 
 	return $s;
 }
-
-?>

@@ -139,5 +139,3 @@ if($loguser['pluginsettings'] != "") {
 		if(array_key_exists($setName, $pluginSettings))
 			$pluginSettings[$setName]["value"] = stripslashes(urldecode($setVal));
 }
-
-?>

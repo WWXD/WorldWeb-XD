@@ -314,5 +314,3 @@ function MakeOptions($fieldName, $checkedIndex, $choicesList) {
 					</label>", $key, $fieldName, $checks[$key], $val);
 	return $result;
 }
-
-?>

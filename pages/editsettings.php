@@ -239,5 +239,3 @@ function foldersize($path) {
 	}
 	return $total_size;
 }
-
-?>

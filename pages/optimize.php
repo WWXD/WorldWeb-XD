@@ -72,5 +72,3 @@ write(
 </table>
 
 ", $tablelist, $total);
-
-?>

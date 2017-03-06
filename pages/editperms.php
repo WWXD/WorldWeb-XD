@@ -261,5 +261,3 @@ function CanEditPerm($perm, $arg=0) {
 	if ($loguser['root']) return true;
 	return HasPermission($perm, $arg);
 }
-
-?>

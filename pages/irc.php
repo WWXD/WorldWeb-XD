@@ -1,4 +1,8 @@
 <?php
+//WorldWeb XD: IRC Page
+//Access: Logged-in users
+//Todo: Make template and plugin.
+
 if(!$loguserid)
 	Kill(__("You need to be logged in in order to access this page"));
 $title = __("IRC Page");

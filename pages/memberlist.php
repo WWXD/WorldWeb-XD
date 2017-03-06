@@ -187,6 +187,3 @@ function makeSelect($name, $options) {
 
 	return $result;
 }
-
-
-?>
