@@ -185,8 +185,12 @@ function makePost($post, $type, $params=array()) {
 		$links = array();
 		if (HasPermission('mod.deleteposts', $params['fid'])) {
 			$links['undelete'] = actionLinkTag(__("Undelete"), "editpost", $post['id'], "delete=2&key=".$loguser['token']);
+		}
+
+		if (HasPermission('mod.deleteposts', $params['fid']) || $poster['id'] == $loguserid) {
 			$links['view'] = "<a href=\"#\" onclick=\"replacePost(".$post['id'].",true); return false;\">".__("View")."</a>";
 		}
+
 		$post['links'] = $links;
 
 		RenderTemplate('postbox_deleted', array('post' => $post));

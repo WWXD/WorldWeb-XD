@@ -140,6 +140,8 @@ if($_GET['action']=="close" && $canClose) {
 					$iconurl = "img/icons/icon".$_POST['iconid'].".png";
 				else
 					$iconurl = $_POST['iconurl'];
+			} else {
+				$iconurl = '';
 			}
 		} else
 			$iconurl = $thread['icon'];

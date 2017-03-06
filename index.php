@@ -238,8 +238,9 @@ $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' seconds (with '.$queries.' SQL queries and '.sprintf('%.03f',memory_get_usage() / 1024).'K of RAM)';
 
 ?>
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+
+<html>
 <head>
 	<title><?php print $layout_title; ?></title>
 

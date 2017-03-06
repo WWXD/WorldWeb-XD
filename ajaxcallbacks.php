@@ -62,7 +62,7 @@ else if ($action == 'rp') // retrieve post
 		die(__("Unknown post ID."));
 	$post = Fetch($rPost);
 
-	if (!HasPermission('mod.deleteposts', $post['fid']))
+	if (!HasPermission('mod.deleteposts', $post['fid']) || $poster['id'] == $loguserid)
 		die(__("No."));
 
 	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, array('tid'=>$post['thread'], 'fid'=>$post['fid'])));
@@ -79,7 +79,6 @@ else if($action == "tf")	//Theme File
 	if(!file_exists($themeFile))
 		$themeFile = "themes/$theme/style.php";
 
-
 function checkForImage(&$image, $external, $file)
 {
 	if($image) return;
@@ -92,7 +91,7 @@ function checkForImage(&$image, $external, $file)
 	else
 	{
 		if(file_exists($file))
-			$image = $file;
+			$image = resourceLink($file);
 	}
 }
 
@@ -182,7 +181,7 @@ elseif($action == "sr")	//Show Revision
 		$post = Fetch($rPost);
 	else
 		die(format(__("Unknown post ID #{0} or revision missing."), $id));
-		
+
 	if (!HasPermission('mod.editposts', $post['fid']))
 		die('No.');
 

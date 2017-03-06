@@ -247,13 +247,15 @@ if ($mobileLayout)
 }
 
 
-function setLastActivity()
-{
+function setLastActivity() {
 	global $loguserid, $isBot, $lastKnownBrowser, $ipban;
 
 	Query("delete from {guests} where ip = {0}", $_SERVER['REMOTE_ADDR']);
 
 	if($ipban) return;
+
+	$url = getRequestedURL();
+	$url = substr($url, 0, 127);
 
 	if($loguserid == 0)
 	{
@@ -261,12 +263,12 @@ function setLastActivity()
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 			$ua = $_SERVER['HTTP_USER_AGENT'];
 		Query("insert into {guests} (date, ip, lasturl, useragent, bot) values ({0}, {1}, {2}, {3}, {4})",
-			time(), $_SERVER['REMOTE_ADDR'], getRequestedURL(), $ua, $isBot);
+			time(), $_SERVER['REMOTE_ADDR'], $url, $ua, $isBot);
 	}
 	else
 	{
 		Query("update {users} set lastactivity={0}, lastip={1}, lasturl={2}, lastknownbrowser={3}, loggedin=1 where id={4}",
-			time(), $_SERVER['REMOTE_ADDR'], getRequestedURL(), $lastKnownBrowser, $loguserid);
+			time(), $_SERVER['REMOTE_ADDR'], $url, $lastKnownBrowser, $loguserid);
 	}
 }
 

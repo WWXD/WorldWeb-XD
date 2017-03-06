@@ -127,11 +127,13 @@
 	$footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></div></div></body></html>';
 
 	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.4', '>='))
-		die($header.'Sorry, WorldWeb XD requires PHP version 5.4 or above, while you are currently running '. PHP_VERSION .'.'.$footer);
+		die($header.'Sorry, WorldWeb XD requires PHP version 5.4 or above, while you are currently running '. PHP_VERSION .'. Please update to the latest, and try again.'.$footer);
 
-	if (!is_dir(__DIR__.'/config'))
-		if (!mkdir(__DIR__.'/config'))
+	if (!is_dir(__DIR__.'/config')) {
+		if (!mkdir(__DIR__.'/config')) {
 			die($header.'Failed to create the config directory. Check the permissions of the user running PHP.'.$footer);
+		}
+	}
 
 	//Make all the data folders...
 	@mkdir(__DIR__.'/data');
@@ -142,13 +144,20 @@
 	@mkdir(__DIR__.'/templates_c');
 
 	if ($_POST['submit']) {
-		$boardusername = trim($_POST['boardusername']);
-		$boardpassword = $_POST['boardpassword'];
+		$ownerusername = trim($_POST['ownerusername']);
+		$ownerpassword = $_POST['ownerpassword'];
+		$ownpassconf = $_POST['opconfirm'];
 
-		if (!$boardusername || !$boardpassword)
+		if (!$ownerusername && !$ownerpassword)
 			die($header.'Please enter a admin username and password.'.$footer);
+		else if (!$ownerusername && $ownerpassword)
+			die($header.'Please enter a admin username.'.$footer);
+		else if ($ownerusername && (!$ownerpassword && !$ownpassconf))
+			die($header.'Please enter a admin password.'.$footer);
+		else if ((!$ownerpassword && $ownpassconf) || ($ownerpassword && !$ownpassconf))
+			die($header.'Please enter a admin password twice.'.$footer);
 
-		if ($boardpassword !== $_POST['bpconfirm'])
+		if ($ownerpassword !== $ownpassconf)
 			die($header.'The passwords you entered don\'t match.'.$footer);
 
 		$test = new mysqli($_POST['dbserver'], $_POST['dbusername'], $_POST['dbpassword'], $_POST['dbname']);
@@ -174,9 +183,6 @@
 		define('SALT', $salt);
 		$saltfile = '<?php define(\'SALT\', '.phpescape($salt).'); ?>';
 		file_put_contents(__DIR__.'/config/salt.php', $saltfile);
-
-		$kurifile = '<?php define(\'KURIKEY\', '.phpescape(Shake(32)).'); ?>';
-		file_put_contents(__DIR__.'/config/kurikey.php', $kurifile);
 
 		require(__DIR__.'/lib/mysql.php');
 		require(__DIR__.'/db/functions.php');
@@ -209,6 +215,7 @@
 	<?php
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
+		unlink(__DIR__.'/config/database_sample.php');
 	} else {
 	?>
 		<div class="container">
@@ -225,7 +232,21 @@
 			<div class="outline">
 				<div class="box cell center">
 					Please note that you are using a version of WorldWeb XD obtained from the Git repository.<br />
--					This version of WorldWeb XD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
+					This version of WorldWeb XD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
+				</div>
+			</div>
+			<div class="outline">
+				<div class="box cell center">
+					Welcome to WorldWeb XD. Before getting started, we need some information on the database. You will need to know the following items before proceeding.
+						<ol>
+							<li>Database name</li>
+							<li>Database username</li>
+							<li>Database password</li>
+							<li>Database host</li>
+							<li>Table prefix (if the websites's database is shared with other applications)</li>
+						</ol>
+					<br/><br/>
+					We’re going to use this information to create a <samp>database.php</samp> file. <b>If for any reason this automatic file creation doesn’t work, don’t worry. All this does is fill in the database information to a configuration file. You may also simply open <samp>database-sample.php</samp> in a text editor, fill in your information, and save it as <samp>database.php</samp>.</b>
 				</div>
 			</div>
 				<form action="" method="POST">
@@ -234,32 +255,32 @@
 							MySQL Parameters
 						</div>
 						<div class="box cell center">
-							MySQL Server: <input type="text" name="dbserver" size=30 value="localhost">
+							MySQL Server: <input type="text" name="dbserver" size="30" value="localhost">
 						</div>
 						<div class="box cell center">
-							MySQL Username: <input type="text" name="dbusername" size=30 value="">
+							MySQL Username: <input type="text" name="dbusername" size="30" value="">
 						</div>
 						<div class="box cell center">
-							MySQL Password: <input type="password" name="dbpassword" size=30 value="">
+							MySQL Password: <input type="password" name="dbpassword" size="30" value="">
 						</div>
 						<div class="box cell center">
-							MySQL Database: <input type="text" name="dbname" size=30 value="">
+							MySQL Database: <input type="text" name="dbname" size="30" value="">
 						</div>
 						<div class="box cell center">
-							Table Prefix: <input type="text" name="dbprefix" size=30 value=""><br>
+							Table Prefix: <input type="text" name="dbprefix" size="30" value=""><br>
 							<small>Change this if the websites's database is shared with other applications. Leaving this blank is fine.</small>
 						</div>
 						<div class="box col2 center">
 							Owner Credentials
 						</div>
 						<div class="box cell center">
-							Username: <input type="text" name="boardusername" size=30 maxlength=20 value="">
+							Owner Username: <input type="text" name="ownerusername" size=30 maxlength=20 value="">
 						</div>
 						<div class="box cell center">
-							Password: <input type="password" name="boardpassword" size=30 value="">
+							Owner Password: <input type="password" name="ownerpassword" size=30 value="">
 						</div>
 						<div class="box cell center">
-							Confirm Password: <input type="password" name="bpconfirm" size=30 value=""><br>
+							Confirm Password: <input type="password" name="opconfirm" size=30 value=""><br>
 						<small>Once the installation is complete, the owner account with these credentials will be made. Sign into that when you're done with the installation proccess.</small>
 						</div>
 						<div class="box cell center">

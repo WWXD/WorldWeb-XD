@@ -295,7 +295,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		$newstuff = $forum['ignored'] ? 0 : $forum['numnew'];
 		if ($newstuff > 0)
 			$fdata['new'] = "<div class=\"statusIcon new\">$newstuff</div>";
-			
+
 		$fdata['description'] = $forum['description'];
 		if (isset($mods[$forum['id']])) {
 			foreach($mods[$forum['id']] as $user) {

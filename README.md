@@ -1,38 +1,32 @@
 # WorldWeb XD
 
-https://maorninja.h05t.gq/
-
 -------------------------------------------------------------------------------
 
-WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage
-
-It is based off ABXD. ABXD is made by Dirbaio, Nina, GlitchMr & co, and was originally
-Kawa's project. See http://abxd.dirbaio.net/ for more details.
-
-It uses Smarty for its templates, Font Awesome for the icons and jQuery. And possibly some other funny things 
-I forgot about.
+WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates, Font Awesome for the icons and jQuery.
 
 ## Requirements
 
-WorldWeb XD requires PHP 5.3. You also need the mcrypt extension.
+PHP version (minimum): 5.4. It will work on 7.0, but its better to use PHP 5.4.
+PHP extentions: mcrypt 
+MySQL: None, but you should have a recent version.
 
-There is no exact requirement for MySQL, but make sure to have a recent version.
-
-Everything else is provided in the package.
+Knowledge on coding: No, but if you do, you can add your own nifty features. Just be sure to send in a pull request, so other users can use it as well.
 
 ## How to install and use
 
 PHP and MySQL knowledge isn't required to use WorldWeb XD but is a plus.
 
-Get a webserver. Upload the WorldWeb XD codebase to it. Create an empty MySQL database.
-
-Browse to your websites's link and follow the instructions.
+1. Go to http://h05t.gq/ and sign up. You should be getting an email with CPanel info.
+2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
+3. Get the FTP data of your new host and upload all the files their. You can use FileZilla to do so.
+4. Make a MySQL database, and take notes of needed info.
+5. Go to your domain and it'll tell you what you need.
 
 If everything went fine, browse to your freshly installed board and configure it. If not, let us know.
 
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
 
-If you can't make a board banner, delete img/logo.png to have a text banner.
+If you want to have a image logo, just be sure to put it in the `img` directory, under the name `logo.png`.
 
 If you want plugins, they're here: https://github.com/WorldWeb-XD/Plugins      
 If you want themes, they're here: https://github.com/WorldWeb-XD/Themes     
@@ -50,8 +44,8 @@ Everything else is safe to overwrite.
 ## Features
 
  * Flexible permission system
- * Plugin system
- * Templates (in the works, about 80% done)
+ * Add-on system
+ * Templates (in the works, about 80% done). This uses the Smarty system, though, we would like to change that to something else.
  * URL rewriting, enables human-readable forum and thread URLs for public content
  * Post layouts
  * more Acmlmboard feel
@@ -59,15 +53,7 @@ Everything else is safe to overwrite.
  * Smiley Box.
  * Instameme (thanks Jon)
 
-## Board owner's tips
-
-http://board.example/?page=makelr -> regenerates the L/R tree used for forum listings and such.
-Use if some of your forums are showing up in wrong places.
-
-http://board.example/?page=editperms&gid=X -> edit permissions for group ID X.
-
-http://board.example/?page=secgroups -> assign secondary groups to a user.
-
+## Website owner's tips
 
 How to add groups: add to the usergroups table via PMA
  * type: 0 for primary groups, 1 for secondary
@@ -85,9 +71,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-The WorldWen help forum is at my devboard: http://maorninja.h05t.gq
-
-If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail.
+If anything goes wrong with your board, report it on our notabug's issues page. Make sure to describe your problems in detail.
 
 If the error is a 'MySQL Error', to get a detailed report, you need to open config/database.php in a text editor, find `$debugMode = 0;` and replace it with `$debugMode = 1;`. 
 This will make the board give you the MySQL error message and the query which went wrong. After that, report the error to us and we'll fix it. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.

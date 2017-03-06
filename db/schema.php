@@ -67,7 +67,7 @@ $tables = array(
 	"favorites" => array(
 		"fields" => array(
 			"user" => $genericInt,
-			"thread" => $genericInt,			
+			"thread" => $genericInt,
 		),
 		"special" => "primary key (`user`, `thread`)"
 	),
@@ -101,7 +101,7 @@ $tables = array(
 			"date" => $genericInt,
 			"lasturl" => "varchar(100)".$notNull,
 			"lastforum" => $genericInt,
-			"useragent" => "varchar(1024)".$notNull,			
+			"useragent" => "varchar(1024)".$notNull,
 			"bot" => $bool,
 		),
 		"special" => $keyID.", key `ip` (`ip`), key `bot` (`bot`)"
@@ -110,7 +110,7 @@ $tables = array(
 	"ignoredforums" => array(
 		"fields" => array(
 			"uid" => $genericInt,
-			"fid" => $genericInt,			
+			"fid" => $genericInt,
 		),
 		"special" => "key `mainkey` (`uid`, `fid`)"
 	),
@@ -119,7 +119,7 @@ $tables = array(
 		"fields" => array(
 			"ip_from" => "bigint(12) NOT NULL DEFAULT '0'",
 			"ip_to" => "bigint(12) NOT NULL DEFAULT '0'",
-			"cc" => "varchar(2) DEFAULT ''",			
+			"cc" => "varchar(2) DEFAULT ''",
 		),
 		"special" => "key `ip_from` (`ip_from`)"
 	),
@@ -127,8 +127,8 @@ $tables = array(
 	"ipbans" => array(
 		"fields" => array(
 			"ip" => "varchar(45)".$notNull,
-			"reason" => "varchar(100)".$notNull,			
-			"date" => $genericInt,			
+			"reason" => "varchar(100)".$notNull,
+			"date" => $genericInt,
 			"whitelisted" => $bool,
 		),
 		"special" => "unique key `ip` (`ip`), key `date` (`date`)"
@@ -138,7 +138,7 @@ $tables = array(
 		"fields" => array(
 			"version" => $genericInt,
 			"views" => $genericInt,
-			"hotcount" => $genericInt,			
+			"hotcount" => $genericInt,
 			"maxusers" => $genericInt,
 			"maxusersdate" => $genericInt,
 			"maxuserstext" => $text,
@@ -153,8 +153,8 @@ $tables = array(
 	"moodavatars" => array(
 		"fields" => array(
 			"id" => $AI,
-			"uid" => $genericInt,			
-			"mid" => $genericInt,			
+			"uid" => $genericInt,
+			"mid" => $genericInt,
 			"name" => $var256,
 		),
 		"special" => $keyID. ", key `mainkey` (`uid`, `mid`)"
@@ -255,7 +255,7 @@ $tables = array(
 			"num" => $genericInt,
 			"deleted" => $bool,
 			"deletedby" => $genericInt,
-			"reason" => "varchar(300)".$notNull,
+			"reason" => $text,
 			"options" => "tinyint(4) NOT NULL DEFAULT '0'",
 			"mood" => $genericInt,
 			"currentrevision" => $genericInt,

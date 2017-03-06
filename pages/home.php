@@ -24,10 +24,10 @@ $lastposts = Query("	SELECT
 while ($lp = Fetch($lastposts)) {
 	$user = getDataPrefix($lp, 'u_');
 	$tags = ParseThreadTags($lp['t_title']);
-	
+
 	$fmtdate = relativedate($lp['t_lastpostdate']);
 	$desc = UserLink($user).__(' posted in ').actionLinkTag($tags[0], 'post', $lp['t_lastpostid']);
-	
+
 	$lastActivity[$lp['t_lastpostdate']] = array('description' => $desc, 'formattedDate' => $fmtdate);
 }
 
