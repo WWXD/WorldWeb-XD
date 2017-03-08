@@ -18,7 +18,7 @@ MySQL: None, but you should have a recent version.  
 
 1. Go to http://h05t.gq/ and sign up. You should be getting an email with CPanel info.
 2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
-3. Get the FTP data of your new host and upload all the files their. You can use FileZilla to do so.
+3. Get the FTP data of your new host and upload all the files there. You can use FileZilla to do so.
 4. Make a MySQL database, and take notes of needed info.
 5. Go to your domain and it'll tell you what you need.
 
@@ -71,7 +71,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 
 ## Support, troubleshooting, etc
 
-If anything goes wrong with your board, report it on our notabug's issues page. Make sure to describe your problems in detail.
+If anything goes wrong with your board, report it on our [notabug's issues page](https://notabug.org/WorldWeb-XD/WorldWeb-XD/issues). Make sure to describe your problems in detail.
 
 If the error is a 'MySQL Error', to get a detailed report, you need to open config/database.php in a text editor, find `$debugMode = 0;` and replace it with `$debugMode = 1;`. 
 This will make the board give you the MySQL error message and the query which went wrong. After that, report the error to us and we'll fix it. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.
