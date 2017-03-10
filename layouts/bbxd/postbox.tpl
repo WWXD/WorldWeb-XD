@@ -7,6 +7,8 @@
 				<div style="float: left;" id="meta_{$post.id}">
 				{if $post.type == $smarty.const.POST_SAMPLE}
 					Preview
+				{elseif $post.type == $smarty.const.POST_PROFILE}
+					About me
 				{else}
 					{if $post.type == $smarty.const.POST_PM}Sent{else}Posted{/if} on {$post.formattedDate}
 					{if $post.threadlink} in {$post.threadlink}{/if}

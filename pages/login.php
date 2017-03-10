@@ -3,6 +3,21 @@
 //  Access: guests
 if (!defined('BLARG')) die();
 
+// This is needed to keep up to date with new hashing settings.
+// From https://gist.github.com/nikic/3707231#rehashing-passwords
+function isValidPassword($password, $hash, $uid) {
+	if (!password_verify($password, $hash))
+		return false;
+
+	if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+
+		Query('UPDATE {users} SET password = {0} WHERE id = {1}', $hash, $uid);
+	}
+
+	return true;
+}
+
 if($_POST['action'] == "logout" && $loguserid) {
 	setcookie("logsession", "", 2147483647, URL_ROOT, "", false, true);
 	Query("UPDATE {users} SET loggedin = 0 WHERE id={0}", $loguserid);
@@ -19,15 +34,25 @@ if($_POST['action'] == "logout" && $loguserid) {
 
 	$user = Fetch(Query("select * from {users} where name={0} or email={0}", $_POST['name']));
 	if($user) {
-		$sha = doHash($pass.SALT.$user['pss']);
-		if($user['password'] === $sha)
+		// Check for the password. (new type)
+		if (isValidPassword($pass, $user['password'], $user['id']))
 			$okay = true;
+		else {
+			// Check for the legacy ABXD password and convert it to the new password.
+			$sha = doHash($pass.$salt.$user['pss']);
+			if ($user['password'] == $sha) {
+				$password = password_hash($pass, PASSWORD_DEFAULT);
+
+				Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $user['id']);
+				$okay = true;
+			}
+		}
 	}
 
 	// auth plugins
 
 	if(!$okay) {
-		Report("A visitor from [b]".$_SERVER['REMOTE_ADDR']."[/] tried to log in as [b]".$user['name']."[/].", 1);
+		Report("A visitor from [b]".$_SERVER['REMOTE_ADDR']."[/] tried to log in as [b]".$_POST['name']."[/].", 1);
 		Alert(__("Invalid user name or password."));
 		$bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php');
 	} else {
@@ -46,9 +71,17 @@ if($_POST['action'] == "logout" && $loguserid) {
 			if($testuser['id'] == $user['id'])
 				continue;
 
-			$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
-			if($testuser['password'] === $sha)
+			if (isValidPassword($pass, $testuser['password'], $testuser['id']))
 				$matches[] = $testuser['id'];
+			else {
+				$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
+				if($testuser['password'] === $sha) {
+					$password = password_hash($pass, PASSWORD_DEFAULT);
+
+					Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $testuser['id']);
+					$matches[] = $testuser['id'];
+				}
+			}
 		}
 
 		if (count($matches) > 0)
@@ -65,7 +98,7 @@ $forgotPass = '';
 
 if(Settings::get("mailResetSender") != "")
 	$forgotPass = "<button onclick=\"document.location = '".htmlentities(actionLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
-	
+
 $fields = array(
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",
 	'password' => "<input type=\"password\" name=\"pass\" size=24>",

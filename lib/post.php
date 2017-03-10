@@ -58,13 +58,23 @@ function applyTags($text, $tags) {
 	$s = $text;
 	foreach($tags as $tag => $val)
 		$s = str_replace("&".$tag."&", $val, $s);
-	if(is_numeric($tags['numposts']))
-		$s = preg_replace('@&(\d+)&@sie', 'max($1 - '.$tags['numposts'].', 0)', $s);
+	if(is_numeric($tags['postcount']))
+		$s = preg_replace_callback('@&(\d+)&@si', array(new MaxPosts($tags), 'max_posts_callback'), $s);
 	else
 		$s = preg_replace("'&(\d+)&'si", "preview", $s);
 	return $s;
 }
 
+class MaxPosts {
+	var $tags;
+	function __construct($tags) {
+		$this->tags = $tags;
+	}
+
+	function max_posts_callback($results) {
+		return max($results[1] - $this->tags['postcount'], 0);
+	}
+}
 
 $activityCache = array();
 function getActivity($id) {

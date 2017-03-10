@@ -77,7 +77,7 @@ echo "
 if(isset($_GET['q']))
 {
 	$viewableforums = ForumsWithPermission('forum.viewforum');
-	
+
 	$searchQuery = $_GET['q'];
 	$searchQuery = strtolower(preg_replace('@\s+@', ' ', $searchQuery));
 	

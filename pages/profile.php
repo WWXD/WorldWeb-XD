@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - User profile page
+//  WorldWeb XD - User profile page
 //  Access: all
 if (!defined('BLARG')) die();
 

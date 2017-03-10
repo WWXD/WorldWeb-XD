@@ -61,10 +61,6 @@ function getPluginData($plugin, $load = true) {
 			$minver = (int)$setting[1];
 	}
 
-	// where the fuck is $abxd_version supposed to be set
-	//if($minver > $abxd_version)
-	//	throw new BadPluginException(__("Plugin meant for a later version"));
-
 	$plugindata['buckets'] = array();
 	$plugindata['pages'] = array();
 	$plugindata['templates'] = array();
@@ -76,16 +72,18 @@ function getPluginData($plugin, $load = true) {
 			if(substr($f, 0, 5) == "page_") {
 				$pagename = substr($f, 5, strlen($f) - 4 - 5);
 				$plugindata["pages"][] = $pagename;
-				if($load) $pluginpages[$pagename] = $plugindata['dir'];
+				if($load)
+					$pluginpages[$pagename] = $plugindata['dir'];
 			} else {
 				$bucketname = substr($f, 0, -4);
 				$plugindata['buckets'][] = $bucketname;
-				if($load) $pluginbuckets[$bucketname][] = $plugindata['dir'];
+				if($load)
+					$pluginbuckets[$bucketname][] = $plugindata['dir'];
 			}
 		}
 	}
 	closedir($pdir);
-	
+
 	if (is_dir($dir.'/pages')) {
 		$pdir = @opendir($dir.'/pages');
 		while($f = readdir($pdir)) {
@@ -97,7 +95,7 @@ function getPluginData($plugin, $load = true) {
 		}
 		closedir($pdir);
 	}
-	
+
 	if (is_dir($dir.'/layouts')) {
 		$pdir = @opendir($dir.'/layouts');
 		while($f = readdir($pdir)) {

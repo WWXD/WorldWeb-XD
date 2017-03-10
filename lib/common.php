@@ -23,6 +23,9 @@ define('DATA_URL', URL_ROOT.'data/');
 if(!is_file(__DIR__.'/../config/database.php'))
 	die(header('Location: install.php'));
 
+if (!function_exists('password_hash'))
+	require_once('passhash.php');
+
 
 // Deslash GPC variables if we have magic quotes on
 if (get_magic_quotes_gpc()) {

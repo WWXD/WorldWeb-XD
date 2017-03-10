@@ -70,6 +70,17 @@ function Query_AddUserInput($match) {
  * {table} syntax allows for flexible manipulation of table names (namely, adding a DB prefix)
  *
  */
+ 
+function Query_MangleTables($match) {
+	global $dbpref, $tableLists;
+	$tablename = $match[1];
+	if($tableLists[$tablename])
+		return $tableLists[$tablename];
+
+	return $dbpref.$tablename;
+}
+
+
 function query() {
 	global $dbpref, $args, $fieldLists;
 	$args = func_get_args();
@@ -83,13 +94,16 @@ function query() {
 	$query = preg_replace_callback("@(\w+)\.\(([\w,\s]+)\)@s", 'Query_ExpandFieldLists', $query);
 
 	// add table prefixes
-	$query = preg_replace("@\{([a-z]\w*)\}@si", $dbpref.'$1', $query);
+	$query = preg_replace_callback("@\{([a-z]\w*)\}@si", "Query_MangleTables", $query);
 
 	// add the user input
 	$query = preg_replace_callback("@\{(\d+\w?)\}@s", 'Query_AddUserInput', $query);
 
 	return RawQuery($query);
 }
+
+$tableLists = array(
+);
 
 function rawQuery($query) {
 	global $queries, $querytext, $loguser, $dblink, $debugMode, $logSqlErrors, $dbpref, $loguserid, $mysqlCellClass;
@@ -191,7 +205,7 @@ $fieldLists = array(
 );
 
 function loadFieldLists() {
-	global $fieldLists;
+	global $fieldLists, $tableLists;
 
 	//Allow plugins to add their own!
 	$bucket = "fieldLists"; include(__DIR__."/pluginloader.php");

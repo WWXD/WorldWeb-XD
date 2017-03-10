@@ -52,7 +52,6 @@ $rPosts = Query("	SELECT
 				LEFT JOIN {users} du ON du.id=p.deletedby
 				LEFT JOIN {threads} t ON t.id=p.thread
 				LEFT JOIN {forums} f ON f.id=t.forum
-				LEFT JOIN {categories} c ON c.id=f.catid
 			WHERE u.id={1} AND f.id IN ({4c}){$extrashit}
 			ORDER BY date ASC LIMIT {2u}, {3u}", $loguserid, $id, $from, $ppp, ForumsWithPermission('forum.viewforum'));
 

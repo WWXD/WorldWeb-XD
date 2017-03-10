@@ -94,11 +94,18 @@ if (!$fakeerror) {
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
 
+				$plugin_ABXD = $pluginpages[$page_ABXD];
+				$self_ABXD = $plugins[$plugin_ABXD];
+
 				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
-				if(!file_exists($page))
+				$page_ABXD = __DIR__.'/plugins/'.$self['dir']."/page_".$page.".php";
+				if(!file_exists($page) || !file_exists($page_ABXD))
 					throw new Exception(404);
 				include($page);
+				include($page_ABXD);
+
 				unset($self);
+				unset($self_ABXD);
 			} else {
 				$page = __DIR__.'/pages/'.$page.'.php';
 				if(!file_exists($page))
@@ -184,21 +191,21 @@ if($title != '')
 //=======================
 // Board logo and theme
 
-if (file_exists(resourceLink('themes/$theme/logo.png'))) {
+if (file_exists(__DIR__.'/themes/$theme/logo.png')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('themes/$theme/logo.jpg'))) {
+} else if (file_exists(__DIR__.'/themes/$theme/logo.jpg')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('themes/$theme/logo.jpeg'))) {
+} else if (file_exists(__DIR__.'/themes/$theme/logo.jpeg')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('themes/$theme/logo.gif'))) {
+} else if (file_exists(__DIR__.'/themes/$theme/logo.gif')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('img/logo.png'))) {
+} else if (file_exists(__DIR__.'/img/logo.png')) {
 	$logo = '<img id="theme_banner" src="img/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('img/logo.jpg'))) {
+} else if (file_exists(__DIR__.'/img/logo.jpg')) {
 	$logo = '<img id="theme_banner" src="img/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('img/logo.jpeg'))) {
+} else if (file_exists(__DIR__.'/img/logo.jpeg')) {
 	$logo = '<img id="theme_banner" src="img/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(resourceLink('img/logo.gif'))) {
+} else if (file_exists(__DIR__.'/img/logo.gif')) {
 	$logo = '<img id="theme_banner" src="img/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else {
 	$logo = '<h1>'.$layout_boardtitle.'</h1><h3>'.$layout_description.'</h3>';
@@ -265,6 +272,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script>hljs.initHighlightingOnLoad();</script>
 	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>  
 
 	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
 

@@ -236,8 +236,7 @@ if($_POST['actionsave']) {
 	$passwordEntered = false;
 
 	if($_POST['currpassword'] != "") {
-		$sha = doHash($_POST['currpassword'].SALT.$loguser['pss']);
-		if($loguser['password'] == $sha)
+		if (password_verify($_POST['currpassword'], $loguser['password']))
 			$passwordEntered = true;
 		else {
 			Alert(__("Invalid password"));

@@ -1,6 +1,8 @@
 <?php
 //  Blargboard XD - User account registration page
 //  Access: Guests
+//  Todo: Make it use templates
+//      - See bottom
 if (!defined('BLARG')) die();
 
 $title = __("Register");
@@ -121,16 +123,19 @@ if($_POST['register']) {
 		Alert($err, __('Error'));
 	else {
 		$newsalt = Shake();
-		$sha = doHash($_POST['pass'].SALT.$newsalt);
+		$password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");
 		if($uid < 1) $uid = 1;
 
 		if (!Settings::Get('AdminVer')) {
 			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-				$uid, $_POST['name'], $sha, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+				$uid, $_POST['name'], $password, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
 		} else {
+			//Todo: Add a title entry that says "Need Verification".
+			//(Maybe) Make a new rank
+			//Send a PM to all staff members notifying that he registered.
 			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-				$uid, $_POST['name'], $sha, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+				$uid, $_POST['name'], $password, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
 		}
 
 		Report("New user: [b]".$_POST['name']."[/] (#".$uid.") -> [g]#HERE#?uid=".$uid);

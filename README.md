@@ -16,11 +16,11 @@ MySQL: None, but you should have a recent version.  
 
 ## How to install and use
 
-1. Go to http://h05t.gq/ and sign up. You should be getting an email with CPanel info.
+1. Go to any webhost of your desire (if you want a freehost, we recommend [h05t.gq](http://h05t.gq/)) and sign up. You should be getting an email with CPanel info.
 2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
 3. Get the FTP data of your new host and upload all the files there. You can use FileZilla to do so.
 4. Make a MySQL database, and take notes of needed info.
-5. Go to your domain and it'll tell you what you need.
+5. Go to your domain and follow the on-screen prompts.
 
 If everything went fine, browse to your freshly installed website and configure it. If not, let us know.
 
