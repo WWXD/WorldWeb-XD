@@ -3,15 +3,13 @@ if (!defined('BLARG')) die();
 
 define('CACHE_TIME', 3600);
 
-if(isset($_REQUEST['q']))
-{
+if(isset($_REQUEST['q'])) {
 	$searchQuery = $_REQUEST['q'];
 	$searchQuery = strtolower(preg_replace('@\s+@', ' ', $searchQuery));
 	$sqhash = md5($searchQuery);
-	
+
 	$res = FetchResult("SELECT date FROM {searchcache} WHERE queryhash={0}", $sqhash);
-	if ($res == -1 || $res < (time()-CACHE_TIME))
-	{
+	if ($res == -1 || $res < (time()-CACHE_TIME)) {
 		$bool = htmlspecialchars($searchQuery);
 
 		$search = Query("
@@ -22,8 +20,7 @@ if(isset($_REQUEST['q']))
 			$bool);
 
 		$tresults = array();
-		if(NumRows($search))
-		{
+		if(NumRows($search)) {
 			while($result = Fetch($search))
 				$tresults[] = $result['tid'];
 		}
@@ -37,12 +34,11 @@ if(isset($_REQUEST['q']))
 			$bool);
 
 		$presults = array();
-		if(NumRows($search))
-		{
+		if(NumRows($search)) {
 			while($result = Fetch($search))
 				$presults[] = $result['pid'];
 		}
-		
+
 		Query("
 			INSERT INTO {searchcache} (queryhash,query,date,threadresults,postresults) 
 			VALUES ({0},{1},{2},{3},{4})
@@ -74,8 +70,7 @@ echo "
 	</form>";
 
 
-if(isset($_GET['q']))
-{
+if(isset($_GET['q'])) {
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 
 	$searchQuery = $_GET['q'];
@@ -84,8 +79,7 @@ if(isset($_GET['q']))
 	$bool = htmlspecialchars($searchQuery);
 	$t = explode(" ", $bool);
 	$terms = array();
-	foreach($t as $term)
-	{
+	foreach($t as $term) {
 		if($term[0] == "-")
 			continue;
 		if($term[0] == "+" || $term[0] == "\"")
@@ -95,25 +89,24 @@ if(isset($_GET['q']))
 		else if($term != "")
 			$terms[] = $term;
 	}
-	
+
 	$res = Fetch(Query("SELECT ".($_GET['inposts']?'postresults':'threadresults')." AS results FROM {searchcache} WHERE queryhash={0}", md5($searchQuery)));
 	$results = explode(',', $res['results']);
 	$nres = 0;
 	$rdata = array();
-	
+
 	if(isset($_GET['from'])) $from = (int)$_GET['from'];
 	else $from = 0;
 	$tpp = $loguser['threadsperpage'];
 	if($tpp<1) $tpp=50;
 
-	if (!$_GET['inposts'])
-	{
+	if (!$_GET['inposts']) {
 		$nres = FetchResult("
 			SELECT COUNT(*)
 			FROM {threads} t
 			WHERE t.id IN ({0c}) AND t.forum IN ({1c})", 
 			$results, $viewableforums);
-			
+
 		$search = Query("
 			SELECT
 				t.id, t.title, t.user, t.lastpostdate, t.forum, 
@@ -124,10 +117,8 @@ if(isset($_GET['q']))
 			ORDER BY t.lastpostdate DESC
 			LIMIT {2u},{3u}", $results, $viewableforums, $from, $tpp);
 
-		if(NumRows($search))
-		{
-			while($result = Fetch($search))
-			{
+		if(NumRows($search)) {
+			while($result = Fetch($search)) {
 				$r = array();
 				
 				$r['link'] = makeThreadLink($result);
@@ -139,9 +130,7 @@ if(isset($_GET['q']))
 				$rdata[] = $r;
 			}
 		}
-	}
-	else
-	{
+	} else {
 		$nres = FetchResult("
 			SELECT COUNT(*)
 			FROM {posts_text} pt
@@ -149,7 +138,7 @@ if(isset($_GET['q']))
 				LEFT JOIN {threads} t ON t.id = p.thread
 			WHERE pt.pid IN ({0c}) AND t.forum IN ({1c}) AND pt.revision = p.currentrevision", 
 			$results, $viewableforums);
-			
+
 		$search = Query("
 			SELECT
 				pt.text, pt.pid,
@@ -164,39 +153,35 @@ if(isset($_GET['q']))
 			ORDER BY p.date DESC
 			LIMIT {2u},{3u}", $results, $viewableforums, $from, $tpp);
 
-		if(NumRows($search))
-		{
+		if(NumRows($search)) {
 			$results = "";
-			while($result = Fetch($search))
-			{
+			while($result = Fetch($search)) {
 				$r = array();
-				
+
 				$tags = ParseThreadTags($result['title']);
-				
-	//			$result['text'] = str_replace("<!--", "~#~", str_replace("-->", "~#~", $result['text']));
+
 				$r['description'] = MakeSnippet($result['text'], $terms);
 				$r['user'] = UserLink(getDataPrefix($result, "u_"));
 				$r['link'] = actionLinkTag($tags[0], "post", $result['pid']);
 				$r['formattedDate'] = formatdate($result['date']);
-				
+
 				$rdata[] = $r;
 			}
 		}
 	}
-	
+
 	if ($nres == 0) $restext = __('No results found');
 	else if ($nres == 1) $restext = __('1 result found');
 	else $restext = $nres.__(' results found');
-	
+
 	$pagelinks = PageLinks(actionLink('search', '', 'q='.urlencode($searchQuery).'&inposts='.$_GET['inposts'].'&from='), $tpp, $from, $nres);
-	
+
 	RenderTemplate('searchresults', array('results' => $rdata, 'nresults' => $nres, 'resultstext' => $restext, 'pagelinks' => $pagelinks));
 }
 
 
 
-function MakeSnippet($text, $terms, $title = false)
-{
+function MakeSnippet($text, $terms, $title = false) {
 	$text = strip_tags($text);
 	if(!$title)
 		$text = preg_replace("/(\[\/?)(\w+)([^\]]*\])/i", "", $text);
@@ -208,16 +193,14 @@ function MakeSnippet($text, $terms, $title = false)
 	$pat1 = "/(.*)(".$terms.")(.{0,".$max."})/i";
 	$lineno = 0;
 	$extract = "";
-	foreach($lines as $line)
-	{
+	foreach($lines as $line) {
 		if($contextlines == 0)
 			break;
 		$lineno++;
 
 		if($title)
 			$line = htmlspecialchars($line);
-		else
-		{
+		else {
 			$m = array();
 			if(!preg_match($pat1, $line, $m))
 				continue;

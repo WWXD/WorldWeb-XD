@@ -103,7 +103,7 @@ if (isset($_POST['saveuploads'])) {
 			}
 
 			$rejected = true;
-			Alert(__("You're going too damn fast! Slow down a little."), __("Hold your horses."));
+			Alert(__("You're going too fast! Slow down a little."), __("Hold your horses."));
 		}
 	}
 

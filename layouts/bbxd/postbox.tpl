@@ -10,6 +10,7 @@
 				{elseif $post.type == $smarty.const.POST_PROFILE}
 					About me
 				{else}
+					{if $post.type == $smarty.const.POST_NORMAL}<a href="post/{$post.id}/">Post #{$post.postNum}</a>&nbsp;&bull;{/if}
 					{if $post.type == $smarty.const.POST_PM}Sent{else}Posted{/if} on {$post.formattedDate}
 					{if $post.threadlink} in {$post.threadlink}{/if}
 					{if $post.revdetail} ({$post.revdetail}){/if}
