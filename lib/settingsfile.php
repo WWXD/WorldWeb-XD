@@ -105,11 +105,11 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		),
 
 
-		"Syndrones" => array (
+		"Syndromes" => array (
 			"type" => "options",
 			"options" => array('0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net'),
 			"default" => '1',
-			"name" => "Syndrones",
+			"name" => "Syndromes",
 			'category' => 'Functionality'
 		),
 		"postLayoutType" => array (
