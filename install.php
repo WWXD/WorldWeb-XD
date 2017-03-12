@@ -29,11 +29,13 @@
 				border-left: 1px solid #383838;
 				border-right: 1px solid #000;
 				border-bottom: 1px solid #000;
-				padding: 5px; }
+				padding: 5px;
+			}
 
 			.header {
 				background: #1a1a1a;
-				padding: 4px 8px; }
+				padding: 4px 8px;
+			}
 
 			.cell {
 				background: #202020; }
@@ -42,10 +44,14 @@
 				background: rgb(30,30,30);
 				background: -moz-linear-gradient(top, rgba(30,30,30,1) 0%, rgba(20,20,20,1) 100%);
 				background: -webkit-linear-gradient(top, rgba(30,30,30,1) 0%,rgba(20,20,20,1) 100%);
-				background: linear-gradient(to bottom, rgba(30,30,30,1) 0%,rgba(20,20,20,1) 100%); }
+				background: linear-gradient(to bottom, rgba(30,30,30,1) 0%,rgba(20,20,20,1) 100%);
+			}
 
 			.center {
 				text-align: center; }
+
+			.left {
+				text-align: left; }
 
 			#title {
 				font-size: 5em;
@@ -53,7 +59,8 @@
 				margin-top: 5px;
 				text-align: center;
 				font-family: 'Roboto Slab'; 
-				font-weight: normal; }
+				font-weight: normal;
+			}
 
 			textarea, input {
 				color: #eeeeee; }
@@ -61,15 +68,17 @@
 			textarea, input[type='text'], input[type='password'], input[type='email'] {
 				border: 1px solid #555555;
 				background: #333333;
-				padding: 4px }
+				padding: 4px
+			}
 
 			textarea:hover, input[type='text']:hover, input[type='password']:hover, input[type='email']:hover {
 				border: 1px solid #888; }
 
 			textarea:focus, textarea:active, input[type='text']:focus, input[type='text']:active, input[type='password']:focus, input[type='password']:active, input[type='email']:focus, 	input[type='email']:active {
 				border: 1px solid #999;
-				background: #484848; }
-			
+				background: #484848;
+			}
+
 			button, input[type='submit'] {
 				background: #1a1a1a;
 				border-top: 1px solid #383838;
@@ -77,11 +86,12 @@
 				border-bottom: 1px solid #000;
 				border-right: 1px solid #000;
 				color: #cccccc;
-				padding: 6px 10px; }
+				padding: 6px 10px;
+			}
 
 			button:hover, input[type='submit']:hover {
 				background: #1e1e1e; }
-			
+
 			button:active, input[type='submit']:active {
 				background: #1e1e1e; }
 				
@@ -99,8 +109,7 @@
 	<body>
 	<?php
 
-	function phpescape($var)
-	{
+	function phpescape($var) {
 		$var = addslashes($var);
 		$var = str_replace('\\\'', '\'', $var);
 		return '"'.$var.'"';
@@ -116,6 +125,26 @@
 		return $salt;
 	}
 
+	function htmltrim__recursive($var, $level = 0) {
+		// Remove spaces (32), tabs (9), returns (13, 10, and 11), nulls (0), and hard spaces. (160)
+		if (!is_array($var))
+			return trim($var, ' ' . "\t\n\r\x0B" . "\0" . "\xA0");
+
+		// Go through all the elements and remove the whitespace.
+		foreach ($var as $k => $v)
+			$var[$k] = $level > 25 ? null : htmltrim__recursive($v, $level + 1);
+
+		return $var;
+	}
+	
+	if (!function_exists('password_hash'))
+		require_once(__DIR__ . '/lib/password.php');
+
+	foreach ($_POST as $key => $value) {
+		if (!is_array($_POST[$key]))
+			$_POST[$key] = htmltrim__recursive(str_replace(["\n", "\r"], '', $_POST[$key]));
+	}
+
 	define('BLARG', 1);
 
 	$header = '<div class="container"><div class="outline"><div class="box header center">Error</div><div class="box cell center">';
@@ -127,7 +156,7 @@
 	if(ini_get('register_globals'))
 		die($header."PHP, as it is running on this server, has the <code>register_globals</code> setting turned on. This is something of a security hazard, and is a <a href=\"http://en.wikipedia.org/wiki/Deprecation\" target=\"_blank\">deprecated function</a>. For more information on this topic, please refer to the <a href=\"http://php.net/manual/en/security.globals.php\" target=\"_blank\">PHP manual</a>.</p><p>At any rate, this is designed to run with <code>register_globals</code> turned <em>off</em>. You can try adding the line <code>php_flag register_globals off</code> to an <code>.htaccess</code> file on your website root directory (often something like <code>public_html</code>). If not, ask your provider to edit the <code>php.ini</code> file accordingly and make the internet a little safer for all of us.".$footer);
 
-	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.4', '<'))
+	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.4', '=<'))
 		die($header.'Sorry, WorldWeb XD requires PHP version 5.4 or above, while you are currently running '. PHP_VERSION .'. Please update to the latest, and <a href="javascript:window.history.back();">try again</a>.'.$footer);
 
 	$footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></div></div></body></html>';
@@ -196,11 +225,10 @@
 		Upgrade();
 		Import(__DIR__.'/db/install.sql');
 
-		$pss = Shake(16);
-		$sha = hash('sha256', $boardpassword.$salt.$pss, FALSE);
+		$sha = password_hash($ownerpassword, PASSWORD_DEFAULT);
 
 		Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-			1, $boardusername, $sha, $pss, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
+			1, $ownerusername, $sha, $pss, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
 
 		echo '</div></div></div>';
 
@@ -211,14 +239,14 @@
 					Congratulations!
 				</div>
 				<div class="box cell center">
-					The WorldWeb XD installation was successful. You may now <a href="./login/">proceed to your website and login</a>. Make sure you edit the website's setting. Thanks for choosing WorldWeb XD!
+					The WorldWeb XD installation was successful. You may now <a href="./">proceed to your website</a> and <a href="./login/">login</a>. Make sure you edit the website's setting. Thanks for choosing WorldWeb XD!
 				</div>
 			</div>
 		</div>
 	<?php
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
-		unlink(__DIR__.'/config/database_sample.php');
+//		unlink(__DIR__.'/config/database_sample.php'); I'm commenting this out until I get around to actually making that file
 	} else {
 	?>
 		<div class="container">
