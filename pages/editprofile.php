@@ -1,8 +1,10 @@
 <?php
 if (!defined('BLARG')) die();
 
-echo "<script src=\"".resourceLink('js/register.js')."\"></script>
-<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+if(Settings::get('PassChecker')) {
+	print "<script src=\"".resourceLink('js/register.js')."\"></script>
+	<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
+}
 
 //Check Stuff
 if(!$loguserid)
@@ -357,6 +359,10 @@ if($_POST['actionsave']) {
 					}
 					break;
 
+				case "email":
+					$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
+					break;
+
 				case "bitmask":
 					$val = 0;
 					if ($_POST[$field]) {
@@ -389,7 +395,7 @@ if($_POST['actionsave']) {
 	if(!$failed) {
 		RawQuery($query);
 
-		$his = "[b]".$user['name']."[/]'s";
+		$his = "[b]".$user['name']."[/b]'s";
 		if($loguserid == $userid)
 			$his = HisHer($user['sex']);
 		Report("[b]".$loguser['name']."[/] edited ".$his." profile. -> [g]#HERE#?uid=".$userid, 1);
@@ -530,10 +536,8 @@ function HandlePassword($field, $item) {
 		$_POST[$field] = "";
 
 	if($_POST[$field]) {
-		$newsalt = Shake();
-		$sha = doHash($_POST[$field].SALT.$newsalt);
-		$_POST[$field] = $sha;
-		$sets[] = "pss = '".$newsalt."'";
+		$pwd = $_POST[$field];
+		$_POST[$field] = password_hash($_POST[$field], PASSWORD_DEFAULT);
 
 		//Now logout all the sessions that aren't this one, for security.
 		Query("DELETE FROM {sessions} WHERE id != {0} and user = {1}", doHash($_COOKIE['logsession'].SALT), $user['id']);
@@ -818,7 +822,7 @@ foreach ($epFields as $catid => $cfields) {
 }
 
 
-echo "
+print "
 	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\">
 ";
 
@@ -829,7 +833,7 @@ RenderTemplate('form_editprofile', array(
 	'selectedTab' => $selectedTab,
 	'btnEditProfile' => "<input type=\"submit\" id=\"submit\" name=\"actionsave\" value=\"".__("Save")."\">"));
 
-echo "
+print "
 		<input type=\"hidden\" name=\"editusermode\" value=\"1\">
 		<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">
@@ -845,29 +849,29 @@ function IsReallyEmpty($subject) {
 
 function AddPage($page, $name) {
 	global $epPages, $epCategories;
-	
+
 	$epPages[$page] = $name;
 	$epCategories[$page] = array();
 }
 
 function AddCategory($page, $cat, $name) {
 	global $epCategories, $epFields;
-	
+
 	$epCategories[$page][$page.'.'.$cat] = $name;
 	$epFields[$page.'.'.$cat] = array();
 }
 
 function AddField($page, $cat, $id, $label, $type, $misc=null) {
 	global $epFields;
-	
+
 	$field = array(
 		'caption' => $label,
 		'type' => $type,
 	);
-	
+
 	if ($misc)
 		$field = array_merge($field, $misc);
-	
+
 	$epFields[$page.'.'.$cat][$id] = $field;
 }
 
