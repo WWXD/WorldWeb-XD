@@ -202,7 +202,7 @@ print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\"
 		</tr>
 		<tr>
 			<td class=\"cell2 center\">
-				<label for=\"pw\">".__("Password")."</label>
+				<label for=\"pw\">".__("Password")."</label> <br>
 				<small>Preferibly use passwords with at least 8 characters, with uppercase and lowercase letters, numbers and symbols.</small>
 			</td>
 			<td class=\"cell1\">
@@ -283,7 +283,7 @@ print "
 		<tr>
 			<td class=\"cell2\"></td>
 			<td class=\"cell0\">
-				<label><input type=\"checkbox\" name=\"readFaq\">".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>
+				<label><input type=\"checkbox\" name=\"readFaq\"> ".format(__("I have read the {0}FAQ{1}"), "<a href=\"".actionLink("faq")."\">", "</a>")."</label>
 			</td>
 		</tr>
 		<tr class=\"cell2\">
