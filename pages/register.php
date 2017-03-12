@@ -302,6 +302,8 @@ else
 	print "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 
 print "		</td>
+		</tr>
+		<tr>
 			<td colspan=\"2\" class=\"cell1 smallFonts\" style=\"padding:0.7em;\">
 				Do you already have an account? Log into it <a href=\"/login/\">here</a>.
 			</td>
