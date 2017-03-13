@@ -107,7 +107,7 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 
 		"Syndromes" => array (
 			"type" => "options",
-			"options" => array('0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net'),
+			"options" => array('0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'),
 			"default" => '1',
 			"name" => "Syndromes",
 			'category' => 'Functionality'

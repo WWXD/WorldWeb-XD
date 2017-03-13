@@ -4,9 +4,9 @@ if (!defined('BLARG')) die();
 $aff = "Affected by ";
 
 if (Settings::get('syndromes') == "0") {
-	$syndromes array()
+	$syndromes = array();
 } else if (Settings::get('syndromes') == "1") {
-	$syndromes array(
+	$syndromes = array(
 		10 => array("Actually active", "#53C373"),
 		20 => array("$aff'Activity Syndrome'", "#69D989"),
 		30 => array("$aff'Activity Syndrome' +", "#83F3A3"),
@@ -19,9 +19,9 @@ if (Settings::get('syndromes') == "0") {
 
 		// this one can't be reached unless the minimum interval between posts is 9 or less
 		9001 => array("$aff'Goku Syndrome'", "#FF5353"),
-	)
+	);
 } else if (Settings::get('syndromes') == "2") {
-	$syndromes array(
+	$syndromes = array(
 		75 => array("$aff'Reinfors Syndrome'", "#83F3A3"),
 		100 => array("$aff'Reinfors Syndrome' +", "#FFE323"),
 		150 => array("$aff'Reinfors Syndrome' ++", "#FF5353"),
@@ -34,9 +34,9 @@ if (Settings::get('syndromes') == "0") {
 		500 => array("$aff'Wooster Syndrome' ++++!!", "#A0A0A0"),
 		600 => array("$aff'Anya Syndrome'!!!", "#C762F2"),
 		800 => array("$aff'Something higher than Anya Syndrome' +++++!!", "#D06030"),
-	)
+	);
 } else if (Settings::get('syndromes') == "3") {
-	$syndromes array(
+	$syndromes = array(
 		25 => array("$aff'Posting Syndrome'", "#53C373"),
 		50 => array("$aff'Posting Syndrome' +", "#69D989"),
 		75 => array("$aff'Geno Syndrome'", "#83F3A3"),
@@ -52,5 +52,21 @@ if (Settings::get('syndromes') == "0") {
 		600 => array("$aff'Anya Syndrome'!!!", "#C762F2"),
 		800 => array("$aff'Xkeeper Syndrome'!!!!", "#D06030"),
 		1000 => array("$aff'Wtf?! Syndrome'!~", "#FF2277"),
-	)
-}
+	);
+} else if (Settings::get('syndromes') == "4") {
+	$syndromes = array(
+		0 => array("$aff'Laziness'", "#ff0000"),
+		1 => array("$aff'Carpal Tunnel Syndrome'", "#76655c"),
+		5 => array("$aff'Trooperness'", "#6d9a6d"),
+		25 => array("$aff'1/35th Vizzed Syndrome'", "#716f96"),
+		75 => array("$aff'Trooperness A+'", "#459a45"),
+		100 => array("$aff'Official Post Spree Syndrome'", "#ffa200"),
+		150 => array("$aff'Ravering Syndrome'", "#c585cf"),
+		200 => array("$aff'Ravering Syndrome+'", "#cb6ad9"),
+		300 => array("$aff'Veneeval Syndrome'", "#76cbce"),
+		350 => array("$aff'Veneeval Syndrome+'", "#3ac9ce"),
+		555 => array("$aff'Yahmonners Syndrome'", "#c9c9c9"),
+		777 => array("$aff'Lucky 777 Syndrome'", "#06ff00"),
+		875 => array("$aff'<b>VIZZED</b> Syndrome'", "#483fff"),
+	);
+};
