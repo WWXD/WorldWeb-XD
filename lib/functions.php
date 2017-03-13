@@ -344,3 +344,48 @@ function forumRedirectURL($redir) {
 function smarty_function_plural($params, $template) {
 	return Plural($params['num'], $params['what']);
 }
+
+function entity_fix__callback($matches) {
+	if (!isset($matches[2]))
+		return '';
+
+	$num = $matches[2][0] === 'x' ? hexdec(substr($matches[2], 1)) : (int) $matches[2];
+
+	// we don't allow control characters, characters out of range, byte markers, etc
+	if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF) || $num == 0x202D || $num == 0x202E)
+		return '';
+	else
+		return '&#' . $num . ';';
+}
+
+function utfmb4_fix($string) {
+	$i = 0;
+	$len = strlen($string);
+	$new_string = '';
+	while ($i < $len) {
+		$ord = ord($string[$i]);
+		if ($ord < 128)	{
+			$new_string .= $string[$i];
+			$i++;
+		} elseif ($ord < 224) {
+			$new_string .= $string[$i] . $string[$i+1];
+			$i += 2;
+		} elseif ($ord < 240) {
+			$new_string .= $string[$i] . $string[$i+1] . $string[$i+2];
+			$i += 3;
+		} elseif ($ord < 248) {
+			// Magic happens.
+			$val = (ord($string[$i]) & 0x07) << 18;
+			$val += (ord($string[$i+1]) & 0x3F) << 12;
+			$val += (ord($string[$i+2]) & 0x3F) << 6;
+			$val += (ord($string[$i+3]) & 0x3F);
+			$new_string .= '&#' . $val . ';';
+			$i += 4;
+		}
+	}
+	return $new_string;
+}
+
+function utfmb4String($string) {
+	return utfmb4_fix(preg_replace_callback('~(&#(\d{1,7}|x[0-9a-fA-F]{1,6});)~', 'entity_fix__callback', $string));
+}

@@ -172,7 +172,8 @@ if (isset($_POST['saveuploads'])) {
 	}
 
 	if(!$rejected) {
-		$post = $_POST['text'];
+		$post = utfmb4String($_POST['text']);
+		$_POST['description'] = utfmb4String($_POST['description']);
 
 		$options = 0;
 		if($_POST['nopl']) $options |= 1;

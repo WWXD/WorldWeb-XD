@@ -276,7 +276,7 @@ if($_POST['actionsave']) {
 				case "text":
 				case "textarea":
 				case 'themeselector':
-					$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
+					$sets[] = $field." = '".SqlEscape(utfmb4String($_POST[$field]))."'";
 					break;
 				case "password":
 					if($_POST[$field])

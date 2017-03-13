@@ -120,7 +120,7 @@ if (isset($_POST['saveuploads'])) {
 		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
-		$post = $_POST['text'];
+		$post = utfmb4String($_POST['text']);
 
 		$options = 0;
 		if($_POST['nopl']) $options |= 1;

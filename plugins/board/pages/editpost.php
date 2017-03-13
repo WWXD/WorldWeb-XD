@@ -155,6 +155,8 @@ if (isset($_POST['saveuploads'])) {
 		}
 		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
+		$_POST['text'] = utfmb4String($_POST['text']);
+
 		$options = 0;
 		if($_POST['nopl']) $options |= 1;
 		if($_POST['nosm']) $options |= 2;
