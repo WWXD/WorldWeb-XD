@@ -120,6 +120,18 @@ function bbcodeImage($contents, $arg, $parenttag)
 		$dest = $arg;
 	}
 
+	// I can't into camo yet
+	if (strpos($dest, 'https://images.weserv.nl/?url=') !== 0 && strpos($dest, getServerURLNoSlash($ishttps)) !== 0) {
+		if (strpos($dest, 'http://images.weserv.nl/?url=') === 0)
+			$dest = 'https://' . substr($dest, strlen('http://'));
+		else if (strpos($dest, 'http://') !== 0 && strpos($dest, 'https://') !== 0)
+			$dest = 'https://images.weserv.nl/?url=' . $dest;
+		else if (strpos($dest, 'http://') === 0)
+			$dest = 'https://images.weserv.nl/?url=' . substr($dest, strlen('http://'));
+		else if (strpos($dest, 'https://') === 0)
+			$dest = 'https://images.weserv.nl/?url=ssl:' . substr($dest, strlen('https://'));
+	}
+
 	return '<img class="imgtag" src="'.htmlspecialchars($dest).'" alt="'.htmlspecialchars($title).'"/>';
 }
 
@@ -127,14 +139,28 @@ function bbcodeImage($contents, $arg, $parenttag)
 function bbcodeImageScale($contents, $arg, $parenttag)
 {
 	$dest = $contents;
+	$orig = $dest;
 	$title = "";
 	if($arg)
 	{
 		$title = $contents;
 		$dest = $arg;
+		$orig = $dest;
 	}
 
-	return '<a href="'.htmlspecialchars($dest).'"><img class="imgtag" style="max-width:300px; max-height:300px;" src="'.htmlspecialchars($dest).'" alt="'.htmlspecialchars($title).'"/></a>';
+	// I can't into camo yet
+	if (strpos($dest, 'https://images.weserv.nl/?url=') !== 0 && strpos($dest, getServerURLNoSlash($ishttps)) !== 0) {
+		if (strpos($dest, 'http://images.weserv.nl/?url=') === 0)
+			$dest = 'https://' . substr($dest, strlen('http://'));
+		else if (strpos($dest, 'http://') !== 0 && strpos($dest, 'https://') !== 0)
+			$dest = 'https://images.weserv.nl/?url=' . $dest;
+		else if (strpos($dest, 'http://') === 0)
+			$dest = 'https://images.weserv.nl/?url=' . substr($dest, strlen('http://'));
+		else if (strpos($dest, 'https://') === 0)
+			$dest = 'https://images.weserv.nl/?url=ssl:' . substr($dest, strlen('https://'));
+	}
+
+	return '<a href="'.htmlspecialchars($orig).'" target="_blank"><img class="imgtag" style="max-width:300px; max-height:300px;" src="'.htmlspecialchars($dest).'" alt="'.htmlspecialchars($title).'"/></a>';
 }
 
 
