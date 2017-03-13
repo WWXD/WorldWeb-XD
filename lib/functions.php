@@ -248,6 +248,7 @@ function formatIP($ip) {
 	$res = $ip;
 	$res .=  " " . IP2C($ip);
 	$res = "<nobr>$res</nobr>";
+	$ip = ip2long_better($ip);
 	if (HasPermission('admin.ipsearch'))
 		return actionLinkTag($res, "ipquery", $ip);
 	else
@@ -258,6 +259,11 @@ function ip2long_better($ip) {
 	$v = explode('.', $ip); 
 	return ($v[0]*16777216)+($v[1]*65536)+($v[2]*256)+$v[3];
 }
+
+function long2ip_better($ip) {
+   return long2ip((float)$ip);
+}
+
 //TODO: Optimize it so that it can be made with a join in online.php and other places.
 function IP2C($ip) {
 	global $dblink;
