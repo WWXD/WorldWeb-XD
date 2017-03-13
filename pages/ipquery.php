@@ -4,7 +4,7 @@ if (!defined('BLARG')) die();
 CheckPermission('admin.ipsearch');
 
 if (isset($_GET["id"])) {
-	$ip = $_GET["id"];
+	$ip = long2ip_better($_GET["id"]);
 	if(!filter_var($ip, FILTER_VALIDATE_IP))
 		Kill("Invalid IP");
 } else
