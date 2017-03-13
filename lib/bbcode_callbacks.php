@@ -380,6 +380,11 @@ function bbcodeMeme($contents, $arg, $parenttag) {
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme7.jpg" alt="Instameme7"/>';
 	else if ($contents == '8')
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/instameme8.jpg" alt="Instameme8"/>';
+	//I guess intergrate the ban tag too, it doesn't really need its own tag
+	else if ($contents == 'ban')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';
+	else if ($arg == 'ban')
+		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';
 	//If a number was found that is not in the collection
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/insta404.jpg" alt="Instameme404"/>';
