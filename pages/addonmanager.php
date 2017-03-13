@@ -7,9 +7,50 @@ CheckPermission('admin.editsettings');
 
 MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("addonmanager") => __("Add-on Manager")));
 
+$enabledfile = BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt';
+
+if($_REQUEST['action'] == "enable") {
+	if($_REQUEST['key'] != $loguser['token'])
+		Kill("No.");
+
+	Query("insert into {enabledplugins} values ({0})", $_REQUEST['id']);
+	require(BOARD_ROOT.'db/functions.php');
+	Upgrade();
+
+	//Make a new file for easier detecting that it is enabled
+	if (!file_put_contents($enabledfile, 'This is a holdertext file that signifies that this add-on is enabled. Don\'t delete this file.')) {
+		Report("[b]".$loguser['name']."[/] tried to add a add-on called ".$_REQUEST['id']." but failed.", false);
+		Alert(__("Sorry, but the add-on couldn't be added by our file detection usage. Please report this to the website's owner."), __("Error"));
+	} else {
+		Report("[b]".$loguser['name']."[/] successfully added an add-on called ".$_REQUEST['id'].".", false);
+		Alert(__("You have successfully added the add-on."), __("Success"));
+	}
+
+	die(header("location: ".actionLink("pluginmanager")));
+}
+
+if($_REQUEST['action'] == "disable") {
+	if($_REQUEST['key'] != $loguser['token'])
+		Kill("No.");
+
+	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
+
+	//Delete the enabled text.
+	if (file_exists($enabledfile)) {
+		if(!unlink($enabledfile)) {
+			Report("[b]".$loguser['name']."[/] tried to remove a add-on called ".$_REQUEST['id']." but failed.", false);
+			Alert(__("Sorry, but the add-on couldn't be removed by our file detection usage. Please report this to the website's owner."), __("Error"));
+		} else {
+			Report("[b]".$loguser['name']."[/] successfully removed an add-on called ".$_REQUEST['id'].".", false);
+			Alert(__("You have successfully removed the add-on."), __("Success"));
+		}
+	}
+
+	die(header("location: ".actionLink("pluginmanager")));
+}
 
 $cell = 0;
-$pluginsDir = @opendir(BOARD_ROOT."add-ons");
+$pluginsDir = @opendir(BOARD_ROOT."plugins");
 
 $enabledplugins = array();
 $disabledplugins = array();
@@ -70,7 +111,7 @@ function listPlugin($plugin, $plugindata) {
 		$text = __("Disable");
 		$act = "disable";
 	}
-	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "pluginmanager", $plugin, "action=".$act."&key=".$loguser['token']);
+	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "pluginmanager", $plugin, "action=".$act."&key=".$loguser['token']."/");
 
 	if(in_array("settingsfile", $plugindata['buckets'])) {
 		if(isset($plugins[$plugin]))
@@ -79,47 +120,4 @@ function listPlugin($plugin, $plugindata) {
 	$pdata['actions'] .= '</ul>';
 
 	return $pdata;
-}
-
-$enabledfile = BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt';
-
-if($_REQUEST['action'] == "enable") {
-	if($_REQUEST['key'] != $loguser['token'])
-		Kill("No.");
-
-	Query("insert into {enabledplugins} values ({0})", $_REQUEST['id']);
-	require(BOARD_ROOT.'db/functions.php');
-	Upgrade();
-
-	die(header("location: ".actionLink("pluginmanager")));
-
-	//Make a new file for easier detecting that it is enabled
-	if (!file_put_contents($enabledfile, 'This is a holdertext file that signifies that this add-on is enabled. Don\'t delete this file.')){
-		Report("[b]".$loguser['name']."[/] tried to add a add-on called "$_REQUEST['id']" but failed.", false);
-		Alert(__("Sorry, but the add-on couldn't be added by our file detection usage. Please report this to the website's owner."), __("Error"));
-	} else {
-		Report("[b]".$loguser['name']."[/] successfully added an add-on called "$_REQUEST['id']".", false);
-		Alert(__("You have successfully added the add-on."), __("Success"));
-	}
-}
-
-if($_REQUEST['action'] == "disable") {
-	if($_REQUEST['key'] != $loguser['token'])
-		Kill("No.");
-
-	Query("delete from {enabledplugins} where plugin={0}", $_REQUEST['id']);
-	die(header("location: ".actionLink("pluginmanager")));
-
-	$pluginsDir = @opendir(BOARD_ROOT."plugins/".$plugin);
-
-	//Delete the enabled text.
-	if (file_exists($enabledfile)) {
-		if(!unlink($enabledfile)) {
-			Report("[b]".$loguser['name']."[/] tried to remove a add-on called "$_REQUEST['id']" but failed.", false);
-			Alert(__("Sorry, but the add-on couldn't be removed by our file detection usage. Please report this to the website's owner."), __("Error"));
-		} else {
-			Report("[b]".$loguser['name']."[/] successfully removed an add-on called "$_REQUEST['id']".", false);
-			Alert(__("You have successfully removed the add-on."), __("Success"));
-		}
-	}
 }

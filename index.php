@@ -233,7 +233,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 
 $layout_credits =
-'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322 <a href="'.BOARD_ROOT.'/credits/">et al</a><br>
+'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322 <a href="'.__DIR__.'credits/">et al</a><br>
 Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 

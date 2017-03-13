@@ -96,12 +96,12 @@ echo "
 	</form>";
 
 
-if(isset($_GET['q'])) {
+if(isset($_GET['q']) || isset($_POST['q'])) {
 	$viewableforums = ForumsWithPermission('forum.viewforum');
 
 	$searchQuery = $_GET['q'];
 	$searchQuery = strtolower(preg_replace('@\s+@', ' ', $searchQuery));
-	
+
 	$bool = htmlspecialchars($searchQuery);
 	$t = explode(" ", $bool);
 	$terms = array();
