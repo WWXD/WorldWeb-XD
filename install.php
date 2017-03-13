@@ -227,8 +227,8 @@
 
 		$sha = password_hash($ownerpassword, PASSWORD_DEFAULT);
 
-		Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-			1, $ownerusername, $sha, $pss, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
+		Query("insert into {users} (id, name, password, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8})", 
+			1, $ownerusername, $sha, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
 
 		echo '</div></div></div>';
 

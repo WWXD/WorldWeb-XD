@@ -1,6 +1,32 @@
 <?php
 if (!defined('BLARG')) die();
 
+if(isset($_POST['google'])) {
+	$here = GetFullURL();
+	$here = substr($here, 0, strrpos($here, "/"));
+	header("Location: http://www.google.com/search?q=".urlencode($_POST['google']." site:".$here));
+}
+
+print "	<table>
+		<tr>
+			<td style=\"width: 70%; border: 0px none; vertical-align: top; padding-right: 1em; padding-bottom: 1em;\">
+	<form name=\"searchform\"  action=\"".actionLink("search")."\" method=\"post\">
+		<table class=\"outline margin\">
+			<tr class=\"header0\"><th>
+				<strong>".__("Google search")."</strong>
+			</th></tr>
+			<tr><td class=\"cell0\">
+				<input type=\"text\" maxlength=\"1024\" name=\"google\" style=\"width: 80%;\" />
+				&nbsp;
+				<input type=\"submit\" value=\"".__("Search")."\" />
+			</td></tr>
+		</table>
+	</form>
+	<script type=\"text/javascript\">
+		document.searchform.google.focus();
+	</script>
+";
+
 define('CACHE_TIME', 3600);
 
 if(isset($_REQUEST['q'])) {
