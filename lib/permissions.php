@@ -21,7 +21,7 @@ function LoadPermset($res) {
 		$k = $perm['perm'];
 		if ($perm['arg']) $k .= '_'.$perm['arg'];
 
-		if ($perm['ord'] > $permord[$k] || $perms[$k] != -1)
+		if ((isset($permord[$k]) && ($perm['ord'] > $permord[$k])) || (isset($perms[$k]) && $perms[$k] != -1))
 			$perms[$k] = $perm['value'];
 
 		$permord[$k] = $perm['ord'];
@@ -67,19 +67,6 @@ function LoadGroups() {
 	$loguser['owner'] = ($loguserGroup['id'] == Settings::get('rootGroup'));
 	$loguser['rank'] = $loguserGroup['rank'];
 	$loguser['group'] = $usergroups[$loguser['primarygroup']];
-
-	//English language
-
-	$myrank = $loguserGroup['rank'];										//My Rank
-	$targetrank = $usergroups[$user['primarygroup']]['rank'];				//The Targets Rank
-	$Iamroot = ($loguserGroup['id'] == Settings::get('rootGroup'));			//I am Root/Owner
-	$Iamowner = ($loguserGroup['id'] == Settings::get('rootGroup'));		//I am Root/Owner
-	$Iambanned = ($loguserGroup['id'] == Settings::get('bannedGroup'));		//I am banned
-	$myGroup = $usergroups[$loguser['primarygroup']];						//My Group
-	$Iamloggedin = $loguser["id"];											//I am logged in
-	$Iamnotloggedin = !$loguser["id"];										//I am not logged in
-
-
 }
 
 function HasPermission($perm, $arg=0, $guest=false) {
