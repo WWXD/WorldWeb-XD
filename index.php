@@ -30,9 +30,6 @@ $metaStuff = array(
 	'tags' => Settings::get('metaTags')
 );
 
-// Protect from <iframe> password steal hack
-header('X-Frame-Options: DENY');
-
 
 //Use buffering to draw the page.
 //Useful to have it disabled when running from the terminal.
