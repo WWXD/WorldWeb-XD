@@ -52,7 +52,7 @@ $fields = array(
 	'group' => makeSelect("group", $allgroups),
 	'name' => '<input type="text" name="name" size=24 maxlength=20 value="'.htmlspecialchars($_GET['name']).'">',
 
-	'btnSearch' => '<input type="submit" value="'.__('Search').'">',
+	'btnSearch' => '<input type="submit" value="'.__('<i class=\"icon-search\"></i> Search').'">',
 );
 
 echo getForm('memberlist');
