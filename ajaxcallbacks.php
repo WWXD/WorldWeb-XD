@@ -122,7 +122,7 @@ elseif($action == "srl")	//Show Revision List
 	$qThread = "select forum from {threads} where id={0}";
 	$rThread = Query($qThread, $post['thread']);
 	$thread = Fetch($rThread);
-	
+
 	if (!HasPermission('forum.viewforum', $thread['forum'])) die('No.');
 	if (!HasPermission('mod.editposts', $thread['forum'])) die('No.');
 
@@ -160,6 +160,7 @@ elseif($action == "srl")	//Show Revision List
 }
 elseif($action == "sr")	//Show Revision
 {
+	global $loguser, $blocklayouts;
 	$rPost = Query("
 			SELECT
 				p.*,
@@ -185,7 +186,30 @@ elseif($action == "sr")	//Show Revision
 	if (!HasPermission('mod.editposts', $post['fid']))
 		die('No.');
 
-	die(makePostText($post, getDataPrefix($post, 'u_')));
+	$poster = getDataPrefix($post, 'u_');
+
+	LoadBlockLayouts();
+	$pltype = Settings::get('postLayoutType');
+	$isBlocked = $poster['globalblock'] || $loguser['blocklayouts'] || isset($blocklayouts[$poster['id']]);
+
+	$post['haslayout'] = false;
+	$post['fulllayout'] = false;
+
+	if(!$isBlocked) {
+		$poster['postheader'] = $pltype ? trim($poster['postheader']) : '';
+		$poster['signature'] = trim($poster['signature']);
+
+		$post['haslayout'] = $poster['postheader']?1:0;
+		$post['fulllayout'] = $poster['fulllayout'] && $post['haslayout'] && ($pltype==2);
+
+		if (!$post['haslayout'] && $poster['signature'])
+			$poster['signature'] = '<div class="signature">'.$poster['signature'].'</div>';
+	} else {
+		$poster['postheader'] = '';
+		$poster['signature'] = '';
+	}
+
+	die(makePostText($post, $poster));
 }
 elseif($action == "em")	//Email
 {
