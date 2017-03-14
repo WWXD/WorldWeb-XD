@@ -74,7 +74,7 @@ function Query_AddUserInput($match) {
 function Query_MangleTables($match) {
 	global $dbpref, $tableLists;
 	$tablename = $match[1];
-	if($tableLists[$tablename])
+	if(isset($tableLists[$tablename]))
 		return $tableLists[$tablename];
 
 	return $dbpref.$tablename;
