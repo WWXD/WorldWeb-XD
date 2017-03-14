@@ -210,7 +210,7 @@ if($_COOKIE['logsession'] && !$ipban) {
 }
 
 if($loguser) {
-	$loguser['token'] = hash('sha1', "{$loguser['id']},".SALT.",dr567hgdf546guol89ty896rd7y56gvers9t");
+	$loguser['token'] = hash('sha1', "{$loguser['id']},{$loguser['pss']},".SALT.",dr567hgdf546guol89ty896rd7y56gvers9t");
 	$loguserid = (int)$loguser["id"];
 
 	$sessid = doHash($_COOKIE['logsession'].SALT);
