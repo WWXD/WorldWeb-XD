@@ -111,7 +111,7 @@ function listPlugin($plugin, $plugindata) {
 		$text = __("Disable");
 		$act = "disable";
 	}
-	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "addonmanager", $plugin, "action=".$act."&key=".$loguser['token']."/");
+	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "addonmanager", $plugin, "action=".$act."&key=".$loguser['token']);
 
 	if(in_array("settingsfile", $plugindata['buckets'])) {
 		if(isset($plugins[$plugin]))
