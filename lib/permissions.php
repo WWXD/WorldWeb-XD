@@ -83,7 +83,11 @@ function LoadGroups() {
 }
 
 function HasPermission($perm, $arg=0, $guest=false) {
-	global $guestPermset, $loguserPermset;
+	global $guestPermset, $loguserPermset, $loguserid;
+
+	// Root user always has permission, no matter what,
+	if ($loguserid == 1)
+		return true;
 
 	$permset = $guest ? $guestPermset : $loguserPermset;
 
