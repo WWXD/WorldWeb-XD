@@ -71,7 +71,7 @@ if(isset($_POST["_plugin"])) {
 			if($plugin == "main")
 				die(header("Location: $boardroot".actionLink("admin")));
 			else
-				die(header("Location: $boardroot".actionLink("pluginmanager")));
+				die(header("Location: $boardroot".actionLink("addonmanager")));
 		} else
 			Alert(__("Settings were successfully saved!"));
 	} else
