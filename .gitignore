@@ -1,0 +1,5 @@
+# Ignore the config folder, for those git deployments
+/config
+
+# Ignore enabled plugins file
+/plugins/enabled.txt
