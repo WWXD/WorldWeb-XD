@@ -36,7 +36,7 @@ if (HasPermission('admin.editsmilies'))		$adminLinks[] = actionLinkTag(__("Manag
 if ($loguser['root'])						$adminLinks[] = actionLinkTag(__("Optimize tables"), "optimize");
 if (HasPermission('admin.viewlog'))			$adminLinks[] = actionLinkTag(__("View log"), "log");
 if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Rereg radar'), 'reregs');
-if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Last Known Browsers'), 'lastknownbrowsers');
+if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Last Known Browsers'), 'lkb');
 if ($loguser['root'])						$adminLinks[] = actionLinkTag(__('Edit Groups'), 'editgroups');
 if (HasPermission('admin.editusers'))		$adminLinks[] = actionLinkTag(__('Add secondary Groups'), 'secgroups');
 
