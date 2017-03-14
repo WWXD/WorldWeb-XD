@@ -34,17 +34,17 @@ $metaStuff = array(
 header('X-Frame-Options: DENY');
 
 
-//Use buffering to draw the page. 
+//Use buffering to draw the page.
 //Useful to have it disabled when running from the terminal.
 $useBuffering = true;
 //Support for running pages from the terminal.
 if(isset($argv)) {
 	$_GET = array();
 	$_GET["page"] = $argv[1];
-	
+
 	$_SERVER = array();
 	$_SERVER["REMOTE_ADDR"] = "0.0.0.0";
-	
+
 	$ajaxPage = true;
 	$useBuffering = false;
 }
@@ -97,12 +97,16 @@ if (!$fakeerror) {
 				$plugin_ABXD = $pluginpages[$page_ABXD];
 				$self_ABXD = $plugins[$plugin_ABXD];
 
-				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
-				$page_ABXD = __DIR__.'/plugins/'.$self['dir']."/page_".$page.".php";
-				if(!file_exists($page) || !file_exists($page_ABXD))
+				$pageName = $page;
+
+				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$pageName.".php";
+				$page_ABXD = __DIR__.'/plugins/'.$self['dir']."/page_".$pageName.".php";
+				if(file_exists($page))
+					include($page);
+				elseif (file_exists($page_ABXD))
+					include($page_ABXD);
+				else
 					throw new Exception(404);
-				include($page);
-				include($page_ABXD);
 
 				unset($self);
 				unset($self_ABXD);
@@ -272,7 +276,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script>hljs.initHighlightingOnLoad();</script>
 	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>  
+	<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
 
 	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
 
