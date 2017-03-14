@@ -27,7 +27,7 @@ function actionLink($action, $id="", $args="", $urlname="") {
 	else if (is_numeric($id)) $action .= '/';
 	else $action .= '';
 
-	if (is_numeric($id))
+	if (@is_numeric($id) || is_string($id))
 	{
 		if ($urlname) $id .= '-'.urlNamify($urlname);
 		$id .= '';
