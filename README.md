@@ -1,6 +1,6 @@
 # WorldWeb XD
 
-WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates (might change), Font Awesome for the icons and jQuery.
+WorldWeb XD (WWXD, for short) is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates (might change), Font Awesome for the icons and jQuery.
 
 ## Requirements
 
