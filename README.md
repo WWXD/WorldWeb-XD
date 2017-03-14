@@ -5,7 +5,7 @@ WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storag
 ## Requirements
 
 PHP version (minimum): 5.4. It will work on 7.0.    
-PHP extentions: mcrypt && PHP-GD
+PHP extentions: mcrypt & PHP-GD
 
 You will also need `mod-rewrite` for apache2 and allow `override all` for rewritten URLS
 
