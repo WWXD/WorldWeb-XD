@@ -22,12 +22,15 @@ function actionLink($action, $id="", $args="", $urlname="") {
 	// calling plugins at EVERY link?! way to waste performances
 	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
 
+	// Making this easir to handle later
+	$hasid = (@is_numeric($id) || is_string($id));
+
 	// rewritten links
 	if ($action == MAIN_PAGE) $action = '';
-	else if (is_numeric($id)) $action .= '/';
+	else if ($hasid) $action .= '/';
 	else $action .= '';
 
-	if (@is_numeric($id) || is_string($id))
+	if ($hasid)
 	{
 		if ($urlname) $id .= '-'.urlNamify($urlname);
 		$id .= '';
