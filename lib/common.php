@@ -7,9 +7,6 @@ header('X-Frame-Options: DENY');
 // I can't believe there are PRODUCTION servers that have E_NOTICE turned on. What are they THINKING? -- Kawa
 error_reporting(E_ALL ^ E_NOTICE | E_STRICT);
 
-
-
-	
 define('BLARG_VERSION', '1.2');
 
 define('BOARD_ROOT', dirname(__DIR__).'/');
@@ -19,6 +16,7 @@ $boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
 define('URL_ROOT', $boardroot);
 define('DATA_URL', URL_ROOT.'data/');
 
+setlocale(LC_ALL, 'en_US.UTF8');
 
 if(!is_file(__DIR__.'/../config/database.php'))
 	die(header('Location: install.php'));

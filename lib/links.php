@@ -24,18 +24,18 @@ function actionLink($action, $id="", $args="", $urlname="") {
 
 	// rewritten links
 	if ($action == MAIN_PAGE) $action = '';
-	else if ($id) $action .= '/';
+	else if (is_numeric($id)) $action .= '/';
 	else $action .= '';
-	
-	if ($id)
+
+	if (is_numeric($id))
 	{
 		if ($urlname) $id .= '-'.urlNamify($urlname);
 		$id .= '';
 	}
 	else $id = '';
-	
+
 	return $boardroot.$action.$id.($args ? '?'.$args : '');
-	
+
 }
 
 
@@ -57,10 +57,10 @@ function actionLinkTagItemConfirm($text, $prompt, $action, $id='', $args="") {
 
 function getForm($action, $id='') {
 	$ret = '<form method="GET"><input type="hidden" name="page" value="'.$action.'">';
-	
+
 	if ($id != '')
 		$ret .= '<input type="hidden" name="id" value="'.htmlspecialchars($id).'">';
-	
+
 	return $ret;
 }
 
@@ -86,12 +86,12 @@ function prettyRainbow($s) {
 	$out = '';
 	for ($i = 0; $i < $len;) {
 		$c = $s[$i++];
-		
+
 		if ($c == ' ') {
 			$out .= '&nbsp;';
 			continue;
 		}
-		
+
 		$ord = ord($c);
 		if ($ord & 0x80) {		// UTF8 shiz
 			if ($ord & 0x40) {
@@ -113,7 +113,7 @@ function prettyRainbow($s) {
 			if ($c == '<') $c = '&lt;';
 			else if ($c == '>') $c = '&gt;';
 		}
-		
+
 		$out .= '<span style="color:hsl('.$r.',100%,80.4%);">'.$c.'</span>';
 		$r += 31;
 		$r %= 360;
@@ -128,10 +128,10 @@ function userLink($user, $showMinipic = false, $customID = false) {
 	global $usergroups;
 	global $poptart, $dorainbow, $newToday;
 	global $luckybastards;
-	
+
 	if ($dorainbow == -1) {
 		$dorainbow = false;
-		
+
 		if ($newToday >= 600)
 			$dorainbow = true;
 	}
@@ -141,26 +141,26 @@ function userLink($user, $showMinipic = false, $customID = false) {
 	$fname = ($user['displayname'] ? $user['displayname'] : $user['name']);
 	$fname = htmlspecialchars($fname);
 	$fname = str_replace(" ", "&nbsp;", $fname);
-	
+
 	$isbanned = $fgroup['id'] == Settings::get('bannedGroup');
 
 	$minipic = "";
 	if($showMinipic || Settings::get("alwaysMinipic"))
 		$minipic = getMinipicTag($user);
-	
+
 	if(!Settings::get("showGender"))
 		$fsex = 2;
 	//else if ($fsex != 2)
 	//	$fsex = $fsex ? 0:1; // switch male/female for the lulz
-	
+
 	if ($fsex == 0) $scolor = 'color_male';
 	else if ($fsex == 1) $scolor = 'color_female';
 	else $scolor = 'color_unspec';
-	
+
 	$classing = ' style="color: '.htmlspecialchars($fgroup[$scolor]).';"';
 
 	$bucket = "userLink"; include(__DIR__."/pluginloader.php");
-	
+
 	if (!$isbanned && $luckybastards && in_array($user['id'], $luckybastards)) {
 		$classing = ' style="text-shadow:0px 0px 4px;"';
 		$fname = prettyRainbow($fname);
@@ -170,12 +170,12 @@ function userLink($user, $showMinipic = false, $customID = false) {
 		$poptart += 31;
 		$poptart %= 360;
 	}
-	
+
 	$fname = $minipic.$fname;
-	
+
 	if ($customID)
 		$classing .= " id=\"$customID\"";
-	
+
 	$title = htmlspecialchars($user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
 	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
 	return actionLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", $user["id"], "", $user["name"]);
@@ -217,7 +217,7 @@ function makeFromUrl($url, $from) {
 
 function pageLinks($url, $epp, $from, $total) {
 	if ($total <= $epp) return '';
-	
+
 	$url = htmlspecialchars($url);
 
 	if($from < 0) $from = 0;
@@ -252,7 +252,7 @@ function pageLinks($url, $epp, $from, $total) {
 
 function pageLinksInverted($url, $epp, $from, $total) {
 	if ($total <= $epp) return '';
-	
+
 	$url = htmlspecialchars($url);
 
 	if($from < 0) $from = 0;
