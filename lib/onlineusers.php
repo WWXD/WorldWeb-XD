@@ -50,7 +50,7 @@ function OnlineUsers($forum = 0, $update = true) {
 
 
 function getOnlineUsersText() {
-	global $OnlineUsersFid;
+	global $OnlineUsersFid, $loguserid;
 
 	$refreshCode = "";
 
