@@ -258,7 +258,7 @@
 					</div>
 				</div>
 				<div class="box col2 center">
-					<a href="https://notabug.org/WorldWeb-XD/WorldWeb-XD/">Notabug repo</a> - <a href="https://notabug.org/WorldWeb-XD/WorldWeb-XD/src/master/README.md">Readme file</a>
+					<a href="https://github.com/WWXD/WorldWeb-XD/">Github repo</a> - <a href="https://github.com/WWXD/WorldWeb-XD/blob/master/README.md">Readme file</a>
 				</div>
 			</div>
 			<div class="outline">
