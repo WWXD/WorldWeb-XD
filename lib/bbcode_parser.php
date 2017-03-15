@@ -105,8 +105,8 @@ $TagList = array
 	'[ugotbanned'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[instameme'	=> 	TAG_GOOD | TAG_RAWCONTENTS | TAG_CLOSEOPTIONAL,
 	'[youtube' 		=> 	TAG_GOOD | TAG_NOAUTOLINK,
-	'[gist' 		=> TAG_GOOD | TAG_NOFORMAT,
-	
+	'[gist' 		=> TAG_GOOD,
+
 	'[color'	=>	TAG_GOOD,
 	'[colour'	=>	TAG_GOOD,
 	'[purple'	=>	TAG_GOOD,

@@ -2,6 +2,7 @@
 
 define('BLARG', 1);
 $ajaxPage = true;
+define('MAIN_PAGE', 'home');
 include(__DIR__."/lib/common.php");
 header("Cache-Control: no-cache");
 

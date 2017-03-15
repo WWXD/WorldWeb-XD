@@ -21,7 +21,7 @@ function LoadPermset($res) {
 		$k = $perm['perm'];
 		if ($perm['arg']) $k .= '_'.$perm['arg'];
 
-		if ((isset($permord[$k]) && ($perm['ord'] > $permord[$k])) || (isset($perms[$k]) && $perms[$k] != -1))
+		if ((isset($permord[$k]) && ($perm['ord'] > $permord[$k])) || (!isset($perms[$k]) || $perms[$k] != -1))
 			$perms[$k] = $perm['value'];
 
 		$permord[$k] = $perm['ord'];
@@ -56,7 +56,7 @@ function LoadGroups() {
 	$res = Query("	SELECT *, 1 ord FROM {permissions} WHERE applyto=0 AND id={0}
 					UNION SELECT *, 2 ord FROM {permissions} WHERE applyto=0 AND id IN ({1c})
 					UNION SELECT *, 3 ord FROM {permissions} WHERE applyto=1 AND id={2}
-					ORDER BY ord", 
+					ORDER BY ord",
 		$loguserGroup['id'], $secgroups, $loguserid);
 	$loguserPermset = LoadPermset($res);
 
@@ -70,14 +70,16 @@ function LoadGroups() {
 
 	//Language people told me its easier to code in so I just added it in.
 
-	$myrank = $loguserGroup['rank'];														//My Rank
-	$targetrank = $usergroups[$user['primarygroup']]['rank'];					//The Targets Rank
-	$Iamroot = ($loguserGroup['id'] == Settings::get('rootGroup'));			//I am Root/Owner
-	$Iamowner = ($loguserGroup['id'] == Settings::get('rootGroup'));		//I am Root/Owner
-	$Iambanned = ($loguserGroup['id'] == Settings::get('bannedGroup'));//I am banned
-	$myGroup = $usergroups[$loguser['primarygroup']];							//My Group
-	$Iamloggedin = $loguser["id"];															//I am logged in
-	$Iamnotloggedin = !$loguser["id"];													//I am not logged in
+	if (isset($user)) {
+		$myrank = $loguserGroup['rank'];														//My Rank
+		$targetrank = $usergroups[$user['primarygroup']]['rank'];					//The Targets Rank
+		$Iamroot = ($loguserGroup['id'] == Settings::get('rootGroup'));			//I am Root/Owner
+		$Iamowner = ($loguserGroup['id'] == Settings::get('rootGroup'));		//I am Root/Owner
+		$Iambanned = ($loguserGroup['id'] == Settings::get('bannedGroup'));//I am banned
+		$myGroup = $usergroups[$loguser['primarygroup']];							//My Group
+		$Iamloggedin = $loguser["id"];															//I am logged in
+		$Iamnotloggedin = !$loguser["id"];													//I am not logged in
+	}
 }
 
 function HasPermission($perm, $arg=0, $guest=false) {
@@ -129,7 +131,7 @@ function CheckPermission($perm, $arg=0, $guest=false) {
 function ForumsWithPermission($perm, $guest=false) {
 	global $guestPermset, $loguserPermset;
 	static $fpermcache = array();
-	
+
 	if ($guest) {
 		$permset = $guestPermset;
 		$cperm = 'guest_'.$perm;
@@ -137,25 +139,25 @@ function ForumsWithPermission($perm, $guest=false) {
 		$permset = $loguserPermset;
 		$cperm = $perm;
 	}
-	
+
 	if (isset($fpermcache[$cperm]))
 		return $fpermcache[$cperm];
-	
+
 	$ret = array();
-	
+
 	// if the general permission is set to deny, no need to check for specific permissions
 	if ($permset[$perm] == -1) {
 		$fpermcache[$cperm] = $ret;
 		return $ret;
 	}
-	
+
 	$forumlist = Query("SELECT id FROM {forums}");
-	
+
 	// if the general permission is set to grant, we need to check for forums for which it'd be revoked
 	// otherwise we need to check for forums for which it'd be granted
 	if ($permset[$perm] == 1) {
 		while ($forum = Fetch($forumlist)) {
-			if ($permset[$perm.'_'.$forum['id']] != -1)
+			if (!isset($permset[$perm.'_'.$forum['id']]) || $permset[$perm.'_'.$forum['id']] != -1)
 				$ret[] = $forum['id'];
 		}
 	} else {
@@ -178,7 +180,7 @@ function GetUserPermissions($users, $perms=null) {
 		$userclause = '= {0}';
 
 	// retrieve all the groups those users belong to
-	$allgroups = Query("	
+	$allgroups = Query("
 				SELECT primarygroup gid, id uid, 0 type FROM {users} WHERE id {$userclause}
 		UNION 	SELECT groupid gid, userid uid, 1 type FROM {secondarygroups} WHERE userid {$userclause}",
 		$users);
@@ -195,7 +197,7 @@ function GetUserPermissions($users, $perms=null) {
 
 		$groupusers[$g['gid']][] = $g['uid'];
 	}
-	
+
 	// remove duplicate group IDs. This is faster than using array_unique.
 	$primgroups = array_flip(array_flip($primgroups));
 	$secgroups = array_flip(array_flip($secgroups));
@@ -208,11 +210,11 @@ function GetUserPermissions($users, $perms=null) {
 		$permclause = '';
 
 	// retrieve all the permissions related to those users and groups
-	$res = Query("	
+	$res = Query("
 				SELECT *, 1 ord FROM {permissions} WHERE applyto=0 AND id IN ({1c}) {$permclause}
 		UNION 	SELECT *, 2 ord FROM {permissions} WHERE applyto=0 AND id IN ({2c}) {$permclause}
 		UNION 	SELECT *, 3 ord FROM {permissions} WHERE applyto=1 AND id {$userclause} {$permclause}
-				ORDER BY ord", 
+				ORDER BY ord",
 		$users, $primgroups, $secgroups, $perms);
 
 	$permdata = array();
@@ -221,15 +223,15 @@ function GetUserPermissions($users, $perms=null) {
 	// compile all the resulting permission lists for all the requested users
 	while ($p = Fetch($res)) {
 		if ($p['value'] == 0) continue;
-		
+
 		$k = $p['perm'];
 		if ($p['arg']) $k .= '_'.$p['arg'];
-		
+
 		if ($p['applyto'] == 0) {	// group perm -- apply it to all the matching users
 			foreach ($groupusers[$p['id']] as $uid) {
 				if ($p['ord'] > $permord[$uid][$k] || $permdata[$uid][$k] != -1)
 					$permdata[$uid][$k] = $p['value'];
-				
+
 				$permord[$uid][$k] = $p['ord'];
 			}
 		} else { // user perm

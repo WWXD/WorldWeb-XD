@@ -14,7 +14,7 @@ function RenderTemplate($template, $options=null) {
 
 		$tplroot = BOARD_ROOT.'/plugins/'.$self['dir'].'/layouts/';
 	} else
-		$tplroot = BOARD_ROOT.'/layouts/'; 
+		$tplroot = BOARD_ROOT.'/layouts/';
 
 	if ($mobileLayout) {
 		$tplname = $tplroot.'mobile/'.$template.'.tpl';
@@ -77,11 +77,11 @@ function makeForumList($fieldname, $selectedID, $allowNone=false) {
 	foreach ($cats as $cid=>$cat) {
 		if (empty($fora[$cid]))
 			continue;
-			
+
 		$cname = $cat['name'];
 		if ($cat['board']) $cname = $forumBoards[$cat['board']].' - '.$cname;
-			
-		$theList .= 
+
+		$theList .=
 '			<optgroup label="'.htmlspecialchars($cname).'">
 '.mfl_forumBlock($fora, $cid, $selectedID, 0).
 '			</optgroup>
@@ -98,14 +98,14 @@ function forumCrumbs($forum) {
 	if ($forum['board'] != '')
 		$ret[actionLink('board', $forum['board'])] = $forumBoards[$forum['board']];
 
-	if (!$forum['id']) return $ret;
-	
+	if (!isset($forum['id'])) return $ret;
+
 	$parents = Query("SELECT id,title FROM {forums} WHERE l<{0} AND r>{1} ORDER BY l", $forum['l'], $forum['r']);
 	while ($p = Fetch($parents)) {
 		$public = HasPermission('forum.viewforum', $p['id'], true);
 		$ret[actionLink('forum', $p['id'], '', $public?$p['title']:'')] = $p['title'];
 	}
-	
+
 	$public = HasPermission('forum.viewforum', $forum['id'], true);
 	$ret[actionLink('forum', $forum['id'], '', $public?$forum['title']:'')] = $forum['title'];
 	return $ret;
@@ -192,7 +192,7 @@ function makeForumListinglol($parent, $boardlol='') {
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY c.corder, c.id, f.forder, f.id", 
+						ORDER BY c.corder, c.id, f.forder, f.id",
 						$loguserid, $viewableforums, $boardlol, -$parent);
 	if (!NumRows($rFora))
 		return;
@@ -206,13 +206,13 @@ function makeForumListinglol($parent, $boardlol='') {
 						FROM {forums} f
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY f.forder, f.id", 
+						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
 	$subfora = array();
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
-	$rMods = Query("	SELECT 
+	$rMods = Query("	SELECT
 							p.(arg, applyto, id),
 							u.(_userfields)
 						FROM
@@ -259,7 +259,7 @@ function makeForumListinglol($parent, $boardlol='') {
 										FROM {forums} f
 											".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
-										WHERE f.l>={1} AND f.r<={2}", 
+										WHERE f.l>={1} AND f.r<={2}",
 										$loguserid, $f['minl'], $f['maxr']);
 					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
@@ -285,7 +285,7 @@ function makeForumListinglol($parent, $boardlol='') {
 			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
 		} else
-			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
+			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '',
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
 
 		$fdata['ignored'] = $forum['ignored'];
@@ -310,7 +310,7 @@ function makeForumListinglol($parent, $boardlol='') {
 
 		if (isset($subfora[$forum['id']])) {
 			foreach ($subfora[$forum['id']] as $subforum) {
-				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
+				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '',
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
 
 				if ($subforum['ignored'])
@@ -357,7 +357,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY c.corder, c.id, f.forder, f.id", 
+						ORDER BY c.corder, c.id, f.forder, f.id",
 						$loguserid, $viewableforums, $boardmeh, -$parent);
 	if (!NumRows($rFora))
 		return;
@@ -371,13 +371,13 @@ function makeForumListingmeh($parent, $boardmeh='') {
 						FROM {forums} f
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY f.forder, f.id", 
+						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
 	$subfora = array();
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
-	$rMods = Query("	SELECT 
+	$rMods = Query("	SELECT
 							p.(arg, applyto, id),
 							u.(_userfields)
 						FROM
@@ -424,7 +424,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 										FROM {forums} f
 											".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
-										WHERE f.l>={1} AND f.r<={2}", 
+										WHERE f.l>={1} AND f.r<={2}",
 										$loguserid, $f['minl'], $f['maxr']);
 					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
@@ -450,7 +450,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
 		} else
-			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
+			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '',
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
 
 		$fdata['ignored'] = $forum['ignored'];
@@ -475,7 +475,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 
 		if (isset($subfora[$forum['id']])) {
 			foreach ($subfora[$forum['id']] as $subforum) {
-				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
+				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '',
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
 
 				if ($subforum['ignored'])
@@ -525,7 +525,7 @@ function makeForumListing($parent, $board='') {
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 							LEFT JOIN {users} lu ON lu.id=f.lastpostuser
 						WHERE f.id IN ({1c}) AND ".($parent==0 ? 'c.board={2} AND f.catid>0' : 'f.catid={3}').(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY c.corder, c.id, f.forder, f.id", 
+						ORDER BY c.corder, c.id, f.forder, f.id",
 						$loguserid, $viewableforums, $board, -$parent);
 	if (!NumRows($rFora))
 		return;
@@ -539,14 +539,14 @@ function makeForumListing($parent, $board='') {
 						FROM {forums} f
 							".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
-						ORDER BY f.forder, f.id", 
+						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
 	$subfora = array();
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
 
-	$rMods = Query("	SELECT 
+	$rMods = Query("	SELECT
 							p.(arg, applyto, id),
 							u.(_userfields)
 						FROM
@@ -567,7 +567,7 @@ function makeForumListing($parent, $board='') {
 		if($skipThisOne)
 			continue;
 
-		if (!$categories[$forum['catid']])
+		if (!isset($categories[$forum['catid']]))
 			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
 
 		$fdata = array('id' => $forum['id']);
@@ -594,7 +594,7 @@ function makeForumListing($parent, $board='') {
 										FROM {forums} f
 											".($loguserid ? "LEFT JOIN {ignoredforums} i ON i.fid=f.id AND i.uid={0}" : "")."
 											LEFT JOIN {users} lu ON lu.id=f.lastpostuser
-										WHERE f.l>={1} AND f.r<={2}", 
+										WHERE f.l>={1} AND f.r<={2}",
 										$loguserid, $f['minl'], $f['maxr']);
 					while ($sforum = Fetch($sforums)) {
 						$forum['numthreads'] += $sforum['numthreads'];
@@ -620,7 +620,7 @@ function makeForumListing($parent, $board='') {
 			} else
 				$fdata['link'] = '<a href="'.htmlspecialchars($redir).'">'.$forum['title'].'</a>';
 		} else
-			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '', 
+			$fdata['link'] = actionLinkTag($forum['title'], "forum",  $forum['id'], '',
 				HasPermission('forum.viewforum', $forum['id'], true) ? $forum['title'] : '');
 
 		$fdata['ignored'] = $forum['ignored'];
@@ -649,7 +649,7 @@ function makeForumListing($parent, $board='') {
 
 		if (isset($subfora[$forum['id']])) {
 			foreach ($subfora[$forum['id']] as $subforum) {
-				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '', 
+				$link = actionLinkTag($subforum['title'], 'forum', $subforum['id'], '',
 					HasPermission('forum.viewforum', $subforum['id'], true) ? $subforum['title'] : '');
 
 				if ($subforum['ignored'])
@@ -780,13 +780,13 @@ function makeAnncBar() {
 
 	$anncforum = Settings::get('anncForum');
 	if ($anncforum > 0) {
-		$annc = Query("	SELECT 
+		$annc = Query("	SELECT
 							t.id, t.title, t.icon, t.poll, t.forum,
 							t.date anncdate,
 							".($loguserid ? "tr.date readdate," : '')."
 							u.(_userfields)
-						FROM 
-							{threads} t 
+						FROM
+							{threads} t
 							".($loguserid ? "LEFT JOIN {threadsread} tr ON tr.thread=t.id AND tr.id={1}" : '')."
 							LEFT JOIN {users} u ON u.id=t.user
 						WHERE forum={0}

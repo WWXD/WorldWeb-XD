@@ -19,13 +19,17 @@ if ($_SERVER['HTTP_USER_AGENT'] == 'Mozilla/4.0')
 	do403();
 
 // spamdexing in referrals/useragents
-if (stristr($_SERVER['HTTP_REFERER'], '<a href=') ||
-	stristr($_SERVER['HTTP_USER_AGENT'], '<a href='))
-	do403();
+if (isset($_SERVER['HTTP_REFERER'])) {
+	if (stristr($_SERVER['HTTP_REFERER'], '<a href=') ||
+		stristr($_SERVER['HTTP_USER_AGENT'], '<a href='))
+		do403();
+}
 
 // spamrefreshing
-if (stristr($_SERVER['HTTP_REFERER'], 'refreshthis.com'))
-	do403();
+if (isset($_SERVER['HTTP_REFERER'])) {
+	if (stristr($_SERVER['HTTP_REFERER'], 'refreshthis.com'))
+		do403();
+}
 
 if ($isBot) {
 	// keep SE bots out of certain pages that don't interest them anyway

@@ -57,7 +57,7 @@ else
 if(!ctype_alnum($page))
 	$page = MAIN_PAGE;
 
-if($page == $mainPage) {
+if($page == MAIN_PAGE) {
 	if(isset($_GET['fid']) && (int)$_GET['fid'] > 0 && !isset($_GET['action']))
 		die(header("Location: ".actionLink("forum", (int)$_GET['fid'])));
 	if(isset($_GET['tid']) && (int)$_GET['tid'] > 0)
@@ -88,16 +88,17 @@ if (!$fakeerror) {
 	try {
 		try {
 			if(array_key_exists($page, $pluginpages)) {
-				$plugin = $pluginpages[$page];
-				$self = $plugins[$plugin];
-
-				$plugin_ABXD = $pluginpages[$page_ABXD];
-				$self_ABXD = $plugins[$plugin_ABXD];
-
 				$pageName = $page;
+
+				$plugin = $pluginpages[$pageName];
+				$self = $plugins[$plugin];
 
 				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$pageName.".php";
 				$page_ABXD = __DIR__.'/plugins/'.$self['dir']."/page_".$pageName.".php";
+
+				$plugin_ABXD = $pluginpages[$pageName];
+				$self_ABXD = $plugins[$plugin];
+
 				if(file_exists($page))
 					include($page);
 				elseif (file_exists($page_ABXD))
@@ -146,7 +147,7 @@ require(__DIR__.'/layouts/menus.php');
 
 $mobileswitch = '';
 if ($mobileLayout) $mobileswitch .= 'Mobile view - ';
-if ($_COOKIE['forcelayout']) $mobileswitch .= '<a href="?forcelayout=0" rel="nofollow">Auto view</a>';
+if (isset($_COOKIE['forcelayout']) && $_COOKIE['forcelayout']) $mobileswitch .= '<a href="?forcelayout=0" rel="nofollow">Auto view</a>';
 else if ($mobileLayout) $mobileswitch .= '<a href="?forcelayout=-1" rel="nofollow">Force normal view</a>';
 else $mobileswitch .= '<a href="?forcelayout=1" rel="nofollow">Force mobile view [BETA]</a>';
 
@@ -308,7 +309,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 			'boardname' => Settings::get('boardname'),
 			'poratitle' => Settings::get('PoRATitle'),
 			'poratext' => parseBBCode(Settings::get('PoRAText')),
-			'layout_logopic' => $layout_logopic,
+			'layout_logopic' => $logo,
 			'layout_time' => $layout_time,
 			'layout_views' => $layout_views,
 			'layout_onlineusers' => $layout_onlineusers,
@@ -330,7 +331,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 			'boardname' => Settings::get('boardname'),
 			'poratitle' => Settings::get('PoRATitle'),
 			'poratext' => parseBBCode(Settings::get('PoRAText')),
-			'layout_logopic' => $layout_logopic,
+			'layout_logopic' => $logo,
 			'layout_time' => $layout_time,
 			'layout_views' => $layout_views,
 			'layout_onlineusers' => $layout_onlineusers,

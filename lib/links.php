@@ -315,5 +315,10 @@ function getFullURL(){ return getFullRequestedURL(); }
 // --- Smarty interface
 // ----------------------------------------------------------------------------
 
-function smarty_function_actionLink($params, $template) { return htmlspecialchars(actionLink($params['page'], ($params['id']?:''), $params['args'], $params['urlname'])); }
+function smarty_function_actionLink($params, $template) {
+	$id = isset($params['id']) ? $params['id'] : false;
+	$args = isset($params['args']) ? $params['args'] : '';
+	$url = isset($params['urlname']) ? $params['urlname'] : '';
+	return htmlspecialchars(actionLink($params['page'], ($id?:''), $args, $url));
+}
 function smarty_function_resourceLink($params, $template) { return htmlspecialchars(resourceLink($params['url'])); }

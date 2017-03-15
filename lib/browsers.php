@@ -90,9 +90,12 @@ foreach($knownBrowsers as $code => $name) {
 	}
 }
 
-if ($_COOKIE['forcelayout'] == 1)
-	$mobileLayout = true;
-else if ($_COOKIE['forcelayout'] == -1)
+if (isset($_COOKIE['forcelayout'])) {
+	if ($_COOKIE['forcelayout'] == 1)
+		$mobileLayout = true;
+	else if ($_COOKIE['forcelayout'] == -1)
+		$mobileLayout = false;
+} else
 	$mobileLayout = false;
 
 $oldAndroid = false;
