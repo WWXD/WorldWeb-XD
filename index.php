@@ -246,32 +246,31 @@ $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' seconds (with '.$queries.' SQL queries and '.sprintf('%.03f',memory_get_usage() / 1024).'K of RAM)';
 
 ?>
-<!DOCTYPE html>
-
+<!doctype html>
 <html>
 <head>
 	<title><?php print $layout_title; ?></title>
 
-	<meta http-equiv="Content-Type" content="text/html; CHARSET=utf-8">
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=10">
 	<meta name="description" content="<?php print $metaStuff['description']; ?>">
 	<meta name="keywords" content="<?php print $metaStuff['tags']; ?>">
 
-	<link rel="shortcut icon" type="image/x-icon" href="<?php print $favicon;?>">
-	<link rel="stylesheet" type="text/css" href="<?php print resourceLink("css/common.css");?>">
-	<link rel="stylesheet" type="text/css" id="theme_css" href="<?php print resourceLink($themefile); ?>">
-	<link rel="stylesheet" type="text/css" href="<?php print resourceLink('css/font-awesome.min.css'); ?>">
+	<link rel="shortcut icon" href="<?php print $favicon;?>">
+	<link rel="stylesheet" href="<?php print resourceLink("css/common.css");?>">
+	<link rel="stylesheet" id="theme_css" href="<?php print resourceLink($themefile); ?>">
+	<link rel="stylesheet" href="<?php print resourceLink('css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php print resourceLink('css/w3.css'); ?>">
 
-	<script type="text/javascript" src="<?php print resourceLink("js/jquery.js");?>"></script>
-	<script type="text/javascript" src="<?php print resourceLink("js/tricks.js");?>"></script>
-	<script type="text/javascript" src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
-	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
-	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+	<script src="<?php print resourceLink("js/jquery.js");?>"></script>
+	<script src="<?php print resourceLink("js/tricks.js");?>"></script>
+	<script src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
+	<script src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
+	<script src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
-	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
+	<script>boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
 
@@ -279,9 +278,9 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 
 	<?php if ($mobileLayout) { ?>
 	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width">
-	<script type="text/javascript" src="<?php echo resourceLink('js/mobile.js'); ?>"></script>
+	<script src="<?php echo resourceLink('js/mobile.js'); ?>"></script>
 	<?php if ($oldAndroid) { ?>
-	<style type="text/css">
+	<style>
 	#mobile-sidebar { height: auto!important; max-height: none!important; }
 	#realbody { max-height: none!important; max-width: none!important; overflow: scroll!important; }
 	</style>
