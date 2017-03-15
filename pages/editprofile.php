@@ -393,6 +393,8 @@ if($_POST['actionsave']) {
 
 	$query .= join($sets, ", ")." WHERE id = ".$userid;
 	if(!$failed) {
+		$bucket = "profilesave"; include(BOARD_ROOT."lib/pluginloader.php");
+
 		RawQuery($query);
 
 		$his = "[b]".$user['name']."[/b]'s";
