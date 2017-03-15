@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>Blargboard updater</title>
+<title>World Web XD updater</title>
 <style type="text/css">
 a:link { color: #0e5; }
 a:visited { color: #0e5; }
@@ -68,7 +68,7 @@ td:not([colspan='2'])
 </head>
 <body>
 <div id="container">
-<h1>Blargboard updater</h1>
+<h1>World Web XD updater</h1>
 <br>
 <?php
 
