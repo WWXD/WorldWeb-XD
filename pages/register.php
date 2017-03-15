@@ -1,5 +1,5 @@
 <?php
-//  Blargboard XD - User account registration page
+//  WorldWeb XD - User account registration page
 //  Access: Guests
 //  Todo: Make it use templates
 //      - See bottom
@@ -8,8 +8,8 @@ if (!defined('BLARG')) die();
 $title = __("Register");
 
 $haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings::get('captcha');
-if($haveSecurimage)
-	session_start();
+$RegisterWord = Settings::get('RegWordKey') !== "";
+$Math = Settings::get('Math');
 
 MakeCrumbs(array('register' => __('Register')));
 
@@ -17,12 +17,16 @@ $sexes = array(__("Male"), __("Female"), __("N/A"));
 
 if($loguserid && !$loguser['root'])
 	Kill(__("An unknown error occured, please try again later."));
+elseif($loguserid && $loguser['root'])
+	Alert(__("You are currently logged in. However, you are a root, so you may re-register here freely"));
 
 if(Settings::get('DisReg') && !$loguser['root'])
 	Kill(__("Registering is currently disabled. Please try again later."));
+else if(Settings::get('DisReg') && !$loguser['root'])
+	Alert(__("Registering is currently disabled, but you are a root."));
 
 if($_POST['register']) {
-	if (IsProxy() || IsProxyFSpamList()) {
+	if ((IsProxy() || IsProxyFSpamList()) && !$loguser['root']) {
 		$adminemail = Settings::get('ownerEmail');
 		
 		if ($adminemail)
@@ -125,7 +129,7 @@ if($_POST['register']) {
 		$newsalt = Shake();
 		$password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");
-		if($uid < 1) $uid = 1;
+		if($uid < 2) $uid = 2;
 
 		if (!Settings::Get('AdminVer')) {
 			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
@@ -138,7 +142,7 @@ if($_POST['register']) {
 				$uid, $_POST['name'], $password, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
 		}
 
-		Report("New user: [b]".$_POST['name']."[/] (#".$uid.") -> [g]#HERE#?uid=".$uid);
+		Report("New user: [b]".$_POST['name']."[/b] (#".$uid.") -> [g]#HERE#?uid=".$uid);
 
 		$user = Fetch(Query("select * from {users} where id={0}", $uid));
 		$user['rawpass'] = $_POST['pass'];
@@ -252,7 +256,7 @@ if($haveSecurimage) {
 		</tr>";
 }
 
-if(Settings::get('math')) {
+if($math) {
 	print "
 		<tr>
 			<td class=\"cell2\">
@@ -265,7 +269,7 @@ if(Settings::get('math')) {
 		</tr>";
 }
 
-if(Settings::get('RegWordKey') !== "") {
+if($RegisterWord) {
 	print "
 		<tr>
 			<td class=\"cell2\">
