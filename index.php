@@ -256,6 +256,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<meta name="description" content="<?php print $metaStuff['description']; ?>">
 	<meta name="keywords" content="<?php print $metaStuff['tags']; ?>">
 
+	<base href="<?php echo getServerURLNoSlash($ishttps)?>" /><!--[if IE]></base><![endif]-->
 	<link rel="shortcut icon" href="<?php print $favicon;?>">
 	<link rel="stylesheet" href="<?php print resourceLink("css/common.css");?>">
 	<link rel="stylesheet" id="theme_css" href="<?php print resourceLink($themefile); ?>">
