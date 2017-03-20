@@ -25,10 +25,10 @@ if(Settings::get('DisReg') && !$loguser['root'])
 else if(Settings::get('DisReg') && !$loguser['root'])
 	Alert(__("Registering is currently disabled, but you are a root."));
 
-if($_POST['register']) {
+if($http->post('register')) {
 	if ((IsProxy() || IsProxyFSpamList()) && !$loguser['root']) {
 		$adminemail = Settings::get('ownerEmail');
-		
+
 		if ($adminemail)
 			$halp = '<br/><br/>If you aren\'t using a proxy, contact the board owner at: '.$adminemail;
 		else
@@ -36,10 +36,10 @@ if($_POST['register']) {
 
 		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
 	} else {
-		$name = trim($_POST['name']);
+		$name = trim($http->post('name'));
 		$cname = str_replace(" ","", strtolower($name));
 
-		$email = trim($_POST['email']);
+		$email = trim($http->post('email'));
 		$cemail = str_replace(" ","", strtolower($email));
 
 		$rUsers = Query("select name, displayname, email from {users}");
@@ -70,33 +70,33 @@ if($_POST['register']) {
 			$err = __("This user name is already taken by someone else. Please choose another one.");
 		if ($ipKnown >= 1)
 			$err = __("You already have an account.");
-		if (!$_POST['readFaq'])
+		if (!$http->post('readFaq'))
 			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
-		if (!$_POST['pass']) //Yes, I know that it should be common sence that you need to enter a password and that the "Less than 8 characters" thing exist, but its actually better to show the user what he's doing wrong. Other than to act blind to him.
+		if (!$http->post('pass')) //Yes, I know that it should be common sence that you need to enter a password and that the "Less than 8 characters" thing exist, but its actually better to show the user what he's doing wrong. Other than to act blind to him.
 			$err = __("You need to enter your password.");
-		if (strlen($_POST['pass']) < 8)
+		if (strlen($http->post('pass')) < 8)
 			$err = __("Your password must be at least eight characters long.");
-		if ($_POST['pass'] !== $_POST['pass2'])
+		if ($http->post('pass') !== $http->post('pass2'))
 			$err = __("The passwords you entered don't match.");
-		if (!$_POST['pass2']) //I don't know if this is actually checked before. If a message already exists, please notify me.
+		if (!$http->post('pass2')) //I don't know if this is actually checked before. If a message already exists, please notify me.
 			$err = __("You need to enter your password again.");
 		if (!$cemail && Settings::get('email'))
 			$err = __("You need to specify an email. Please specify one, and try again.");
-		if ($_POST['botprot'])
+		if ($http->post('botprot'))
 			$err = __("An unknown error occured, please try again.");
 		if ($uemail == $cemail)
 			$err = __("You already have an account.");
 		if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
 			$err = __("An unknown error occured, please try again.");
-		if (($_POST['pass'] || $_POST['pass2']) == $cname)
+		if (($http->post('pass') || $http->post('pass2')) === $cname)
 			$err = __("Don't put your username as your password. You'll impose high security risk to your account");
-		if (!$_POST['math'] && Settings::get('math'))
+		if (!$http->post('math') && Settings::get('math'))
 			$err = __("You forgot to answer the math question.");
-		if ($_POST['math'] !== "11")
+		if ($http->post('math') !== "11")
 			$err = __("Wrong Math Answer. Please try again.");
-		if (!$_POST['KeyWord'] && Settings::get("RegWordKey") !== "")
+		if (!$http->post('KeyWord') && Settings::get("RegWordKey") !== "")
 			$err = __("You forgot to enter the Registration Word Key. Please try again. Remeber that you have to contact the admin, in order to recieve it.");
-		if ($_POST['KeyWord'] !== Settings::get("RegWordKey"))
+		if ($http->post('KeyWord') !== Settings::get("RegWordKey"))
 			$err = __("You entered the wrong registration key. Please try again, but this time, with the right Registration Key. Remember that you have to obtain this key from a admin.");
 		if (strlen($cname)>20)
 			$err = __("The maximum limit for usernames are 20 characters. Please try again, but this time, with a shorter username");
@@ -104,7 +104,7 @@ if($_POST['register']) {
 		if($haveSecurimage) {
 			include("securimage/securimage.php");
 			$securimage = new Securimage();
-			if($securimage->check($_POST['captcha_code']) == false)
+			if($securimage->check($http->post('captcha_code')) == false)
 				$err = __("You got the CAPTCHA wrong.");
 		}
 
@@ -113,7 +113,7 @@ if($_POST['register']) {
 			$reasons[] = 'tor';
 		}
 		$s = new StopForumSpam($stopForumSpamKey);
-		if($s->is_spammer(array('email' => $_POST['email'], 'ip' => $_SERVER['REMOTE_ADDR'] ))) {
+		if($s->is_spammer(array('email' => $http->post('email'), 'ip' => $_SERVER['REMOTE_ADDR'] ))) {
 			$reasons[] = 'sfs';
 		}
 		if(count($reasons)) {
@@ -127,25 +127,25 @@ if($_POST['register']) {
 		Alert($err, __('Error'));
 	else {
 		$newsalt = Shake();
-		$password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+		$password = password_hash($http->post('pass'), PASSWORD_DEFAULT);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");
 		if($uid < 2) $uid = 2;
 
 		if (!Settings::Get('AdminVer')) {
-			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-				$uid, $_POST['name'], $password, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})",
+				$uid, $http->post('name'), $password, $newsalt, Settings::get('defaultGroup'), time(), $_SERVER['REMOTE_ADDR'], $http->post('email'), (int)$http->post('sex'), Settings::get("defaultTheme"));
 		} else {
 			//Todo: Add a title entry that says "Need Verification".
 			//(Maybe) Make a new rank
 			//Send a PM to all staff members notifying that he registered.
-			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
-				$uid, $_POST['name'], $password, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $_POST['email'], (int)$_POST['sex'], Settings::get("defaultTheme"));
+			$rUsers = Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})",
+				$uid, $http->post('name'), $password, $newsalt, Settings::get('bannedGroup'), time(), $_SERVER['REMOTE_ADDR'], $http->post('email'), (int)$http->post('sex'), Settings::get("defaultTheme"));
 		}
 
-		Report("New user: [b]".$_POST['name']."[/b] (#".$uid.") -> [g]#HERE#?uid=".$uid);
+		Report("New user: [b]".$http->post('name')."[/b] (#".$uid.") -> [g]#HERE#?uid=".$uid);
 
 		$user = Fetch(Query("select * from {users} where id={0}", $uid));
-		$user['rawpass'] = $_POST['pass'];
+		$user['rawpass'] = $http->post('pass');
 
 		$bucket = "newuser"; include(BOARD_ROOT."lib/pluginloader.php");
 
@@ -157,7 +157,7 @@ if($_POST['register']) {
 			if($testuser['id'] == $user['id'])
 				continue;
 
-			$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
+			$sha = doHash($http->post('pass').SALT.$testuser['pss']);
 			if($testuser['password'] === $sha)
 				$matches[] = $testuser['id'];
 		}
@@ -169,7 +169,7 @@ if($_POST['register']) {
 		Query("INSERT INTO {threadsread} (id,thread,date) SELECT {0}, id, {1} FROM {threads} WHERE lastpostdate<={2} ON DUPLICATE KEY UPDATE date={1}", $uid, time(), time()-900);
 
 
-		if($_POST['autologin']) {
+		if($http->post('autologin')) {
 			$sessionID = Shake();
 			setcookie("logsession", $sessionID, 0, URL_ROOT, "", false, true);
 			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], 0);
@@ -201,7 +201,7 @@ print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\"
 				<label for=\"un\">".__("User name")."</label>
 			</td>
 			<td class=\"cell0\">
-				<input type=\"text\" id=\"un\" name=\"name\" maxlength=20 size=24 autocorrect=off autocapitalize=words value=\"".htmlspecialchars($_POST['name'])."\" class=\"required\">
+				<input type=\"text\" id=\"un\" name=\"name\" maxlength=20 size=24 autocorrect=off autocapitalize=words value=\"".htmlspecialchars($http->post('name'))."\" class=\"required\">
 			</td>
 		</tr>
 		<tr>
@@ -218,7 +218,7 @@ print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\"
 				Email address
 			</td>
 			<td class=\"cell0\">
-				<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($_POST['email'])."\" maxlength=\"60\" size=24";
+				<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($http->post('email'))."\" maxlength=\"60\" size=24";
 if (Settings::get('email'))
 	print "class=\"required\"";
 print "
@@ -230,7 +230,7 @@ print "
 				Gender
 			</td>
 			<td class=\"cell1\">
-				".MakeOptions("sex",$_POST['sex'],$sexes)."
+				".MakeOptions("sex",$http->post('sex'),$sexes)."
 			</td>
 		</tr>
 		<tr style=\"display:none;\">
@@ -294,7 +294,7 @@ print "
 			<td></td>
 			<td>
 				<input type=\"submit\" name=\"register\" value=\"".__("Register")."\">
-				<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($_POST['autologin']?' checked="checked"':'').">".__("Log in afterwards")."</label>
+				<label><input type=\"checkbox\" checked=\"checked\" name=\"autologin\"".($http->post('autologin')?' checked="checked"':'').">".__("Log in afterwards")."</label>
 			</td>
 		</tr>
 		<tr>
