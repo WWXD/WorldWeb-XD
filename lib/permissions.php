@@ -92,7 +92,7 @@ function HasPermission($perm, $arg=0, $guest=false) {
 	$permset = $guest ? $guestPermset : $loguserPermset;
 
 	// check general permission first
-	if ($permset[$perm] == -1)
+	if (!isset($permset[$perm]) || $permset[$perm] == -1)
 		return false;
 
 	$needspecific = !$permset[$perm];
@@ -104,10 +104,10 @@ function HasPermission($perm, $arg=0, $guest=false) {
 	if ($arg) {
 		$perm .= '_'.$arg;
 		if ($needspecific) {
-			if ($permset[$perm] != 1)
+			if (!isset($permset[$perm]) || $permset[$perm] != 1)
 				return false;
 		} else {
-			if ($permset[$perm] == -1)
+			if (!isset($permset[$perm]) || $permset[$perm] == -1)
 				return false;
 		}
 	}
