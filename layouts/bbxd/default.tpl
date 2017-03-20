@@ -31,7 +31,7 @@
 				<table class="layout-table">
 				<tr>
 				<td>
-					<a href="{actionLink page='home'}">{$logo}</a>
+					<a href="{pageLink name='home'}">{$logo}</a>
 				</td>
 				<td>
 					<table class="outline" id="headerInfo">
@@ -49,7 +49,7 @@
 				<table class="layout-table">
 				<tr>
 				<td>
-					<a href="{actionLink page='home'}"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a>
+					<a href="{pageLink name='home'}"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a>
 				</td>
 				</tr>
 				</table>
@@ -103,7 +103,7 @@
 					{/if}
 				</div>
 				<div id="navMenuContainer">
-					<span class="navButton"><a href="{actionLink page='home'}">Home</a></span>
+					<span class="navButton"><a href="{pageLink name='home'}">Home</a></span>
 					{foreach $headerlinks as $url=>$text}
 						<span class="navButton"><a href="{$url|escape}">{$text}</a></span>
 					{/foreach}
