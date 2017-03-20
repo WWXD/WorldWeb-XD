@@ -137,7 +137,7 @@ class AltoRouter {
         // prepend base path to route url again
         $url = $this->basePath . $route;
 
-        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('`(/|\.|\-)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
 
             foreach($matches as $match) {
                 list($block, $pre, $type, $param, $optional) = $match;
@@ -237,7 +237,7 @@ class AltoRouter {
      * Compile the regex for a given route (EXPENSIVE)
      */
     private function compileRoute($route) {
-        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('`(/|\.|\-)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
 
             $matchTypes = $this->matchTypes;
             foreach($matches as $match) {
