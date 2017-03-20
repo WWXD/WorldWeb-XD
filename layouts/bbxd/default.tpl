@@ -96,8 +96,8 @@
 							<i class="icon-caret-down"></i>
 						</div>
 						<ul class="dropdownMenu">
-							<li><a href="{actionLink page='register'}">Register</a>
-							<li><a href="{actionLink page='login'}">Log in</a>
+							<li><a href="{pageLink name='register'}">Register</a>
+							<li><a href="{pageLink name='login'}">Log in</a>
 						</ul>
 					</div>
 					{/if}

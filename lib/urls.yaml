@@ -6,4 +6,12 @@
 
 # Basic pages
 home: ['GET', '/', 'home']
+
+# Accounts related
+login: ['GET|POST', '/accounts/login', 'login']
+logout: ['POST', '/accounts/logout', 'login']
+register: ['GET|POST', '/accounts/register', 'register']
+
+# ehh
 irc: ['GET', '/misc/irc', 'irc']
+credits: ['GET', '/misc/credits', 'credits']
