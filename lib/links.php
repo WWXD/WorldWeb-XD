@@ -41,6 +41,14 @@ function actionLink($action, $id="", $args="", $urlname="") {
 
 }
 
+function pageLink($page, $params=array()) {
+	global $router;
+	return $router->generate($page, $params);
+}
+
+function pageLinkTag($text, $page, $params=array()) {
+	return '<a href="'.htmlentities(pageLink($page, $params)).'">'.$text.'</a>';
+}
 
 function actionLinkTag($text, $action, $id='', $args="", $urlname="") {
 	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>';
@@ -315,6 +323,10 @@ function getFullURL(){ return getFullRequestedURL(); }
 // --- Smarty interface
 // ----------------------------------------------------------------------------
 
+function smarty_function_pageLink($params, $template) {
+	$passParams = isset($params['params']) ? $params['params'] : array();
+	return pageLink($params['name'], $passParams);
+}
 function smarty_function_actionLink($params, $template) {
 	$id = isset($params['id']) ? $params['id'] : false;
 	$args = isset($params['args']) ? $params['args'] : '';
