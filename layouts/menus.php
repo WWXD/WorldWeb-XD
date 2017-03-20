@@ -3,7 +3,7 @@ if (!defined('BLARG')) die();
 
 $headerlinks = array
 (
-	actionLink('irc') => 'IRC', 
+	pageLink('irc') => 'IRC',
 );
 
 $sidelinks = array
