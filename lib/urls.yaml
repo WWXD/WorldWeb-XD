@@ -12,6 +12,9 @@ login: ['GET|POST', '/accounts/login', 'login']
 logout: ['POST', '/accounts/logout', 'login']
 register: ['GET|POST', '/accounts/register', 'register']
 
+# User Profiles
+profile: ['GET|POST', '/members/[i:id]-[s:name]?', 'profile']
+
 # ehh
 irc: ['GET', '/misc/irc', 'irc']
 credits: ['GET', '/misc/credits', 'credits']

@@ -189,7 +189,10 @@ function userLink($user, $showMinipic = false, $customID = false) {
 
 	$title = htmlspecialchars($user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
 	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
-	return actionLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", $user["id"], "", $user["name"]);
+	return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", array(
+		'id' => $user['id'],
+		'name' => slugify($user['name'])
+	));
 }
 
 function userLinkById($id) {
