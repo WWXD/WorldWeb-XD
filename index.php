@@ -78,6 +78,7 @@ if (!$fakeerror) {
 			// Check first for plugin pages.
 			if(array_key_exists($pageName, $pluginpages)) {
 				// TODO: Make this cleaner than a hack.
+				$plugin = $pluginpages[$pageName];
 				$self = $plugins[$plugin];
 
 				$addonWWXD = __DIR__.'/plugins/'.$self['dir'].'/pages/'.$pageName.'.php';
