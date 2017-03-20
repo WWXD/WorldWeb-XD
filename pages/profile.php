@@ -3,7 +3,7 @@
 //  Access: all
 if (!defined('BLARG')) die();
 
-$id = (int)$_REQUEST['id'];
+$id = $pageParams['id'];
 
 $rUser = Query("select u.* from {users} u where u.id={0}",$id);
 if(NumRows($rUser))
@@ -27,9 +27,9 @@ if($id == $loguserid) {
 $canDeleteComments = ($id == $loguserid && HasPermission('user.deleteownusercomments')) || HasPermission('admin.adminusercomments');
 $canComment = (HasPermission('user.postusercomments')) || HasPermission('admin.adminusercomments');
 
-if($loguserid && $_REQUEST['token'] == $loguser['token']) {
-	if(isset($_GET['block'])) {
-		$block = (int)$_GET['block'];
+if($loguserid && $http->request('token') == $loguser['token']) {
+	if($http->get('block')) {
+		$block = (int)$http->get('block');
 		$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 		$isBlocked = NumRows($rBlock);
 		if($block && !$isBlocked && $loguserid != $id) {
@@ -50,29 +50,41 @@ if($loguserid && $_REQUEST['token'] == $loguser['token']) {
 			else
 				Alert(__("You've successfully unblocked this users signature."), __('Unblock successfull'));
 		}
-		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
+		die(header("Location: ".pageLink("profile", array(
+				'id' => $id,
+				'name' => slugify($user['name'])
+			))
+		));
 	}
 
-	if($_GET['action'] == "delete") {
-		$postedby = FetchResult("SELECT cid FROM {usercomments} WHERE uid={0} AND id={1}", $id, (int)$_GET['cid']);
+	if($http->get('action') == "delete") {
+		$postedby = FetchResult("SELECT cid FROM {usercomments} WHERE uid={0} AND id={1}", $id, (int)$http->get('cid'));
 		if ($canDeleteComments || ($postedby == $loguserid && HasPermission('user.deleteownusercomments'))) {
-			Query("delete from {usercomments} where uid={0} and id={1}", $id, (int)$_GET['cid']);
+			Query("delete from {usercomments} where uid={0} and id={1}", $id, (int)$http->get('cid'));
 			if ($loguserid != $id) {
 				// dismiss any new comment notification that has been sent to that user, unless there are still new comments
 				$lastcmt = FetchResult("SELECT date FROM {usercomments} WHERE uid={0} ORDER BY date DESC LIMIT 1", $id);
 				if ($lastcmt < $user['lastprofileview'])
 					DismissNotification('profilecomment', $id, $id);
 			}
-			die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
+			die(header("Location: ".pageLink("profile", array(
+					'id' => $id,
+					'name' => slugify($user['name'])
+				))
+			));
 		}
 	}
 
-	if(isset($_POST['actionpost']) && !IsReallyEmpty($_POST['text']) && $canComment) {
-		$rComment = Query("insert into {usercomments} (uid, cid, date, text) values ({0}, {1}, {2}, {3})", $id, $loguserid, time(), $_POST['text']);
+	if($http->post('action') === 'post' && !IsReallyEmpty($http->post('text')) && $canComment) {
+		$rComment = Query("insert into {usercomments} (uid, cid, date, text) values ({0}, {1}, {2}, {3})", $id, $loguserid, time(), $http->post('text'));
 		if($loguserid != $id) {
 			SendNotification('profilecomment', $id, $id);
 		}
-		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
+		die(header("Location: ".pageLink("profile", array(
+				'id' => $id,
+				'name' => slugify($user['name'])
+			))
+		));
 	}
 }
 
@@ -90,9 +102,15 @@ if($loguserid) {
 	$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 	$isBlocked = NumRows($rBlock);
 	if($isBlocked)
-		$blockLayoutLink = actionLinkTag($unblocktext, "profile", $id, "block=0&token={$loguser['token']}");
+		$blockLayoutLink = pageLinkTag($unblocktext, "profile", array(
+				'id' => $id,
+				'name' => slugify($user['name'])
+			), "block=0&token={$loguser['token']}");
 	else if($id != $loguserid)
-		$blockLayoutLink = actionLinkTag($blocktext, "profile", $id, "block=1&token={$loguser['token']}");
+		$blockLayoutLink = pageLinkTag($blocktext, "profile", array(
+				'id' => $id,
+				'name' => slugify($user['name'])
+			), "block=1&token={$loguser['token']}");
 }
 
 $daysKnown = (time()-$user['regdate'])/86400;
@@ -210,7 +228,7 @@ $profileParts[__("General information")] = $temp;
 
 $temp = array();
 $temp[__("Email address")] = $emailField;
-if($homepage)
+if(isset($homepage))
 	$temp[__("Homepage")] = $homepage;
 $profileParts[__("Contact information")] = $temp;
 
@@ -221,7 +239,7 @@ if(file_exists($infofile))
 {
 	$themeinfo = file_get_contents($infofile);
 	$themeinfo = explode("\n", $themeinfo, 2);
-	
+
 	$themename = trim($themeinfo[0]);
 	$themeauthor = trim($themeinfo[1]);
 } else {
@@ -266,8 +284,8 @@ $total = FetchResult("SELECT
 					FROM {usercomments}
 					WHERE uid={0}", $id);
 
-$from = (int)$_GET["from"];
-if(!isset($_GET["from"]))
+$from = (int)$http->get('from');
+if($http->get('from') === null)
 	$from = 0;
 $realFrom = $total-$from-$cpp;
 $realLen = $cpp;
@@ -288,7 +306,11 @@ if (!HasPermission('user.postusercomments') && $user['primarygroup'] == Settings
 else
 	$profilecommenterror = 'You may not post profile comments here.';
 
-$pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']), $cpp, $from, $total);
+$pagelinks = PageLinksInverted(pageLink("profile", array(
+					'id' => $id,
+					'name' => slugify($user['name'])
+				), 'from=')
+			, $cpp, $from, $total);
 
 $comments = array();
 while($comment = Fetch($rComments)) {
@@ -324,14 +346,14 @@ if($canComment) {
 
 
 RenderTemplate('profile', array(
-	'username' => htmlspecialchars($uname), 
+	'username' => htmlspecialchars($uname),
 	'userlink' => UserLink($user),
 	'profileParts' => $profileParts,
 	'comments' => $comments,
 	'commentField' => $commentField,
 	'profilecommenterror' => $profilecommenterror,
 
-	'pagelinks' => $pagelinks));	
+	'pagelinks' => $pagelinks));
 
 
 if (!$mobileLayout) {
@@ -388,9 +410,12 @@ if(HasPermission('user.sendpms'))
 $links[] = actionLinkTag(__("Show posts"), "listposts", $id, "", $user['name']);
 $links[] = actionLinkTag(__("Show threads"), "listthreads", $id, "", $user['name']);
 
-if ($loguserid) $links[] = $blockLayoutLink;
+if ($loguserid && isset($blockLayoutLink)) $links[] = $blockLayoutLink;
 
-MakeCrumbs(array(actionLink("profile", $id, '', $user['name']) => htmlspecialchars($uname)), $links);
+MakeCrumbs(array(pageLink("profile", array(
+				'id' => $id,
+				'name' => slugify($user['name'])
+			)) => htmlspecialchars($uname)), $links);
 
 $title = format(__("Profile for {0}"), htmlspecialchars($uname));
 
