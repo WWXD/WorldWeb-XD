@@ -215,7 +215,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 
 $layout_credits =
-'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322 <a href="'.actionLink('credits').'">et al</a><br>
+'<img src="'.resourceLink('img/poweredbybbxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322 <a href="'.pageLink('credits').'">et al</a><br>
 Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 
@@ -271,7 +271,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<?php } ?>
 </head>
 <body style="width:100%; font-size: <?php echo $loguser['fontsize']; ?>%;">
-<form action="<?php echo htmlentities(actionLink('login')); ?>" method="post" id="logout" style="display:none;"><input type="hidden" name="action" value="logout"></form>
+<form action="<?php echo htmlentities(pageLink('logout')); ?>" method="post" id="logout" style="display:none;"><input type="hidden" name="action" value="logout"></form>
 <?php
 	if (Settings::get('maintenance'))
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';

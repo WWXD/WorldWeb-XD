@@ -31,6 +31,7 @@
 			<td>
 				{$fields.btnLogin}
 				{$fields.btnForgotPass}
+				<input type="hidden" name="action" value="login">
 			</td>
 		</tr>
 	</table>

@@ -18,21 +18,21 @@ function isValidPassword($password, $hash, $uid) {
 	return true;
 }
 
-if($_POST['action'] == "logout" && $loguserid) {
+if($http->post('action') === "logout" && $loguserid) {
 	setcookie("logsession", "", 2147483647, URL_ROOT, "", false, true);
 	Query("UPDATE {users} SET loggedin = 0 WHERE id={0}", $loguserid);
 	Query("DELETE FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT));
 
 	die(header("Location: ".URL_ROOT));
-} elseif(!$_POST['action'] == "logout" && $loguserid) {
+} elseif($http->post('action') === "login" && $loguserid) {
 	Kill(__("Your already logged in. First log out."));
-} elseif($_POST['action'] == "logout" && !$loguserid) {
+} elseif($http->post('action') === "logout" && !$loguserid) {
 	Kill(__("Why in the world are you trying to log out if your not even logged in?"));
-} elseif(isset($_POST['actionlogin']) && !$_POST['action'] == "logout" && !$loguserid) {
+} elseif($http->post('action') === "login" && !$loguserid) {
 	$okay = false;
-	$pass = $_POST['pass'];
+	$pass = $http->post('pass');
 
-	$user = Fetch(Query("select * from {users} where name={0} or email={0}", $_POST['name']));
+	$user = Fetch(Query("select * from {users} where name={0} or email={0}", $http->post('name')));
 	if($user) {
 		// Check for the password. (new type)
 		if (isValidPassword($pass, $user['password'], $user['id']))
@@ -52,7 +52,7 @@ if($_POST['action'] == "logout" && $loguserid) {
 	// auth plugins
 
 	if(!$okay) {
-		Report("A visitor from [b]".$_SERVER['REMOTE_ADDR']."[/] tried to log in as [b]".$_POST['name']."[/].", 1);
+		Report("A visitor from [b]".$_SERVER['REMOTE_ADDR']."[/] tried to log in as [b]".$http->post('name')."[/].", 1);
 		Alert(__("Invalid user name or password."));
 		$bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php');
 	} else {
@@ -60,7 +60,7 @@ if($_POST['action'] == "logout" && $loguserid) {
 
 		$sessionID = Shake();
 		setcookie("logsession", $sessionID, 2147483647, URL_ROOT, "", false, true);
-		Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], $_POST['session']?1:0);
+		Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], $http->post('session')?1:0);
 
 		Report("[b]".$user['name']."[/] logged in from [b]".$_SERVER['REMOTE_ADDR']."[/].", 1);
 
@@ -74,7 +74,7 @@ if($_POST['action'] == "logout" && $loguserid) {
 			if (isValidPassword($pass, $testuser['password'], $testuser['id']))
 				$matches[] = $testuser['id'];
 			else {
-				$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
+				$sha = doHash($http->post('pass').SALT.$testuser['pss']);
 				if($testuser['password'] === $sha) {
 					$password = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -108,7 +108,7 @@ $fields = array(
 	'btnForgotPass' => $forgotPass,
 );
 
-echo "<form name=\"loginform\" action=\"".htmlentities(actionLink("login"))."\" method=\"post\">";
+echo "<form name=\"loginform\" action=\"".htmlentities(pageLink("login"))."\" method=\"post\">";
 
 RenderTemplate('form_login', array('fields' => $fields));
 
