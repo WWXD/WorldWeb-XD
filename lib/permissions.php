@@ -152,19 +152,18 @@ function ForumsWithPermission($perm, $guest=false) {
 	}
 
 	$forumlist = Query("SELECT id FROM {forums}");
+	$check = (bool)($permset[$perm] == 1);
 
 	// if the general permission is set to grant, we need to check for forums for which it'd be revoked
 	// otherwise we need to check for forums for which it'd be granted
-	if ($permset[$perm] == 1) {
-		while ($forum = Fetch($forumlist)) {
-			if (isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] != -1)
-				$ret[] = $forum['id'];
-		}
-	} else {
-		while ($forum = Fetch($forumlist)) {
-			if (isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] == 1)
-				$ret[] = $forum['id'];
-		}
+	while ($forum = Fetch($forumlist)) {
+		if ($check && (isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] != -1))
+			$ret[] = $forum['id'];
+		elseif (!$check && ((isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] == 1)))
+			$ret[] = $forum['id'];
+		// We're still checking if this exists but since the others failed, it's a neutral perm.
+		elseif (!isset($permset[$perm.'_'.$forum['id']]))
+			$ret[] = $forum['id'];
 	}
 
 
