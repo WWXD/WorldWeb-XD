@@ -157,15 +157,16 @@ function ForumsWithPermission($perm, $guest=false) {
 	// otherwise we need to check for forums for which it'd be granted
 	if ($permset[$perm] == 1) {
 		while ($forum = Fetch($forumlist)) {
-			if (!isset($permset[$perm.'_'.$forum['id']]) || $permset[$perm.'_'.$forum['id']] != -1)
+			if (isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] != -1)
 				$ret[] = $forum['id'];
 		}
 	} else {
 		while ($forum = Fetch($forumlist)) {
-			if ($permset[$perm.'_'.$forum['id']] == 1)
+			if (isset($permset[$perm.'_'.$forum['id']]) && $permset[$perm.'_'.$forum['id']] == 1)
 				$ret[] = $forum['id'];
 		}
 	}
+
 
 	$fpermcache[$cperm] = $ret;
 	return $ret;
