@@ -256,7 +256,7 @@ if($haveSecurimage) {
 		</tr>";
 }
 
-if($math) {
+if(isset($math)) {
 	print "
 		<tr>
 			<td class=\"cell2\">
@@ -317,11 +317,12 @@ print "		</td>
 
 function MakeOptions($fieldName, $checkedIndex, $choicesList) {
 	$checks[$checkedIndex] = " checked=\"checked\"";
+	$result = '';
 	foreach($choicesList as $key=>$val)
 		$result .= format("
 					<label>
 						<input type=\"radio\" name=\"{1}\" value=\"{0}\"{2}>
 						{3}
-					</label>", $key, $fieldName, $checks[$key], $val);
+					</label>", $key, $fieldName, (isset($checks[$key]) ? $checks[$key] : ''), $val);
 	return $result;
 }
