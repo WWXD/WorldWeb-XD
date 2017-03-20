@@ -69,6 +69,9 @@ Settings::checkPlugin("main");
 require_once(__DIR__."/functions.php");
 require_once(__DIR__."/language.php");
 require_once(__DIR__."/links.php");
+require_once(__DIR__."/urlslugs.php");
+require_once(__DIR__."/yaml.php");
+require_once(__DIR__."/router.php");
 
 class KillException extends Exception { }
 date_default_timezone_set("GMT");
@@ -78,9 +81,24 @@ $title = "";
 
 //WARNING: These things need to be kept in a certain order of execution.
 
+// TODO: Nuke this.
 $thisURL = $_SERVER['SCRIPT_NAME'];
 if($q = $_SERVER['QUERY_STRING'])
 	$thisURL .= "?$q";
+
+// Init the router
+$router = new AltoRouter();
+
+// Add a special regex for our purposes
+$router->addMatchTypes(['s' => '[0-9A-Za-z\-]+']);
+
+// Load the basic URLs we use by default via the YAML file
+$routes = spyc_load_file(__DIR__."/urls.yaml");
+
+// Map our routes
+foreach ($routes as $route_name => $params) {
+    $router->map($params[0], $params[1], $params[2], $route_name);
+}
 
 require_once(__DIR__."/browsers.php");
 require_once(__DIR__."/pluginsystem.php");

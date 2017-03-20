@@ -31,7 +31,7 @@ class BadPluginException extends Exception { }
 
 // TODO cache all those data so we don't have to scan directories at each run
 function getPluginData($plugin, $load = true) {
-	global $pluginpages, $pluginbuckets, $plugintemplates, $misc, $abxd_version;
+	global $pluginpages, $pluginbuckets, $plugintemplates, $misc, $abxd_version, $router;
 
 	if(!is_dir(__DIR__."/../plugins/".$plugin))
 		throw new BadPluginException("Plugin folder is gone");
@@ -106,6 +106,24 @@ function getPluginData($plugin, $load = true) {
 			}
 		}
 		closedir($pdir);
+	}
+
+	if(file_exists($dir.'/routes.yaml')) {
+		$routes = spyc_load_file($dir.'/routes.yaml');
+		$allRoutes = $router->getRoutes();
+		$existingRoutes = array();
+
+		foreach ($allRoutes as $route) {
+			$existingRoutes[] = $route[3];
+		}
+		foreach ($routes as $route_name => $params) {
+			if (in_array($route_name, $existingRoutes))
+				throw new BadPluginException(__("Plugin route \"$route_name\" conflicts with an existing route."));
+		}
+		// Trust me, this is to avoid polluting the routes if there's a conflict that we dealt with earlier.
+		foreach ($routes as $route_name => $params) {
+			$router->map($params[0], $params[1], $params[2], $route_name);
+		}
 	}
 
 	return $plugindata;

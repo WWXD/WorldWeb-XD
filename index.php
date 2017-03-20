@@ -4,7 +4,7 @@ $starttime = microtime(true);
 define('BLARG', 1);
 
 // change this to change your board's default page
-define('MAIN_PAGE', 'home');
+define('MAIN_PAGE', 'index');
 
 $ajaxPage = false;
 if(isset($_GET['ajax']))
@@ -37,7 +37,6 @@ $useBuffering = true;
 //Support for running pages from the terminal.
 if(isset($argv)) {
 	$_GET = array();
-	$_GET["page"] = $argv[1];
 
 	$_SERVER = array();
 	$_SERVER["REMOTE_ADDR"] = "0.0.0.0";
@@ -50,25 +49,7 @@ if(isset($argv)) {
 //=======================
 // Do the page
 
-if (isset($_GET['page']))
-	$page = $_GET['page'];
-else
-	$page = MAIN_PAGE;
-if(!ctype_alnum($page))
-	$page = MAIN_PAGE;
-
-if($page == MAIN_PAGE) {
-	if(isset($_GET['fid']) && (int)$_GET['fid'] > 0 && !isset($_GET['action']))
-		die(header("Location: ".actionLink("forum", (int)$_GET['fid'])));
-	if(isset($_GET['tid']) && (int)$_GET['tid'] > 0)
-		die(header("Location: ".actionLink("thread", (int)$_GET['tid'])));
-	if(isset($_GET['uid']) && (int)$_GET['uid'] > 0)
-		die(header("Location: ".actionLink("profile", (int)$_GET['uid'])));
-	if(isset($_GET['pid']) && (int)$_GET['pid'] > 0)
-		die(header("Location: ".actionLink("post", (int)$_GET['pid'])));
-}
-
-define('CURRENT_PAGE', $page);
+$match = $router->match();
 
 ob_start();
 $layout_crumbs = "";
@@ -86,38 +67,37 @@ if ($loguser['flags'] & 0x2) {
 
 if (!$fakeerror) {
 	try {
-		try {
-			if(array_key_exists($page, $pluginpages)) {
-				$pageName = $page;
+		// Throw the 404 page if we don't have a match already.
+		if ($match === false)
+			require_once(__DIR__.'/pages/404.php');
+		else {
+			// Set up the stuff for our page loader.
+			$pageName = $match['target'];
+			$pageParams = $match['params'];
 
-				$plugin = $pluginpages[$pageName];
+			// Check first for plugin pages.
+			if(array_key_exists($pageName, $pluginpages)) {
+				// TODO: Make this cleaner than a hack.
 				$self = $plugins[$plugin];
 
-				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$pageName.".php";
-				$page_ABXD = __DIR__.'/plugins/'.$self['dir']."/page_".$pageName.".php";
+				$addonWWXD = __DIR__.'/plugins/'.$self['dir'].'/pages/'.$pageName.'.php';
+				$addonABXD = __DIR__.'/plugins/'.$self['dir'].'/page_'.$pageName.'.php';
 
-				$plugin_ABXD = $pluginpages[$pageName];
-				$self_ABXD = $plugins[$plugin];
-
-				if(file_exists($page))
-					include($page);
-				elseif (file_exists($page_ABXD))
-					include($page_ABXD);
+				if (file_exists($addonWWXD))
+					require_once($addonWWXD);
+				elseif (file_exists($addonABXD))
+					require_once($addonABXD);
 				else
-					throw new Exception(404);
-
-				unset($self);
-				unset($self_ABXD);
+					require_once(__DIR__.'/pages/404.php');
 			} else {
-				$page = __DIR__.'/pages/'.$page.'.php';
-				if(!file_exists($page))
-					throw new Exception(404);
-				include($page);
+				// Check now for core pages.
+				$page = $page = __DIR__.'/pages/'.$pageName.'.php';
+
+				if (file_exists($page))
+					require_once($page);
+				else
+					require_once(__DIR__.'/pages/404.php');
 			}
-		}
-		catch(Exception $e) {
-			if ($e->getMessage() != 404) { throw $e; }
-			require(__DIR__.'/pages/404.php');
 		}
 	} catch(KillException $e) {
 		// Nothing. Just ignore this exception.
