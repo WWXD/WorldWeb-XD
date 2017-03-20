@@ -53,22 +53,22 @@ function usectime() {
 $forumBoards = array('' => 'Main forums');
 
 
-include(__DIR__."/../config/salt.php");
+require_once(__DIR__."/../config/salt.php");
 
-include(__DIR__."/settingsfile.php");
+require_once(__DIR__."/settingsfile.php");
 
-include(__DIR__."/debug.php");
-include(__DIR__."/mysql.php");
-include(__DIR__."/../config/database.php");
+require_once(__DIR__."/debug.php");
+require_once(__DIR__."/mysql.php");
+require_once(__DIR__."/../config/database.php");
 if(!fetch(query("SHOW TABLES LIKE '{misc}'")))
 	die("The boards tables are empty. Please copy the db folder and install.php to your board root and delete the config folder from the root. Overwrite any files if nessesary.");
-include(__DIR__."/settingssystem.php");
+require_once(__DIR__."/settingssystem.php");
 Settings::load();
 Settings::checkPlugin("main");
 
-include(__DIR__."/functions.php");
-include(__DIR__."/language.php");
-include(__DIR__."/links.php");
+require_once(__DIR__."/functions.php");
+require_once(__DIR__."/language.php");
+require_once(__DIR__."/links.php");
 
 class KillException extends Exception { }
 date_default_timezone_set("GMT");
@@ -82,37 +82,37 @@ $thisURL = $_SERVER['SCRIPT_NAME'];
 if($q = $_SERVER['QUERY_STRING'])
 	$thisURL .= "?$q";
 
-include(__DIR__."/browsers.php");
-include(__DIR__."/pluginsystem.php");
+require_once(__DIR__."/browsers.php");
+require_once(__DIR__."/pluginsystem.php");
 loadFieldLists();
-include(__DIR__."/loguser.php");
-include(__DIR__."/permissions.php");
+require_once(__DIR__."/loguser.php");
+require_once(__DIR__."/permissions.php");
 
 if (Settings::get('maintenance') && !$loguser['root'] && (!isset($_GET['page']) || $_GET['page'] != 'login'))
 	$_GET["page"] = "maintenance";
 
-include(__DIR__."/notifications.php");
-include(__DIR__."/firewall.php");
-include(__DIR__."/ranksets.php");
-include(__DIR__."/bbcode_parser.php");
-include(__DIR__."/bbcode_text.php");
-include(__DIR__."/bbcode_callbacks.php");
-include(__DIR__."/bbcode_main.php");
-include(__DIR__."/post.php");
-include(__DIR__."/onlineusers.php");
+require_once(__DIR__."/notifications.php");
+require_once(__DIR__."/firewall.php");
+require_once(__DIR__."/ranksets.php");
+require_once(__DIR__."/bbcode_parser.php");
+require_once(__DIR__."/bbcode_text.php");
+require_once(__DIR__."/bbcode_callbacks.php");
+require_once(__DIR__."/bbcode_main.php");
+require_once(__DIR__."/post.php");
+require_once(__DIR__."/onlineusers.php");
 
 $theme = $loguser['theme'];
-include(__DIR__."/layout.php");
+require_once(__DIR__."/layout.php");
 
 //Classes
 
-include(__DIR__."/smarty/Smarty.class.php");
+require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
 $tpl->assign('loguserid', $loguserid);
 $tpl->setCompileDir('/tmp/templates_compiled');
 $tpl->setCacheDir('/tmp/templates_cache');
-include(__DIR__."/../class/PipeMenuBuilder.php");
+require_once(__DIR__."/../class/PipeMenuBuilder.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 
