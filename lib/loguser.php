@@ -165,7 +165,7 @@ Query("delete from {sessions} where expiration != 0 and expiration < {0}", time(
 
 function isIPBanned($ip) {
 	$rIPBan = Query("select * from {ipbans} where instr({0}, ip)=1", $ip);
-	
+
 	$result = false;
 	while ($ipban = Fetch($rIPBan)) {
 		// check if this IP ban is actually good
@@ -200,7 +200,7 @@ function doHash($data)
 
 $loguser = NULL;
 
-if($_COOKIE['logsession'] && !$ipban) {
+if(isset($_COOKIE['logsession']) && !$ipban) {
 	$session = Fetch(Query("SELECT * FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT)));
 	if($session) {
 		$loguser = Fetch(Query("SELECT * FROM {users} WHERE id={0}", $session["user"]));
@@ -217,9 +217,23 @@ if($loguser) {
 	Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
 	Query("DELETE FROM {sessions} WHERE user={0} AND lasttime<={1}", $loguserid, time()-2592000);
 } else {
-	$loguser = array("name"=>"", "primarygroup"=>Settings::get('defaultGroup'), "threadsperpage"=>50, "postsperpage"=>20, "theme"=>Settings::get("defaultTheme"),
-		"dateformat"=>"m-d-y", "timeformat"=>"h:i A", "fontsize"=>80, "timezone"=>0, "blocklayouts"=>!Settings::get("guestLayouts"),
-		'token'=>hash('sha1', rand()));
+	$loguser = array(
+		"id" => 0,
+		"name" => "",
+		"displayname" => "",
+		"sex" => 0,
+		"primarygroup" => Settings::get('defaultGroup'),
+		"threadsperpage" => 50,
+		"postsperpage" => 20,
+		"theme" => Settings::get("defaultTheme"),
+		"dateformat" => "m-d-y",
+		"timeformat" => "h:i A",
+		"fontsize" => 80,
+		"timezone" => 0,
+		"blocklayouts" => !Settings::get("guestLayouts"),
+		"flags" => 0,
+		'token'=>hash('sha1', rand())
+	);
 	$loguserid = 0;
 }
 
