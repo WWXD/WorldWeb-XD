@@ -41,13 +41,13 @@ function actionLink($action, $id="", $args="", $urlname="") {
 
 }
 
-function pageLink($page, $params=array()) {
+function pageLink($page, $params=array(), $extra='') {
 	global $router;
-	return $router->generate($page, $params);
+	return $router->generate($page, $params) . ($extra != '' ? '?' . $extra : '');
 }
 
-function pageLinkTag($text, $page, $params=array()) {
-	return '<a href="'.htmlentities(pageLink($page, $params)).'">'.$text.'</a>';
+function pageLinkTag($text, $page, $params=array(), $extra='') {
+	return '<a href="'.htmlentities(pageLink($page, $params, $extra)).'">'.$text.'</a>';
 }
 
 function actionLinkTag($text, $action, $id='', $args="", $urlname="") {
