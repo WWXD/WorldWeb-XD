@@ -13,6 +13,7 @@ define('BOARD_ROOT', dirname(__DIR__).'/');
 define('DATA_DIR', BOARD_ROOT.'data/');
 
 $boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
+
 define('URL_ROOT', $boardroot);
 define('DATA_URL', URL_ROOT.'data/');
 
@@ -91,6 +92,9 @@ if($q = $_SERVER['QUERY_STRING'])
 
 // Init the router
 $router = new AltoRouter();
+
+// Set the root for the board
+$router->setBasePath(substr($boardroot, 0, -1));
 
 // Add a special regex for our purposes
 $router->addMatchTypes(['s' => '[0-9A-Za-z\-]+']);
