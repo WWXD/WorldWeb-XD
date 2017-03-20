@@ -57,6 +57,9 @@ require_once(__DIR__."/../config/salt.php");
 
 require_once(__DIR__."/settingsfile.php");
 
+require_once(__DIR__."/input.php");
+$http = new Input();
+
 require_once(__DIR__."/debug.php");
 require_once(__DIR__."/mysql.php");
 require_once(__DIR__."/../config/database.php");
