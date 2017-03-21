@@ -11,7 +11,7 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 
 	$user = Fetch($user);
 
-	$sha = doHash($_GET['key'].SALT.$user['pss']);
+	$sha = password_hash($_GET['key'], PASSWORD_DEFAULT);
 
 	$user = Query("select id, name, password, pss from {users} where id = {0} and lostkey = {1} and lostkeytimer > {2}", (int)$_GET['id'], $sha, (time() - (60*60)));
 
@@ -22,7 +22,7 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 
 	$newsalt = Shake();
 	$newPass = randomString(8);
-	$sha = doHash($newPass.SALT.$newsalt);
+	$sha = password_hash($newPass, PASSWORD_DEFAULT);
 
 	Query("update {users} set lostkey = '', password = {0}, pss = {2} where id = {1}", $sha, (int)$_GET['id'], $newsalt);
 	Kill(format(__("Your password has been reset to <strong>{0}</strong>. You can use this password to log in to the board. We suggest you change it as soon as possible."), $newPass), __("Password reset"));
@@ -35,12 +35,12 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 	if(NumRows($user) != 0) {
 		$user = Fetch($user);
 		if($user['lostkeytimer'] > time() - (60*60)) //wait an hour between attempts
-			Alert(__("To prevent abuse, this function can only be used once an hour."), __("Slow down!"));
+			Kill(__("To prevent abuse, this function can only be used once an hour."), __("Slow down!"));
 
 		//Make a RANDOM reset key.
 		$resetKey = Shake();
 
-		$hashedResetKey = doHash($resetKey.SALT.$user['pss']);
+		$hashedResetKey = password_hash($resetKey, PASSWORD_DEFAULT);
 
 		$from = Settings::get("mailResetSender");
 		$to = $user['email'];

@@ -104,13 +104,14 @@ function listPlugin($plugin, $plugindata) {
 	if ($hasperms)
 		$pdata['description'] .= '<br><strong>This plugin has permissions. After enabling it, make sure to configure them properly.</strong>';
 
-
-	$text = __("Enable");
-	$act = "enable";
 	if(isset($plugins[$plugin])) {
 		$text = __("Disable");
 		$act = "disable";
+	} else {
+		$text = __("Enable");
+		$act = "enable";
 	}
+
 	$pdata['actions'] = '<ul class="pipemenu">'.actionLinkTagItem($text, "addonmanager", '', "addon=".$plugin."&action=".$act."&key=".$loguser['token']);
 
 	if(in_array("settingsfile", $plugindata['buckets'])) {
