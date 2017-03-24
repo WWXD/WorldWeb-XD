@@ -97,7 +97,7 @@ MakeCrumbs(array('' => __('Log in')));
 $forgotPass = '';
 
 if(Settings::get("mailResetSender") != "")
-	$forgotPass = "<button onclick=\"document.location = '".htmlentities(actionLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
+	$forgotPass = "<button onclick=\"document.location = '".htmlentities(pageLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
 
 $fields = array(
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",

@@ -11,10 +11,19 @@ home: ['GET', '/', 'home']
 login: ['GET|POST', '/accounts/login', 'login']
 logout: ['POST', '/accounts/logout', 'login']
 register: ['GET|POST', '/accounts/register', 'register']
+lostpass: ['GET|POST', '/accounts/lostpass', 'lostpass']
 
 # User Profiles
 profile: ['GET|POST', '/members/[i:id]-[s:name]?', 'profile']
 
+#admin links
+
+admin: ['GET', '/admin', 'admin']
+lkb: ['GET', '/admin/lastknownbrowsers', 'lkb']
+addons: ['GET|POST', '/admin/addons', 'addonmanager']
+
 # ehh
 irc: ['GET', '/misc/irc', 'irc']
 credits: ['GET', '/misc/credits', 'credits']
+online: ['GET', '/misc/online', 'online']
+records: ['GET', '/misc/records', 'records']

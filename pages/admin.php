@@ -1,5 +1,5 @@
 <?php
-//  BlargBoard XD - Administration hub page
+//  WorldWeb XD - Administration hub page
 //  Access: Administrators
 if (!defined('BLARG')) die();
 
