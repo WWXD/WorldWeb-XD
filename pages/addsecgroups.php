@@ -3,19 +3,19 @@ if (!defined('BLARG')) die();
 
 CheckPermission('admin.editusers');
 
-if ($_POST['submit']) {
-	if ($_POST['userid'] && $_POST['groupid']) {
+if ($http->post('submit')) {
+	if ($http->post('userid') && $http->post('groupid')) {
 		Query("INSERT INTO {secondarygroups} (userid,groupid) VALUES ({0},{1})",
-			$_POST['userid'], $_POST['groupid']);
+			$http->post('userid'), $http->post('groupid'));
 		Report("[b]".$loguser['name']."[/] successfully added a secondary group (ID: ".$_POST['groupid'].") to user ID #".$_POST['userid'].".", false);
 		Alert(__("Secondary group successfully added."), __("Notice"));
-	} else if (!$_POST['userid'] && $_POST['groupid']) {
-		Report("[b]".$loguser['name']."[/] tried to add a secondary group (ID: ".$_POST['groupid'].").", false);
-		Alert(__("Please enter a user ID and try again."), __("Notice"));
-	} else if ($_POST['userid'] && !$_POST['groupid']) {
-		Report("[b]".$loguser['name']."[/] tried to add a secondary group to user ID #".$_POST['userid'].".", false);
-		Alert(__("Please enter a group ID and try again."), __("Notice"));
-	} else if (!$_POST['userid'] && !$_POST['groupid']) {
+	} else if (!$http->post('userid') && $http->post('groupid')) {
+		Report("[b]".$loguser['name']."[/] tried to add a secondary group (ID: ".$http->post('groupid').") from someone.", false);
+		Alert(__("Please enter a User ID and try again."), __("Notice"));
+	} else if ($http->post('userid') && !$http->post('groupid')) {
+		Report("[b]".$loguser['name']."[/] tried to add a secondary group from user ID #".$http->post('userid').".", false);
+		Alert(__("Please enter a Group ID and try again."), __("Notice"));
+	} else if (!$http->post('userid') && !$http->post('groupid')) {
 		Report("[b]".$loguser['name']."[/] tried to add a secondary group.", false);
 		Alert(__("Please enter a Group ID and a User ID and try again."), __("Notice"));
 	}

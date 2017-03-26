@@ -1,6 +1,6 @@
 <?php
 
 if($loguserid){
-	$userMenu[actionLink('favorites')] = __('Favorites');
+	$userMenu[pageLink('favorites')] = __('Favorites');
 }
 ?>

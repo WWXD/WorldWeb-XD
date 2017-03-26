@@ -54,6 +54,10 @@ function actionLinkTag($text, $action, $id='', $args="", $urlname="") {
 	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>';
 }
 
+function pageLinkTagItem($text, $page, $params=array(), $extra='') {
+	return '<li><a href="'.htmlentities(pageLink($page, $params, $extra)).'">'.$text.'</a></li>';
+}
+
 function actionLinkTagItem($text, $action, $id='', $args="", $urlname="") {
 	return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a></li>';
 }

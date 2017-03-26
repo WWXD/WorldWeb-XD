@@ -14,13 +14,16 @@ register: ['GET|POST', '/accounts/register', 'register']
 lostpass: ['GET|POST', '/accounts/lostpass', 'lostpass']
 
 # User Profiles
-profile: ['GET|POST', '/members/[i:id]-[s:name]?', 'profile']
+profile: ['GET|POST', '/members/[i:id]-[s:name]/?', 'profile']
 
 #admin links
 
 admin: ['GET', '/admin', 'admin']
 lkb: ['GET', '/admin/lastknownbrowsers', 'lkb']
 addons: ['GET|POST', '/admin/addons', 'addonmanager']
+secondary: ['GET', '/admin/secgroups', 'secgroups']
+addsec: ['GET|POST', '/admin/secgroups/add', 'addsecgroups']
+removesec: ['GET|POST', '/admin/secgroups/remove', 'removesecgroups']
 
 # ehh
 irc: ['GET', '/misc/irc', 'irc']
