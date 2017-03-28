@@ -4,16 +4,16 @@ if (!defined('BLARG')) die();
 if(Settings::get("mailResetSender") == "")
 	Kill(__("No sender specified for reset emails."));
 
-if(isset($_GET['key']) && isset($_GET['id'])) {
-	$user = Query("select pss from {users} where id = {0}", (int)$_GET['id']);
+if($http->get('id'))) {
+	$user = Query("select pss from {users} where id = {0}", (int)$http->get('id'));
 	if(NumRows($user) == 0)
 		Kill(__("Invalid key."));
 
 	$user = Fetch($user);
 
-	$sha = password_hash($_GET['key'], PASSWORD_DEFAULT);
+	$sha = password_hash($http->get('key'), PASSWORD_DEFAULT);
 
-	$user = Query("select id, name, password, pss from {users} where id = {0} and lostkey = {1} and lostkeytimer > {2}", (int)$_GET['id'], $sha, (time() - (60*60)));
+	$user = Query("select id, name, password, pss from {users} where id = {0} and lostkey = {1} and lostkeytimer > {2}", (int)$http->get('id'), $sha, (time() - (60*60)));
 
 	if(NumRows($user) == 0)
 		Kill(__("Invalid key."));
@@ -24,14 +24,14 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 	$newPass = randomString(8);
 	$sha = password_hash($newPass, PASSWORD_DEFAULT);
 
-	Query("update {users} set lostkey = '', password = {0}, pss = {2} where id = {1}", $sha, (int)$_GET['id'], $newsalt);
+	Query("update {users} set lostkey = '', password = {0}, pss = {2} where id = {1}", $sha, (int)$http->get('id'), $newsalt);
 	Kill(format(__("Your password has been reset to <strong>{0}</strong>. You can use this password to log in to the board. We suggest you change it as soon as possible."), $newPass), __("Password reset"));
 
-} else if(isset($_POST['action'])) {
-	if($_POST['mail'] != $_POST['mail2'])
+} else if($http->post('action')) {
+	if($http->post('mail') != $http->post('mail2'))
 		Alert(__("The e-mail addresses you entered don't match, try again."));
 
-	$user = Query("select id, name, password, email, lostkeytimer, pss from {users} where name = {0} and email = {1}", $_POST['name'], $_POST['mail']);
+	$user = Query("select id, name, password, email, lostkeytimer, pss from {users} where name = {0} and email = {1}", $http->post('name'), $http->post('mail'));
 	if(NumRows($user) != 0) {
 		$user = Fetch($user);
 		if($user['lostkeytimer'] > time() - (60*60)) //wait an hour between attempts
@@ -62,7 +62,7 @@ if(isset($_GET['key']) && isset($_GET['id'])) {
 	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));
 
 	echo "
-	<form action=\"".htmlentities(actionLink("lostpass"))."\" method=\"post\">";
+	<form action=\"".htmlentities(pageLink("lostpass"))."\" method=\"post\">";
 
 	$fields = array(
 		'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24>",
