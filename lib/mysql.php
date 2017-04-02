@@ -1,17 +1,31 @@
 <?php
-// AcmlmBoard XD support - MySQL database wrapper functions
+// WorldWeb XD support - MySQL database wrapper functions
 if (!defined('BLARG')) die();
 
-include(__DIR__."/../config/database.php");
-
 $queries = 0;
+$dberror = "";
+function sqlConnect() {
+	global $dbserv, $dbuser, $dbpass, $dbname, $dblink, $dberror;
+	$dblink = new mysqli($dbserv, $dbuser, $dbpass);
+	if($dblink->connect_error) {
+		$dberror = $dblink->connect_error;
+		return false;
+	}
+	if(!$dblink->select_db($dbname)) {
+		$dberror = "Database does not exist";
+		return false;
+	}
+	$dblink->set_charset('utf8');
+	if (!$dblink->set_charset("utf8mb4")) {
+        $dberror = "Error setting UTF8 charset";
+		return false;
+	}
+	mysqli_query($dblink, 'SET SESSION sql_mode = "MYSQL40"');
 
-$dblink = new mysqli($dbserv, $dbuser, $dbpass, $dbname);
-unset($dbpass);
+	unset($dbpass);
 
-$dblink->set_charset('utf8');
-
-mysqli_query($dblink, 'SET SESSION sql_mode = "MYSQL40"');
+	return true;
+}
 
 function SqlEscape($text) {
 	global $dblink;
@@ -19,7 +33,7 @@ function SqlEscape($text) {
 }
 
 function Query_ExpandFieldLists($match) {
-	$ret = array();
+	$ret = [];
 	$prefix = $match[1];
 	$fields = preg_split('@\s*,\s*@', $match[2]);
 
@@ -102,8 +116,8 @@ function query() {
 	return RawQuery($query);
 }
 
-$tableLists = array(
-);
+$tableLists = [
+];
 
 function rawQuery($query) {
 	global $queries, $querytext, $loguser, $dblink, $debugMode, $logSqlErrors, $dbpref, $loguserid, $mysqlCellClass;
@@ -190,7 +204,7 @@ function affectedRows() {
 }
 
 function getDataPrefix($data, $pref) {
-	$res = array();
+	$res = [];
 
 	foreach($data as $key=>$val)
 		if(substr($key, 0, strlen($pref)) == $pref)
@@ -200,9 +214,9 @@ function getDataPrefix($data, $pref) {
 }
 
 
-$fieldLists = array(
+$fieldLists = [
 	"userfields" => "id,name,displayname,primarygroup,sex,minipic"
-);
+];
 
 function loadFieldLists() {
 	global $fieldLists, $tableLists;

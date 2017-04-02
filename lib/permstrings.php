@@ -1,18 +1,15 @@
 <?php
 if (!defined('BLARG')) die();
 
-$permCats = array
-(
+$permCats = [
 	'user' => __('User permissions'),
 	'forum' => __('Forum permissions'),
 	'mod' => __('Moderation permissions'),
 	'admin' => __('Administration permissions'),
-);
+];
 
-$permDescs = array
-(
-	'user' => array
-	(
+$permDescs = [
+	'user' => [
 		'user.editprofile' => __('Edit own profile'),
 		'user.editdisplayname' => __('Edit display name'),
 		'user.edittitle' => __('Edit custom title'),
@@ -30,15 +27,13 @@ $permDescs = array
 		'user.votepolls' => __('Vote to polls'),
 		'user.doublepost' => __('Make consecutive posts'),
 		'user.viewhiddenforums' => __('View hidden forums'),
-	),
-	'forum' => array
-	(
+	],
+	'forum' => [
 		'forum.viewforum' => __('View forum'),
 		'forum.postthreads' => __('Post threads'),
 		'forum.postreplies' => __('Reply to threads'),
-	),
-	'mod' => array
-	(
+	],
+	'mod' => [
 		'mod.editposts' => __('Edit posts'),
 		'mod.deleteposts' => __('Delete posts'),
 		'mod.closethreads' => __('Close/Open threads'),
@@ -47,9 +42,8 @@ $permDescs = array
 		'mod.deletethreads' => __('Delete threads'),
 		'mod.movethreads' => __('Move threads'),
 		'mod.renamethreads' => __('Rename threads'),
-	),
-	'admin' => array
-	(
+	],
+	'admin' => [
 		'admin.viewips' => __('View IP addresses'),
 		'admin.viewadminpanel' => __('View admin panel'),
 		'admin.viewadminnotices' => __('View admin notices'),
@@ -68,9 +62,9 @@ $permDescs = array
 		'admin.viewstaffpms' => __('Receive staff PMs'),
 		'admin.userdelete' => __('Delete Users'),
 		'admin.assignbadges' => __('Assign Badges'),
-	),
-);
+	],
+];
 
-$guestPerms = array('forum.viewforum');
+$guestPerms = ['forum.viewforum'];
 
 $bucket = 'permStrings'; include(__DIR__."/pluginloader.php");

@@ -23,6 +23,7 @@ if (isset($_GET['forcelayout'])) {
 $layout_birthdays = getBirthdaysText();
 
 $tpl->assign('logusername', htmlspecialchars($loguser['displayname'] ?: $loguser['name']));
+$tpl->assign('loguser', $loguser);
 $tpl->assign('loguserlink', UserLink($loguser));
 
 $metaStuff = array(

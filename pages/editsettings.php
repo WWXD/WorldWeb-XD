@@ -28,13 +28,13 @@ if(!ctype_alnum($plugin))
 	Kill(__("No."));
 
 if($plugin == "main")
-	MakeCrumbs(array(actionLink("admin") => __("Admin"), '' => __("Edit settings")));
+	MakeCrumbs([actionLink("admin") => __("Admin"), '' => __("Edit settings")]);
 else
-	MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("pluginmanager") => __("Plugin manager"), '' => $plugins[$plugin]['name']));
+	MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("pluginmanager") => __("Plugin manager"), '' => $plugins[$plugin]['name']]);
 
 $settings = Settings::getSettingsFile($plugin);
 $oursettings = Settings::$settingsArray[$plugin];
-$invalidsettings = array();
+$invalidsettings = [];
 
 if(isset($_POST["_plugin"])) {
 	if ($_POST['key'] !== $loguser['token'])
@@ -84,7 +84,7 @@ echo "
 		<input type=\"hidden\" name=\"_plugin\" value=\"$plugin\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">";
 
-$settingfields = array();
+$settingfields = [];
 $settingfields[''] = ''; // ensures the uncategorized entries come first
 
 foreach($settings as $name => $data) {
@@ -96,7 +96,7 @@ foreach($settings as $name => $data) {
 	if ($htmlfield != null && $htmlfield != $name)
 		continue;
 
-	$sdata = array();
+	$sdata = [];
 
 	$sdata['name'] = $name;
 	if(isset($data['name']))
@@ -112,7 +112,7 @@ foreach($settings as $name => $data) {
 	$value = htmlspecialchars($value);
 
 	if($type == "boolean")
-		$input = makeSelect($name, $value, array(1=>"Yes", 0=>"No"));
+		$input = makeSelect($name, $value, [1=>"Yes", 0=>"No"]);
 	else if($type == "options")
 		$input = makeSelect($name, $value, $options);
 	else if($type == "integer" || $type == "float")
@@ -150,12 +150,12 @@ foreach($settings as $name => $data) {
 if (!$settingfields[''])
 	unset($settingfields['']);
 
-$fields = array(
+$fields = [
 	'btnSaveExit' => "<input type=\"submit\" name=\"_exit\" value=\"".__("Save and Exit")."\">",
 	'btnSave' => "<input type=\"submit\" name=\"_action\" value=\"".__("Save")."\">",
-);
+];
 
-RenderTemplate('form_settings', array('settingfields' => $settingfields, 'htmlfield' => $htmlfield, 'fields' => $fields));
+RenderTemplate('form_settings', ['settingfields' => $settingfields, 'htmlfield' => $htmlfield, 'fields' => $fields]);
 
 echo "
 	</form>";
@@ -182,7 +182,7 @@ function makeSelectImput($fieldName, $checkedIndex, $choicesList, $extras = "") 
 }
 
 function makeThemeList($fieldname, $value) {
-	$themes = array();
+	$themes = [];
 	$dir = @opendir("themes");
 	while ($file = readdir($dir)) {
 		if ($file != "." && $file != "..") {
@@ -195,7 +195,7 @@ function makeThemeList($fieldname, $value) {
 }
 
 function makeLayoutList($fieldname, $value) {
-	$layouts = array();
+	$layouts = [];
 	$dir = @opendir("layouts");
 	while ($layout = readdir($dir)) {
 		if(!endsWith($layout, ".php") && $layout != "." && $layout != "..") {
@@ -207,7 +207,7 @@ function makeLayoutList($fieldname, $value) {
 }
 
 function makeLangList($fieldname, $value) {
-	$data = array();
+	$data = [];
 	$dir = @opendir("lib/lang");
 	while ($file = readdir($dir)) {
 		//print $file;

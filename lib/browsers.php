@@ -39,8 +39,7 @@ $knownBrowsers = [
 	"Links" => "Links",
 	"Nokia" => "Nokia mobile"];
 
-$knownOSes = array
-(
+$knownOSes = array(
 	"Nintendo 3DS" => "Nintendo 3DS",
 	'iPod' => 'iPod',
 	'iPad' => 'iPad',
@@ -133,7 +132,7 @@ function GetVersion($ua, $versionStart) {
 	$version = "";
 	if (strpos($ua, "Linux")) {
 		for ($i = ++$versionStart; $i < strlen($ua); $i++) {
-			if ($ua[$i] === " ")
+			if ($ua[$i] === " " || $ua[$i] == ")")
 				break;
 			else if ($ua[$i] != ";") $version .= $ua[$i];
 		}

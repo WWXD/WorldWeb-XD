@@ -48,7 +48,7 @@ class Settings {
 	//Loads ALL the settings.
 
 	public static function load() {
-		self::$settingsArray = array();
+		self::$settingsArray = [];
 		$rSettings = Query("select * from {settings}");
 
 		while($setting = Fetch($rSettings)) {
@@ -59,7 +59,7 @@ class Settings {
 	public static function getSettingsFile($pluginname) {
 		global $plugins;
 
-		$settings = array();
+		$settings = [];
 
 		//Get the setting list.
 		if($pluginname == "main")
@@ -73,7 +73,7 @@ class Settings {
 
 	public static function checkPlugin($pluginname) {
 		if(!isset(self::$settingsArray[$pluginname]))
-			self::$settingsArray[$pluginname] = array();
+			self::$settingsArray[$pluginname] = [];
 
 		$changed = false;
 
@@ -82,7 +82,7 @@ class Settings {
 			$type = $data['type'];
 			$default = $data['default'];
 
-			if(!isset(self::$settingsArray[$pluginname][$name]) || !self::validate(self::$settingsArray[$pluginname][$name], $type, (isset($data["options"]) ? $data["options"] : array()))) {
+			if(!isset(self::$settingsArray[$pluginname][$name]) || !self::validate(self::$settingsArray[$pluginname][$name], $type, (isset($data["options"]) ? $data["options"] : []))) {
 				if (isset($data['defaultfile']))
 					self::$settingsArray[$pluginname][$name] = file_get_contents($data['defaultfile']);
 				else
@@ -107,7 +107,7 @@ class Settings {
 	}
 
 
-	public static function validate($value, $type, $options = array()) {
+	public static function validate($value, $type, $options = []) {
 		if($type == "boolean" || $type == "integer" || $type == "float" || $type == "user" || $type == "forum" || $type == 'group' || $type == "layout" || $type == "theme" || $type == "language")
 			if(trim($value) == "")
 				return false;
@@ -117,7 +117,7 @@ class Settings {
 				return false;
 
 		if($type == "integer" || $type == "user" || $type == "forum" || $type == 'group')
-			if(!is_numeric($value) || $value != (int)$value) //TODO: I'm not sure if it's the best way. is_numeric allows float values too.
+			if(!ctype_digit($value) || $value === "")
 				return false;
 
 		if($type == "float")

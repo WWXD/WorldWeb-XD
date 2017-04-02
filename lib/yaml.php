@@ -101,13 +101,13 @@ class Spyc {
   private $path;
   private $result;
   private $LiteralPlaceHolder = '___YAML_Literal_Block___';
-  private $SavedGroups = array();
+  private $SavedGroups = [];
   private $indent;
   /**
    * Path modifier that should be applied after adding current element.
    * @var array
    */
-  private $delayedPath = array();
+  private $delayedPath = [];
 
   /**#@+
   * @access public
@@ -270,7 +270,7 @@ class Spyc {
     if(is_object($value)) $value = (array)$value;
     if (is_array($value)) {
       if (empty ($value))
-        return $this->_dumpNode($key, array(), $indent, $previous_key, $first_key, $source_array);
+        return $this->_dumpNode($key, [], $indent, $previous_key, $first_key, $source_array);
       // It has children.  What to do?
       // Make it the right kind of item
       $string = $this->_dumpNode($key, self::REMPTY, $indent, $previous_key, $first_key, $source_array);
@@ -327,7 +327,7 @@ class Spyc {
       $value  = $this->_doFolding($value,$indent);
     }
 
-    if ($value === array()) $value = '[ ]';
+    if ($value === []) $value = '[ ]';
     if ($value === "") $value = '""';
     if (self::isTranslationWord($value)) {
       $value = $this->_doLiteralBlock($value, $indent);
@@ -416,17 +416,17 @@ class Spyc {
   }
 
   private function isTrueWord($value) {
-    $words = self::getTranslations(array('true', 'on', 'yes', 'y'));
+    $words = self::getTranslations(['true', 'on', 'yes', 'y']);
     return in_array($value, $words, true);
   }
 
   private function isFalseWord($value) {
-    $words = self::getTranslations(array('false', 'off', 'no', 'n'));
+    $words = self::getTranslations(['false', 'off', 'no', 'n']);
     return in_array($value, $words, true);
   }
 
   private function isNullWord($value) {
-    $words = self::getTranslations(array('null', '~'));
+    $words = self::getTranslations(['null', '~']);
     return in_array($value, $words, true);
   }
 
@@ -462,9 +462,9 @@ class Spyc {
      * @access private
      */
   private static function getTranslations(array $words) {
-    $result = array();
+    $result = [];
     foreach ($words as $i) {
-      $result = array_merge($result, array(ucfirst($i), strtoupper($i), strtolower($i)));
+      $result = array_merge($result, [ucfirst($i), strtoupper($i), strtolower($i)]);
     }
     return $result;
   }
@@ -482,14 +482,14 @@ class Spyc {
   }
 
   private function loadWithSource($Source) {
-    if (empty ($Source)) return array();
+    if (empty ($Source)) return [];
     if ($this->setting_use_syck_is_possible && function_exists ('syck_load')) {
       $array = syck_load (implode ("\n", $Source));
-      return is_array($array) ? $array : array();
+      return is_array($array) ? $array : [];
     }
 
-    $this->path = array();
-    $this->result = array();
+    $this->path = [];
+    $this->result = [];
 
     $cnt = count($Source);
     for ($i = 0; $i < $cnt; $i++) {
@@ -534,7 +534,7 @@ class Spyc {
       foreach ($this->delayedPath as $indent => $delayedPath)
         $this->path[$indent] = $delayedPath;
 
-      $this->delayedPath = array();
+      $this->delayedPath = [];
 
     }
     return $this->result;
@@ -562,11 +562,11 @@ class Spyc {
      * @param string $line A line from the YAML file
      */
   private function _parseLine($line) {
-    if (!$line) return array();
+    if (!$line) return [];
     $line = trim($line);
-    if (!$line) return array();
+    if (!$line) return [];
 
-    $array = array();
+    $array = [];
 
     $group = $this->nodeContainsGroup($line);
     if ($group) {
@@ -613,8 +613,8 @@ class Spyc {
     if ($is_quoted) {
       $value = str_replace('\n', "\n", $value);
       if ($first_character == "'")
-        return strtr(substr ($value, 1, -1), array ('\'\'' => '\'', '\\\''=> '\''));
-      return strtr(substr ($value, 1, -1), array ('\\"' => '"', '\\\''=> '\''));
+        return strtr(substr ($value, 1, -1), ['\'\'' => '\'', '\\\''=> '\'']);
+      return strtr(substr ($value, 1, -1), ['\\"' => '"', '\\\''=> '\'']);
     }
 
     if (strpos($value, ' #') !== false && !$is_quoted)
@@ -623,10 +623,10 @@ class Spyc {
     if ($first_character == '[' && $last_character == ']') {
       // Take out strings sequences and mappings
       $innerValue = trim(substr ($value, 1, -1));
-      if ($innerValue === '') return array();
+      if ($innerValue === '') return [];
       $explode = $this->_inlineEscape($innerValue);
       // Propagate value array
-      $value  = array();
+      $value  = [];
       foreach ($explode as $v) {
         $value[] = $this->_toType($v);
       }
@@ -639,17 +639,17 @@ class Spyc {
       array_shift($array);
       $value = trim(implode(': ',$array));
       $value = $this->_toType($value);
-      return array($key => $value);
+      return [$key => $value];
     }
 
     if ($first_character == '{' && $last_character == '}') {
       $innerValue = trim(substr ($value, 1, -1));
-      if ($innerValue === '') return array();
+      if ($innerValue === '') return [];
       // Inline Mapping
       // Take out strings sequences and mappings
       $explode = $this->_inlineEscape($innerValue);
       // Propagate value array
-      $array = array();
+      $array = [];
       foreach ($explode as $v) {
         $SubArr = $this->_toType($v);
         if (empty($SubArr)) continue;
@@ -700,10 +700,10 @@ class Spyc {
     // pure mappings and mappings with sequences inside can't go very
     // deep.  This needs to be fixed.
 
-    $seqs = array();
-    $maps = array();
-    $saved_strings = array();
-    $saved_empties = array();
+    $seqs = [];
+    $maps = [];
+    $saved_strings = [];
+    $saved_empties = [];
 
     // Check for empty strings
     $regex = '/("")|(\'\')/';
@@ -845,7 +845,7 @@ class Spyc {
       if (empty ($array)) return false;
 
       foreach ($array as $k => $_) {
-        $this->addArray(array($k => $_), $indent);
+        $this->addArray([$k => $_], $indent);
         $this->path = $CommonGroupPath;
       }
       return true;
@@ -874,7 +874,7 @@ class Spyc {
 
 
 
-    $history = array();
+    $history = [];
     // Unfolding inner array tree.
     $history[] = $_arr = $this->result;
     foreach ($this->path as $k) {
@@ -889,16 +889,16 @@ class Spyc {
 
     // Adding string or numeric key to the innermost level or $this->arr.
     if (is_string($key) && $key == '<<') {
-      if (!is_array ($_arr)) { $_arr = array (); }
+      if (!is_array ($_arr)) { $_arr = []; }
 
       $_arr = array_merge ($_arr, $value);
     } else if ($key || $key === '' || $key === '0') {
       if (!is_array ($_arr))
-        $_arr = array ($key=>$value);
+        $_arr = [$key=>$value];
       else
         $_arr[$key] = $value;
     } else {
-      if (!is_array ($_arr)) { $_arr = array ($value); $key = 0; }
+      if (!is_array ($_arr)) { $_arr = [$value]; $key = 0; }
       else { $_arr[] = $value; end ($_arr); $key = key ($_arr); }
     }
 
@@ -979,7 +979,7 @@ class Spyc {
   }
 
   private function getParentPathByIndent ($indent) {
-    if ($indent == 0) return array();
+    if ($indent == 0) return [];
     $linePath = $this->path;
     do {
       end($linePath); $lastIndentInParentPath = key($linePath);
@@ -992,7 +992,7 @@ class Spyc {
   private function clearBiggerPathValues ($indent) {
 
 
-    if ($indent == 0) $this->path = array();
+    if ($indent == 0) $this->path = [];
     if (empty ($this->path)) return true;
 
     foreach ($this->path as $k => $_) {
@@ -1048,11 +1048,11 @@ class Spyc {
   }
 
   private function returnMappedSequence ($line) {
-    $array = array();
+    $array = [];
     $key         = self::unquote(trim(substr($line,1,-1)));
-    $array[$key] = array();
-    $this->delayedPath = array(strpos ($line, $key) + $this->indent => $key);
-    return array($array);
+    $array[$key] = [];
+    $this->delayedPath = [strpos ($line, $key) + $this->indent => $key];
+    return [$array];
   }
 
   private function checkKeysInValue($value) {
@@ -1065,7 +1065,7 @@ class Spyc {
 
   private function returnMappedValue ($line) {
     $this->checkKeysInValue($line);
-    $array = array();
+    $array = [];
     $key         = self::unquote (trim(substr($line,0,-1)));
     $array[$key] = '';
     return $array;
@@ -1084,7 +1084,7 @@ class Spyc {
   }
 
   private function returnKeyValuePair ($line) {
-    $array = array();
+    $array = [];
     $key = '';
     if (strpos ($line, ': ')) {
       // It's a key/value pair most likely
@@ -1104,7 +1104,7 @@ class Spyc {
       if ($key === '0') $key = '__!YAMLZero';
       $array[$key] = $value;
     } else {
-      $array = array ($line);
+      $array = [$line];
     }
     return $array;
 
@@ -1112,8 +1112,8 @@ class Spyc {
 
 
   private function returnArrayElement ($line) {
-     if (strlen($line) <= 1) return array(array()); // Weird %)
-     $array = array();
+     if (strlen($line) <= 1) return [[]]; // Weird %)
+     $array = [];
      $value   = trim(substr($line,1));
      $value   = $this->_toType($value);
      if ($this->isArrayElement($value)) {

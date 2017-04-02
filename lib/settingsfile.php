@@ -1,95 +1,95 @@
 <?php
 if (!defined('BLARG')) die();
 
-	$settings = array(
-		"boardname" => array (
+	$settings = [
+		"boardname" => [
 			"type" => "text",
 			"default" => "WorldWeb XD",
 			"name" => "Board name",
 			'category' => 'Board identity'
-		),
-		"metaDescription" => array (
+		],
+		"metaDescription" => [
 			"type" => "text",
 			"default" => "A WorldWeb XD",
 			"name" => "Meta description",
 			'category' => 'Board identity'
-		),
-		"metaTags" => array (
+		],
+		"metaTags" => [
 			"type" => "text",
 			"default" => "WorldWeb, World, Web",
 			"name" => "Meta tags",
 			'category' => 'Board identity'
-		),
-		"breadcrumbsMainName" => array (
+		],
+		"breadcrumbsMainName" => [
 			"type" => "text",
 			"default" => "Main",
 			"name" => "Text in breadcrumbs' first link",
 			'category' => 'Board identity'
-		),
-		"layout_credits" => array (
+		],
+		"layout_credits" => [
 			"type" => "text",
 			"default" => "Site ran by [user=1]",
 			"name" => "Custom Credits",
 			'category' => 'Board identity'
-		),
+		],
 		
 		
-		"dateformat" => array (
+		"dateformat" => [
 			"type" => "text",
 			"default" => "m-d-y, h:i a",
 			"name" => "Default date format",
 			'category' => 'Presentation'
-		),
-		"guestLayouts" => array (
+		],
+		"guestLayouts" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Show post layouts to guests",
 			'category' => 'Presentation'
-		),
-		"defaultTheme" => array (
+		],
+		"defaultTheme" => [
 			"type" => "theme",
 			"default" => "blargboard",
 			"name" => "Default board theme",
 			'category' => 'Presentation'
-		),
-		"defaultLayout" => array (
+		],
+		"defaultLayout" => [
 			"type" => "layout",
 			"default" => "bbxd",
 			"name" => "Board layout",
 			'category' => 'Presentation'
-		),
-		"showGender" => array (
+		],
+		"showGender" => [
 			"type" => "boolean",
 			"default" => "1",
 			"name" => "Color usernames based on gender",
 			'category' => 'Presentation'
-		),
-		"defaultLanguage" => array (
+		],
+		"defaultLanguage" => [
 			"type" => "language",
 			"default" => "en_US",
 			"name" => "Board language",
 			'category' => 'Presentation'
-		),
-		"tagsDirection" => array (
+		],
+		"tagsDirection" => [
 			"type" => "options",
-			"options" => array('Left' => 'Left', 'Right' => 'Right'),
+			"options" => ['Left' => 'Left', 'Right' => 'Right'],
 			"default" => 'Right',
 			"name" => "Direction of thread tags",
 			'category' => 'Presentation'
-		),
-		"alwaysMinipic" => array (
+		],
+		"alwaysMinipic" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Show minipics everywhere",
 			'category' => 'Presentation'
-		),
-		"showExtraSidebar" => array (
+		],
+		"showExtraSidebar" => [
 			"type" => "boolean",
 			"default" => "1",
 			"name" => "Show extra info in post sidebar",
 			'category' => 'Presentation'
-		),
-		"profilePreviewText" => array (
+		],
+		"profilePreviewText" => [
 			"type" => "textbbcode",
 			"default" => "This is a sample post. You [b]probably[/b] [i]already[/i] [u]know[/u] what this is for.
 
@@ -102,241 +102,241 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 }[/source]",
 			"name" => "Post preview text",
 			'category' => 'Presentation'
-		),
+		],
 
 
-		"Syndromes" => array (
+		"Syndromes" => [
 			"type" => "options",
-			"options" => array('0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'),
+			"options" => ['0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'],
 			"default" => '1',
 			"name" => "Syndromes",
 			'category' => 'Functionality'
-		),
-		"postLayoutType" => array (
+		],
+		"postLayoutType" => [
 			"type" => "options",
-			"options" => array('0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'),
+			"options" => ['0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'],
 			"default" => '2',
 			"name" => "Post layout type",
 			'category' => 'Functionality'
-		),
-		"postAttach" => array (
+		],
+		"postAttach" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Allow post attachments",
 			'category' => 'Functionality'
-		),
-		"customTitleThreshold" => array (
+		],
+		"customTitleThreshold" => [
 			"type" => "integer",
 			"default" => "100",
 			"name" => "Custom title threshold (posts)",
 			'category' => 'Functionality'
-		),
-		"oldThreadThreshold" => array (
+		],
+		"oldThreadThreshold" => [
 			"type" => "integer",
 			"default" => "3",
 			"name" => "Old thread threshold (months)",
 			'category' => 'Functionality'
-		),
-		"minwords" => array (
+		],
+		"minwords" => [
 			"type" => "integer",
 			"default" => "5",
 			"name" => "Minimum post word count",
 			'category' => 'Functionality'
-		),
-		"viewcountInterval" => array (
+		],
+		"viewcountInterval" => [
 			"type" => "integer",
 			"default" => "10000",
 			"name" => "Viewcount report interval",
 			'category' => 'Functionality'
-		),
-		"ajax" => array (
+		],
+		"ajax" => [
 			"type" => "boolean",
 			"default" => "1",
 			"name" => "Enable AJAX",
 			'category' => 'Functionality'
-		),
-		"ownerEmail" => array (
+		],
+		"ownerEmail" => [
 			"type" => "text",
 			"default" => "",
 			"name" => "Owner email address",
 			"help" => "This email address will be shown to IP-banned users and on other occasions.",
 			'category' => 'Functionality'
-		),
-		"mailResetSender" => array (
+		],
+		"mailResetSender" => [
 			"type" => "text",
 			"default" => "",
 			"name" => "Password Reset email sender",
 			"help" => "Email address used to send the pasword reset e-mails. If left blank, the password reset feature is disabled.",
 			'category' => 'Functionality'
-		),
-		"floodProtectionInterval" => array (
+		],
+		"floodProtectionInterval" => [
 			"type" => "integer",
 			"default" => "10",
 			"name" => "Minimum time between user posts (seconds)",
 			'category' => 'Functionality'
-		),
-		"nofollow" => array (
+		],
+		"nofollow" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Add rel=nofollow to all user-posted links",
 			'category' => 'Functionality'
-		),
-		"maintenance" => array (
+		],
+		"maintenance" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Maintenance mode",
 			'category' => 'Functionality',
 			'rootonly' => 1,
-		),
+		],
 
 
-		"ircserver" => array (
+		"ircserver" => [
 			"type" => "text",
 			"default" => "irc.fortytwo.tech",
 			"name" => "Server Name",
 			'category' => 'IRC'
-		),
-		"ircchannel" => array (
+		],
+		"ircchannel" => [
 			"type" => "text",
 			"default" => "42net",
 			"name" => "Channel",
 			'category' => 'IRC'
-		),
+		],
 
 
-		'PoRATitle' => array(
+		'PoRATitle' => [
 			'type' => 'text',
 			'default' => 'Blargbox',
 			'name' => 'Info box title',
 			'category' => 'Information',
-		),
-		"PoRAText" => array (
+		],
+		"PoRAText" => [
 			"type" => "textbox",
 			"default" => "Welcome to Blargboard. Edit this.",
 			"name" => "Info box text",
 			'category' => 'Information',
-		),
-		"rssTitle" => array (
+		],
+		"rssTitle" => [
 			"type" => "text",
 			"default" => "Blargboard RSS",
 			"name" => "RSS feed title",
 			'category' => 'Information',
-		),
-		"rssDesc" => array (
+		],
+		"rssDesc" => [
 			"type" => "text",
 			"default" => "A news feed for Blargboard",
 			"name" => "RSS feed description",
 			'category' => 'Information',
-		),
+		],
 
 
-		"email" => array (
+		"email" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Email Verification (Verification part not working just yet)",
 			'category' => 'RegistrationSec'
-		),
-		"math" => array (
+		],
+		"math" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Math question",
 			'category' => 'RegistrationSec'
-		),
-		"RegWordKey" => array (
+		],
+		"RegWordKey" => [
 			"type" => "text",
 			"default" => "",
 			"name" => "Registration Key",
 			"help" => "This is the actual registration key used. Leave blank in order to not use this function.",
 			'category' => 'RegistrationSec'
-		),
-		"Captcha" => array (
+		],
+		"Captcha" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Captcha",
 			"help" => "You'll need to download Securimage from http://www.phpcaptcha.org and extract it into a /securimage folder.",
 			'category' => 'RegistrationSec'
-		),
-		"AdminVer" => array (
+		],
+		"AdminVer" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Admin Verification",
 			'category' => 'RegistrationSec'
-		),
-		"PassChecker" => array (
+		],
+		"PassChecker" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "A Password checker.",
 			"help" => "Straitly ported from ABXD.",
 			'category' => 'RegistrationSec'
-		),
-		"DisReg" => array (
+		],
+		"DisReg" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Turn off registration",
 			"help" => "Usefull when your site is hit with a spam attack.",
 			'category' => 'RegistrationSec'
-		),
+		],
 
 
-		'newsForum' => array(
+		'newsForum' => [
 			'type' => 'forum',
 			'default' => '0',
 			'name' => 'Latest News forum',
 			'category' => 'Forum settings',
-		),
-		'anncForum' => array(
+		],
+		'anncForum' => [
 			'type' => 'forum',
 			'default' => '0',
 			'name' => 'Announcements forum',
 			'category' => 'Forum settings',
-		),
-		"trashForum" => array (
+		],
+		"trashForum" => [
 			"type" => "forum",
 			"default" => "0",
 			"name" => "Trash forum",
 			'category' => 'Forum settings',
-		),
-		"secretTrashForum" => array (
+		],
+		"secretTrashForum" => [
 			"type" => "forum",
 			"default" => "0",
 			"name" => "Deleted threads forum",
 			'category' => 'Forum settings',
-		),
+		],
 
 
-		'defaultGroup' => array (
+		'defaultGroup' => [
 			'type' => 'group',
 			'default' => 0,
 			'name' => 'Group for new users',
 			'category' => 'Group settings',
 			'rootonly' => 1,
-		),
-		'rootGroup' => array (
+		],
+		'rootGroup' => [
 			'type' => 'group',
 			'default' => 4,
 			'name' => 'Group for root users',
 			'category' => 'Group settings',
 			'rootonly' => 1,
-		),
-		'bannedGroup' => array (
+		],
+		'bannedGroup' => [
 			'type' => 'group',
 			'default' => -1,
 			'name' => 'Group for banned users',
 			'category' => 'Group settings',
 			'rootonly' => 1,
-		),
+		],
 
 
-		'homepageText' => array(
+		'homepageText' => [
 			'type' => 'texthtml',
 			'default' => 'Welcome to WorldWeb XD.<br/><br/>Fill this with relevant info.',
 			'name' => 'Homepage contents',
 			'category' => 'Homepage contents',
-		),
-		'faqText' => array(
+		],
+		'faqText' => [
 			'type' => 'texthtml',
 			'default' => 'WorldWeb XD FAQ. Put your rules and stuff here.',
 			'name' => 'FAQ contents',
 			'category' => 'FAQ contents',
-		),
-	);
+		],
+	];

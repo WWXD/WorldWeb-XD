@@ -4,22 +4,22 @@ if (!defined('BLARG')) die();
 CheckPermission('admin.editgroups');
 
 $title = __('Edit groups');
-MakeCrumbs(array(actionLink('admin') => __('Admin'), '' => __('Edit groups')));
+MakeCrumbs([actionLink('admin') => __('Admin'), '' => __('Edit groups')]);
 
-$gtypes = array(
+$gtypes = [
 	0 => __('Primary'),
 	1 => __('Secondary')
-);
+];
 
-$gdisplays = array(
+$gdisplays = [
 	-1 => __('Hidden'),
 	0 => __('Regular'),
 	1 => __('Staff')
-);
+];
 
 if (!$_POST['saveaction']) {
 	$groups = Query("SELECT * FROM {usergroups} WHERE rank<={0} ORDER BY type, rank", $loguserGroup['rank']);
-	$gdata = array();
+	$gdata = [];
 
 	while ($group = Fetch($groups)) {
 		$gtitle = htmlspecialchars($group['title']);
@@ -29,7 +29,7 @@ if (!$_POST['saveaction']) {
 		$gdata[] = actionLinkTag($gtitle, 'editgroups', $group['id']);
 	}
 
-	RenderTemplate('grouplist', array('groups' => $gdata));
+	RenderTemplate('grouplist', ['groups' => $gdata]);
 }
 
 if (isset($_GET['id'])) {
@@ -41,11 +41,11 @@ if (isset($_GET['id'])) {
 	if ($group['rank'] > $loguserGroup['rank'])
 		Kill(__('You may not edit this group.'));
 
-	MakeCrumbs(array(actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups'), '' => htmlspecialchars($group['title'])));
+	MakeCrumbs([actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups'), '' => htmlspecialchars($group['title'])]);
 
 	$canPromoteHigher = $loguser['root'] && ($gid == $loguserGroup['id']);
 } else {
-	MakeCrumbs(array(actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups')));
+	MakeCrumbs([actionLink('admin') => __('Admin'), actionLink('editgroups') => __('Edit groups')]);
 	Alert(__('Select a group above to edit it.'), __('Notice'));
 	return;
 }
@@ -63,8 +63,8 @@ else
 if ($error)
 	Alert($error, __('Error'));
 
-$permlist = array();
-$fpermlist = array();
+$permlist = [];
+$fpermlist = [];
 
 echo '
 	<form action="" method="POST">
@@ -251,7 +251,7 @@ function PermTable($cat)
 	}
 }
 
-function ForumPermTable($fid, $fpl=array())
+function ForumPermTable($fid, $fpl=[])
 {
 	global $permCats, $permDescs;
 
@@ -279,7 +279,7 @@ function ForumPermTable($fid, $fpl=array())
 	}
 
 	$lastcat = -1;
-	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
+	$pd = ['forum' => $permDescs['forum'], 'mod' => $permDescs['mod']];
 	foreach ($pd as $cat=>$perms)
 	{
 		if ($lastcat != $cat)

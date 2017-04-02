@@ -36,7 +36,7 @@ if($action == "q")	//Quote
 		$quote['text'] = __("Post is deleted");
 
 	$reply = "[quote=\"".$quote['poster']."\" id=\"".$quote['id']."\"]".$quote['text']."[/quote]";
-	$reply = str_replace("/me", "[b]* ".htmlspecialchars($quote['poster'])."[/b]", $reply);
+	$reply = str_replace("/me ", "[b]* ".htmlspecialchars($quote['poster'])."[/b]", $reply);
 	die($reply);
 }
 else if ($action == 'rp') // retrieve post
@@ -66,7 +66,7 @@ else if ($action == 'rp') // retrieve post
 	if (!HasPermission('mod.deleteposts', $post['fid']) || $poster['id'] == $loguserid)
 		die(__("No."));
 
-	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, array('tid'=>$post['thread'], 'fid'=>$post['fid'])));
+	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, ['tid'=>$post['thread'], 'fid'=>$post['fid']]));
 }
 else if($action == "ou")	//Online Users
 {
@@ -124,8 +124,10 @@ elseif($action == "srl")	//Show Revision List
 	$rThread = Query($qThread, $post['thread']);
 	$thread = Fetch($rThread);
 
-	if (!HasPermission('forum.viewforum', $thread['forum'])) die('No.');
-	if (!HasPermission('mod.editposts', $thread['forum'])) die('No.');
+	if (!HasPermission('forum.viewforum', $thread['forum']))
+		die('You may not view this forum.');
+	if (!HasPermission('mod.editposts', $thread['forum']))
+		die('No.');
 
 
 	$qRevs = "SELECT

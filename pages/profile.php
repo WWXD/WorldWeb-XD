@@ -14,7 +14,7 @@ else
 $uname = $user['displayname'] ?: $user['name'];
 
 $ugroup = $usergroups[$user['primarygroup']];
-$usgroups = array();
+$usgroups = [];
 
 $res = Query("SELECT groupid FROM {secondarygroups} WHERE userid={0}", $id);
 while ($sg = Fetch($res)) $usgroups[] = $usergroups[$sg['groupid']];
@@ -50,10 +50,10 @@ if($loguserid && $http->request('token') == $loguser['token']) {
 			else
 				Alert(__("You've successfully unblocked this users signature."), __('Unblock successfull'));
 		}
-		die(header("Location: ".pageLink("profile", array(
+		die(header("Location: ".pageLink("profile", [
 				'id' => $id,
 				'name' => slugify($user['name'])
-			))
+			])
 		));
 	}
 
@@ -67,10 +67,10 @@ if($loguserid && $http->request('token') == $loguser['token']) {
 				if ($lastcmt < $user['lastprofileview'])
 					DismissNotification('profilecomment', $id, $id);
 			}
-			die(header("Location: ".pageLink("profile", array(
+			die(header("Location: ".pageLink("profile", [
 					'id' => $id,
 					'name' => slugify($user['name'])
-				))
+				])
 			));
 		}
 	}
@@ -80,10 +80,10 @@ if($loguserid && $http->request('token') == $loguser['token']) {
 		if($loguserid != $id) {
 			SendNotification('profilecomment', $id, $id);
 		}
-		die(header("Location: ".pageLink("profile", array(
+		die(header("Location: ".pageLink("profile", [
 				'id' => $id,
 				'name' => slugify($user['name'])
-			))
+			])
 		));
 	}
 }
@@ -102,15 +102,15 @@ if($loguserid) {
 	$rBlock = Query("select * from {blockedlayouts} where user={0} and blockee={1}", $id, $loguserid);
 	$isBlocked = NumRows($rBlock);
 	if($isBlocked)
-		$blockLayoutLink = pageLinkTag($unblocktext, "profile", array(
+		$blockLayoutLink = pageLinkTag($unblocktext, "profile", [
 				'id' => $id,
 				'name' => slugify($user['name'])
-			), "block=0&token={$loguser['token']}");
+			], "block=0&token={$loguser['token']}");
 	else if($id != $loguserid)
-		$blockLayoutLink = pageLinkTag($blocktext, "profile", array(
+		$blockLayoutLink = pageLinkTag($blocktext, "profile", [
 				'id' => $id,
 				'name' => slugify($user['name'])
-			), "block=1&token={$loguser['token']}");
+			], "block=1&token={$loguser['token']}");
 }
 
 $daysKnown = (time()-$user['regdate'])/86400;
@@ -158,9 +158,9 @@ else if (HasPermission('admin.editusers'))
 	$emailField = "<span id=\"emailField\">".__("Private")." <button style=\"font-size: 0.7em;\" onclick=\"$(this.parentNode).load('".URL_ROOT."ajaxcallbacks.php?a=em&amp;id=".$id."');\">".__("Snoop")."</button></span>";
 
 
-$profileParts = array();
+$profileParts = [];
 
-$temp = array();
+$temp = [];
 $temp[__("Name")] = $minipic . htmlspecialchars($user['displayname'] ? $user['displayname'] : $user['name']) . ($user['displayname'] ? " (".htmlspecialchars($user['name']).")" : "");
 if($title)
 	$temp[__("Title")] = $title;
@@ -197,7 +197,7 @@ if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
 		LIMIT 0, 1", $user["id"]));
 
 	if($lastPost) {
-		$thread = array();
+		$thread = [];
 		$thread['title'] = $lastPost['ttit'];
 		$thread['id'] = $lastPost['tid'];
 		$thread['forum'] = $lastPost['fid'];
@@ -226,13 +226,13 @@ if(HasPermission('admin.viewips')) {
 
 $profileParts[__("General information")] = $temp;
 
-$temp = array();
+$temp = [];
 $temp[__("Email address")] = $emailField;
 if(isset($homepage))
 	$temp[__("Homepage")] = $homepage;
 $profileParts[__("Contact information")] = $temp;
 
-$temp = array();
+$temp = [];
 $infofile = "themes/".$user['theme']."/themeinfo.txt";
 
 if(file_exists($infofile))
@@ -250,7 +250,7 @@ $temp[__("Theme")] = $themename;
 $temp[__("Items per page")] = Plural($user['postsperpage'], __("post")) . ", " . Plural($user['threadsperpage'], __("thread"));
 $profileParts[__("Presentation")] = $temp;
 
-$temp = array();
+$temp = [];
 if($user['realname'])
 	$temp[__("Real name")] = htmlspecialchars($user['realname']);
 if($user['location'])
@@ -267,7 +267,7 @@ if ($user['bio'] && $mobileLayout)
 $badgersR = Query("select * from {badges} where owner={0} order by color", $id);
 if(NumRows($badgersR)) {
 	$badgers = "";
-	$colors = array("bronze", "silver", "gold", "platinum");
+	$colors = ["bronze", "silver", "gold", "platinum"];
 	while($badger = Fetch($badgersR))
 		$badgers .= Format("<span class=\"badge {0}\">{1}</span> ", $colors[$badger['color']], $badger['name']);
 	$profileParts['General information']['Badges'] = $badgers;
@@ -306,15 +306,15 @@ if (!HasPermission('user.postusercomments') && $user['primarygroup'] == Settings
 else
 	$profilecommenterror = 'You may not post profile comments here.';
 
-$pagelinks = PageLinksInverted(pageLink("profile", array(
+$pagelinks = PageLinksInverted(pageLink("profile", [
 					'id' => $id,
 					'name' => slugify($user['name'])
-				), 'from=')
+				], 'from=')
 			, $cpp, $from, $total);
 
-$comments = array();
+$comments = [];
 while($comment = Fetch($rComments)) {
-	$cmt = array();
+	$cmt = [];
 
 	if($canDeleteComments || ($comment['cid'] == $loguserid && HasPermission('user.deleteownusercomments'))) {
 		$deleteLink = "<small style=\"float: right; margin: 0px 4px;\">".
@@ -345,7 +345,7 @@ if($canComment) {
 
 
 
-RenderTemplate('profile', array(
+RenderTemplate('profile', [
 	'username' => htmlspecialchars($uname),
 	'userlink' => UserLink($user),
 	'profileParts' => $profileParts,
@@ -353,7 +353,7 @@ RenderTemplate('profile', array(
 	'commentField' => $commentField,
 	'profilecommenterror' => $profilecommenterror,
 
-	'pagelinks' => $pagelinks));
+	'pagelinks' => $pagelinks]);
 
 
 if (!$mobileLayout) {
@@ -381,7 +381,7 @@ if (!$mobileLayout) {
 }
 
 
-$links = array();
+$links = [];
 
 if (HasPermission('admin.banusers') && $loguserid != $id) {
 	if ($user['primarygroup'] != Settings::get('bannedGroup'))
@@ -412,10 +412,10 @@ $links[] = actionLinkTag(__("Show threads"), "listthreads", $id, "", $user['name
 
 if ($loguserid && isset($blockLayoutLink)) $links[] = $blockLayoutLink;
 
-MakeCrumbs(array(pageLink("profile", array(
+MakeCrumbs([pageLink("profile", [
 				'id' => $id,
 				'name' => slugify($user['name'])
-			)) => htmlspecialchars($uname)), $links);
+			]) => htmlspecialchars($uname)], $links);
 
 $title = format(__("Profile for {0}"), htmlspecialchars($uname));
 

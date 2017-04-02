@@ -58,7 +58,7 @@ function makeForumList($fieldname, $selectedID, $allowNone=false) {
 	if ($allowNone) $noneOption = '<option value=0>'.__('(none)').'</option>';
 
 	$rCats = Query("SELECT id, name, board FROM {categories} ORDER BY board, corder, id");
-	$cats = array();
+	$cats = [];
 	while ($cat = Fetch($rCats))
 		$cats[$cat['id']] = $cat;
 
@@ -69,7 +69,7 @@ function makeForumList($fieldname, $selectedID, $allowNone=false) {
 						WHERE f.id IN ({0c})".(!$viewhidden ? " AND f.hidden=0" : '')." AND f.redirect=''
 						ORDER BY f.forder, f.id", $viewableforums);
 
-	$fora = array();
+	$fora = [];
 	while($forum = Fetch($rFora))
 		$fora[$forum['catid']][] = $forum;
 
@@ -93,7 +93,7 @@ function makeForumList($fieldname, $selectedID, $allowNone=false) {
 
 function forumCrumbs($forum) {
 	global $forumBoards;
-	$ret = array(actionLink('board') => __('Forums'));
+	$ret = [actionLink('board') => __('Forums')];
 
 	if ($forum['board'] != '')
 		$ret[actionLink('board', $forum['board'])] = $forumBoards[$forum['board']];
@@ -122,7 +122,7 @@ function makeForumCrumbs($crumbs, $forum) {
 function doThreadPreview($tid, $maxdate=0) {
 	global $loguser;
 
-	$review = array();
+	$review = [];
 	$ppp = $loguser['postsperpage'] ?: 20;
 
 	$rPosts = Query("
@@ -137,7 +137,7 @@ function doThreadPreview($tid, $maxdate=0) {
 		order by date desc limit 0, {2u}", $tid, $maxdate, $ppp);
 
 	while ($post = Fetch($rPosts)) {
-		$pdata = array('id' => $post['id']);
+		$pdata = ['id' => $post['id']];
 
 		$poster = getDataPrefix($post, 'u_');
 		$pdata['userlink'] = UserLink($poster);
@@ -150,14 +150,14 @@ function doThreadPreview($tid, $maxdate=0) {
 		$review[] = $pdata;
 	}
 
-	RenderTemplate('threadreview', array('review' => $review));
+	RenderTemplate('threadreview', ['review' => $review]);
 }
 
 function makeCrumbs($path, $links='') {
 	global $layout_crumbs, $layout_actionlinks;
 
 	if(count($path) != 0) {
-		$pathPrefix = array(actionLink(0) => Settings::get("breadcrumbsMainName"));
+		$pathPrefix = [actionLink(0) => Settings::get("breadcrumbsMainName")];
 
 		$bucket = "breadcrumbs"; include(__DIR__."/pluginloader.php");
 
@@ -208,7 +208,7 @@ function makeForumListinglol($parent, $boardlol='') {
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
-	$subfora = array();
+	$subfora = [];
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
@@ -222,10 +222,10 @@ function makeForumListinglol($parent, $boardlol='') {
 						GROUP BY p.applyto, p.id, p.arg
 						ORDER BY p.applyto, p.id",
 						'mod.');
-	$mods = array();
+	$mods = [];
 	while($mod = Fetch($rMods))
-		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
-	$categories = array();
+		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : ['groupid' => $mod['p_id']];
+	$categories = [];
 	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
@@ -233,9 +233,9 @@ function makeForumListinglol($parent, $boardlol='') {
 			continue;
 
 		if (!$categories[$forum['catid']])
-			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
+			$categories[$forum['catid']] = ['id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => []];
 
-		$fdata = array('id' => $forum['id']);
+		$fdata = ['id' => $forum['id']];
 
 		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
@@ -338,7 +338,7 @@ function makeForumListinglol($parent, $boardlol='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist1', array('categories' => $categories));
+	RenderTemplate('forumlist1', ['categories' => $categories]);
 }
 
 function makeForumListingmeh($parent, $boardmeh='') {
@@ -373,7 +373,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
-	$subfora = array();
+	$subfora = [];
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
@@ -387,10 +387,10 @@ function makeForumListingmeh($parent, $boardmeh='') {
 						GROUP BY p.applyto, p.id, p.arg
 						ORDER BY p.applyto, p.id",
 						'mod.');
-	$mods = array();
+	$mods = [];
 	while($mod = Fetch($rMods))
-		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
-	$categories = array();
+		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : ['groupid' => $mod['p_id']];
+	$categories = [];
 	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
@@ -398,9 +398,9 @@ function makeForumListingmeh($parent, $boardmeh='') {
 			continue;
 
 		if (!$categories[$forum['catid']])
-			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
+			$categories[$forum['catid']] = ['id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => []];
 
-		$fdata = array('id' => $forum['id']);
+		$fdata = ['id' => $forum['id']];
 
 		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
@@ -503,7 +503,7 @@ function makeForumListingmeh($parent, $boardmeh='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist2', array('categories' => $categories));
+	RenderTemplate('forumlist2', ['categories' => $categories]);
 }
 
 
@@ -541,7 +541,7 @@ function makeForumListing($parent, $board='') {
 						WHERE f.id IN ({1c}) AND f.l>{2} AND f.r<{3} AND f.catid!={4}".(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY f.forder, f.id",
 						$loguserid, $viewableforums, $f['minl'], $f['maxr'], -$parent);
-	$subfora = array();
+	$subfora = [];
 	while ($sf = Fetch($rSubfora))
 		$subfora[-$sf['catid']][] = $sf;
 
@@ -556,11 +556,11 @@ function makeForumListing($parent, $board='') {
 						GROUP BY p.applyto, p.id, p.arg
 						ORDER BY p.applyto, p.id",
 						'mod.');
-	$mods = array();
+	$mods = [];
 	while($mod = Fetch($rMods))
-		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : array('groupid' => $mod['p_id']);
+		$mods[$mod['p_arg']][] = $mod['p_applyto'] ? getDataPrefix($mod, "u_") : ['groupid' => $mod['p_id']];
 
-	$categories = array();
+	$categories = [];
 	while($forum = Fetch($rFora)) {
 		$skipThisOne = false;
 		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
@@ -568,9 +568,9 @@ function makeForumListing($parent, $board='') {
 			continue;
 
 		if (!isset($categories[$forum['catid']]))
-			$categories[$forum['catid']] = array('id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => array());
+			$categories[$forum['catid']] = ['id' => $forum['catid'], 'name' => ($parent==0)?$forum['cname']:'Subforums', 'forums' => []];
 
-		$fdata = array('id' => $forum['id']);
+		$fdata = ['id' => $forum['id']];
 
 		if ($forum['redirect']) {
 			$redir = $forum['redirect'];
@@ -679,15 +679,15 @@ function makeForumListing($parent, $board='') {
 		$categories[$forum['catid']]['forums'][$forum['id']] = $fdata;
 	}
 
-	RenderTemplate('forumlist', array('categories' => $categories));
+	RenderTemplate('forumlist', ['categories' => $categories]);
 }
 
 function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum = false) {
 	global $loguserid, $loguser, $misc;
 
-	$threadlist = array();
+	$threadlist = [];
 	while ($thread = Fetch($threads)) {
-		$tdata = array('id' => $thread['id']);
+		$tdata = ['id' => $thread['id']];
 		$starter = getDataPrefix($thread, 'su_');
 		$last = getDataPrefix($thread, 'lu_');
 
@@ -772,7 +772,7 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 		$threadlist[$tdata['id']] = $tdata;
 	}
 
-	RenderTemplate('threadlist', array('threads' => $threadlist, 'pagelinks' => $pagelinks, 'dostickies' => $dostickies, 'showforum' => $showforum));
+	RenderTemplate('threadlist', ['threads' => $threadlist, 'pagelinks' => $pagelinks, 'dostickies' => $dostickies, 'showforum' => $showforum]);
 }
 
 function makeAnncBar() {
@@ -794,7 +794,7 @@ function makeAnncBar() {
 
 		if ($annc && NumRows($annc)) {
 			$annc = Fetch($annc);
-			$adata = array();
+			$adata = [];
 
 			$adata['new'] = '';
 			if ((!$loguserid && $annc['anncdate'] > (time()-900)) ||
@@ -808,7 +808,7 @@ function makeAnncBar() {
 			$adata['user'] = UserLink($user);
 			$adata['date'] = formatdate($annc['anncdate']);
 
-			RenderTemplate('anncbar', array('annc' => $adata));
+			RenderTemplate('anncbar', ['annc' => $adata]);
 		}
 	}
 }

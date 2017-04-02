@@ -15,8 +15,8 @@ if (isset($_GET['uid'])) {
 	if ($targetrank > $loguserGroup['rank'])
 		Kill(__('You may not edit permissions for this user.'));
 
-	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
-		'' => __('Edit permissions for user: ').htmlspecialchars($user['displayname']?$user['displayname']:$user['name'])));
+	MakeCrumbs([actionLink('admin') => __('Admin'), 
+		'' => __('Edit permissions for user: ').htmlspecialchars($user['displayname']?$user['displayname']:$user['name'])]);
 } else if (isset($_GET['gid'])) {
 	CheckPermission('admin.editgroups');
 	$applyto = 0;
@@ -28,8 +28,8 @@ if (isset($_GET['uid'])) {
 	if ($targetrank >= $loguserGroup['rank'] && !$loguser['root'])
 		Kill(__('You may not edit permissions for this group.'));
 
-	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
-		'' => __('Edit permissions for group: ').htmlspecialchars($usergroups[$id]['name'])));
+	MakeCrumbs([actionLink('admin') => __('Admin'), 
+		'' => __('Edit permissions for group: ').htmlspecialchars($usergroups[$id]['name'])]);
 } else
 	Kill(__('Invalid parameters.'));
 
@@ -85,8 +85,8 @@ if ($_POST['saveaction'] || $_POST['addfpermaction']) {
 	</script>
 <?php
 
-$permlist = array();
-$fpermlist = array();
+$permlist = [];
+$fpermlist = [];
 
 echo '
 	<form action="" method="POST">
@@ -184,7 +184,7 @@ function PermTable($cat) {
 	}
 }
 
-function ForumPermTable($fid, $fpl=array()) {
+function ForumPermTable($fid, $fpl=[]) {
 	global $permCats, $permDescs;
 
 	if (!$fid) {
@@ -208,7 +208,7 @@ function ForumPermTable($fid, $fpl=array()) {
 	}
 
 	$lastcat = -1;
-	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
+	$pd = ['forum' => $permDescs['forum'], 'mod' => $permDescs['mod']];
 	foreach ($pd as $cat=>$perms) {
 		if ($lastcat != $cat) {
 			if ($lastcat != -1)
@@ -246,14 +246,14 @@ function PermData($key) {
 	if ($key[0] == 'p') {
 		$pname = substr($key, 5);
 		$pname = str_replace('_', '.', $pname);
-		return array('perm' => $pname, 'arg' => 0);
+		return ['perm' => $pname, 'arg' => 0];
 	}
 
 	$seppos = strpos($key, '_', 6);
 	$arg = intval(substr($key, 6, $seppos));
 	$pname = substr($key, $seppos + 1);
 	$pname = str_replace('_', '.', $pname);
-	return array('perm' => $pname, 'arg' => $arg);
+	return ['perm' => $pname, 'arg' => $arg];
 }
 
 function CanEditPerm($perm, $arg=0) {

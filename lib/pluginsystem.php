@@ -1,11 +1,11 @@
 <?php
 if (!defined('BLARG')) die();
 
-$pluginSettings = array();
-$plugins = array();
-$pluginbuckets = array();
-$pluginpages = array();
-$plugintemplates = array();
+$pluginSettings = [];
+$plugins = [];
+$pluginbuckets = [];
+$pluginpages = [];
+$plugintemplates = [];
 
 function registerSetting($settingname, $label, $check = false)
 {
@@ -36,7 +36,7 @@ function getPluginData($plugin, $load = true) {
 	if(!is_dir(__DIR__."/../plugins/".$plugin))
 		throw new BadPluginException("Plugin folder is gone");
 
-	$plugindata = array();
+	$plugindata = [];
 	$plugindata['dir'] = $plugin;
 	if(!file_exists(__DIR__."/../plugins/".$plugin."/plugin.settings"))
 		throw new BadPluginException(__("Plugin folder doesn't contain plugin.settings"));
@@ -61,9 +61,9 @@ function getPluginData($plugin, $load = true) {
 			$minver = (int)$setting[1];
 	}
 
-	$plugindata['buckets'] = array();
-	$plugindata['pages'] = array();
-	$plugindata['templates'] = array();
+	$plugindata['buckets'] = [];
+	$plugindata['pages'] = [];
+	$plugindata['templates'] = [];
 
 	$dir = __DIR__."/../plugins/".$plugindata['dir'];
 	$pdir = @opendir($dir);
@@ -111,7 +111,7 @@ function getPluginData($plugin, $load = true) {
 	if(file_exists($dir.'/routes.yaml')) {
 		$routes = spyc_load_file($dir.'/routes.yaml');
 		$allRoutes = $router->getRoutes();
-		$existingRoutes = array();
+		$existingRoutes = [];
 
 		foreach ($allRoutes as $route) {
 			$existingRoutes[] = $route[3];
@@ -150,7 +150,7 @@ while($plugin = Fetch($rPlugins)) {
 if($loguser['pluginsettings'] != "") {
 	$settings = unserialize($loguser['pluginsettings']);
 	if(!is_array($settings))
-		$settings = array();
+		$settings = [];
 	foreach($settings as $setName => $setVal)
 		if(array_key_exists($setName, $pluginSettings))
 			$pluginSettings[$setName]["value"] = stripslashes(urldecode($setVal));

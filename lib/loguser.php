@@ -2,7 +2,7 @@
 //  AcmlmBoard XD support - Login support
 if (!defined('BLARG')) die();
 
-$bots = array(
+$bots = [
 	"Microsoft URL Control", "Bingbot", "Microsoft URL Control - 5.01.4511", "Microsoft URL Control - 6.00.8169",
 	"Yahoo! Slurp", "Slurp",
 	"Mediapartners-Google", "AdsBot-Google-Mobile-Apps", "Googlebot-News", "Googlebot-Image", "GoogleBot", "AdsBot-Google", "AdsBot-Google-Mobile-Apps",
@@ -108,7 +108,7 @@ $bots = array(
  "Zeus",
  "Zeus 32297 Webster Pro V2.9 Win32",
 	"bot", "spider", "crawler", //catch-all
-);
+];
 
 $isBot = 0;
 if(str_replace($bots,"x",$_SERVER['HTTP_USER_AGENT']) != $_SERVER['HTTP_USER_AGENT']) // stristr()/stripos()?
@@ -217,7 +217,7 @@ if($loguser) {
 	Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
 	Query("DELETE FROM {sessions} WHERE user={0} AND lasttime<={1}", $loguserid, time()-2592000);
 } else {
-	$loguser = array(
+	$loguser = [
 		"id" => 0,
 		"name" => "",
 		"displayname" => "",
@@ -233,7 +233,7 @@ if($loguser) {
 		"blocklayouts" => !Settings::get("guestLayouts"),
 		"flags" => 0,
 		'token'=>hash('sha1', rand())
-	);
+	];
 	$loguserid = 0;
 }
 
@@ -261,16 +261,13 @@ function setLastActivity() {
 	$url = getRequestedURL();
 	$url = substr($url, 0, 127);
 
-	if($loguserid == 0)
-	{
+	if($loguserid == 0) {
 		$ua = "";
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 			$ua = $_SERVER['HTTP_USER_AGENT'];
 		Query("insert into {guests} (date, ip, lasturl, useragent, bot) values ({0}, {1}, {2}, {3}, {4})",
 			time(), $_SERVER['REMOTE_ADDR'], $url, $ua, $isBot);
-	}
-	else
-	{
+	} else {
 		Query("update {users} set lastactivity={0}, lastip={1}, lasturl={2}, lastknownbrowser={3}, loggedin=1 where id={4}",
 			time(), $_SERVER['REMOTE_ADDR'], $url, $lastKnownBrowser, $loguserid);
 	}

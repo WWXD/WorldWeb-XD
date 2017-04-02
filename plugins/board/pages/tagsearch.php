@@ -3,9 +3,9 @@ if (!defined('BLARG')) die();
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
 
-$tag = $_GET['tag'];
+$tag = $_GET['id'];
 $tagcode = '"['.$tag.']"';
-$forum = $_GET['fid'];
+$forum = (int)$_GET['fid'];
 
 $cond = "WHERE MATCH (t.title) AGAINST ({0} IN BOOLEAN MODE)";
 

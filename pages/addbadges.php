@@ -32,7 +32,7 @@ $rBadge = query($qBadge);
 $badgeList = "";
 while($badges = Fetch($rBadge)) {
 	$cellClass = ($cellClass+1) % 2;
-	$colors = array(__("Bronze"),__("Silver"),__("Gold"),__("Platinum"));
+	$colors = [__("Bronze"),__("Silver"),__("Gold"),__("Platinum")];
 	$badgeList .= format(
 "
 	<tr class=\"cell{0}\">

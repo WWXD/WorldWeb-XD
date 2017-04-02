@@ -3,8 +3,8 @@ if (!defined('BLARG')) die();
 
 require __DIR__."/permstrings.php";
 
-$usergroups = array();
-$grouplist = array();
+$usergroups = [];
+$grouplist = [];
 $res = Query("SELECT * FROM {usergroups} ORDER BY id");
 while ($g = Fetch($res)) {
 	$usergroups[$g['id']] = $g;
@@ -12,8 +12,8 @@ while ($g = Fetch($res)) {
 }
 
 function LoadPermset($res) {
-	$perms = array();
-	$permord = array();
+	$perms = [];
+	$permord = [];
 
 	while ($perm = Fetch($res)) {
 		if ($perm['value'] == 0) continue;
@@ -47,7 +47,7 @@ function LoadGroups() {
 		return;
 	}
 
-	$secgroups = array();
+	$secgroups = [];
 	$loguserGroup = $usergroups[$loguser['primarygroup']];
 
 	$res = Query("SELECT groupid FROM {secondarygroups} WHERE userid={0}", $loguserid);
@@ -130,7 +130,7 @@ function CheckPermission($perm, $arg=0, $guest=false) {
 
 function ForumsWithPermission($perm, $guest=false) {
 	global $guestPermset, $loguserPermset;
-	static $fpermcache = array();
+	static $fpermcache = [];
 
 	if ($guest) {
 		$permset = $guestPermset;
@@ -143,7 +143,7 @@ function ForumsWithPermission($perm, $guest=false) {
 	if (isset($fpermcache[$cperm]))
 		return $fpermcache[$cperm];
 
-	$ret = array();
+	$ret = [];
 
 	// if the general permission is set to deny, no need to check for specific permissions
 	if ($permset[$perm] == -1) {
@@ -185,9 +185,9 @@ function GetUserPermissions($users, $perms=null) {
 		UNION 	SELECT groupid gid, userid uid, 1 type FROM {secondarygroups} WHERE userid {$userclause}",
 		$users);
 
-	$primgroups = array();	// primary group IDs
-	$secgroups = array();	// secondary group IDs
-	$groupusers = array();	// array of user IDs for each group
+	$primgroups = [];	// primary group IDs
+	$secgroups = [];	// secondary group IDs
+	$groupusers = [];	// array of user IDs for each group
 
 	while ($g = Fetch($allgroups)) {
 		if ($g['type'])
@@ -217,8 +217,8 @@ function GetUserPermissions($users, $perms=null) {
 				ORDER BY ord",
 		$users, $primgroups, $secgroups, $perms);
 
-	$permdata = array();
-	$permord = array();
+	$permdata = [];
+	$permord = [];
 
 	// compile all the resulting permission lists for all the requested users
 	while ($p = Fetch($res)) {

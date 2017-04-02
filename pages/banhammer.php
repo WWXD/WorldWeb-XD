@@ -59,20 +59,20 @@ if ($_POST['ban']) {
 if (isset($_GET['unban'])) {
 	$title = __('Unban user');
 
-	MakeCrumbs(array(actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
-		actionLink('banhammer', $id, 'unban=1') => __('Unban user')));
+	MakeCrumbs([actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
+		actionLink('banhammer', $id, 'unban=1') => __('Unban user')]);
 
 	$userlink = userLink(getDataPrefix($user, 'u_'));
-	$fields = array(
+	$fields = [
 		'target' => $userlink,
 		'btnUnbanUser' => '<input type="submit" name="unban" value="Unban user">',
-	);
+	];
 	$template = 'form_unbanuser';
 } else {
 	$title = __('Ban user');
 
-	MakeCrumbs(array(actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
-		actionLink('banhammer', $id) => __('Ban user')));
+	MakeCrumbs([actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
+		actionLink('banhammer', $id) => __('Ban user')]);
 
 	$duration = '
 	<label><input type="radio" name="permanent" value="0"> For: </label>
@@ -88,20 +88,20 @@ if (isset($_GET['unban'])) {
 	<label><input type="radio" name="permanent" value="1" checked="checked"> Permanent</label>';
 
 	$userlink = userLink(getDataPrefix($user, 'u_'));
-	$fields = array(
+	$fields = [
 		'target' => $userlink,
 		'duration' => $duration,
 		'reason' => '<input type="text" name="reason" size=80 maxlength=200>',
 
 		'btnBanUser' => '<input type="submit" name="ban" value="Ban user">',
-	);
+	];
 	$template = 'form_banuser';
 }
 
 echo '
 	<form action="" method="POST">';
 
-RenderTemplate($template, array('fields' => $fields));
+RenderTemplate($template, ['fields' => $fields]);
 
 echo '
 		<input type="hidden" name="token" value="'.$loguser['token'].'">

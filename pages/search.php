@@ -45,7 +45,7 @@ if(isset($_REQUEST['q'])) {
 			ORDER BY t.lastpostdate DESC", 
 			$bool);
 
-		$tresults = array();
+		$tresults = [];
 		if(NumRows($search)) {
 			while($result = Fetch($search))
 				$tresults[] = $result['tid'];
@@ -59,7 +59,7 @@ if(isset($_REQUEST['q'])) {
 			ORDER BY p.date DESC", 
 			$bool);
 
-		$presults = array();
+		$presults = [];
 		if(NumRows($search)) {
 			while($result = Fetch($search))
 				$presults[] = $result['pid'];
@@ -76,21 +76,21 @@ if(isset($_REQUEST['q'])) {
 		die(header('Location: '.actionLink('search', '', 'q='.urlencode($searchQuery).'&inposts='.$_POST['inposts'])));
 }
 
-MakeCrumbs(array(actionLink("search") => __("Search")));
+MakeCrumbs([actionLink("search") => __("Search")]);
 
 echo "
 	<form action=\"".htmlentities(actionLink("search"))."\" method=\"post\">";
 	
-$fields = array(
+$fields = [
 	'terms' => "<input type=\"text\" maxlength=\"1024\" name=\"q\" style=\"width:100%;border-sizing:border-box;-moz-border-sizing:border-box;\" value=\"".htmlspecialchars($_REQUEST['q'])."\">",
 	'searchin' => '
 		<label><input type="radio" name="inposts" value="0"'.($_REQUEST['inposts']==0 ? ' checked="checked"' : '').'>'.__('Thread titles').'</label> 
 		<label><input type="radio" name="inposts" value="1"'.($_REQUEST['inposts']==1 ? ' checked="checked"' : '').'>'.__('Posts').'</label>',
 	
 	'btnSubmit' => "<input type=\"submit\" value=\"".__("Search")."\">",
-);
+];
 
-RenderTemplate('form_search', array('fields' => $fields));
+RenderTemplate('form_search', ['fields' => $fields]);
 
 echo "
 	</form>";
@@ -104,7 +104,7 @@ if(isset($_GET['q']) || isset($_POST['q'])) {
 
 	$bool = htmlspecialchars($searchQuery);
 	$t = explode(" ", $bool);
-	$terms = array();
+	$terms = [];
 	foreach($t as $term) {
 		if($term[0] == "-")
 			continue;
@@ -119,7 +119,7 @@ if(isset($_GET['q']) || isset($_POST['q'])) {
 	$res = Fetch(Query("SELECT ".($_GET['inposts']?'postresults':'threadresults')." AS results FROM {searchcache} WHERE queryhash={0}", md5($searchQuery)));
 	$results = explode(',', $res['results']);
 	$nres = 0;
-	$rdata = array();
+	$rdata = [];
 
 	if(isset($_GET['from'])) $from = (int)$_GET['from'];
 	else $from = 0;
@@ -145,7 +145,7 @@ if(isset($_GET['q']) || isset($_POST['q'])) {
 
 		if(NumRows($search)) {
 			while($result = Fetch($search)) {
-				$r = array();
+				$r = [];
 				
 				$r['link'] = makeThreadLink($result);
 				$r['description'] = '';
@@ -182,7 +182,7 @@ if(isset($_GET['q']) || isset($_POST['q'])) {
 		if(NumRows($search)) {
 			$results = "";
 			while($result = Fetch($search)) {
-				$r = array();
+				$r = [];
 
 				$tags = ParseThreadTags($result['title']);
 
@@ -202,7 +202,7 @@ if(isset($_GET['q']) || isset($_POST['q'])) {
 
 	$pagelinks = PageLinks(actionLink('search', '', 'q='.urlencode($searchQuery).'&inposts='.$_GET['inposts'].'&from='), $tpp, $from, $nres);
 
-	RenderTemplate('searchresults', array('results' => $rdata, 'nresults' => $nres, 'resultstext' => $restext, 'pagelinks' => $pagelinks));
+	RenderTemplate('searchresults', ['results' => $rdata, 'nresults' => $nres, 'resultstext' => $restext, 'pagelinks' => $pagelinks]);
 }
 
 
@@ -227,7 +227,7 @@ function MakeSnippet($text, $terms, $title = false) {
 		if($title)
 			$line = htmlspecialchars($line);
 		else {
-			$m = array();
+			$m = [];
 			if(!preg_match($pat1, $line, $m))
 				continue;
 			$contextlines--;

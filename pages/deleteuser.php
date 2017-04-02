@@ -2,7 +2,7 @@
 
 $title = __("Delete the user");
 
-makeCrumbs(array(actionlink('deleteuser') => __("Delete User")));
+makeCrumbs([actionlink('deleteuser') => __("Delete User")]);
 
 /*	Make 18 checks:
 	1) If the user can edit his own profile: you don't want to be a hypocrite. This one is checked twice, with one of them being a message, while the other is displaying the page.

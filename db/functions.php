@@ -1,60 +1,52 @@
 <?php
 if (!defined('BLARG')) die();
 
-function Import($sqlFile)
-{
+function Import($sqlFile) {
 	global $dblink, $dbpref;
 	$res = $dblink->multi_query(str_replace('{$dbpref}', $dbpref, file_get_contents($sqlFile)));
 
 	$i = 0; 
-	if ($res) 
-	{
-		do 
-		{
+	if ($res)  {
+		do {
 			$i++; 
 		} while ($dblink->more_results() && $dblink->next_result()); 
 	}
-	if ($dblink->errno) 
-	{ 
+
+	if ($dblink->errno)  { 
 		echo "MySQL Error when importing file $sqlFile at statement $i: \n";
 		echo $dblink->error, "\n";
 		die();
 	}
 }
 
-function Upgrade()
-{
+function Upgrade() {
 	global $dbname, $dbpref;
 
 	//Load the board tables.
 	include(__DIR__."/schema.php");
 
 	//Allow plugins to add their own tables!
-	if (NumRows(Query("show table status from $dbname like '{enabledplugins}'")))
-	{
+	if (NumRows(Query("show table status from $dbname like '{enabledplugins}'"))) {
 		$rPlugins = Query("select * from {enabledplugins}");
 		while($plugin = Fetch($rPlugins))
 		{
-			$plugin = str_replace(array('.','/','\\'), '', $plugin['plugin']);
+			$plugin = str_replace(['.','/','\\'], '', $plugin['plugin']);
 			$path = __DIR__."/../plugins/$plugin/installSchema.php";
 			if(file_exists($path))
 				include($path);
 		}
 	}
 
-	foreach($tables as $table => $tableSchema)
-	{
+	foreach($tables as $table => $tableSchema) {
 		print "<li>";
 		print $dbpref.$table."&hellip;";
 		$tableStatus = Query("show table status from $dbname like '{".$table."}'");
 		$numRows = NumRows($tableStatus);
-		if($numRows == 0)
-		{
+		if($numRows == 0) {
 			print " creating&hellip;";
 			$create = "create table `{".$table."}` (\n";
 			$comma = "";
-			foreach($tableSchema['fields'] as $field => $type)
-			{
+			foreach($tableSchema['fields'] as $field => $type) {
 				$create .= $comma."\t`".$field."` ".$type;
 				$comma = ",\n";
 			}
@@ -63,24 +55,21 @@ function Upgrade()
 			$create .= "\n) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;";
 			//print "<pre>".$create."</pre>";
 			Query($create);
-		}
-		else
-		{
+		} else {
 			$primaryKey = "";
 			$changes = 0;
-			$foundFields = array();
+			$foundFields = [];
 			$scan = Query("show columns from `{".$table."}`");
-			while($field = $scan->fetch_assoc())
-			{
+			while($field = $scan->fetch_assoc()) {
 				$fieldName = $field['Field'];
 				$foundFields[] = $fieldName;
 				$type = $field['Type'];
-				
+
 				$encoding = Fetch(Query("SELECT CHARACTER_SET_NAME charset, COLLATION_NAME coll FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA={0} AND TABLE_NAME='{".$table."}' AND COLUMN_NAME={1}", 
 					$dbname, $fieldName));
 				if ($encoding['charset'] && ($encoding['charset'] != 'utf8' || $encoding['coll'] != 'utf8_bin'))
 					$type .= " CHARACTER SET {$encoding['charset']} COLLATE {$encoding['coll']}";
-				
+
 				if($field['Null'] == "NO")
 					$type .= " NOT NULL";
 				//if($field['Default'] != "")
@@ -90,14 +79,11 @@ function Upgrade()
 					$type .= " DEFAULT '".$field['Default']."'";
 				if($field['Key'] == "PRI")
 					$primaryKey = $fieldName;
-				if(array_key_exists($fieldName, $tableSchema['fields']))
-				{
+				if(array_key_exists($fieldName, $tableSchema['fields'])) {
 					$wantedType = $tableSchema['fields'][$fieldName];
-					if(strcasecmp($wantedType, $type))
-					{
+					if(strcasecmp($wantedType, $type)) {
 						print " \"".$fieldName."\" not correct type: was $type, wanted $wantedType &hellip;<br />";
-						if($fieldName == "id")
-						{
+						if($fieldName == "id") {
 							print_r($field);
 							print "{ ".$type." }";
 						}
@@ -106,24 +92,21 @@ function Upgrade()
 					}
 				}
 			}
-			foreach($tableSchema['fields'] as $fieldName => $type)
-			{
-				if(!in_array($fieldName, $foundFields))
-				{
+			foreach($tableSchema['fields'] as $fieldName => $type) {
+				if(!in_array($fieldName, $foundFields)) {
 					print " \"".$fieldName."\" missing&hellip;";
 					Query("ALTER TABLE {".$table."} ADD `$fieldName` $type");
 					$changes++;
 				}
 			}
-			$newindexes = array();
+			$newindexes = [];
 			preg_match_all('@((primary|unique|fulltext)\s*)?key\s+(`(\w+)`\s+)?\(([\w`,\s]+)\)@si', $tableSchema['special'], $idxs, PREG_SET_ORDER);
-			foreach ($idxs as $idx)
-			{
+			foreach ($idxs as $idx) {
 				$name = $idx[4] ? $idx[4] : 'PRIMARY';
 				$newindexes[$name]['type'] = strtolower($idx[2]);
 				$newindexes[$name]['fields'] = strtolower(preg_replace('@\s+@s', '', $idx[5]));
 			}
-			$curindexes = array();
+			$curindexes = [];
 			$idxs = Query("SHOW INDEX FROM `{".$table."}`");
 			while ($idx = Fetch($idxs))
 			{

@@ -8,50 +8,38 @@ $title = __("Private messages");
 if(!$loguserid)
 	Kill(__("You must be logged in to view your private messages."));
 
-$user = $loguserid;
-$userGet = '';
-$snoop = '';
-if(isset($_GET['user']) && HasPermission('admin.viewpms'))
-{
+if(isset($_GET['user']) && $user !== $loguserid && HasPermission('admin.viewpms')) {
 	$user = (int)$_GET['user'];
 	$snoop = "&snooping=1";
 	$userGet = "&user=".$user;
+} else {
+	$user = $loguserid;
+	$userGet = '';
+	$snoop = '';
 }
 
-if(isset($_POST['action']))
-{
-	if ($_POST['token'] !== $loguser['token']) Kill('No.');
-	
-	if($_POST['action'] == 'multidel' && $_POST['delete'] && !$snoop)
-	{
-		foreach($_POST['delete'] as $pid => $on)
-		{
+if(isset($_POST['action'])) {
+	if ($_POST['token'] !== $loguser['token'])
+		Kill('No.');
+
+	if($_POST['action'] == 'multidel' && $_POST['delete'] && !$snoop) {
+		foreach($_POST['delete'] as $pid => $on) {
 			$rPM = Query("select userto,userfrom,deleted,drafting from {pmsgs} where id = {0} and (userto = {1} or userfrom = {1})", $pid, $loguserid);
-			if(NumRows($rPM))
-			{
+			if(NumRows($rPM)) {
 				$pm = Fetch($rPM);
-				
-				if ($pm['drafting'])
-				{
+
+				if ($pm['drafting']) {
 					Query("DELETE FROM {pmsgs} WHERE id={0} AND drafting=1", $pid);
 					Query("DELETE FROM {pmsgs_text} WHERE pid={0}", $pid);
-				}
-				else
-				{
+				} else {
 					if ($pm['userto'] == $loguserid) $pm['deleted'] |= 2;
 					if ($pm['userfrom'] == $loguserid) $pm['deleted'] |= 1;
-					
-					/*if($pm['deleted'] == 3)
-					{
-						Query("delete from {pmsgs} where id = {0}", $pid);
-						Query("delete from {pmsgs_text} where pid = {0}", $pid);
-					}
-					else*/
-						Query("update {pmsgs} set deleted = {0} where id = {1} AND userto={2}", $pm['deleted'], $pid, $pm['userto']);
+
+					Query("update {pmsgs} set deleted = {0} where id = {1} AND userto={2}", $pm['deleted'], $pid, $pm['userto']);
 				}
 			}
 		}
-		
+
 		die(header('Location: '.$_SERVER['HTTP_REFERER']));
 	}
 }
@@ -64,8 +52,7 @@ $staffpms = '';
 
 $showWhat = 0;
 
-if(isset($_GET['show']))
-{
+if(isset($_GET['show'])) {
 	$showWhat = (int)$_GET['show'];
 	
 	$show = "&show=".$showWhat;
@@ -74,11 +61,10 @@ if(isset($_GET['show']))
 	else if($showWhat == 2)
 		$drafting = 1;
 	$onclause = 'p.userto';
-}
-else
-{
+} else {
 	$whereFrom = "p.userto = {0}";
-	if (HasPermission('admin.viewstaffpms') && $user==$loguserid) $staffpms = ' OR userto={4}';
+	if (HasPermission('admin.viewstaffpms') && $user==$loguserid)
+		$staffpms = ' OR userto={4}';
 	$onclause = 'p.userfrom';
 }
 $whereFrom .= " and p.drafting = ".$drafting;
@@ -121,20 +107,14 @@ $pagelinks = PageLinks(actionLink("private", "", "$show$userGet&from="), $ppp, $
 RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
 
 $pms = array();
-while($pm = Fetch($rPM))
-{
+while($pm = Fetch($rPM)) {
 	$pmdata = array();
-	
-	if ($showWhat == 1 && $pm['userto'] == -1)
-	{
+
+	if ($showWhat == 1 && $pm['userto'] == -1) {
 		$pmdata['userlink'] = 'Staff';
-	}
-	else if ($pm['drafting'])
-	{
+	} else if ($pm['drafting']) {
 		$pmdata['userlink'] = htmlspecialchars($pm['draft_to']);
-	}
-	else
-	{
+	} else {
 		$user = getDataPrefix($pm, 'u_');
 		$pmdata['userlink'] = UserLink($user);
 	}
@@ -143,14 +123,14 @@ while($pm = Fetch($rPM))
 		$pmdata['newIcon'] = "<div class=\"statusIcon new\"></div>";
 	else
 		$pmdata['newIcon'] = '';
-		
+
 	if ($pm['drafting'])
 		$pmdata['link'] = actionLinkTag(htmlspecialchars($pm['title']), 'sendprivate', '', 'pid='.$pm['id'].$snoop);
 	else
 		$pmdata['link'] = actionLinkTag(htmlspecialchars($pm['title']), 'showprivate', $pm['id'], substr($snoop,1));
 
 	$pmdata['deleteCheck'] = $snoop ? '' : "<input type=\"checkbox\" name=\"delete[{$pm['id']}]\">";
-	
+
 	$pmdata['formattedDate'] = formatdate($pm['date']);
 
 	$pms[] = $pmdata;

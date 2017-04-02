@@ -208,7 +208,7 @@ $usersperday = Query("SELECT FLOOR(regdate / 86400) day, COUNT(*) num FROM {user
 $threadsperday = Query("SELECT FLOOR(p.date / 86400) day, COUNT(*) num FROM {threads} t LEFT JOIN {posts} p ON p.thread=t.id AND p.id=(SELECT MIN(p2.id) FROM {posts} p2 WHERE p2.thread=t.id) WHERE p.date>={0} GROUP BY day ORDER BY day", $timewarp);
 $postsperday = Query("SELECT FLOOR(date / 86400) day, COUNT(*) num FROM {posts} WHERE date>={0} GROUP BY day ORDER BY day", $timewarp);
 
-$stats = array();
+$stats = [];
 while ($u = Fetch($usersperday)) $stats[$u['day']]['u'] = $u['num'];
 while ($t = Fetch($threadsperday)) $stats[$t['day']]['t'] = $t['num'];
 while ($p = Fetch($postsperday)) $stats[$p['day']]['p'] = $p['num'];

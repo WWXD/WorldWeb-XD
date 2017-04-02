@@ -3,6 +3,7 @@ if (!defined('BLARG')) die();
 
 $ishttps = ($_SERVER['SERVER_PORT'] == 443);
 $serverport = ($_SERVER['SERVER_PORT'] == ($ishttps?443:80)) ? '' : ':'.$_SERVER['SERVER_PORT'];
+$siteURL = 'http' . $ishttps ? 's' : '' . '://' . SITE_URL . '/';
 
 function urlNamify($urlname) {
 	$urlname = strtolower($urlname);
@@ -19,23 +20,22 @@ function actionLink($action, $id="", $args="", $urlname="") {
 	if($boardroot == "")
 		$boardroot = "./";
 
-	// calling plugins at EVERY link?! way to waste performances
-	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
-
 	// Making this easir to handle later
 	$hasid = (@is_numeric($id) || is_string($id));
 
 	// rewritten links
-	if ($action == MAIN_PAGE) $action = '';
-	else if ($hasid) $action .= '/';
-	else $action .= '';
+	if ($action == MAIN_PAGE)
+		$action = '';
+	else if ($hasid)
+		$action .= '/';
+	else
+		$action .= '';
 
-	if ($hasid)
-	{
+	if ($hasid) {
 		if ($urlname) $id .= '-'.urlNamify($urlname);
 		$id .= '';
-	}
-	else $id = '';
+	} else
+		$id = '';
 
 	return $boardroot.$action.$id.($args ? '?'.$args : '');
 
@@ -46,20 +46,20 @@ function pageLink($page, $params=array(), $extra='') {
 	return $router->generate($page, $params) . ($extra != '' ? '?' . $extra : '');
 }
 
-function pageLinkTag($text, $page, $params=array(), $extra='') {
-	return '<a href="'.htmlentities(pageLink($page, $params, $extra)).'">'.$text.'</a>';
+function pageLinkTag($text, $page, $params=array(), $extra='', $title="") {
+	return '<a href="'.htmlentities(pageLink($page, $params, $extra)).'" title="'. $title . '">'.$text.'</a>';
 }
 
-function actionLinkTag($text, $action, $id='', $args="", $urlname="") {
-	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a>';
+function actionLinkTag($text, $action, $id='', $args="", $urlname="", $title="") {
+	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'" title="'. $title . '">'.$text.'</a>';
 }
 
-function pageLinkTagItem($text, $page, $params=array(), $extra='') {
-	return '<li><a href="'.htmlentities(pageLink($page, $params, $extra)).'">'.$text.'</a></li>';
+function pageLinkTagItem($text, $page, $params=array(), $extra='', $title="") {
+	return '<li><a href="'.htmlentities(pageLink($page, $params, $extra)).'" title="'. $title . '">'.$text.'</a></li>';
 }
 
-function actionLinkTagItem($text, $action, $id='', $args="", $urlname="") {
-	return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'">'.$text.'</a></li>';
+function actionLinkTagItem($text, $action, $id='', $args="", $urlname="", $title="") {
+	return '<li><a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'" title="'. $title . '">'.$text.'</a></li>';
 }
 
 function actionLinkTagConfirm($text, $prompt, $action, $id='', $args="") {
@@ -79,7 +79,9 @@ function getForm($action, $id='') {
 	return $ret;
 }
 
-function resourceLink($what) { return URL_ROOT.$what; }
+function resourceLink($what) {
+	return BOARD_ROOT.$what;
+}
 
 function themeResourceLink($what) {
 	global $theme;
@@ -309,22 +311,31 @@ function absoluteActionLink($action, $id=0, $args="") {
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
 }
 
-function getRequestedURL() { return $_SERVER['REQUEST_URI']; }
+function getRequestedURL() {
+	return $_SERVER['REQUEST_URI'];
+}
 
 function getServerDomainNoSlash($https = false) {
 	global $serverport;
 	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport;
 }
 
-function getServerURL($https = false) { return getServerURLNoSlash($https)."/"; }
+function getServerURL($https = false) {
+	return getServerURLNoSlash($https)."/";
+}
 
 function getServerURLNoSlash($https = false) {
     global $serverport;
     return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
 
-function getFullRequestedURL($https = false) { return getServerURL($https) . $_SERVER['REQUEST_URI']; }
-function getFullURL(){ return getFullRequestedURL(); }
+function getFullRequestedURL($https = false) {
+	return getServerURL($https) . $_SERVER['REQUEST_URI'];
+}
+
+function getFullURL() {
+	return getFullRequestedURL();
+}
 
 // ----------------------------------------------------------------------------
 // --- Smarty interface
@@ -334,10 +345,14 @@ function smarty_function_pageLink($params, $template) {
 	$passParams = isset($params['params']) ? $params['params'] : array();
 	return pageLink($params['name'], $passParams);
 }
+
 function smarty_function_actionLink($params, $template) {
 	$id = isset($params['id']) ? $params['id'] : false;
 	$args = isset($params['args']) ? $params['args'] : '';
 	$url = isset($params['urlname']) ? $params['urlname'] : '';
 	return htmlspecialchars(actionLink($params['page'], ($id?:''), $args, $url));
 }
-function smarty_function_resourceLink($params, $template) { return htmlspecialchars(resourceLink($params['url'])); }
+
+function smarty_function_resourceLink($params, $template) {
+	return htmlspecialchars(resourceLink($params['url']));
+}

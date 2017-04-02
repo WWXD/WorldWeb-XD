@@ -59,20 +59,20 @@ if($http->get('id'))) {
 	Alert(__('Invalid user name or email address.'));
 } else {
 	$title = __('Request password reset');
-	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));
+	MakeCrumbs([actionLink('login') => __('Log in'), '' => __('Request password reset')]);
 
 	echo "
 	<form action=\"".htmlentities(pageLink("lostpass"))."\" method=\"post\">";
 
-	$fields = array(
+	$fields = [
 		'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24>",
 		'email' => "<input type=\"text\" name=\"mail\" maxlength=60 size=24>",
 		'email2' => "<input type=\"text\" name=\"mail2\" maxlength=60 size=24>",
 
 		'btnSendReset' => "<input type=\"submit\" name=\"action\" value=\"".__("Send reset email")."\">",
-	);
+	];
 
-	RenderTemplate('form_lostpass', array('fields' => $fields));
+	RenderTemplate('form_lostpass', ['fields' => $fields]);
 
 	echo "
 	</form>

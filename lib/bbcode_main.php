@@ -58,6 +58,8 @@ function filterJS($match) {
 	$url = str_replace("\n", "", $url);
 	if (stristr($url, "javascript:"))
 		return "";
+	if (stristr($url, "data:"))
+		return "";
 	return $match[0];
 }
 

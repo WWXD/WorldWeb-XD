@@ -11,6 +11,7 @@ define('BLARG_VERSION', '1.2');
 
 define('BOARD_ROOT', dirname(__DIR__).'/');
 define('DATA_DIR', BOARD_ROOT.'data/');
+define('LIB_DIR', BOARD_ROOT.'lib/');
 
 $boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
 
@@ -51,7 +52,8 @@ function usectime() {
 
 // undocumented feature: multiple 'boards'.
 // add in here to add board sections to your board
-$forumBoards = array('' => 'Main forums');
+// Will turn into Database form...
+$forumBoards = array()('' => 'Main forums');
 
 
 require_once(__DIR__."/../config/salt.php");
@@ -64,6 +66,8 @@ $http = new Input();
 require_once(__DIR__."/debug.php");
 require_once(__DIR__."/mysql.php");
 require_once(__DIR__."/../config/database.php");
+if(!sqlConnect())
+	die("Can't connect to the board database. Check the installation settings");
 if(!fetch(query("SHOW TABLES LIKE '{misc}'")))
 	die("The boards tables are empty. Please copy the db folder and install.php to your board root and delete the config folder from the root. Overwrite any files if nessesary.");
 require_once(__DIR__."/settingssystem.php");

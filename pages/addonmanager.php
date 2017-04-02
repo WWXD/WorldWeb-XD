@@ -5,7 +5,7 @@ $title = "Add-on Manager";
 
 CheckPermission('admin.editsettings');
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("addonmanager") => __("Add-on Manager")));
+MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("addonmanager") => __("Add-on Manager")]);
 
 $enabledfile = BOARD_ROOT.'plugins/'.$plugin.'/enabled.txt';
 
@@ -52,9 +52,9 @@ if($_REQUEST['action'] == "disable") {
 $cell = 0;
 $pluginsDir = @opendir(BOARD_ROOT."plugins");
 
-$enabledplugins = array();
-$disabledplugins = array();
-$pluginDatas = array();
+$enabledplugins = [];
+$disabledplugins = [];
+$pluginDatas = [];
 
 if($pluginsDir !== FALSE) {
 	while(($plugin = readdir($pluginsDir)) !== FALSE) {
@@ -80,8 +80,8 @@ if($pluginsDir !== FALSE) {
 asort($enabledplugins);
 asort($disabledplugins);
 
-$ep = array();
-$dp = array();
+$ep = [];
+$dp = [];
 
 foreach($enabledplugins as $plugin => $pluginname)
 	$ep[] = listPlugin($plugin, $pluginDatas[$plugin]);
@@ -89,7 +89,7 @@ foreach($enabledplugins as $plugin => $pluginname)
 foreach($disabledplugins as $plugin => $pluginname)
 	$dp[] = listPlugin($plugin, $pluginDatas[$plugin]);
 
-RenderTemplate('pluginlist', array('enabledPlugins' => $ep, 'disabledPlugins' => $dp));
+RenderTemplate('pluginlist', ['enabledPlugins' => $ep, 'disabledPlugins' => $dp]);
 
 
 function listPlugin($plugin, $plugindata) {

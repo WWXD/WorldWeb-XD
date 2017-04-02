@@ -10,11 +10,11 @@ if (isset($_GET["id"])) {
 } else
 	Kill("Invalid IP");
 
-$links = array();
+$links = [];
 $links[] = "<a href=\"http://dnsquery.org/ipwhois/$ip\" target=\"_blank\">Whois Query</a>";
 $links[] = "<a onclick=\"if(confirm('Are you sure you want to IP-ban $ip?')) {document.getElementById('banform').submit();} return false;\" href=\"#\">IP Ban</a>";
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("ipbans") => __("IP ban manager"), '' => $ip), $links);
+MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("ipbans") => __("IP ban manager"), '' => $ip], $links);
 
 
 $rUsers = Query("select * from {users} where lastip={0}", $ip);

@@ -11,7 +11,7 @@ $net = Settings::get('ircserver');
 // The actual name of the channel without the beginning #
 $chan = Settings::get('ircchannel');
 // The name prefix for anyone joining
-$bad = array("~", "&", "@", "?", "!", ".", ",", "=", "+", "%", "*");
+$bad = ["~", "&", "@", "?", "!", ".", ",", "=", "+", "%", "*"];
 $handle = str_replace(" ", "", $loguser['name']);
 $handle = str_replace($badchars, "_", $handle);
 ?>

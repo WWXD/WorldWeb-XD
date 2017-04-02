@@ -2,13 +2,12 @@
 if (!defined('BLARG')) die();
 
 // notification formatting callbacks for each notification type
-$NotifFormat = array
-(
+$NotifFormat = [
 	'pm' => 'FormatNotif_PM',
 	'profilecomment' => 'FormatNotif_ProfileComment',
 	'usermention' => 'FormatNotif_mention',
 	'favorites' => 'FormatNotif_favorites',
-);
+];
 
 // plugins should use an init hook to extend $NotifFormat
 
@@ -49,7 +48,7 @@ function notifsort($a, $b) {
 
 function GetNotifications() {
 	global $loguserid, $NotifFormat;
-	$notifs = array();
+	$notifs = [];
 
 	if (!$loguserid) return $notifs;
 
@@ -68,12 +67,11 @@ function GetNotifications() {
 		$ts = '<span class="nobr">'; $te = '</span>';
 		$ndesc = $ts.str_replace("\n", $te.'<br/>'.$ts, $ndesc).$te;
 
-		$notifs[] = array
-		(
+		$notifs[] = [
 			'date' => $n['date'], 
 			'formattedDate' => relativedate($n['date']),
 			'text' => $ndesc
-		);
+		];
 	}
 
 	return $notifs;
