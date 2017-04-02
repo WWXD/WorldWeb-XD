@@ -18,9 +18,9 @@ if ($page['canedit'])
 	$links .= actionLinkTagItem('Edit', 'wikiedit', $urltitle);
 
 if ($page['ismain'])
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki'], $links);
 else
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $wikititle), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $wikititle], $links);
 	
 if ($page['flags'] & WIKI_PFLAG_DELETED) {
 	$wikicontents = "This page has been deleted.";
@@ -50,9 +50,9 @@ if ($page['flags'] & WIKI_PFLAG_DELETED) {
 	$wikicontents = $revInfo.wikiFilter($page['text'], $page['flags'] & WIKI_PFLAG_NOCONTBOX);
 }
 
-RenderTemplate('wiki', array(
+RenderTemplate('wiki', [
 	'wikititle' => $wikititle,
 	'wikicontents' => $wikicontents,
-));
+]);
 
 ?>

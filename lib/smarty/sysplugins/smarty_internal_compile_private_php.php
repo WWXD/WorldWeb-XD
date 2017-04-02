@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Php extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $required_attributes = array('code', 'type');
+    public $required_attributes = ['code', 'type'];
 
     /**
      * Compiles code for generating output from any expression
@@ -59,7 +59,7 @@ class Smarty_Internal_Compile_Private_Php extends Smarty_Internal_CompileBase
             } elseif ($compiler->php_handling == Smarty::PHP_QUOTE) {
                 $output =
                     preg_replace_callback('#(<\?(?:php|=)?)|(<%)|(<script\s+language\s*=\s*["\']?\s*php\s*["\']?\s*>)|(\?>)|(%>)|(<\/script>)#i',
-                                          array($this, 'quote'), $_attr[ 'code' ]);
+                                          [$this, 'quote'], $_attr[ 'code' ]);
                 $compiler->parser->current_buffer->append_subtree($compiler->parser,
                                                                   new Smarty_Internal_ParseTree_Text($output));
                 return '';
@@ -101,8 +101,8 @@ class Smarty_Internal_Compile_Private_Php extends Smarty_Internal_CompileBase
                     $compiler->trigger_template_error("illegal value of option flag \"{$match[2]}\"", null, true);
                 }
             }
-            return preg_replace(array("#^{$ldel}\\s*php\\s*(.)*?{$rdel}#", "#{$ldel}\\s*/\\s*php\\s*{$rdel}$#"),
-                                array('<?php ', '?>'), $_attr[ 'code' ]);
+            return preg_replace(["#^{$ldel}\\s*php\\s*(.)*?{$rdel}#", "#{$ldel}\\s*/\\s*php\\s*{$rdel}$#"],
+                                ['<?php ', '?>'], $_attr[ 'code' ]);
         }
     }
 

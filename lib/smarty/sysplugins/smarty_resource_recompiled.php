@@ -40,8 +40,8 @@ abstract class Smarty_Resource_Recompiled extends Smarty_Resource
     public function process(Smarty_Internal_Template $_smarty_tpl)
     {
         $compiled = &$_smarty_tpl->compiled;
-        $compiled->file_dependency = array();
-        $compiled->includes = array();
+        $compiled->file_dependency = [];
+        $compiled->includes = [];
         $compiled->nocache_hash = null;
         $compiled->unifunc = null;
         $level = ob_get_level();

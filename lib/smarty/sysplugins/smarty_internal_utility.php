@@ -98,8 +98,8 @@ class Smarty_Internal_Utility
                     $_error_count++;
                 }
                 // free memory
-                $smarty->template_objects = array();
-                $_tpl->smarty->template_objects = array();
+                $smarty->template_objects = [];
+                $_tpl->smarty->template_objects = [];
                 $_tpl = null;
                 if ($max_errors !== null && $_error_count == $max_errors) {
                     echo '<br><br>too many errors';
@@ -263,8 +263,8 @@ class Smarty_Internal_Utility
             }
         }
         // clear compiled cache
-        Smarty_Resource::$sources = array();
-        Smarty_Resource::$compileds = array();
+        Smarty_Resource::$sources = [];
+        Smarty_Resource::$compileds = [];
 
         return $_count;
     }
@@ -626,7 +626,7 @@ class Smarty_Internal_Utility
         // test if sysplugins are available
         $source = SMARTY_SYSPLUGINS_DIR;
         if (is_dir($source)) {
-            $expected = array(
+            $expected = [
                 "smarty_cacheresource.php" => true,
                 "smarty_cacheresource_custom.php" => true,
                 "smarty_cacheresource_keyvaluestore.php" => true,
@@ -696,7 +696,7 @@ class Smarty_Internal_Utility
                 "smarty_resource_recompiled.php" => true,
                 "smarty_resource_uncompiled.php" => true,
                 "smarty_security.php" => true,
-            );
+            ];
             $iterator = new DirectoryIterator($source);
             foreach ($iterator as $file) {
                 if (!$file->isDot()) {
@@ -733,7 +733,7 @@ class Smarty_Internal_Utility
         // test if core plugins are available
         $source = SMARTY_PLUGINS_DIR;
         if (is_dir($source)) {
-            $expected = array(
+            $expected = [
                 "block.textformat.php" => true,
                 "function.counter.php" => true,
                 "function.cycle.php" => true,
@@ -781,7 +781,7 @@ class Smarty_Internal_Utility
                 "shared.mb_unicode.php" => true,
                 "shared.mb_wordwrap.php" => true,
                 "variablefilter.htmlspecialchars.php" => true,
-            );
+            ];
             $iterator = new DirectoryIterator($source);
             foreach ($iterator as $file) {
                 if (!$file->isDot()) {

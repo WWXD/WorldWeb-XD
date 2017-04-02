@@ -93,14 +93,14 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      *
      * @var callback[]
      */
-    public $startRenderCallbacks = array();
+    public $startRenderCallbacks = [];
 
     /**
      * Callbacks called after rendering template
      *
      * @var callback[]
      */
-    public $endRenderCallbacks = array();
+    public $endRenderCallbacks = [];
 
     /**
      * Create template data object
@@ -329,7 +329,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
                 $this->cached->hashes[ $tpl->compiled->nocache_hash ] = true;
             }
         }
-        $tpl->_cache = array();
+        $tpl->_cache = [];
         if (isset($uid)) {
             if ($smarty->debugging) {
                 if (!isset($smarty->_debug)) {
@@ -464,7 +464,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
         } else {
             $tpl->mustCompile = !$is_valid;
             $resource = $tpl->compiled;
-            $resource->includes = isset($properties[ 'includes' ]) ? $properties[ 'includes' ] : array();
+            $resource->includes = isset($properties[ 'includes' ]) ? $properties[ 'includes' ] : [];
         }
         if ($is_valid) {
             $resource->unifunc = $properties[ 'unifunc' ];
@@ -556,8 +556,8 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      */
     public function _cleanUp()
     {
-        $this->startRenderCallbacks = array();
-        $this->endRenderCallbacks = array();
+        $this->startRenderCallbacks = [];
+        $this->endRenderCallbacks = [];
         $this->inheritance = null;
     }
 
@@ -589,7 +589,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
     {
         // method of Smarty object?
         if (method_exists($this->smarty, $name)) {
-            return call_user_func_array(array($this->smarty, $name), $args);
+            return call_user_func_array([$this->smarty, $name], $args);
         }
         // parent
         return parent::__call($name, $args);

@@ -8,7 +8,7 @@ CheckPermission('admin.viewadminpanel');
 
 $title = __("Administration Panel");
 
-MakeCrumbs(array(actionLink("admin") => __('Admin')));
+MakeCrumbs([actionLink("admin") => __('Admin')]);
 
 
 if (function_exists('curl_init'))
@@ -19,12 +19,12 @@ else
 	$protstatus = __('Disabled');
 
 
-$adminInfo = array();
+$adminInfo = [];
 $adminInfo[__('Proxy protection')] = $protstatus;
 $adminInfo[__('Last viewcount milestone')] = $misc['milestone'];
 
 
-$adminLinks = array();
+$adminLinks = [];
 
 if ($loguser['root'])						$adminLinks[] = actionLinkTag(__("Recalculate statistics"), "recalc");
 if (HasPermission('admin.manageipbans'))	$adminLinks[] = actionLinkTag(__("Manage IP bans"), "ipbans");
@@ -44,4 +44,4 @@ if (HasPermission('admin.editusers'))		$adminLinks[] = actionLinkTag(__('Add sec
 $bucket = "adminpanel"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
-RenderTemplate('adminpanel', array('adminInfo' => $adminInfo, 'adminLinks' => $adminLinks));
+RenderTemplate('adminpanel', ['adminInfo' => $adminInfo, 'adminLinks' => $adminLinks]);

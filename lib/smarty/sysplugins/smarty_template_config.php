@@ -74,7 +74,7 @@ class Smarty_Template_Config extends Smarty_Template_Source
     public static function load(Smarty_Internal_Template $_template = null, Smarty $smarty = null,
                                 $template_resource = null)
     {
-        static $_incompatible_resources = array('extends' => true, 'php' => true);
+        static $_incompatible_resources = ['extends' => true, 'php' => true];
         if ($_template) {
             $smarty = $_template->smarty;
             $template_resource = $_template->template_resource;

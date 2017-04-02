@@ -15,7 +15,7 @@ $uname = $user["name"];
 if($user["displayname"])
 	$uname = $user["displayname"];
 
-MakeCrumbs(array(actionLink("profile", $uid, "", $user["name"]) => htmlspecialchars($uname), '' => __("List of threads")));
+MakeCrumbs([actionLink("profile", $uid, "", $user["name"]) => htmlspecialchars($uname), '' => __("List of threads")]);
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
 

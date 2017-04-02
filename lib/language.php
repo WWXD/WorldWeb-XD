@@ -28,7 +28,7 @@ function __($english, $flags = 0)
 				$final = $english;
 		}
 		if(!isset($languagePack))
-			$languagePack = array();
+			$languagePack = [];
 		$eDec = html_entity_decode($english, ENT_COMPAT, "UTF-8");
 		if(array_key_exists($eDec, $languagePack))
 			$final = $languagePack[$eDec];

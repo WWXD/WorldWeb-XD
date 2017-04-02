@@ -6,7 +6,7 @@ if (!defined('BLARG')) die();
 if(!$loguser['root'])
 	Kill(__("Owner only, please."));
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("recalc") => __("Recalculate statistics")));
+MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("recalc") => __("Recalculate statistics")]);
 
 function startFix() {
 	global $fixtime;

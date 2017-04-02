@@ -11,9 +11,9 @@ $haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings
 $RegisterWord = Settings::get('RegWordKey') !== "";
 $Math = Settings::get('Math');
 
-MakeCrumbs(array('register' => __('Register')));
+MakeCrumbs(['register' => __('Register')]);
 
-$sexes = array(__("Male"), __("Female"), __("N/A"));
+$sexes = [__("Male"), __("Female"), __("N/A")];
 
 if($loguserid && !$loguser['root'])
 	Kill(__("An unknown error occured, please try again later."));
@@ -108,12 +108,12 @@ if($http->post('register')) {
 				$err = __("You got the CAPTCHA wrong.");
 		}
 
-		$reasons = array();
+		$reasons = [];
 		if(IsTorExitPoint()) {
 			$reasons[] = 'tor';
 		}
 		$s = new StopForumSpam($stopForumSpamKey);
-		if($s->is_spammer(array('email' => $http->post('email'), 'ip' => $_SERVER['REMOTE_ADDR'] ))) {
+		if($s->is_spammer(['email' => $http->post('email'), 'ip' => $_SERVER['REMOTE_ADDR'] ])) {
 			$reasons[] = 'sfs';
 		}
 		if(count($reasons)) {
@@ -151,7 +151,7 @@ if($http->post('register')) {
 
 
 		$rLogUser = Query("select id, pss, password from {users} where 1");
-		$matches = array();
+		$matches = [];
 
 		while($testuser = Fetch($rLogUser)) {
 			if($testuser['id'] == $user['id'])

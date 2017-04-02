@@ -34,13 +34,13 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 if ($isBot) {
 	// keep SE bots out of certain pages that don't interest them anyway
 	// TODO move that code to those individual pages
-	$forbidden = array('register', 'login', 'online', 'referrals', 'records', 'lastknownbrowsers');
+	$forbidden = ['register', 'login', 'online', 'referrals', 'records', 'lastknownbrowsers'];
 	if (in_array($_GET['page'], $forbidden))
 		do403();
 }
 
 //Email Domains to block
-$emaildomainsblock = array(
+$emaildomainsblock = [
 '@07t15ru-fb2wo7r-szlcx1.com',
 '@0815.ru',
 '@0euros.fr',
@@ -1105,7 +1105,7 @@ $emaildomainsblock = array(
 '@zxcvbnm.co.uk',
 '@zyk6fly-qac.com',
 '@zyrqehpq.ru',
-);
+];
 
 //Proxy protect functions
 
@@ -1207,10 +1207,10 @@ class StopForumSpam {
             $known = false;
         }
 		return $spammer;
-        return array(
+        return [
             'spammer' => $spammer,
             'known' => $known
-        );
+        ];
     }
     /**
     * Get json and decode. Currently used for polling the database, but hoping for future

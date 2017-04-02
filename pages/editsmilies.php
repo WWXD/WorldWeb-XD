@@ -4,7 +4,7 @@
 
 CheckPermission('admin.editsmilies');
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("editsmilies") => __("Edit smilies")));
+MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("editsmilies") => __("Edit smilies")]);
 
 if (isset($_POST['action']) && $loguser['token'] != $_POST['key'])
 	Kill(__("No."));

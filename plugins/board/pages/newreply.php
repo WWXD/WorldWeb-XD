@@ -49,13 +49,13 @@ LoadPostToolbar();
 
 $tags = ParseThreadTags($thread['title']);
 $urlname = $isHidden ? '' : $tags[0];
-MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $urlname) => $tags[0], '' => __("New reply")));
+MakeCrumbs(forumCrumbs($forum) + [actionLink("thread", $tid, '', $urlname) => $tags[0], '' => __("New reply")]);
 
 if(!$thread['sticky'] && Settings::get("oldThreadThreshold") > 0 && $thread['lastpostdate'] < time() - (2592000 * Settings::get("oldThreadThreshold")))
 	Alert(__("You are about to bump an old thread. This is usually a very bad idea. Please think about what you are about to do before you press the Post button."));
 
 
-$attachs = array();
+$attachs = [];
 
 if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
@@ -199,7 +199,7 @@ function getCheck($name) {
 	else return "";
 }
 
-$moodSelects = array();
+$moodSelects = [];
 if($_POST['mood'])
 	$moodSelects[(int)$_POST['mood']] = "selected=\"selected\" ";
 $moodOptions = "<option ".$moodSelects[0]."value=\"0\">".__("[Default avatar]")."</option>\n";
@@ -224,7 +224,7 @@ if (HasPermission('mod.closethreads', $fid)) {
 
 $mod_stick = '';
 
-$fields = array(
+$fields = [
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n$prefill</textarea>",
 	'mood' => "<select size=1 name=\"mood\">".$moodOptions."</select>",
 	'nopl' => "<label><input type=\"checkbox\" ".getCheck('nopl')." name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
@@ -233,13 +233,13 @@ $fields = array(
 
 	'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
-);
+];
 
 echo "
 	<form name=\"postform\" action=\"".htmlentities(actionLink("newreply", $tid))."\" method=\"post\" enctype=\"multipart/form-data\">
 		<input type=\"hidden\" name=\"ninja\" value=\"$ninja\">";
 
-RenderTemplate('form_newreply', array('fields' => $fields));
+RenderTemplate('form_newreply', ['fields' => $fields]);
 
 PostAttachForm($attachs);
 

@@ -5,8 +5,8 @@ function loadRanksets() {
 
 	if(isset($ranksetNames)) return;
 
-	$ranksetData = array();
-	$ranksetNames = array();
+	$ranksetData = [];
+	$ranksetNames = [];
 
 	$dir = "img/ranksets/";
 
@@ -41,12 +41,12 @@ function loadRanksets() {
 							break;
 					}
 					$ranksetNames[$file] = $file;
-					$ranksetData[$file] = array();
+					$ranksetData[$file] = [];
 					$data = json_decode(file_get_contents($jsonfile, FILE_USE_INCLUDE_PATH), true);
 					foreach($data as $text => $d) {
 						$num = $d["num"];
 						$image = $d["image"];
-						array_push($ranksetData[$file],array("num" => $num, "image" => $image, "text" => $text));
+						array_push($ranksetData[$file],["num" => $num, "image" => $image, "text" => $text]);
 					}
 				}
 				else if(file_exists($phpinfofile))

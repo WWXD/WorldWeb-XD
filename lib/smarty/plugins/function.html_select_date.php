@@ -57,7 +57,7 @@ function smarty_function_html_select_date($params)
     static $_current_year = null;
     if ($_month_timestamps === null) {
         $_current_year = date('Y');
-        $_month_timestamps = array();
+        $_month_timestamps = [];
         for ($i = 1; $i <= 12; $i ++) {
             $_month_timestamps[ $i ] = mktime(0, 0, 0, $i, 1, 2000);
         }
@@ -180,7 +180,7 @@ function smarty_function_html_select_date($params)
     if (isset($params[ 'time' ]) && is_array($params[ 'time' ])) {
         if (isset($params[ 'time' ][ $prefix . 'Year' ])) {
             // $_REQUEST[$field_array] given
-            foreach (array('Y' => 'Year', 'm' => 'Month', 'd' => 'Day') as $_elementKey => $_elementName) {
+            foreach (['Y' => 'Year', 'm' => 'Month', 'd' => 'Day'] as $_elementKey => $_elementName) {
                 $_variableName = '_' . strtolower($_elementName);
                 $$_variableName =
                     isset($params[ 'time' ][ $prefix . $_elementName ]) ? $params[ 'time' ][ $prefix . $_elementName ] :
@@ -188,7 +188,7 @@ function smarty_function_html_select_date($params)
             }
         } elseif (isset($params[ 'time' ][ $field_array ][ $prefix . 'Year' ])) {
             // $_REQUEST given
-            foreach (array('Y' => 'Year', 'm' => 'Month', 'd' => 'Day') as $_elementKey => $_elementName) {
+            foreach (['Y' => 'Year', 'm' => 'Month', 'd' => 'Day'] as $_elementKey => $_elementName) {
                 $_variableName = '_' . strtolower($_elementName);
                 $$_variableName = isset($params[ 'time' ][ $field_array ][ $prefix . $_elementName ]) ?
                     $params[ 'time' ][ $field_array ][ $prefix . $_elementName ] : date($_elementKey);
@@ -209,7 +209,7 @@ function smarty_function_html_select_date($params)
 
     // make syntax "+N" or "-N" work with $start_year and $end_year
     // Note preg_match('!^(\+|\-)\s*(\d+)$!', $end_year, $match) is slower than trim+substr
-    foreach (array('start', 'end') as $key) {
+    foreach (['start', 'end'] as $key) {
         $key .= '_year';
         $t = $$key;
         if ($t === null) {

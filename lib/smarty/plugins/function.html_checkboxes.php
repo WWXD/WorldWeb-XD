@@ -50,7 +50,7 @@ function smarty_function_html_checkboxes($params, $template)
     $name = 'checkbox';
     $values = null;
     $options = null;
-    $selected = array();
+    $selected = [];
     $separator = '';
     $escape = true;
     $labels = true;
@@ -84,7 +84,7 @@ function smarty_function_html_checkboxes($params, $template)
             case 'checked':
             case 'selected':
                 if (is_array($_val)) {
-                    $selected = array();
+                    $selected = [];
                     foreach ($_val as $_sel) {
                         if (is_object($_sel)) {
                             if (method_exists($_sel, "__toString")) {
@@ -153,7 +153,7 @@ function smarty_function_html_checkboxes($params, $template)
         return '';
     } /* raise error here? */
 
-    $_html_result = array();
+    $_html_result = [];
 
     if (isset($options)) {
         foreach ($options as $_key => $_val) {

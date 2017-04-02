@@ -66,9 +66,9 @@ function CleanupUploads() {
 function HandlePostAttachments($postid, $final) {
 	$targetdir = DATA_DIR.'uploads';
 
-	if (!Settings::get('postAttach')) return array();
+	if (!Settings::get('postAttach')) return [];
 
-	$attachs = array();
+	$attachs = [];
 
 	if (isset($_POST['files']) && !empty($_POST['files'])) {
 		foreach ($_POST['files'] as $fileid=>$blarg) {
@@ -98,7 +98,7 @@ function HandlePostAttachments($postid, $final) {
 function PostAttachForm($files) {
 	if (!Settings::get('postAttach')) return;
 
-	$fdata = array();
+	$fdata = [];
 	asort($files);
 	foreach ($files as $_fileid=>$filename) {
 		$fileid = htmlspecialchars($_fileid);
@@ -108,11 +108,11 @@ function PostAttachForm($files) {
 			<input type="hidden" name="files['.$fileid.']" value="blarg">';
 	}
 
-	$fields = array(
+	$fields = [
 		'newFile' => '<input type="file" name="newfile">',
 
 		'btnSave' => '<input type="submit" name="saveuploads" value="'.__('Save').'">',
-	);
+	];
 
-	RenderTemplate('form_attachfiles', array('files' => $fdata, 'fields' => $fields, 'fileCap' => BytesToSize(POST_ATTACHMENT_CAP)));
+	RenderTemplate('form_attachfiles', ['files' => $fdata, 'fields' => $fields, 'fileCap' => BytesToSize(POST_ATTACHMENT_CAP)]);
 }

@@ -4,21 +4,21 @@
 if (!defined('BLARG')) die();
 
 $title = __("FAQ");
-$links = array();
+$links = [];
 if(HasPermission('admin.editsettings'))
 	$links[] = actionLinkTag(__("Edit the FAQ"), "editsettings", '', 'field=faqText');
 
-MakeCrumbs(array(actionLink("faq") => __("FAQ")), $links);
+MakeCrumbs([actionLink("faq") => __("FAQ")], $links);
 
 makeThemeArrays();
 
 $admin = Fetch(Query("select u.(_userfields) from {users} u where u.primarygroup={0}", Settings::get('rootGroup')));
 $admin = userLink(getDataPrefix($admin, 'u_'));
 
-$sexes = array(0=>__("Male"),1=>__("Female"),2=>__("N/A"));
-$scolors = array(0 => 'color_male', 1 => 'color_female', 2 => 'color_unspec');
+$sexes = [0=>__("Male"),1=>__("Female"),2=>__("N/A")];
+$scolors = [0 => 'color_male', 1 => 'color_female', 2 => 'color_unspec'];
 
-$gcolors = array();
+$gcolors = [];
 $g = Query("SELECT title, color_male, color_female, color_unspec FROM {usergroups} WHERE type=0 ORDER BY rank");
 while ($group = Fetch($g))
 	$gcolors[] = $group;
@@ -61,7 +61,7 @@ $colortable = format("
 ", $headers, $colors);
 
 //implode(", ", $themefiles)
-$themelist = array();
+$themelist = [];
 foreach ($themefiles as $i=>$t)
 	$themelist[$t] = $themes[$i];
 ksort($themelist);

@@ -30,7 +30,7 @@ class Text_Diff_Renderer {
     /**
      * Constructor.
      */
-    function Text_Diff_Renderer($params = array())
+    function Text_Diff_Renderer($params = [])
     {
         foreach ($params as $param => $value) {
             $v = '_' . $param;
@@ -47,7 +47,7 @@ class Text_Diff_Renderer {
      */
     function getParams()
     {
-        $params = array();
+        $params = [];
         foreach (get_object_vars($this) as $k => $v) {
             if ($k[0] == '_') {
                 $params[substr($k, 1)] = $v;
@@ -68,7 +68,7 @@ class Text_Diff_Renderer {
     {
         $xi = $yi = 1;
         $block = false;
-        $context = array();
+        $context = [];
 
         $nlead = $this->_leading_context_lines;
         $ntrail = $this->_trailing_context_lines;
@@ -99,7 +99,7 @@ class Text_Diff_Renderer {
                     $context = array_slice($context, count($context) - $nlead);
                     $x0 = $xi - count($context);
                     $y0 = $yi - count($context);
-                    $block = array();
+                    $block = [];
                     if ($context) {
                         $block[] = new Text_Diff_Op_copy($context);
                     }

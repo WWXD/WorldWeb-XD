@@ -19,61 +19,61 @@ $var1024 = "varchar(1024)".$notNull;
 $AI = "int(11) NOT NULL AUTO_INCREMENT";
 $keyID = "primary key (`id`)";
 
-$tables = array(
-	"badges" => array(
-		"fields" => array(
+$tables = [
+	"badges" => [
+		"fields" => [
 			"owner" => $genericInt,
 			"name" => $var256,
 			"color" => $smallerInt,
-		),
+		],
 		"special" => "unique key `steenkinbadger` (`owner`,`name`)"
-	),
+	],
 
-	"settings" => array(
-		"fields" => array(
+	"settings" => [
+		"fields" => [
 			"plugin" => $var128,
 			"name" => $var128,
 			"value" => $text,
-		),
+		],
 		"special" => "unique key `mainkey` (`plugin`,`name`)"
-	),
+	],
 
 	//Weird column names: An entry means that "blockee" has blocked the layout of "user"
-	"blockedlayouts" => array(
-		"fields" => array(
+	"blockedlayouts" => [
+		"fields" => [
 			"user" => $genericInt,
 			"blockee" => $genericInt,
-		),
+		],
 		"special" => "key `mainkey` (`blockee`, `user`)"
-	),
+	],
 
-	"categories" => array(
-		"fields" => array(
+	"categories" => [
+		"fields" => [
 			"id" => $AI,
 			"name" => $var256,
 			"corder" => $smallerInt,
 			"board" => "varchar(16)".$notNull,
-		),
+		],
 		"special" => $keyID
-	),
+	],
 
-	"enabledplugins" => array(
-		"fields" => array(
+	"enabledplugins" => [
+		"fields" => [
 			"plugin" => $var256,
-		),
+		],
 		"special" => "unique key `plugin` (`plugin`)"
-	),
+	],
 
-	"favorites" => array(
-		"fields" => array(
+	"favorites" => [
+		"fields" => [
 			"user" => $genericInt,
 			"thread" => $genericInt,
-		),
+		],
 		"special" => "primary key (`user`, `thread`)"
-	),
+	],
 
-	"forums" => array(
-		"fields" => array(
+	"forums" => [
+		"fields" => [
 			"id" => $AI,
 			"title" => $var256,
 			"description" => $text,
@@ -90,12 +90,12 @@ $tables = array(
 			"r" => $genericInt,
 			"redirect" => $var256,
 			"offtopic" => $bool,
-		),
+		],
 		"special" => $keyID.", key `catid` (`catid`), key `l` (`l`), key `r` (`r`)"
-	),
+	],
 
-	"guests" => array(
-		"fields" => array(
+	"guests" => [
+		"fields" => [
 			"id" => $AI,
 			"ip" => "varchar(45)".$notNull,
 			"date" => $genericInt,
@@ -103,39 +103,39 @@ $tables = array(
 			"lastforum" => $genericInt,
 			"useragent" => "varchar(1024)".$notNull,
 			"bot" => $bool,
-		),
+		],
 		"special" => $keyID.", key `ip` (`ip`), key `bot` (`bot`)"
-	),
+	],
 
-	"ignoredforums" => array(
-		"fields" => array(
+	"ignoredforums" => [
+		"fields" => [
 			"uid" => $genericInt,
 			"fid" => $genericInt,
-		),
+		],
 		"special" => "key `mainkey` (`uid`, `fid`)"
-	),
+	],
 
-	"ip2c" => array(
-		"fields" => array(
+	"ip2c" => [
+		"fields" => [
 			"ip_from" => "bigint(12) NOT NULL DEFAULT '0'",
 			"ip_to" => "bigint(12) NOT NULL DEFAULT '0'",
 			"cc" => "varchar(2) DEFAULT ''",
-		),
+		],
 		"special" => "key `ip_from` (`ip_from`)"
-	),
+	],
 
-	"ipbans" => array(
-		"fields" => array(
+	"ipbans" => [
+		"fields" => [
 			"ip" => "varchar(45)".$notNull,
 			"reason" => "varchar(100)".$notNull,
 			"date" => $genericInt,
 			"whitelisted" => $bool,
-		),
+		],
 		"special" => "unique key `ip` (`ip`), key `date` (`date`)"
-	),
+	],
 
-	"misc" => array(
-		"fields" => array(
+	"misc" => [
+		"fields" => [
 			"version" => $genericInt,
 			"views" => $genericInt,
 			"hotcount" => $genericInt,
@@ -147,52 +147,52 @@ $tables = array(
 			"maxpostshour" => $genericInt,
 			"maxpostshourdate" => $genericInt,
 			"milestone" => $text,
-		),
-	),
+		],
+	],
 
-	"moodavatars" => array(
-		"fields" => array(
+	"moodavatars" => [
+		"fields" => [
 			"id" => $AI,
 			"uid" => $genericInt,
 			"mid" => $genericInt,
 			"name" => $var256,
-		),
+		],
 		"special" => $keyID. ", key `mainkey` (`uid`, `mid`)"
-	),
+	],
 
-	"notifications" => array(
-		"fields" => array(
+	"notifications" => [
+		"fields" => [
 			"type" => "varchar(16)".$notNull,
 			"id" => $genericInt,
 			"user" => $genericInt,
 			"date" => $genericInt,
 			"args" => $var256,
-		),
+		],
 		"special" => "PRIMARY KEY (`type`,`id`,`user`), KEY `type` (`type`), KEY `user` (`user`), KEY `date` (`date`)"
-	),
+	],
 
-	"passmatches" => array(
-		"fields" => array(
+	"passmatches" => [
+		"fields" => [
 			"date" => $genericInt,
 			"ip" => "varchar(50)".$notNull,
 			"user" => $genericInt,
 			"matches" => "varchar(200)".$notNull,
-		),
-	),
+		],
+	],
 
-	"permissions" => array(
-		"fields" => array(
+	"permissions" => [
+		"fields" => [
 			"applyto" => "tinyint(4) NOT NULL DEFAULT '0'",
 			"id" => $genericInt,
 			"perm" => "varchar(32)".$notNull,
 			"arg" => $genericInt,
 			"value" => "tinyint(4) NOT NULL DEFAULT '0'",
-		),
+		],
 		"special" => "PRIMARY KEY (`applyto`,`id`,`perm`,`arg`), KEY `perm` (`perm`,`arg`), KEY `applyto` (`applyto`,`id`), KEY `applyto_2` (`applyto`,`id`,`perm`)"
-	),
+	],
 
-	"pmsgs" => array(
-		"fields" => array(
+	"pmsgs" => [
+		"fields" => [
 			"id" => $genericInt,
 			"userto" => $genericInt,
 			"userfrom" => $genericInt,
@@ -203,50 +203,50 @@ $tables = array(
 			"deleted" => "tinyint(4) NOT NULL DEFAULT '0'",
 			"drafting" => $bool,
 			"draft_to" => $var128,
-		),
+		],
 		"special" => "key `id` (`id`), key `userto` (`userto`), key `userfrom` (`userfrom`), key `msgread` (`msgread`), key `date` (`date`), key `drafting` (`drafting`)"
-	),
+	],
 
-	"pmsgs_text" => array(
-		"fields" => array(
+	"pmsgs_text" => [
+		"fields" => [
 			"pid" => $AI,
 			"title" => "varchar(256)".$utf8ci.$notNull,
 			"text" => $postText,
-		),
+		],
 		"special" => "primary key (`pid`)"
-	),
+	],
 
-	"poll" => array(
-		"fields" => array(
+	"poll" => [
+		"fields" => [
 			"id" => $AI,
 			"question" => $var256,
 			"closed" => $bool,
 			"doublevote" => $bool,
-		),
+		],
 		"special" => $keyID
-	),
+	],
 
-	"pollvotes" => array(
-		"fields" => array(
+	"pollvotes" => [
+		"fields" => [
 			"user" => $genericInt,
 			"choiceid" => $genericInt,
 			"poll" => $genericInt,
-		),
+		],
 		"special" => "key `lol` (`user`, `choiceid`), key `poll` (`poll`)"
-	),
+	],
 
-	"poll_choices" => array(
-		"fields" => array(
+	"poll_choices" => [
+		"fields" => [
 			"id" => $AI,
 			"poll" => $genericInt,
 			"choice" => $var256,
 			"color" => "varchar(25)".$notNull,
-		),
+		],
 		"special" => $keyID.", key `poll` (`poll`)"
-	),
+	],
 
-	"posts" => array(
-		"fields" => array(
+	"posts" => [
+		"fields" => [
 			"id" => $AI,
 			"thread" => $genericInt,
 			"user" => $genericInt,
@@ -260,23 +260,23 @@ $tables = array(
 			"mood" => $genericInt,
 			"currentrevision" => $genericInt,
 			"has_attachments" => $bool,
-		),
+		],
 		"special" => $keyID.", key `thread` (`thread`), key `date` (`date`), key `user` (`user`), key `ip` (`ip`), key `id` (`id`, `currentrevision`), key `deletedby` (`deletedby`)"
-	),
+	],
 
-	"posts_text" => array(
-		"fields" => array(
+	"posts_text" => [
+		"fields" => [
 			"pid" => $genericInt,
 			"text" => $postText,
 			"revision" => $genericInt,
 			"user" => $genericInt,
 			"date" => $genericInt,
-		),
+		],
 		"special" => "fulltext key `text` (`text`), key `pidrevision` (`pid`, `revision`), key `user` (`user`)"
-	),
+	],
 
-	"queryerrors" => array(
-		"fields" => array(
+	"queryerrors" => [
+		"fields" => [
 			"id" => $AI,
 			"user" => $genericInt,
 			"ip" => "varchar(50)".$notNull,
@@ -286,12 +286,12 @@ $tables = array(
 			"post" => $text,
 			"cookie" => $text,
 			"error" => $text
-		),
+		],
 		"special" => $keyID
-	),
+	],
 
-	"reports" => array(
-		"fields" => array(
+	"reports" => [
+		"fields" => [
 			"ip" => "varchar(45)".$notNull,
 			"user" => $genericInt,
 			"time" => $genericInt,
@@ -299,30 +299,30 @@ $tables = array(
 			"hidden" => $bool,
 			"severity" => "tinyint(2) NOT NULL DEFAULT '0'",
 			"request" => $text,
-		),
-	),
+		],
+	],
 
-	"searchcache" => array(
-		"fields" => array(
+	"searchcache" => [
+		"fields" => [
 			"queryhash" => "char(32)".$notNull,
 			"query" => $text,
 			"date" => $genericInt,
 			"threadresults" => $text,
 			"postresults" => $text,
-		),
+		],
 		"special" => "PRIMARY KEY (`queryhash`)"
-	),
+	],
 
-	"secondarygroups" => array(
-		"fields" => array(
+	"secondarygroups" => [
+		"fields" => [
 			"userid" => $genericInt,
 			"groupid" => $genericInt,
-		),
+		],
 		"special" => "PRIMARY KEY (`userid`,`groupid`)"
-	),
+	],
 
-	"sessions" => array(
-		"fields" => array(
+	"sessions" => [
+		"fields" => [
 			"id" => $var256,
 			"user" => $genericInt,
 			"expiration" => $genericInt,
@@ -332,30 +332,30 @@ $tables = array(
 			"lastip" => $var128,
 			"lasturl" => $var128,
 			"lasttime" => $genericInt,
-		),
+		],
 		"special" => $keyID.", key `user` (`user`), key `expiration` (`expiration`)"
-	),
+	],
 
-	"smilies" => array(
-		"fields" => array(
+	"smilies" => [
+		"fields" => [
 			"id" => $AI,
 			"code" => "varchar(32)".$notNull,
 			"image" => "varchar(32)".$notNull,
-		),
+		],
 		"special" => $keyID
-	),
+	],
 
-	"spieslog" => array(
-		"fields" => array(
+	"spieslog" => [
+		"fields" => [
 			"userid" => $genericInt,
 			"date" => $genericInt,
 			"pmid" => $genericInt,
-		),
+		],
 		"special" => "KEY `userid` (`userid`), KEY `date` (`date`)"
-	),
+	],
 
-	"threads" => array(
-		"fields" => array(
+	"threads" => [
+		"fields" => [
 			"id" => $AI,
 			"forum" => $genericInt,
 			"user" => $genericInt,
@@ -372,21 +372,21 @@ $tables = array(
 			"sticky" => $bool,
 			"poll" => $genericInt,
 			"description" => "varchar(100)".$utf8ci.$notNull,
-		),
+		],
 		"special" => $keyID.", key `forum` (`forum`), key `user` (`user`), key `sticky` (`sticky`), key `lastpostdate` (`lastpostdate`), key `date` (`date`), fulltext key `title` (`title`)"
-	),
+	],
 
-	"threadsread" => array(
-		"fields" => array(
+	"threadsread" => [
+		"fields" => [
 			"id" => $genericInt,
 			"thread" => $genericInt,
 			"date" => $genericInt,
-		),
+		],
 		"special" => "primary key (`id`, `thread`)"
-	),
+	],
 
-	"uploadedfiles" => array(
-		"fields" => array(
+	"uploadedfiles" => [
+		"fields" => [
 			"id" => "char(16)".$notNull,
 			"physicalname" => "varchar(64)".$notNull,
 			"filename" => "varchar(512)".$notNull,
@@ -397,25 +397,25 @@ $tables = array(
 			"parentid" => $genericInt,
 			"downloads" => $genericInt,
 			"deldate" => $genericInt,
-		),
+		],
 		"special" => $keyID.", KEY `user` (`user`), KEY `parent` (`parenttype`,`parentid`), KEY `deldate` (`deldate`)"
-	),
+	],
 
 	// cid = user who commented
 	// uid = user whose profile received the comment
-	"usercomments" => array(
-		"fields" => array(
+	"usercomments" => [
+		"fields" => [
 			"id" => $AI,
 			"uid" => $genericInt,
 			"cid" => $genericInt,
 			"text" => $text,
 			"date" => $genericInt,
-		),
+		],
 		"special" => $keyID.", key `uid` (`uid`), key `date` (`date`)"
-	),
+	],
 
-	"usergroups" => array(
-		"fields" => array(
+	"usergroups" => [
+		"fields" => [
 			"id" => $genericInt,
 			"name" => "varchar(32)".$notNull,
 			"title" => $var256, 
@@ -425,12 +425,12 @@ $tables = array(
 			"color_male" => "varchar(8)".$notNull,
 			"color_female" => "varchar(8)".$notNull,
 			"color_unspec" => "varchar(8)".$notNull,
-		),
+		],
 		"special" => $keyID
-	),
+	],
 
-	"users" => array(
-		"fields" => array(
+	"users" => [
+		"fields" => [
 			"id" => $AI,
 			"name" => "varchar(32)".$utf8ci.$notNull,
 			"displayname" => "varchar(32)".$utf8ci.$notNull,
@@ -480,8 +480,8 @@ $tables = array(
 			"lostkey" => $var128,
 			"lostkeytimer" => $genericInt,
 			"loggedin" => $bool,
-		),
+		],
 		"special" => $keyID.", key `posts` (`posts`), key `name` (`name`), key `lastforum` (`lastforum`), key `lastposttime` (`lastposttime`), key `lastactivity` (`lastactivity`), key `lastip` (`lastip`)"
-	),
-);
+	],
+];
 

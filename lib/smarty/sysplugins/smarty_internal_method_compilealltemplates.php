@@ -80,7 +80,7 @@ class Smarty_Internal_Method_CompileAllTemplates
                 $_start_time = microtime(true);
                 $_smarty = clone $smarty;
                 // 
-                $_smarty->_cache = array();
+                $_smarty->_cache = [];
                 $_smarty->ext = new Smarty_Internal_Extension_Handler();
                 $_smarty->ext->objType = $_smarty->_objType;
                 $_smarty->force_compile = $force_compile;

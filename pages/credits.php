@@ -17,4 +17,4 @@ $credits = ('
 		<li>Everyone behind <a href="https://fortawesome.github.io/Font-Awesome/">Font Awesome</a>, <a href="https://jquery.com/">jQuery</a>, Smarty, and any other libraries this software uses</li>
 	</ul>');
 
-RenderTemplate('credits', array('credits' => $credits));
+RenderTemplate('credits', ['credits' => $credits]);

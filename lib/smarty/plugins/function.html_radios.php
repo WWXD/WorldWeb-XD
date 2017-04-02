@@ -140,7 +140,7 @@ function smarty_function_html_radios($params, $template)
         return '';
     }
 
-    $_html_result = array();
+    $_html_result = [];
 
     if (isset($options)) {
         foreach ($options as $_key => $_val) {

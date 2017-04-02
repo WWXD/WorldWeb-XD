@@ -66,7 +66,7 @@ else if ($action == 'rp') // retrieve post
 	if (!HasPermission('mod.deleteposts', $post['fid']) || $poster['id'] == $loguserid)
 		die(__("No."));
 
-	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, array('tid'=>$post['thread'], 'fid'=>$post['fid'])));
+	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, ['tid'=>$post['thread'], 'fid'=>$post['fid']]));
 }
 else if($action == "ou")	//Online Users
 {

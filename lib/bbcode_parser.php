@@ -13,8 +13,7 @@ define('TAG_RAWCONTENTS',	0x0010);	// tag whose contents shouldn't be parsed (<s
 define('TAG_NOAUTOLINK',	0x0020);	// prevent autolinking
 define('TAG_NOBR',			0x0040);	// no conversion of linebreaks to <br> (pre)
 
-$TagList = array
-(
+$TagList = [
 	// HTML
 
 	'<a'		=>	TAG_GOOD | TAG_NOAUTOLINK,
@@ -123,27 +122,26 @@ $TagList = array
 	'[black'	=>	TAG_GOOD,
 	'[grey'	=>	TAG_GOOD,
 	'[gray'	=>	TAG_GOOD,
-);
+];
 
-$TagAllowedIn = array
-(
-	'<tbody'	=> array('<table' => 1),
-	'<thead'	=> array('<table' => 1),
-	'<tfoot'	=> array('<table' => 1),
-	'<caption'	=> array('<table' => 1),
-	'<colgroup'	=> array('<table' => 1),
-	'<tr' 		=> array('<table' => 1, '<tbody' => 1, '<thead' => 1, '<tfoot' => 1),
-	'<td'		=> array('<tr' => 1),
-	'<th' 		=> array('<tr' => 1),
-	'<col'		=> array('<colgroup' => 1),
+$TagAllowedIn = [
+	'<tbody'	=> ['<table' => 1],
+	'<thead'	=> ['<table' => 1],
+	'<tfoot'	=> ['<table' => 1],
+	'<caption'	=> ['<table' => 1],
+	'<colgroup'	=> ['<table' => 1],
+	'<tr' 		=> ['<table' => 1, '<tbody' => 1, '<thead' => 1, '<tfoot' => 1],
+	'<td'		=> ['<tr' => 1],
+	'<th' 		=> ['<tr' => 1],
+	'<col'		=> ['<colgroup' => 1],
 
-	'<li' 		=> array('<ul' => 1, '<ol' => 1),
+	'<li' 		=> ['<ul' => 1, '<ol' => 1],
 
 
-	'[tr'		=> array('[table' => 1),
-	'[trh' 		=> array('[table' => 1),
-	'[td'		=> array('[tr' => 1, '[trh' => 1),
-);
+	'[tr'		=> ['[table' => 1],
+	'[trh' 		=> ['[table' => 1],
+	'[td'		=> ['[tr' => 1, '[trh' => 1],
+];
 
 
 function filterTag($tag, $attribs, $contents, $close, $parenttag) {
@@ -170,7 +168,7 @@ function filterText($s, $parentTag, $parentMask) {
 	if ($parentMask & TAG_RAWCONTENTS) return $s;
 
 	// prevent unwanted shit
-	$s = str_replace(array('<', '>'), array('&lt;', '&gt;'), $s);
+	$s = str_replace(['<', '>'], ['&lt;', '&gt;'], $s);
 	//$s = preg_replace('@&([a-z0-9]*[^a-z0-9;])@', '&amp;$1', $s);
 
 	if (!($parentMask & TAG_NOBR)) $s = nl2br($s);
@@ -188,11 +186,11 @@ function tagAllowedIn($curtag, $parenttag) {
 
 function parseBBCode($text) {
 	global $TagList, $TagAllowedIn;
-	$spacechars = array(' ', "\t", "\r", "\n", "\f");
-	$attrib_bad = array(' ', "\t", "\r", "\n", "\f", '<', '[', '/', '=');
+	$spacechars = [' ', "\t", "\r", "\n", "\f"];
+	$attrib_bad = [' ', "\t", "\r", "\n", "\f", '<', '[', '/', '='];
 
 	$raw = preg_split("@(</?[a-zA-Z][^\s\f/>]*|\[/?[a-zA-Z][a-zA-Z0-9]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
-	$outputstack = array(0 => array('tag' => '', 'attribs' => '', 'contents' => ''));
+	$outputstack = [0 => ['tag' => '', 'attribs' => '', 'contents' => '']];
 	$si = 0;
 
 	$currenttag = '';
@@ -353,14 +351,14 @@ function parseBBCode($text) {
 								$outputstack[$si]['contents'] .= filterTag($ctag, $cattribs, $ccontents, false, $outputstack[$si]['tag']);
 							}
 
-							$outputstack[++$si] = array('tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask));
+							$outputstack[++$si] = ['tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask)];
 
 							$currenttag = $cur;
 							$currentmask = $tagmask;
 						} else
 							$outputstack[$si]['contents'] .= filterText(htmlspecialchars($followingtext), $currenttag, $currentmask);
 					} else if (tagAllowedIn($tagname, $currenttag)) {
-						$outputstack[++$si] = array('tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask));
+						$outputstack[++$si] = ['tag' => $cur, 'attribs' => $tagattribs, 'contents' => filterText($followingtext, $cur, $tagmask)];
 
 						$currenttag = $cur;
 						$currentmask = $tagmask;

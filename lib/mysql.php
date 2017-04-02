@@ -19,7 +19,7 @@ function SqlEscape($text) {
 }
 
 function Query_ExpandFieldLists($match) {
-	$ret = array();
+	$ret = [];
 	$prefix = $match[1];
 	$fields = preg_split('@\s*,\s*@', $match[2]);
 
@@ -102,8 +102,8 @@ function query() {
 	return RawQuery($query);
 }
 
-$tableLists = array(
-);
+$tableLists = [
+];
 
 function rawQuery($query) {
 	global $queries, $querytext, $loguser, $dblink, $debugMode, $logSqlErrors, $dbpref, $loguserid, $mysqlCellClass;
@@ -190,7 +190,7 @@ function affectedRows() {
 }
 
 function getDataPrefix($data, $pref) {
-	$res = array();
+	$res = [];
 
 	foreach($data as $key=>$val)
 		if(substr($key, 0, strlen($pref)) == $pref)
@@ -200,9 +200,9 @@ function getDataPrefix($data, $pref) {
 }
 
 
-$fieldLists = array(
+$fieldLists = [
 	"userfields" => "id,name,displayname,primarygroup,sex,minipic"
-);
+];
 
 function loadFieldLists() {
 	global $fieldLists, $tableLists;

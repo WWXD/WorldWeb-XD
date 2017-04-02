@@ -40,9 +40,9 @@ if ($_GET['action'] == "markasread") {
 
 $title = 'Favorites';
 
-$links = array(actionLinkTag(__("Mark threads read"), 'favorites', 0, 'action=markasread'));
+$links = [actionLinkTag(__("Mark threads read"), 'favorites', 0, 'action=markasread')];
 
-MakeCrumbs(array(actionLink('favorites') => 'Favorites'), $links);
+MakeCrumbs([actionLink('favorites') => 'Favorites'], $links);
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
 

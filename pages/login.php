@@ -65,7 +65,7 @@ if($http->post('action') === "logout" && $loguserid) {
 		Report("[b]".$user['name']."[/] logged in from [b]".$_SERVER['REMOTE_ADDR']."[/].", 1);
 
 		$rLogUser = Query("select id, pss, password from {users} where 1");
-		$matches = array();
+		$matches = [];
 
 		while($testuser = Fetch($rLogUser)) {
 			if($testuser['id'] == $user['id'])
@@ -92,25 +92,25 @@ if($http->post('action') === "logout" && $loguserid) {
 }
 
 $title = __('Log in');
-MakeCrumbs(array('' => __('Log in')));
+MakeCrumbs(['' => __('Log in')]);
 
 $forgotPass = '';
 
 if(Settings::get("mailResetSender") != "")
 	$forgotPass = "<button onclick=\"document.location = '".htmlentities(pageLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
 
-$fields = array(
+$fields = [
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",
 	'password' => "<input type=\"password\" name=\"pass\" size=24>",
 	'session' => "<label><input type=\"checkbox\" name=\"session\">".__("This session only")."</label>",
 
 	'btnLogin' => "<input type=\"submit\" name=\"actionlogin\" value=\"".__("Log in")."\">",
 	'btnForgotPass' => $forgotPass,
-);
+];
 
 echo "<form name=\"loginform\" action=\"".htmlentities(pageLink("login"))."\" method=\"post\">";
 
-RenderTemplate('form_login', array('fields' => $fields));
+RenderTemplate('form_login', ['fields' => $fields]);
 
 echo "</form>
 	<script type=\"text/javascript\">

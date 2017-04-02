@@ -64,7 +64,7 @@ class Smarty_Internal_Config_File_Compiler
      *
      * @var array
      */
-    public $config_data = array();
+    public $config_data = [];
 
     /**
      * compiled config data must always be written
@@ -87,8 +87,8 @@ class Smarty_Internal_Config_File_Compiler
         $this->lexer_class = $lexer_class;
         $this->parser_class = $parser_class;
         $this->smarty = $smarty;
-        $this->config_data[ 'sections' ] = array();
-        $this->config_data[ 'vars' ] = array();
+        $this->config_data[ 'sections' ] = [];
+        $this->config_data[ 'vars' ] = [];
     }
 
     /**
@@ -102,8 +102,8 @@ class Smarty_Internal_Config_File_Compiler
     {
         $this->template = $template;
         $this->template->compiled->file_dependency[ $this->template->source->uid ] =
-            array($this->template->source->filepath, $this->template->source->getTimeStamp(),
-                  $this->template->source->type);
+            [$this->template->source->filepath, $this->template->source->getTimeStamp(),
+                  $this->template->source->type];
         if ($this->smarty->debugging) {
             if (!isset( $this->smarty->_debug)) {
                 $this->smarty->_debug  = new Smarty_Internal_Debug();
@@ -112,7 +112,7 @@ class Smarty_Internal_Config_File_Compiler
         }
         // init the lexer/parser to compile the config file
         /* @var Smarty_Internal_ConfigFileLexer $lex */
-        $lex = new $this->lexer_class(str_replace(array("\r\n", "\r"), "\n", $template->source->getContent()) . "\n",
+        $lex = new $this->lexer_class(str_replace(["\r\n", "\r"], "\n", $template->source->getContent()) . "\n",
                                       $this);
         /* @var Smarty_Internal_ConfigFileParser $parser */
         $parser = new $this->parser_class($lex, $this);

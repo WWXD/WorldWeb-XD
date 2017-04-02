@@ -43,7 +43,7 @@ if(NumRows($rUser))
 else
 	Kill(__("Unknown user."));
 
-$links = array();
+$links = [];
 
 if(!$snoop && $pm['userto'] == $loguserid) {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
@@ -59,7 +59,7 @@ if(!$snoop && $pm['userto'] == $loguserid) {
 
 
 $pmtitle = htmlspecialchars($pm['title']);
-MakeCrumbs(array(actionLink("private") => __("Private messages"), '' => $pmtitle), $links);
+MakeCrumbs([actionLink("private") => __("Private messages"), '' => $pmtitle], $links);
 
 $pm['num'] = 0;
 $pm['posts'] = $user['posts'];

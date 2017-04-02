@@ -1,5 +1,5 @@
 <?php
-$languagePack = array(
+$languagePack = [
 
 // footer.php
 'MySQL query' =>
@@ -2890,4 +2890,4 @@ $languagePack = array(
 'Enter a message and a thread title and try again.' =>
 'Indtast en besked og en trådtitel og prøv igen.',
 
-);
+];

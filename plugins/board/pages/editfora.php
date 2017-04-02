@@ -9,7 +9,7 @@ $title = __("Edit forums");
 
 CheckPermission('admin.editforums');
 
-MakeCrumbs(array(actionLink("admin") => __("Admin"), actionLink("editfora") => __("Edit forum list")));
+MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("editfora") => __("Edit forum list")]);
 
 /**
 	Okay. Much like the category editor, now the action is specified by $_POST["action"].
@@ -45,7 +45,7 @@ $noFooter = true;
 function recursionCheck($fid, $cid) {
 	if ($cid >= 0) return $cid;
 
-	$check = array();
+	$check = [];
 	for (;;) {
 		$check[] = -$cid;
 		if ($check[0] == $fid)
@@ -80,7 +80,7 @@ if (isset($_REQUEST['action']) && isset($_POST['key'])) {
 			$diff = $oldlr['r'] - $oldlr['l'] + 1;
 
 			$c = Query("SELECT id FROM {forums} WHERE l>{0} AND r<{1}", $oldlr['l'], $oldlr['r']);
-			$children = array();
+			$children = [];
 			while ($blarg = Fetch($c)) $children[] = $blarg['id'];
 
 			Query("UPDATE {forums} SET l=l-{0} WHERE l>{1}", $diff, $oldlr['r']);
@@ -324,13 +324,13 @@ function WriteForumEditContents($fid) {
 	//Get all categories.
 	$rCats = Query("SELECT * FROM {categories} ORDER BY board, corder, id");
 
-	$cats = array();
+	$cats = [];
 	while ($cat = Fetch($rCats))
 		$cats[$cat['id']] = $cat;
 
 	$rFora = Query("SELECT * FROM {forums} ORDER BY l");
 
-	$fora = array();
+	$fora = [];
 	$cid = -1;
 	while ($forum = Fetch($rFora)) {
 		if ($forum['catid'] >= 0) $cid = $forum['catid'];
@@ -338,13 +338,13 @@ function WriteForumEditContents($fid) {
 	}
 	
 	$g = Query("SELECT id,name,type,color_unspec FROM {usergroups} ORDER BY type, rank");
-	$groups = array();
+	$groups = [];
 	while ($group = Fetch($g)) {
 		$name = htmlspecialchars($group['name']);
 		if ($group['type'] == 0)
 			$name = '<strong style="color:'.htmlspecialchars($group['color_unspec']).';">'.$name.'</strong>';
 		
-		$groups[$group['id']] = array('name' => $name, 'permFields' => '');
+		$groups[$group['id']] = ['name' => $name, 'permFields' => ''];
 	}
 
 	if($fid != -1)
@@ -370,8 +370,7 @@ function WriteForumEditContents($fid) {
 
 		$boxtitle = __("Editing forum ").$title;
 
-		$fields = array
-		(
+		$fields = [
 			'title' => '<input type="text" name="title" value="'.$title.'" size=64>',
 			'description' => '<input type="text" name="description" value="'.$description.'" size=80>',
 			'parent' => $catselect,
@@ -382,7 +381,7 @@ function WriteForumEditContents($fid) {
 			
 			'btnSave' => '<button onclick="changeForumInfo('.$fid.'); return false;">Save</button>',
 			'btnDelete' => '<button '.($candelete ? 'onclick="deleteForum(); return false;"' : 'disabled="disabled"').'>Delete</button>',
-		);
+		];
 		$delMessage = $candelete ? '' : ($c ? __('Before deleting a forum, delete or move its subforums.') : __('Before deleting a forum, remove all threads from it.'));
 	} else {
 		$catselect = MakeCatSelect('cat', $cats, $fora, 1, -1);
@@ -393,8 +392,7 @@ function WriteForumEditContents($fid) {
 
 		$boxtitle = __("New forum");
 
-		$fields = array
-		(
+		$fields = [
 			'title' => '<input type="text" name="title" value="" size=64>',
 			'description' => '<input type="text" name="description" value="" size=80>',
 			'parent' => $catselect,
@@ -405,7 +403,7 @@ function WriteForumEditContents($fid) {
 			
 			'btnSave' => '<button onclick="addForum(); return false;">Save</button>',
 			'btnDelete' => '',
-		);
+		];
 		$delMessage = '';
 	}
 
@@ -414,7 +412,7 @@ function WriteForumEditContents($fid) {
 	<input type=\"hidden\" name=\"key\" value=\"".$loguser['token']."\">
 	<input type=\"hidden\" name=\"id\" value=\"$fid\">";
 
-	RenderTemplate('form_editforum', array('formtitle' => $boxtitle, 'fields' => $fields, 'groups' => $groups, 'delMessage' => $delMessage));
+	RenderTemplate('form_editforum', ['formtitle' => $boxtitle, 'fields' => $fields, 'groups' => $groups, 'delMessage' => $delMessage]);
 
 	echo "
 	</form>";
@@ -452,15 +450,14 @@ function WriteCategoryEditContents($cid)
 
 		$boxtitle = __("Editing category ").$name;
 
-		$fields = array
-		(
+		$fields = [
 			'name' => '<input type="text" name="name" value="'.$name.'" size=64>',
 			'order' => '<input type="text" name="corder" value="'.$corder.'" size=3>',
 			'board' => $boardlist,
 			
 			'btnSave' => '<button onclick="changeCategoryInfo('.$cid.'); return false;">Save</button>',
 			'btnDelete' => '<button '.($candelete ? 'onclick="deleteCategory(); return false;"' : 'disabled="disabled"').'>Delete</button>',
-		);
+		];
 		$delMessage = $candelete ? '' : __('Before deleting a category, remove all forums from it.');
 	}
 	else
@@ -475,15 +472,14 @@ function WriteCategoryEditContents($cid)
 
 		$boxtitle = __("New category");
 
-		$fields = array
-		(
+		$fields = [
 			'name' => '<input type="text" name="name" value="" size=64>',
 			'order' => '<input type="text" name="corder" value="0" size=3>',
 			'board' => $boardlist,
 			
 			'btnSave' => '<button onclick="addCategory(); return false;">Save</button>',
 			'btnDelete' => '',
-		);
+		];
 		$delMessage = '';
 	}
 
@@ -492,7 +488,7 @@ function WriteCategoryEditContents($cid)
 	<input type=\"hidden\" name=\"key\" value=\"".$loguser["token"]."\">
 	<input type=\"hidden\" name=\"id\" value=\"$cid\">";
 	
-	RenderTemplate('form_editcategory', array('formtitle' => $boxtitle, 'fields' => $fields, 'delMessage' => $delMessage));
+	RenderTemplate('form_editcategory', ['formtitle' => $boxtitle, 'fields' => $fields, 'delMessage' => $delMessage]);
 
 	echo "
 	</form>";
@@ -503,12 +499,12 @@ function WriteForumTableContents()
 {
 	global $forumBoards;
 	
-	$boards = array();
-	$cats = array();
-	$forums = array();
+	$boards = [];
+	$cats = [];
+	$forums = [];
 	
 	foreach ($forumBoards as $bid=>$bname)
-		$boards[$bid] = array('id' => $bid, 'name' => $bname, 'cats' => array());
+		$boards[$bid] = ['id' => $bid, 'name' => $bname, 'cats' => []];
 	
 	$rCats = Query("SELECT * FROM {categories} ORDER BY board, corder, id");
 	while ($cat = Fetch($rCats))
@@ -538,7 +534,7 @@ function WriteForumTableContents()
 	$btnNewForum = empty($cats) ? '' : '<button onclick="newForum();">'.__("Add forum").'</button>';
 	$btnNewCategory = '<button onclick="newCategory();">'.__("Add category").'</button>';
 	
-	RenderTemplate('editfora_list', array(
+	RenderTemplate('editfora_list', [
 		'boards' => $boards,
 		'cats' => $cats,
 		'forums' => $forums,
@@ -546,7 +542,7 @@ function WriteForumTableContents()
 		
 		'btnNewForum' => $btnNewForum,
 		'btnNewCategory' => $btnNewCategory,
-	));
+	]);
 }
 
 
@@ -622,7 +618,7 @@ function MakeCatSelect($i, $cats, $fora, $v, $fid)
 // 1: allow
 function GetForumPerms($fid)
 {
-	$ret = array();
+	$ret = [];
 	
 	// global perms
 	$perms = Query("SELECT id,perm,value FROM {permissions} WHERE applyto=0 AND (SUBSTR(perm,1,6)={0} OR SUBSTR(perm,1,4)={1}) AND arg=0", 

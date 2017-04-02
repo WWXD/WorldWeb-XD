@@ -9,8 +9,8 @@ if(!$loguserid)
 CheckPermission('user.editprofile');
 CheckPermission('user.editavatars');
 
-MakeCrumbs(array(actionLink('profile', $loguserid, '', $loguser['name']) => htmlspecialchars($loguser['displayname']?$loguser['displayname']:$loguser['name']),
-	actionLink("editavatars") => __("Mood avatars")));
+MakeCrumbs([actionLink('profile', $loguserid, '', $loguser['name']) => htmlspecialchars($loguser['displayname']?$loguser['displayname']:$loguser['name']),
+	actionLink("editavatars") => __("Mood avatars")]);
 
 if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POST['actionadd'])) {
 	$mid = (int)$_POST['mid'];
@@ -36,7 +36,7 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 			$fext = strtolower(substr($fname,-4));
 			$error = "";
 
-			$exts = array(".png",".jpg",".gif");
+			$exts = [".png",".jpg",".gif"];
 			$dimx = 200;
 			$dimy = 200;
 			$dimxs = 60;
@@ -92,10 +92,10 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 	}
 }
 
-$moodRows = array();
+$moodRows = [];
 $rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid asc", $loguserid);
 while($mood = Fetch($rMoods)) {
-	$row = array();
+	$row = [];
 
 	$row['avatar'] = "<img src=\"".DATA_URL."avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";
 
@@ -118,4 +118,4 @@ $newField = "
 					<input type=\"submit\" name=\"actionadd\" value=\"".__("Add")."\">
 				</form>";
 				
-RenderTemplate('moodavatars', array('avatars' => $moodRows, 'newField' => $newField));
+RenderTemplate('moodavatars', ['avatars' => $moodRows, 'newField' => $newField]);

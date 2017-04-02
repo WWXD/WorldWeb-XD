@@ -24,7 +24,7 @@ class Smarty_Internal_ParseTree_Template extends Smarty_Internal_ParseTree
      *
      * @var array
      */
-    public $subtrees = Array();
+    public $subtrees = [];
 
     /**
      * Create root of parse tree for template elements
@@ -57,7 +57,7 @@ class Smarty_Internal_ParseTree_Template extends Smarty_Internal_ParseTree
      * @param \Smarty_Internal_Templateparser $parser
      * @param \Smarty_Internal_ParseTree[]    $array
      */
-    public function append_array(Smarty_Internal_Templateparser $parser, $array = array())
+    public function append_array(Smarty_Internal_Templateparser $parser, $array = [])
     {
         if (!empty($array)) {
             $this->subtrees = array_merge($this->subtrees, (array) $array);
@@ -70,7 +70,7 @@ class Smarty_Internal_ParseTree_Template extends Smarty_Internal_ParseTree
      * @param \Smarty_Internal_Templateparser $parser
      * @param \Smarty_Internal_ParseTree[]    $array
      */
-    public function prepend_array(Smarty_Internal_Templateparser $parser, $array = array())
+    public function prepend_array(Smarty_Internal_Templateparser $parser, $array = [])
     {
         if (!empty($array)) {
             $this->subtrees = array_merge((array) $array, $this->subtrees);

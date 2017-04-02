@@ -11,8 +11,8 @@ if (isset($_GET['fid'])) {
 	$forum = Fetch(Query("SELECT title FROM {forums} WHERE id={0}", $id));
 	if (!$forum) Kill(__('Invalid forum ID.'));
 
-	MakeCrumbs(array(actionLink('admin') => __('Admin'), 
-		'' => __('Edit permissions for forum: ').htmlspecialchars($forum['title'])));
+	MakeCrumbs([actionLink('admin') => __('Admin'), 
+		'' => __('Edit permissions for forum: ').htmlspecialchars($forum['title'])]);
 } else
 	Kill(__('Invalid parameters.'));
 
@@ -40,7 +40,7 @@ if ($_POST['saveaction'])
 	die(header('Location: '.actionLink('editforumperms', '', 'fid='.$id)));
 }
 
-$fpermlist = array();
+$fpermlist = [];
 
 echo '
 	<form action="" method="POST">
@@ -99,7 +99,7 @@ function PermLabel($val)
 	return '';
 }
 
-function ForumPermTable($gid, $fpl=array())
+function ForumPermTable($gid, $fpl=[])
 {
 	global $permCats, $permDescs, $id;
 	
@@ -111,7 +111,7 @@ function ForumPermTable($gid, $fpl=array())
 	unset($fpl['_gcolor']);	
 	
 	$lastcat = -1;
-	$pd = array('forum' => $permDescs['forum'], 'mod' => $permDescs['mod']);
+	$pd = ['forum' => $permDescs['forum'], 'mod' => $permDescs['mod']];
 	foreach ($pd as $cat=>$perms)
 	{
 		if ($lastcat != $cat)
@@ -143,7 +143,7 @@ function PermData($key)
 	$arg = intval(substr($key, 6, $seppos));
 	$pname = substr($key, $seppos + 1);
 	$pname = str_replace('_', '.', $pname);
-	return array('perm' => $pname, 'arg' => $arg);
+	return ['perm' => $pname, 'arg' => $arg];
 }
 
 function CanEditPerm($perm, $arg=0)

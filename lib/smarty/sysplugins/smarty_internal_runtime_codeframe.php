@@ -30,7 +30,7 @@ class Smarty_Internal_Runtime_CodeFrame
     {
         // build property code
         $properties[ 'version' ] = Smarty::SMARTY_VERSION;
-        $properties[ 'unifunc' ] = 'content_' . str_replace(array('.', ','), '_', uniqid('', true));
+        $properties[ 'unifunc' ] = 'content_' . str_replace(['.', ','], '_', uniqid('', true));
         if (!$cache) {
             $properties[ 'has_nocache_code' ] = $_template->compiled->has_nocache_code;
             $properties[ 'file_dependency' ] = $_template->compiled->file_dependency;
@@ -93,6 +93,6 @@ class Smarty_Internal_Runtime_CodeFrame
         $output .= $functions;
         $output .= "<?php }\n";
         // remove unneeded PHP tags
-        return preg_replace(array('/\s*\?>[\n]?<\?php\s*/', '/\?>\s*$/'), array("\n", ''), $output);
+        return preg_replace(['/\s*\?>[\n]?<\?php\s*/', '/\?>\s*$/'], ["\n", ''], $output);
     }
 }

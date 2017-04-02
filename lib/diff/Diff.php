@@ -33,7 +33,7 @@ class Text_Diff {
     {
         // Backward compatibility workaround.
         if (!is_string($engine)) {
-            $params = array($engine, $params);
+            $params = [$engine, $params];
             $engine = 'auto';
         }
 
@@ -46,7 +46,7 @@ class Text_Diff {
         $class = 'Text_Diff_Engine_' . $engine;
         $diff_engine = new $class();
 
-        $this->_edits = call_user_func_array(array($diff_engine, 'diff'), $params);
+        $this->_edits = call_user_func_array([$diff_engine, 'diff'], $params);
     }
 
     /**
@@ -78,7 +78,7 @@ class Text_Diff {
         } else {
             $rev = $this;
         }
-        $rev->_edits = array();
+        $rev->_edits = [];
         foreach ($this->_edits as $edit) {
             $rev->_edits[] = $edit->reverse();
         }
@@ -127,7 +127,7 @@ class Text_Diff {
      */
     function getOriginal()
     {
-        $lines = array();
+        $lines = [];
         foreach ($this->_edits as $edit) {
             if ($edit->orig) {
                 array_splice($lines, count($lines), 0, $edit->orig);
@@ -145,7 +145,7 @@ class Text_Diff {
      */
     function getFinal()
     {
-        $lines = array();
+        $lines = [];
         foreach ($this->_edits as $edit) {
             if ($edit->final) {
                 array_splice($lines, count($lines), 0, $edit->final);
@@ -163,7 +163,7 @@ class Text_Diff {
      */
     static function trimNewlines(&$line, $key)
     {
-        $line = str_replace(array("\n", "\r"), '', $line);
+        $line = str_replace(["\n", "\r"], '', $line);
     }
 
     /**

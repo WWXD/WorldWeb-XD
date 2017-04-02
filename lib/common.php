@@ -51,7 +51,7 @@ function usectime() {
 
 // undocumented feature: multiple 'boards'.
 // add in here to add board sections to your board
-$forumBoards = array('' => 'Main forums');
+$forumBoards = ['' => 'Main forums'];
 
 
 require_once(__DIR__."/../config/salt.php");
@@ -133,7 +133,7 @@ require_once(__DIR__."/layout.php");
 
 require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
-$tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
+$tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
 $tpl->setCompileDir('/tmp/templates_compiled');
 $tpl->setCacheDir('/tmp/templates_cache');

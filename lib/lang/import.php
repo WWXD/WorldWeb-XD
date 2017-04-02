@@ -5,12 +5,12 @@ if (php_sapi_name() !== 'cli')
 }
 include("../language.php");
 
-$langnames = array("nl_NL", "es_ES", "pl_PL");
-$langs = array();
+$langnames = ["nl_NL", "es_ES", "pl_PL"];
+$langs = [];
 
 foreach($langnames as $langname)
 {
-	$languagePack = array();
+	$languagePack = [];
 	importLanguagePack($langname.".txt");
 	$langs[$langname] = $languagePack;
 }

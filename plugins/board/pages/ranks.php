@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 $title = __("Ranks");
-MakeCrumbs(array(actionLink("ranks") => __("Ranks")));
+MakeCrumbs([actionLink("ranks") => __("Ranks")]);
 
 loadRanksets();
 if(count($ranksetData) == 0)
@@ -22,7 +22,7 @@ $rankset = $_GET['id'];
 if(!isset($ranksetData[$rankset]))
 	Kill(__("Rankset not found."));
 
-$ranksets = array();
+$ranksets = [];
 foreach($ranksetNames as $name => $title) {
 	if($name == $rankset)
 		$ranksets[] = $title;
@@ -31,22 +31,22 @@ foreach($ranksetNames as $name => $title) {
 }
 
 
-$users = array();
+$users = [];
 $rUsers = Query("select u.(_userfields), u.(posts,lastposttime) from {users} u order by id asc");
 while($user = Fetch($rUsers))
 	$users[$user['u_id']] = getDataPrefix($user, "u_");
 
 $ranks = $ranksetData[$rankset];
 
-$ranklist = array();
+$ranklist = [];
 for($i = 0; $i < count($ranks); $i++) {
-	$rdata = array();
+	$rdata = [];
 
 	$rank = $ranks[$i];
 	$nextRank = $ranks[$i+1];
 	if($nextRank['num'] == 0)
 		$nextRank['num'] = $ranks[$i]['num'] + 1;
-	$members = array(); $inactive = 0; $total = 0;
+	$members = []; $inactive = 0; $total = 0;
 	foreach($users as $user) {
 		if($user['posts'] >= $rank['num'] && $user['posts'] < $nextRank['num']) {
 			$total++;
@@ -78,4 +78,4 @@ for($i = 0; $i < count($ranks); $i++) {
 	$ranklist[] = $rdata;
 }
 
-RenderTemplate('ranks', array('ranksets' => $ranksets, 'ranks' => $ranklist));
+RenderTemplate('ranks', ['ranksets' => $ranksets, 'ranks' => $ranklist]);

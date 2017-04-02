@@ -42,7 +42,7 @@ class Smarty_Internal_Method_GetTemplateVars
                 return null;
             }
         } else {
-            $_result = array();
+            $_result = [];
             if ($_ptr === null) {
                 $_ptr = $data;
             }

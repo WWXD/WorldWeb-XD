@@ -1,5 +1,5 @@
 <?php
-$languagePack = array(
+$languagePack = [
 
 // footer.php
 'MySQL query' =>
@@ -3049,4 +3049,4 @@ $languagePack = array(
 'Posted in' =>
 'Geschreven in',
 
-);
+];

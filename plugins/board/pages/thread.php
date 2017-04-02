@@ -87,7 +87,7 @@ Query("update {threads} set views=views+1 where id={0} limit 1", $tid);
 
 $isold = (!$thread['sticky'] && Settings::get("oldThreadThreshold") > 0 && $thread['lastpostdate'] < time() - (2592000 * Settings::get("oldThreadThreshold")));
 
-$links = array();
+$links = [];
 if ($loguserid) {
 	$notclosed = (!$thread['closed'] || HasPermission('mod.closethreads', $fid));
 
@@ -135,7 +135,7 @@ if ($loguserid) {
 $OnlineUsersFid = $fid;
 LoadPostToolbar();
 
-MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $urlname) => $threadtags[0]), $links);
+MakeCrumbs(forumCrumbs($forum) + [actionLink("thread", $tid, '', $urlname) => $threadtags[0]], $links);
 
 if($thread['poll']) {
 	$poll = Fetch(Query("SELECT p.*,
@@ -156,16 +156,16 @@ if($thread['poll']) {
 					   WHERE poll={0}", $thread['poll'], $loguserid);
 	$pops = 0;
 	$noColors = 0;
-	$defaultColors = array(
+	$defaultColors = [
 				  "#0000B6","#00B600","#00B6B6","#B60000","#B600B6","#B66700","#B6B6B6",
-		"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",);
+		"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",];
 
-	$pdata = array();
+	$pdata = [];
 	$pdata['question'] = htmlspecialchars($poll['question']);
-	$pdata['options'] = array();
+	$pdata['options'] = [];
 
 	while($option = Fetch($rOptions)) {
-		$odata = array();
+		$odata = [];
 
 		$odata['color'] = htmlspecialchars($option['color']);
 		if($odata['color'] == '')
@@ -194,7 +194,7 @@ if($thread['poll']) {
 	$pdata['votes'] = $poll['votes'];
 	$pdata['voters'] = $totalVotes;
 
-	RenderTemplate('poll', array('poll' => $pdata));
+	RenderTemplate('poll', ['poll' => $pdata]);
 }
 
 Query("insert into {threadsread} (id,thread,date) values ({0}, {1}, {2}) on duplicate key update date={2}", $loguserid, $tid, time());
@@ -226,17 +226,17 @@ $numonpage = NumRows($rPosts);
 
 $pagelinks = PageLinks(actionLink("thread", $tid, "from=", $urlname), $ppp, $from, $total);
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 
 if(NumRows($rPosts)) {
 	while($post = Fetch($rPosts)) {
 		$post['closed'] = $thread['closed'];
 		$post['firstpostid'] = $thread['firstpostid'];
-		MakePost($post, POST_NORMAL, array('tid'=>$tid, 'fid'=>$fid));
+		MakePost($post, POST_NORMAL, ['tid'=>$tid, 'fid'=>$fid]);
 	}
 }
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'bottom']);
 
 if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] && !$isold) {
 	$ninja = FetchResult("select id from {posts} where thread={0} order by date desc limit 0, 1", $tid);
@@ -259,7 +259,7 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 	<option value=\"{0}\">{1}</option>
 ",	$mood['mid'], htmlspecialchars($mood['name']));
 
-	$fields = array(
+	$fields = [
 		'text' => "<textarea id=\"text\" name=\"text\" rows=\"8\"></textarea>",
 		'mood' => "<select size=1 name=\"mood\">".$moodOptions."</select>",
 		'nopl' => "<label><input type=\"checkbox\" name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
@@ -268,13 +268,13 @@ if($loguserid && HasPermission('forum.postreplies', $fid) && !$thread['closed'] 
 
 		'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
 		'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
-	);
+	];
 
 	echo "
 	<form action=\"".htmlentities(actionLink("newreply", $tid))."\" method=\"post\">
 		<input type=\"hidden\" name=\"ninja\" value=\"{$ninja}\">";
 
-	RenderTemplate('form_quickreply', array('fields' => $fields));
+	RenderTemplate('form_quickreply', ['fields' => $fields]);
 
 	echo "
 	</form>";

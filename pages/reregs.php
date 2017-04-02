@@ -4,10 +4,10 @@ if (!defined('BLARG')) die();
 CheckPermission('admin.ipsearch');
 	
 $title = 'Rereg radar';
-MakeCrumbs(array(actionLink("admin") => "Admin", actionLink('reregs') => 'Rereg radar'));
+MakeCrumbs([actionLink("admin") => "Admin", actionLink('reregs') => 'Rereg radar']);
 
 $ipm = Query("SELECT u.(_userfields), u.(lastactivity,lastip) FROM {users} u WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.lastip=u.lastip)>1 ORDER BY lastactivity DESC");
-$ipmatches = array();
+$ipmatches = [];
 while ($match = Fetch($ipm))
 	$ipmatches[$match['u_lastip']][] = $match;
 	
@@ -24,7 +24,7 @@ foreach ($ipmatches as $ip=>$match)
 }
 
 $passm = Query("SELECT u.(_userfields), m.(date,user,matches) FROM {passmatches} m LEFT JOIN {users} u ON u.id=m.user ORDER BY date DESC");
-$passmatches = array();
+$passmatches = [];
 while ($match = Fetch($passm))
 	$passmatches[$match['m_user']] = $match;
 
@@ -91,7 +91,7 @@ while ($match = Fetch($passm))
 		</tr>
 <?php
 	$c = 1;
-	$ulcache = array();
+	$ulcache = [];
 	foreach ($passmatches as $uid=>$match)
 	{
 		if (!$ulcache[$uid])

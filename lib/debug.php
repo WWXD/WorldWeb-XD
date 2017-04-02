@@ -10,9 +10,9 @@ function backTrace()
 			if ($args) {
 				$args .= ', ';
 			}
-			if (in_array(strtolower($bt['function']), array('rawquery', 'query', 'fetchresult')) && !$args)
+			if (in_array(strtolower($bt['function']), ['rawquery', 'query', 'fetchresult']) && !$args)
 				if (is_array($a))
-					$args .= var_export(array_merge(array("..."), array_slice($a, 1)), true);
+					$args .= var_export(array_merge(["..."], array_slice($a, 1)), true);
 				else if (is_string($a))
 					$args .= "'...'";
 				else
@@ -32,7 +32,7 @@ function backTrace()
 }
 function var_format($v) // pretty-print var_export
 {
-	return (str_replace(array("\n"," ","array"),
-array("<br/>","&nbsp;","&nbsp;<i>array</i>"),
+	return (str_replace(["\n"," ","array"],
+["<br/>","&nbsp;","&nbsp;<i>array</i>"],
 var_export($v,true))."<br/>");
 }

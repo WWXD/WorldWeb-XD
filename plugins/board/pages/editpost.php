@@ -104,11 +104,11 @@ if(($post['user'] != $loguserid || !HasPermission('user.editownposts')) && !HasP
 	Kill(__("You are not allowed to edit this post."));
 
 $tags = ParseThreadTags($thread['title']);
-MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $isHidden?'':$tags[0]) => $tags[0], '' => __("Edit post")));
+MakeCrumbs(forumCrumbs($forum) + [actionLink("thread", $tid, '', $isHidden?'':$tags[0]) => $tags[0], '' => __("Edit post")]);
 
 LoadPostToolbar();
 
-$attachs = array();
+$attachs = [];
 if ($post['has_attachments']) {
 	$res = Query("SELECT id,filename 
 		FROM {uploadedfiles}
@@ -203,7 +203,7 @@ if(isset($_POST['actionpreview']) || isset($_POST['actionpost'])) {
 	$_POST['mood'] = $post['mood'];
 }
 
-$moodSelects = array();
+$moodSelects = [];
 if($_POST['mood'])
 	$moodSelects[(int)$_POST['mood']] = "selected=\"selected\" ";
 $moodOptions = Format("<option {0}value=\"0\">".__("[Default avatar]")."</option>\n", $moodSelects[0]);
@@ -211,7 +211,7 @@ $rMoods = Query("select mid, name from {moodavatars} where uid={0} order by mid 
 while($mood = Fetch($rMoods))
 	$moodOptions .= Format("<option {0}value=\"{1}\">{2}</option>\n", $moodSelects[$mood['mid']], $mood['mid'], htmlspecialchars($mood['name']));
 	
-$fields = array(
+$fields = [
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n".htmlspecialchars($prefill)."</textarea>",
 	'mood' => "<select size=1 name=\"mood\">".$moodOptions."</select>",
 	'nopl' => "<label><input type=\"checkbox\" $nopl name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
@@ -219,12 +219,12 @@ $fields = array(
 
 	'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Save")."\">",
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
-);
+];
 
 echo "
 	<form name=\"postform\" action=\"".htmlentities(actionLink("editpost", $pid))."\" method=\"post\" enctype=\"multipart/form-data\">";
 
-RenderTemplate('form_editpost', array('fields' => $fields));
+RenderTemplate('form_editpost', ['fields' => $fields]);
 
 PostAttachForm($attachs);
 

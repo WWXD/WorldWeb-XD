@@ -5,7 +5,7 @@ if (!defined('BLARG')) die();
 
 $title = __("Private messages");
 
-MakeCrumbs(array(actionLink("private") => __("Private messages"), '' => __("Send PM")));
+MakeCrumbs([actionLink("private") => __("Private messages"), '' => __("Send PM")]);
 
 if(!$loguserid) //Not logged in?
 	Kill(__("You must be logged in to send private messages."));
@@ -15,7 +15,7 @@ CheckPermission('user.sendpms');
 $draftID = 0;
 $replyTo = 0;
 $convStart = 0;
-$urlargs = array();
+$urlargs = [];
 
 $pid = (int)$_GET['pid'];
 if($pid) {
@@ -84,7 +84,7 @@ if ($_POST['actiondelete'] && $draftID) {
 LoadPostToolbar();
 
 
-$recipIDs = array();
+$recipIDs = [];
 if($_POST['to']) {
 	$recipients = explode(";", $_POST['to']);
 	foreach($recipients as $to) {
@@ -202,7 +202,7 @@ if($_POST['actionpreview'] || $draftID) {
 	}
 }
 
-$fields = array(
+$fields = [
 	'to' => "<input type=\"text\" name=\"to\" size=40 maxlength=\"128\" value=\"".htmlspecialchars($_POST['to'])."\">",
 	'title' => "<input type=\"text\" name=\"title\" size=80 maxlength=\"60\" value=\"".htmlspecialchars($trefill)."\">",
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n".htmlspecialchars($prefill)."</textarea>",
@@ -211,14 +211,14 @@ $fields = array(
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 	'btnSaveDraft' => "<input type=\"submit\" name=\"actionsave\" value=\"".__("Save draft")."\">",
 	'btnDeleteDraft' => "<input type=\"submit\" name=\"actiondelete\" value=\"".__("Delete draft")."\" onclick=\"if(!confirm('Really delete this draft?'))return false;\">",
-);
+];
 
 if (!$draftID) unset($fields['btnDeleteDraft']);
 
 echo "
 	<form name=\"postform\" action=\"\" method=\"post\">";
 
-RenderTemplate('form_sendprivate', array('fields' => $fields, 'draftMode' => $draftID?true:false, 'maxRecipients' => 5));
+RenderTemplate('form_sendprivate', ['fields' => $fields, 'draftMode' => $draftID?true:false, 'maxRecipients' => 5]);
 
 echo "
 	</form>

@@ -210,7 +210,7 @@ class Smarty_Internal_Config
     public function loadConfigVars($sections = null, $scope = 'local')
     {
         if ($this->data instanceof Smarty_Internal_Template) {
-            $this->data->properties['file_dependency'][sha1($this->source->filepath)] = array($this->source->filepath, $this->source->timestamp, 'file');
+            $this->data->properties['file_dependency'][sha1($this->source->filepath)] = [$this->source->filepath, $this->source->timestamp, 'file'];
         }
         if ($this->mustCompile()) {
             $this->compileConfigSource();
@@ -230,7 +230,7 @@ class Smarty_Internal_Config
                 $scope_ptr = $scope_ptr->parent;
             }
         }
-        $_config_vars = array();
+        $_config_vars = [];
         include($this->getCompiledFilepath());
         // copy global config vars
         foreach ($_config_vars['vars'] as $variable => $value) {

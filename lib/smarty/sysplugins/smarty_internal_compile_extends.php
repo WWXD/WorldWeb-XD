@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_Compile_Shared_Inh
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $required_attributes = array('file');
+    public $required_attributes = ['file'];
 
     /**
      * Array of names of optional attribute required by tag
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_Compile_Shared_Inh
      *
      * @var array
      */
-    public $optional_attributes = array('extends_resource');
+    public $optional_attributes = ['extends_resource'];
 
     /**
      * Attribute definition: Overwrites base class.
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_Compile_Shared_Inh
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $shorttag_order = array('file');
+    public $shorttag_order = ['file'];
 
     /**
      * Compiles code for the {extends} tag extends: resource
@@ -112,8 +112,8 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_Compile_Shared_Inh
     {
         $compiler->parser->template_postfix[] = new Smarty_Internal_ParseTree_Tag($compiler->parser,
                                                                                   $compiler->compileTag('include',
-                                                                                                        array($file,
-                                                                                                              array('scope' => 'parent'))));
+                                                                                                        [$file,
+                                                                                                              ['scope' => 'parent']]));
     }
 
     /**
@@ -125,7 +125,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_Compile_Shared_Inh
      */
     public static function extendsSourceArrayCode($components)
     {
-        $resources = array();
+        $resources = [];
         foreach ($components as $source) {
             $resources[] = $source->resource;
         }

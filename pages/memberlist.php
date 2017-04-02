@@ -13,7 +13,7 @@ else if ($_GET['group'] !== 'staff' && $_GET['group'] !== 'none')
 	$_GET['group'] = (int)$_GET['group'];
 
 
-$allgroups = array();
+$allgroups = [];
 $allgroups['none'] = __('(any)');
 $g = Query("SELECT id,name,type FROM {usergroups} WHERE display>-1 ORDER BY type, rank");
 
@@ -35,35 +35,35 @@ if (!$s) {
 }
 
 
-MakeCrumbs(array(actionLink("memberlist") => __("Member list")));
+MakeCrumbs([actionLink("memberlist") => __("Member list")]);
 
 
-$fields = array(
-	'sortBy' => makeSelect("sort", array(
+$fields = [
+	'sortBy' => makeSelect("sort", [
 			"" => __("Post count"),
 			"id" => __("ID"),
 			"name" => __("Name"),
 			"reg" => __("Registration date")
-		)),
-	'order' => makeSelect("order", array(
+		]),
+	'order' => makeSelect("order", [
 			"desc" => __("Descending"),
 			"asc" => __("Ascending"),
-		)),
+		]),
 	'group' => makeSelect("group", $allgroups),
 	'name' => '<input type="text" name="name" size=24 maxlength=20 value="'.htmlspecialchars($_GET['name']).'">',
 
 	'btnSearch' => '<input type="submit" value="'.__('<i class=\"icon-search\"></i> Search').'">',
-);
+];
 
 echo getForm('memberlist');
 
-RenderTemplate('form_memberlist', array('fields' => $fields));
+RenderTemplate('form_memberlist', ['fields' => $fields]);
 
 echo '
 	</form>';
 	
 	
-$getArgs = array();
+$getArgs = [];
 	
 $tpp = $loguser['threadsperpage'];
 if($tpp<1) $tpp=50;
@@ -82,7 +82,7 @@ if(isset($_GET['order'])) {
 }
 
 $sort = $_GET['sort'];
-if(!in_array($sort, array('', 'id', 'name', 'reg')))
+if(!in_array($sort, ['', 'id', 'name', 'reg']))
 	unset($sort);
 
 if ($sort)
@@ -91,7 +91,7 @@ if ($sort)
 $pow = null;
 if($_GET['group'] !== "none") {
 	if ($_GET['group'] === 'staff') {
-		$pow = array();
+		$pow = [];
 		foreach ($usergroups as $g) {
 			if ($g['display'] == 1)
 				$pow[] = $g['id'];
@@ -134,10 +134,10 @@ if($query != "") {
 $numUsers = FetchResult("select count(*) from {users} where ".$where, null, null, $pow, "%{$query}%");
 $rUsers = Query("select * from {users} where ".$where." order by ".$order.", name asc limit {0u},{1u}", $from, $tpp, $pow, "%{$query}%");
 
-$users = array();
+$users = [];
 $i = $from + 1;
 while($user = Fetch($rUsers)) {
-	$udata = array();
+	$udata = [];
 
 	$daysKnown = (time()-$user['regdate'])/86400;
 	$udata['average'] = sprintf("%1.02f", $user['posts'] / $daysKnown);
@@ -163,7 +163,7 @@ $getArgs[] = 'from=';
 
 $pagelinks = PageLinks(actionLink('memberlist', '', implode('&',$getArgs)), $tpp, $from, $numUsers);
 
-RenderTemplate('memberlist', array('pagelinks' => $pagelinks, 'numUsers' => $numUsers, 'users' => $users));
+RenderTemplate('memberlist', ['pagelinks' => $pagelinks, 'numUsers' => $numUsers, 'users' => $users]);
 
 
 function makeSelect($name, $options) {

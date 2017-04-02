@@ -58,7 +58,7 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
         if ($file[ 0 ] == '[' && preg_match('#^\[([^\]]+)\](.+)$#', $file, $fileMatch)) {
             $file = $fileMatch[ 2 ];
             $_indices = explode(',', $fileMatch[ 1 ]);
-            $_index_dirs = array();
+            $_index_dirs = [];
             foreach ($_indices as $index) {
                 $index = trim($index);
                 // try string indexes

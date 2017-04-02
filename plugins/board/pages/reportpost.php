@@ -56,7 +56,7 @@ if ($_POST['report']) {
 	die(header('Location: '.actionLink('post', $pid)));
 }
 
-MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $isHidden?'':$tags[0]) => $tags[0], '' => __("Report post")));
+MakeCrumbs(forumCrumbs($forum) + [actionLink("thread", $tid, '', $isHidden?'':$tags[0]) => $tags[0], '' => __("Report post")]);
 
 $user = Fetch(Query("SELECT * FROM {users} WHERE id={0}", $post['user']));
 foreach($user as $key => $value)
@@ -65,15 +65,15 @@ foreach($user as $key => $value)
 MakePost($post, POST_SAMPLE);
 
 
-$fields = array(
+$fields = [
 	'message' => '<textarea id="text" name="message" rows=10></textarea>',
 	'btnSubmit' => '<input type="submit" name="report" value="'.__('Submit report').'">',
-);
+];
 
 echo '
 	<form action="" method="POST">';
 
-RenderTemplate('form_reportpost', array('fields' => $fields));
+RenderTemplate('form_reportpost', ['fields' => $fields]);
 
 echo '
 		<input type="hidden" name="key" value="'.$loguser['token'].'">

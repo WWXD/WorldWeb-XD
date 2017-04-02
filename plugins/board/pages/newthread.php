@@ -42,9 +42,9 @@ $urlname = $isHidden ? '' : $forum['title'];
 
 $OnlineUsersFid = $fid;
 
-MakeCrumbs(forumCrumbs($forum) + array('' => __("New thread")));
+MakeCrumbs(forumCrumbs($forum) + ['' => __("New thread")]);
 
-$attachs = array();
+$attachs = [];
 
 if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
@@ -52,27 +52,27 @@ if (isset($_POST['saveuploads'])) {
 	$attachs = HandlePostAttachments(0, false);
 	
 	if($_POST['poll']) {
-		$options = array();
+		$options = [];
 		
-		$pdata = array();
+		$pdata = [];
 		$pdata['question'] = htmlspecialchars($_POST['pollQuestion']);
-		$pdata['options'] = array();
+		$pdata['options'] = [];
 		
 		$noColors = 0;
-		$defaultColors = array(
+		$defaultColors = [
 			          "#0000B6","#00B600","#00B6B6","#B60000","#B600B6","#B66700","#B6B6B6",
-			"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",);
+			"#676767","#6767FF","#67FF67","#67FFFF","#FF6767","#FF67FF","#FFFF67","#FFFFFF",];
 			
 		$totalVotes = 0;
 		foreach ($_POST['pollOption'] as $i=>$opt) {
-			$opt = array('choice'=>$opt, 'color'=>$_POST['pollColor'][$i], 'votes' => rand(1,10));
+			$opt = ['choice'=>$opt, 'color'=>$_POST['pollColor'][$i], 'votes' => rand(1,10)];
 			$totalVotes += $opt['votes'];
 			$options[] = $opt;
 		}
 		
 		$pops = 0;
 		foreach($options as $option) {
-			$odata = array();
+			$odata = [];
 			
 			$odata['color'] = htmlspecialchars($option['color']);
 			if($odata['color'] == '')
@@ -98,7 +98,7 @@ if (isset($_POST['saveuploads'])) {
 		$pdata['votes'] = $totalVotes;
 		$pdata['voters'] = $totalVotes;
 
-		RenderTemplate('poll', array('poll' => $pdata));
+		RenderTemplate('poll', ['poll' => $pdata]);
 	}
 
 	$previewPost['text'] = $_POST['text'];
@@ -334,7 +334,7 @@ $pollSettings .= '</div>';
 $pollSettings .= '<input type="submit" name="pollAdd" value="'.__('Add option').'" onclick="addOption();return false;">';
 
 
-$moodSelects = array();
+$moodSelects = [];
 if($_POST['mood'])
 	$moodSelects[(int)$_POST['mood']] = "selected=\"selected\" ";
 $moodOptions = "<option ".$moodSelects[0]."value=\"0\">".__("[Default avatar]")."</option>\n";
@@ -353,7 +353,7 @@ if (HasPermission('mod.stickthreads', $forum['id']))
 	$mod_stick = "<label><input type=\"checkbox\" ".getCheck("stick")."  name=\"stick\">&nbsp;".__("Sticky", 1)."</label>\n";
 
 
-$fields = array(
+$fields = [
 	'title' => "<input type=\"text\" name=\"title\" size=80 maxlength=\"60\" value=\"$trefill\">",
 	'description' => "<input type=\"text\" name=\"description\" size=80 maxlength=\"60\" value=\"$trefill\">",
 	'icon' => $iconSettings,
@@ -371,7 +371,7 @@ $fields = array(
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 	'btnAddPoll' => "<input type=\"submit\" name=\"addpoll\" value=\"".__("Add poll")."\" onclick=\"addPoll();return false;\">",
 	'btnRemovePoll' => "<input type=\"submit\" name=\"deletepoll\" value=\"".__("Remove poll")."\" onclick=\"removePoll();return false;\">",
-);
+];
 
 
 echo "
@@ -379,7 +379,7 @@ echo "
 	<script src=\"".resourceLink('js/polleditor.js')."\"></script>
 	<form name=\"postform\" action=\"".htmlentities(actionLink("newthread", $fid))."\" method=\"post\" enctype=\"multipart/form-data\">";
 					
-RenderTemplate('form_newthread', array('fields' => $fields, 'pollMode' => (int)$_POST['poll']));
+RenderTemplate('form_newthread', ['fields' => $fields, 'pollMode' => (int)$_POST['poll']]);
 
 PostAttachForm($attachs);
 

@@ -39,12 +39,12 @@ abstract class Smarty_Resource
      *
      * @var array
      */
-    public static $sysplugins = array('file' => 'smarty_internal_resource_file.php',
+    public static $sysplugins = ['file' => 'smarty_internal_resource_file.php',
                                       'string' => 'smarty_internal_resource_string.php',
                                       'extends' => 'smarty_internal_resource_extends.php',
                                       'stream' => 'smarty_internal_resource_stream.php',
                                       'eval' => 'smarty_internal_resource_eval.php',
-                                      'php' => 'smarty_internal_resource_php.php');
+                                      'php' => 'smarty_internal_resource_php.php'];
 
     /**
      * Flag if resource does implement populateCompiledFilepath() method
@@ -153,8 +153,8 @@ abstract class Smarty_Resource
                 return $smarty->_cache[ 'resource_handlers' ][ $type ] = new $_resource_class();
             } else {
                 $smarty->registerResource($type,
-                                          array("smarty_resource_{$type}_source", "smarty_resource_{$type}_timestamp",
-                                                "smarty_resource_{$type}_secure", "smarty_resource_{$type}_trusted"));
+                                          ["smarty_resource_{$type}_source", "smarty_resource_{$type}_timestamp",
+                                                "smarty_resource_{$type}_secure", "smarty_resource_{$type}_trusted"]);
                 // give it another try, now that the resource is registered properly
                 return self::load($smarty, $type);
             }
@@ -196,7 +196,7 @@ abstract class Smarty_Resource
             $type = $default_resource;
             $name = $resource_name;
         }
-        return array($name, $type);
+        return [$name, $type];
     }
 
     /**

@@ -33,7 +33,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
         $_filepath = sha1($source->uid . $smarty->_joined_template_dir);
         $cached->filepath = $smarty->getCacheDir();
         if (isset($_template->cache_id)) {
-            $cached->filepath .= preg_replace(array('![^\w|]+!', '![|]+!'), array('_', $_compile_dir_sep),
+            $cached->filepath .= preg_replace(['![^\w|]+!', '![|]+!'], ['_', $_compile_dir_sep],
                                               $_template->cache_id) . $_compile_dir_sep;
         }
         if (isset($_template->compile_id)) {

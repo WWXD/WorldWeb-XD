@@ -46,7 +46,7 @@ if($user['displayname'])
 	
 $title = __('Edit profile');
 
-makeCrumbs(array(actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
+makeCrumbs([actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")]);
 
 loadRanksets();
 $ranksets = $ranksetNames;
@@ -59,9 +59,9 @@ foreach($dateformats as $format)
 foreach($timeformats as $format)
 	$timelist[$format] = ($format ? $format.' ('.cdate($format).')':'');
 
-$sexes = array(__("Male"), __("Female"), __("N/A"));
+$sexes = [__("Male"), __("Female"), __("N/A")];
 
-$groups = array();
+$groups = [];
 $r = Query("SELECT id,title FROM {usergroups} WHERE type=0 AND rank<={0} ORDER BY rank", $loguserGroup['rank']);
 while ($g = Fetch($r))
 	$groups[$g['id']] = htmlspecialchars($g['title']);
@@ -69,9 +69,9 @@ while ($g = Fetch($r))
 
 $pltype = Settings::get('postLayoutType');
 
-$epPages = array();
-$epCategories = array();
-$epFields = array();
+$epPages = [];
+$epCategories = [];
+$epFields = [];
 
 
 // EDITPROFILE TAB -- GENERAL -------------------------------------------------
@@ -80,29 +80,29 @@ AddPage('general', __('General'));
 AddCategory('general', 'appearance', __('Appearance'));
 
 if ($editUserMode || HasPermission('user.editdisplayname'))
-	AddField('general', 'appearance', 'displayname', __('Display name'), 'text', array('width'=>24, 'length'=>20, 'hint'=>__('Leave this empty to use your login name.'), 'callback'=>'HandleDisplayname'));
+	AddField('general', 'appearance', 'displayname', __('Display name'), 'text', ['width'=>24, 'length'=>20, 'hint'=>__('Leave this empty to use your login name.'), 'callback'=>'HandleDisplayname']);
 
-AddField('general', 'appearance', 'rankset', __('Rankset'), 'select', array('options'=>$ranksets));
+AddField('general', 'appearance', 'rankset', __('Rankset'), 'select', ['options'=>$ranksets]);
 
 if ($editUserMode || (HasPermission('user.edittitle') && (HasPermission('user.havetitle') || $user['posts'] >= Settings::get('customTitleThreshold'))))
-	AddField('general', 'appearance', 'title', __('Title'), 'text', array('width'=>80, 'length'=>255));
+	AddField('general', 'appearance', 'title', __('Title'), 'text', ['width'=>80, 'length'=>255]);
 
 
 if ($editUserMode || HasPermission('user.editavatars')) {
 	AddCategory('general', 'avatar', __('Avatar'));
 
-	AddField('general', 'avatar', 'picture', __('Avatar'), 'displaypic', array('hint'=>__('Maximum size is 200x200 pixels.')));
-	AddField('general', 'avatar', 'minipic', __('Minipic'), 'minipic', array('hint'=>__('Maximum size is 16x16 pixels.')));
+	AddField('general', 'avatar', 'picture', __('Avatar'), 'displaypic', ['hint'=>__('Maximum size is 200x200 pixels.')]);
+	AddField('general', 'avatar', 'minipic', __('Minipic'), 'minipic', ['hint'=>__('Maximum size is 16x16 pixels.')]);
 }
 
 
 AddCategory('general', 'presentation', __('Presentation'));
 
-AddField('general', 'presentation', 'threadsperpage', __('Threads per page'), 'number', array('min'=>1, 'max'=>99));
-AddField('general', 'presentation', 'postsperpage', __('Posts per page'), 'number', array('min'=>1, 'max'=>99));
-AddField('general', 'presentation', 'dateformat', __('Date format'), 'datetime', array('presets'=>$datelist, 'presetname'=>'presetdate'));
-AddField('general', 'presentation', 'timeformat', __('Time format'), 'datetime', array('presets'=>$timelist, 'presetname'=>'presettime'));
-AddField('general', 'presentation', 'fontsize', __('Font scale'), 'number', array('min'=>20, 'max'=>200));
+AddField('general', 'presentation', 'threadsperpage', __('Threads per page'), 'number', ['min'=>1, 'max'=>99]);
+AddField('general', 'presentation', 'postsperpage', __('Posts per page'), 'number', ['min'=>1, 'max'=>99]);
+AddField('general', 'presentation', 'dateformat', __('Date format'), 'datetime', ['presets'=>$datelist, 'presetname'=>'presetdate']);
+AddField('general', 'presentation', 'timeformat', __('Time format'), 'datetime', ['presets'=>$timelist, 'presetname'=>'presettime']);
+AddField('general', 'presentation', 'fontsize', __('Font scale'), 'number', ['min'=>20, 'max'=>200]);
 
 
 AddCategory('general', 'options', __('Options'));
@@ -116,9 +116,9 @@ AddPage('personal', __('Personal'));
 
 AddCategory('personal', 'personal', __('Personal information'));
 
-AddField('personal', 'personal', 'sex', __('Gender'), 'radiogroup', array('options'=>$sexes));
-AddField('personal', 'personal', 'realname', __('Real name'), 'text', array('width'=>24, 'length'=>60));
-AddField('personal', 'personal', 'location', __('Location'), 'text', array('width'=>24, 'length'=>60));
+AddField('personal', 'personal', 'sex', __('Gender'), 'radiogroup', ['options'=>$sexes]);
+AddField('personal', 'personal', 'realname', __('Real name'), 'text', ['width'=>24, 'length'=>60]);
+AddField('personal', 'personal', 'location', __('Location'), 'text', ['width'=>24, 'length'=>60]);
 AddField('personal', 'personal', 'birthday', __('Birthday'), 'birthday');
 
 if ($editUserMode || HasPermission('user.editbio'))
@@ -129,31 +129,31 @@ AddField('personal', 'personal', 'timezone', __('Timezone offset'), 'timezone');
 
 AddCategory('personal', 'contact', __('Contact information'));
 
-AddField('personal', 'contact', 'homepageurl', __('Homepage URL'), 'text', array('width'=>60, 'length'=>60));
-AddField('personal', 'contact', 'homepagename', __('Homepage name'), 'text', array('width'=>60, 'length'=>60));
+AddField('personal', 'contact', 'homepageurl', __('Homepage URL'), 'text', ['width'=>60, 'length'=>60]);
+AddField('personal', 'contact', 'homepagename', __('Homepage name'), 'text', ['width'=>60, 'length'=>60]);
 
 
 // EDITPROFILE TAB -- ACCOUNT -------------------------------------------------
 AddPage('account', __('Account settings'));
 
 AddCategory('account', 'confirm', __('Password confirmation'));
-AddField('account', 'confirm', 'info', '', 'label', array('value'=>__('Enter your password in order to edit account settings.')));
+AddField('account', 'confirm', 'info', '', 'label', ['value'=>__('Enter your password in order to edit account settings.')]);
 AddField('account', 'confirm', 'currpassword', __('Password'), 'passwordonce');
 
 
 AddCategory('account', 'login', __('Login information'));
 
 if ($editUserMode)
-	AddField('account', 'login', 'name', __('User name'), 'text', array('width'=>24, 'length'=>20, 'callback' => 'HandleUsername'));
+	AddField('account', 'login', 'name', __('User name'), 'text', ['width'=>24, 'length'=>20, 'callback' => 'HandleUsername']);
 else
-	AddField('account', 'login', 'name', __('User name'), 'label', array('value'=>htmlspecialchars($user['name'])));
+	AddField('account', 'login', 'name', __('User name'), 'label', ['value'=>htmlspecialchars($user['name'])]);
 
-AddField('account', 'login', 'password', __('Password'), 'password', array('callback'=>'HandlePassword'));
+AddField('account', 'login', 'password', __('Password'), 'password', ['callback'=>'HandlePassword']);
 
 
 AddCategory('account', 'email', __('Email information'));
 
-AddField('account', 'email', 'email', __('Email address'), 'email', array('width'=>24, 'length'=>60));
+AddField('account', 'email', 'email', __('Email address'), 'email', ['width'=>24, 'length'=>60]);
 AddField('account', 'email', 'showemail', __('Make email address public'), 'checkbox');
 
 
@@ -162,19 +162,19 @@ if ($editUserMode)
 	AddCategory('account', 'admin', __('Administrative stuff'));
 
 	if ($isroot)
-		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'label', array('value'=>htmlspecialchars($usergroup['title'])));
+		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'label', ['value'=>htmlspecialchars($usergroup['title'])]);
 	else
-		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'select', array('options'=>$groups));
+		AddField('account', 'admin', 'primarygroup', __('Primary group'), 'select', ['options'=>$groups]);
 
 	// TODO secondary groups!!
 
 	if ($isbanned && $user['tempbantime'])
-		AddField('account', 'admin', 'dopermaban', __('Make ban permanent'), 'checkbox', array('callback'=>'dummycallback'));
+		AddField('account', 'admin', 'dopermaban', __('Make ban permanent'), 'checkbox', ['callback'=>'dummycallback']);
 
 	AddField('account', 'admin', 'globalblock', __('Globally block layout'), 'checkbox');
 
-	$aflags = array(0x1=>__('IP banned'), 0x2=>__('Errorbanned'));
-	AddField('account', 'admin', 'flags', __('Misc. settings'), 'bitmask', array('options'=>$aflags));
+	$aflags = [0x1=>__('IP banned'), 0x2=>__('Errorbanned')];
+	AddField('account', 'admin', 'flags', __('Misc. settings'), 'bitmask', ['options'=>$aflags]);
 }
 
 
@@ -186,10 +186,10 @@ if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt') && ($editUserMode || Ha
 	AddCategory('layout', 'postlayout', $pltext);
 
 	if ($pltype) 
-		AddField('layout', 'postlayout', 'postheader', __('Post header'), 'textarea', array('rows'=>16));
-	AddField('layout', 'postlayout', 'signature', __('Signature'), 'textarea', array('rows'=>16));
+		AddField('layout', 'postlayout', 'postheader', __('Post header'), 'textarea', ['rows'=>16]);
+	AddField('layout', 'postlayout', 'signature', __('Signature'), 'textarea', ['rows'=>16]);
 
-	AddField('layout', 'postlayout', 'signsep', __('Show signature separator'), 'checkbox', array('negative'=>true));
+	AddField('layout', 'postlayout', 'signsep', __('Show signature separator'), 'checkbox', ['negative'=>true]);
 
 	// TODO make a per-user permission for this one?
 	if ($pltype == 2) 
@@ -250,7 +250,7 @@ if($_POST['actionsave']) {
 	}
 
 	$query = "UPDATE {$dbpref}users SET ";
-	$sets = array();
+	$sets = [];
 	$pluginSettings = unserialize($user['pluginsettings']);
 
 	foreach ($epFields as $catid => $cfields) {
@@ -445,12 +445,12 @@ function HandlePicture($field, $type, &$usepic) {
 	global $userid;
 
 	if($type == 0) {
-		$extensions = array(".png",".jpg",".jpeg",".gif");
+		$extensions = [".png",".jpg",".jpeg",".gif"];
 		$maxDim = 200;
 		$maxSize = 600 * 1024;
 		$errorname = __('avatar');
 	} else if($type == 1) {
-		$extensions = array(".png", ".gif");
+		$extensions = [".png", ".gif"];
 		$maxDim = 16;
 		$maxSize = 100 * 1024;
 		$errorname = __('minipic');
@@ -586,7 +586,7 @@ function HandleUsername($field, $item) {
 //Dirbaio: Rewrote this so that it scans the themes dir.
 $dir = "themes/";
 $themeList = "";
-$themes = array();
+$themes = [];
 
 // Open a known directory, and proceed to read its contents
 if (is_dir($dir)) {
@@ -727,7 +727,7 @@ foreach ($epFields as $catid => $cfields) {
 				break;
 
 			case "birthday":
-				if (!$item['value']) $bd = array('', '', '');
+				if (!$item['value']) $bd = ['', '', ''];
 				else $bd = explode('-', date('m-d-Y', $item['value']));
 				$output .= __('Month: ')."<input type=\"text\" name=\"{$field}M\" value=\"{$bd[0]}\" size=4 maxlength=2> ";
 				$output .= __('Day: ')."<input type=\"text\" name=\"{$field}D\" value=\"{$bd[1]}\" size=4 maxlength=2> ";
@@ -763,7 +763,7 @@ foreach ($epFields as $catid => $cfields) {
 			case "select":
 				$disabled = isset($item['disabled']) ? $item['disabled'] : false;
 				$disabled = $disabled ? "disabled=\"disabled\" " : "";
-				$checks = array();
+				$checks = [];
 				$checks[$item['value']] = " selected=\"selected\"";
 				$options = "";
 				foreach($item['options'] as $key => $val)
@@ -772,7 +772,7 @@ foreach ($epFields as $catid => $cfields) {
 				break;
 
 			case "radiogroup":
-				$checks = array();
+				$checks = [];
 				$checks[$item['value']] = " checked=\"checked\"";
 				foreach($item['options'] as $key => $val)
 					$output .= format("<label><input type=\"radio\" name=\"{1}\" value=\"{0}\"{2}>{3}</label>", $key, $field, $checks[$key], $val).' ';
@@ -828,12 +828,12 @@ print "
 	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\">
 ";
 
-RenderTemplate('form_editprofile', array(
+RenderTemplate('form_editprofile', [
 	'pages' => $epPages, 
 	'categories' => $epCategories, 
 	'fields' => $epFields,
 	'selectedTab' => $selectedTab,
-	'btnEditProfile' => "<input type=\"submit\" id=\"submit\" name=\"actionsave\" value=\"".__("Save")."\">"));
+	'btnEditProfile' => "<input type=\"submit\" id=\"submit\" name=\"actionsave\" value=\"".__("Save")."\">"]);
 
 print "
 		<input type=\"hidden\" name=\"editusermode\" value=\"1\">
@@ -853,23 +853,23 @@ function AddPage($page, $name) {
 	global $epPages, $epCategories;
 
 	$epPages[$page] = $name;
-	$epCategories[$page] = array();
+	$epCategories[$page] = [];
 }
 
 function AddCategory($page, $cat, $name) {
 	global $epCategories, $epFields;
 
 	$epCategories[$page][$page.'.'.$cat] = $name;
-	$epFields[$page.'.'.$cat] = array();
+	$epFields[$page.'.'.$cat] = [];
 }
 
 function AddField($page, $cat, $id, $label, $type, $misc=null) {
 	global $epFields;
 
-	$field = array(
+	$field = [
 		'caption' => $label,
 		'type' => $type,
-	);
+	];
 
 	if ($misc)
 		$field = array_merge($field, $misc);

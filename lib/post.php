@@ -23,7 +23,7 @@ function ParseThreadTags($title) {
 
 	$title = str_replace("<", "&lt;", $title);
 	$title = str_replace(">", "&gt;", $title);
-	return array(trim($title), $tags);
+	return [trim($title), $tags];
 }
 
 function filterPollColors($input) {
@@ -37,7 +37,7 @@ function loadBlockLayouts() {
 		return;
 
 	$rBlocks = Query("select * from {blockedlayouts} where blockee = {0}", $loguserid);
-	$blocklayouts = array();
+	$blocklayouts = [];
 
 	while($block = Fetch($rBlocks))
 		$blocklayouts[$block['user']] = 1;
@@ -59,7 +59,7 @@ function applyTags($text, $tags) {
 	foreach($tags as $tag => $val)
 		$s = str_replace("&".$tag."&", $val, $s);
 	if(is_numeric($tags['postcount']))
-		$s = preg_replace_callback('@&(\d+)&@si', array(new MaxPosts($tags), 'max_posts_callback'), $s);
+		$s = preg_replace_callback('@&(\d+)&@si', [new MaxPosts($tags), 'max_posts_callback'], $s);
 	else
 		$s = preg_replace("'&(\d+)&'si", "preview", $s);
 	return $s;
@@ -76,7 +76,7 @@ class MaxPosts {
 	}
 }
 
-$activityCache = array();
+$activityCache = [];
 function getActivity($id) {
 	global $activityCache;
 
@@ -90,13 +90,13 @@ function makePostText($post, $poster) {
 	$noSmilies = $post['options'] & 2;
 
 	//Do Ampersand Tags
-	$tags = array (
+	$tags = [
 		"postnum" => $post['num'],
 		"postcount" => $poster['posts'],
 		"numdays" => floor((time()-$poster['regdate'])/86400),
 		"date" => formatdate($post['date']),
 		"rank" => GetRank($poster['rankset'], $poster['posts']),
-	);
+	];
 	$bucket = "amperTags"; include(__DIR__."/pluginloader.php");
 
 	if($poster['signature'])
@@ -170,7 +170,7 @@ define('POST_PROFILE', 4);          // profile about box. This is going to repla
 //		* fid: the ID of the forum the thread containing the post is in (POST_NORMAL and POST_DELETED_SNOOP only)
 // 		* threadlink: if set, a link to the thread is added next to 'Posted on blahblah' (POST_NORMAL and POST_DELETED_SNOOP only)
 //		* noreplylinks: if set, no links to newreply.php (Quote/ID) are placed in the metabar (POST_NORMAL only)
-function makePost($post, $type, $params=array()) {
+function makePost($post, $type, $params=[]) {
 	global $loguser, $loguserid, $usergroups, $isBot, $blocklayouts;
 
 	$poster = getDataPrefix($post, 'u_');
@@ -192,7 +192,7 @@ function makePost($post, $type, $params=array()) {
 		$post['deluserlink'] = UserLink(getDataPrefix($post, 'du_'));
 		$post['delreason'] = htmlspecialchars($post['reason']);
 
-		$links = array();
+		$links = [];
 		if (HasPermission('mod.deleteposts', $params['fid'])) {
 			$links['undelete'] = actionLinkTag(__("Undelete"), "editpost", $post['id'], "delete=2&key=".$loguser['token']);
 		}
@@ -203,11 +203,11 @@ function makePost($post, $type, $params=array()) {
 
 		$post['links'] = $links;
 
-		RenderTemplate('postbox_deleted', array('post' => $post));
+		RenderTemplate('postbox_deleted', ['post' => $post]);
 		return;
 	}
 
-	$links = array();
+	$links = [];
 
 	if ($type != POST_SAMPLE || $type != POST_PROFILE) {
 		$forum = $params['fid'];
@@ -215,7 +215,7 @@ function makePost($post, $type, $params=array()) {
 
 		$notclosed = (!$post['closed'] || HasPermission('mod.closethreads', $forum));
 
-		$extraLinks = array();
+		$extraLinks = [];
 
 		if (!$isBot) {
 			if ($type == POST_DELETED_SNOOP) {
@@ -259,7 +259,7 @@ function makePost($post, $type, $params=array()) {
 
 		//Threadlinks for listpost.php
 		if ($params['threadlink']) {
-			$thread = array();
+			$thread = [];
 			$thread['id'] = $post['thread'];
 			$thread['title'] = $post['threadname'];
 			$thread['forum'] = $post['fid'];
@@ -286,7 +286,7 @@ function makePost($post, $type, $params=array()) {
 
 	// POST SIDEBAR
 
-	$sidebar = array();
+	$sidebar = [];
 
 	// quit abusing custom syndromes.
 	$poster['title'] = preg_replace('@Affected by \'?.*?Syndrome\'?@si', '', $poster['title']);
@@ -325,7 +325,7 @@ function makePost($post, $type, $params=array()) {
 	if($poster['lastactivity'] > time() - 300)
 		$sidebar['isonline'] = __("User is <strong>online</strong>");
 
-	$sidebarExtra = array();
+	$sidebarExtra = [];
 	$bucket = "sidebar"; include(__DIR__."/pluginloader.php");
 	$sidebar['extra'] = $sidebarExtra;
 
@@ -354,5 +354,5 @@ function makePost($post, $type, $params=array()) {
 
 	//PRINT THE POST!
 
-	RenderTemplate('postbox', array('post' => $post));
+	RenderTemplate('postbox', ['post' => $post]);
 }

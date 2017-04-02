@@ -1,10 +1,10 @@
 <?php
 //PipeMenuBuilder class -- It builds menus.
 class PipeMenu {
-	private $classNames = array("pipemenu");
-	private $entries = array();
+	private $classNames = ["pipemenu"];
+	private $entries = [];
 	public function setClass($class) {
-		$this->classNames = array($class);
+		$this->classNames = [$class];
 	}
 	public function addClass($class) {
 		$this->classNames[] = $class;

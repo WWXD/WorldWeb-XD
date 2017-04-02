@@ -7,7 +7,7 @@ $homepage = Settings::get('homepageText');
 $homepage = parseBBCode($homepage);
 
 // timestamp => data
-$lastActivity = array();
+$lastActivity = [];
 $maxitems = 10;
 
 $lastposts = Query("	SELECT
@@ -28,7 +28,7 @@ while ($lp = Fetch($lastposts)) {
 	$fmtdate = relativedate($lp['t_lastpostdate']);
 	$desc = UserLink($user).__(' posted in ').actionLinkTag($tags[0], 'post', $lp['t_lastpostid']);
 
-	$lastActivity[$lp['t_lastpostdate']] = array('description' => $desc, 'formattedDate' => $fmtdate);
+	$lastActivity[$lp['t_lastpostdate']] = ['description' => $desc, 'formattedDate' => $fmtdate];
 }
 
 $bucket = 'lastactivity'; include(BOARD_ROOT.'lib/pluginloader.php');
@@ -36,7 +36,7 @@ $bucket = 'lastactivity'; include(BOARD_ROOT.'lib/pluginloader.php');
 krsort($lastActivity);
 $lastActivity = array_slice($lastActivity, 0, $maxitems);
 
-RenderTemplate('homepage', array('homepage' => $homepage, 'lastactivity' => $lastActivity));
+RenderTemplate('homepage', ['homepage' => $homepage, 'lastactivity' => $lastActivity]);
 
 
 $rFora = Query("select * from {forums} where id = {0}", Settings::get('newsForum'));
@@ -58,11 +58,11 @@ else
 
 $tpp = 5;
 
-$links = array('<a href="'.URL_ROOT.'rss.php">'.__('RSS feed').'</a>');
+$links = ['<a href="'.URL_ROOT.'rss.php">'.__('RSS feed').'</a>'];
 if (HasPermission('forum.postthreads', $forum['id']))
 	$links[] = actionLinkTag(__('Post new'), 'newthread', $forum['id']);
 
-MakeCrumbs(array(), $links);
+MakeCrumbs([], $links);
 
 $rThreads = Query("	SELECT 
 						t.id, t.title, t.closed, t.replies, t.lastpostid,
@@ -83,10 +83,10 @@ $numonpage = NumRows($rThreads);
 
 $pagelinks = PageLinks(actionLink('home', '', 'from='), $tpp, $from, $total);
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 
 while($thread = Fetch($rThreads)) {
-	$pdata = array();
+	$pdata = [];
 
 	$starter = getDataPrefix($thread, 'su_');
 	$last = getDataPrefix($thread, 'lu_');
@@ -114,13 +114,13 @@ while($thread = Fetch($rThreads)) {
 		$newreply = actionLinkTag(__("Post a comment"), "newreply", $thread['id']);
 	$pdata['replylink'] = $newreply;
 
-	$modlinks = array();
+	$modlinks = [];
 	if (($loguserid == $starter['id'] && HasPermission('user.editownposts')) || HasPermission('mod.editposts', $forum['id']))
 		$modlinks['edit'] = actionLinkTag(__('Edit'), 'editpost', $thread['pid']);
 	if (($loguserid == $starter['id'] && HasPermission('user.deleteownposts')) || HasPermission('mod.deleteposts', $forum['id']))
 		$modlinks['delete'] = actionLinkTag(__('Delete'), 'editpost', $thread['pid'], 'delete=1&key='.$loguser['token']);
 
-	RenderTemplate('newspost', array('post' => $pdata));
+	RenderTemplate('newspost', ['post' => $pdata]);
 }
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'bottom']);

@@ -35,7 +35,7 @@ function Upgrade()
 		$rPlugins = Query("select * from {enabledplugins}");
 		while($plugin = Fetch($rPlugins))
 		{
-			$plugin = str_replace(array('.','/','\\'), '', $plugin['plugin']);
+			$plugin = str_replace(['.','/','\\'], '', $plugin['plugin']);
 			$path = __DIR__."/../plugins/$plugin/installSchema.php";
 			if(file_exists($path))
 				include($path);
@@ -68,7 +68,7 @@ function Upgrade()
 		{
 			$primaryKey = "";
 			$changes = 0;
-			$foundFields = array();
+			$foundFields = [];
 			$scan = Query("show columns from `{".$table."}`");
 			while($field = $scan->fetch_assoc())
 			{
@@ -115,7 +115,7 @@ function Upgrade()
 					$changes++;
 				}
 			}
-			$newindexes = array();
+			$newindexes = [];
 			preg_match_all('@((primary|unique|fulltext)\s*)?key\s+(`(\w+)`\s+)?\(([\w`,\s]+)\)@si', $tableSchema['special'], $idxs, PREG_SET_ORDER);
 			foreach ($idxs as $idx)
 			{
@@ -123,7 +123,7 @@ function Upgrade()
 				$newindexes[$name]['type'] = strtolower($idx[2]);
 				$newindexes[$name]['fields'] = strtolower(preg_replace('@\s+@s', '', $idx[5]));
 			}
-			$curindexes = array();
+			$curindexes = [];
 			$idxs = Query("SHOW INDEX FROM `{".$table."}`");
 			while ($idx = Fetch($idxs))
 			{

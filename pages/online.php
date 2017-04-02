@@ -4,7 +4,7 @@
 if (!defined('BLARG')) die();
 
 $title = __("Online users");
-MakeCrumbs(array(actionLink("online") => __("Online users")));
+MakeCrumbs([actionLink("online") => __("Online users")]);
 
 if(!$loguserid)
 	Kill(__("You need to be logged in in order to access this page"));
@@ -18,18 +18,18 @@ $rUsers = Query("select * from {users} where lastactivity > {0} order by lastact
 $rGuests = Query("select * from {guests} where date > {0} and bot = 0 order by date desc", (time()-$time));
 $rBots = Query("select * from {guests} where date > {0} and bot = 1 order by date desc", (time()-$time));
 
-$spans = array(60, 300, 900, 3600, 86400);
-$spanList = array();
+$spans = [60, 300, 900, 3600, 86400];
+$spanList = [];
 foreach($spans as $span) {
 	$spanList[] = ($span==$time) ? timeunits($span) : actionLinkTag(timeunits($span), "online", "", "time=$span");
 }
 
 
-$userList = array();
+$userList = [];
 $i = 1;
 while($user = Fetch($rUsers))
 {
-	$udata = array();
+	$udata = [];
 	$udata['num'] = $i++;
 	
 	$udata['link'] = UserLink($user);
@@ -51,12 +51,12 @@ while($user = Fetch($rUsers))
 $guestList = listGuests($rGuests);
 $botList = listGuests($rBots);
 
-RenderTemplate('onlinelist', array(
+RenderTemplate('onlinelist', [
 	'timelinks' => $spanList,
 	'showIPs' => $showIPs, 
 	'users' => $userList, 
 	'guests' => $guestList, 
-	'bots' => $botList));
+	'bots' => $botList]);
 
 
 function FilterURL($url) {
@@ -69,11 +69,11 @@ function FilterURL($url) {
 function listGuests($rGuests) {
 	global $showIPs;
 	
-	$guestList = array();
+	$guestList = [];
 	$i = 1;
 	while($guest = Fetch($rGuests))
 	{
-		$gdata = array();
+		$gdata = [];
 		$gdata['num'] = $i++;
 		
 		if ($showIPs)

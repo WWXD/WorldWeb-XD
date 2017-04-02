@@ -26,8 +26,8 @@ function Alert($s, $t="") {
 		$t = __("Notice");
 
 	RenderTemplate('messagebox', 
-		array(	'msgtitle' => $t,
-				'message' => $s));
+		[	'msgtitle' => $t,
+				'message' => $s]);
 }
 
 function Kill($s, $t="") {
@@ -99,10 +99,10 @@ function write() {
 }
 
 function OptimizeLayouts($text) {
-	$bucket = array();
+	$bucket = [];
 
 	// Save the tags in the temp array and remove them from where they were originally
-	$regexps = array("@<style(.*?)</style(.*?)>(\r?\n?)@si", "@<link(.*?)>(\r?\n?)@si", "@<script(.*?)</script(.*?)>(\r?\n?)@si");
+	$regexps = ["@<style(.*?)</style(.*?)>(\r?\n?)@si", "@<link(.*?)>(\r?\n?)@si", "@<script(.*?)</script(.*?)>(\r?\n?)@si"];
 	foreach ($regexps as $regexp) {
 		preg_match_all($regexp, $text, $temp, PREG_PATTERN_ORDER);
 		$text = preg_replace($regexp, "", $text);
@@ -172,7 +172,7 @@ function IniValToBytes($val) {
 }
 
 function BytesToSize($size, $retstring = '%01.2f&nbsp;%s') {
-	$sizes = array('B', 'KiB', 'MiB');
+	$sizes = ['B', 'KiB', 'MiB'];
 	$lastsizestring = end($sizes);
 	foreach($sizes as $sizestring) {
 		if($size < 1024)
@@ -187,8 +187,8 @@ function BytesToSize($size, $retstring = '%01.2f&nbsp;%s') {
 
 function makeThemeArrays() {
 	global $themes, $themefiles;
-	$themes = array();
-	$themefiles = array();
+	$themes = [];
+	$themefiles = [];
 	$dir = @opendir("themes");
 	while ($file = readdir($dir)) {
 		if ($file != "." && $file != "..") {
@@ -233,11 +233,11 @@ function formatBirthday($b) {
 }
 
 function getSexName($sex) {
-	$sexes = array(
+	$sexes = [
 		0 => __("Male"),
 		1 => __("Female"),
 		2 => __("N/A"),
-	);
+	];
 
 	return $sexes[$sex];
 }
@@ -285,11 +285,11 @@ function IP2C($ip) {
 function getBirthdaysText($ret = true) {
 	global $luckybastards, $loguser;
 	
-	$luckybastards = array();
+	$luckybastards = [];
 	$today = gmdate('m-d', time()+$loguser['timezone']);
 	
 	$rBirthdays = Query("select u.birthday, u.(_userfields) from {users} u where u.birthday > 0 and u.primarygroup!={0} order by u.name", Settings::get('bannedGroup'));
-	$birthdays = array();
+	$birthdays = [];
 	while($user = Fetch($rBirthdays)) {
 		$b = $user['birthday'];
 		if(gmdate("m-d", $b) == $today) {
@@ -310,7 +310,7 @@ function getBirthdaysText($ret = true) {
 }
 
 function getKeywords($stuff) {
-	$common = array('the', 'and', 'that', 'have', 'for', 'not', 'this');
+	$common = ['the', 'and', 'that', 'have', 'for', 'not', 'this'];
 
 	$stuff = strtolower($stuff);
 	$stuff = str_replace('\'s', '', $stuff);

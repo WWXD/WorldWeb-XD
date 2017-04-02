@@ -12,11 +12,11 @@ if($loguserid && isset($_GET['action']) && $_GET['action'] == "markallread") {
 	die(header("Location: ".actionLink("board1", $boardlol)));
 }
 
-$links = array();
+$links = [];
 if($loguserid)
 	$links[] = actionLinkTag(__("Mark all forums read"), "board1", $boardlol, "action=markallread");
 
-MakeCrumbs(forumCrumbs(array('board1' => $boardlol)), $links);
+MakeCrumbs(forumCrumbs(['board1' => $boardlol]), $links);
 
 if ($board == '') {
 	$statData = Fetch(Query("SELECT
@@ -36,7 +36,7 @@ if ($board == '') {
 		$statData['lastUserLink'] = UserLink($lastUser);
 	}
 
-	RenderTemplate('boardstats', array('stats' => $statData));
+	RenderTemplate('boardstats', ['stats' => $statData]);
 }
 
 makeAnncBar();

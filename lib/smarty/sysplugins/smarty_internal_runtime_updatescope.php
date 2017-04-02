@@ -50,7 +50,7 @@ class Smarty_Internal_Runtime_UpdateScope
      */
     public function _getAffectedScopes(Smarty_Internal_Template $tpl, $mergedScope)
     {
-        $_stack = array();
+        $_stack = [];
         $ptr = $tpl->parent;
         if ($mergedScope && isset($ptr) && $ptr->_objType == 2) {
             $_stack[] = $ptr;
