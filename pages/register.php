@@ -210,8 +210,11 @@ print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\"
 				<small>Preferibly use passwords with at least 8 characters, with uppercase and lowercase letters, numbers and symbols.</small>
 			</td>
 			<td class=\"cell1\">
-				<input type=\"password\" id=\"pw\" name=\"pass\" size=24 class=\"required\"> | Confirm: <input type=\"password\" id=\"pw2\" name=\"pass2\" size=24 class=\"required\">
-			</td>
+				<input type=\"password\" id=\"pw\" name=\"pass\" size=24 class=\"required\"> | Confirm: <input type=\"password\" id=\"pw2\" name=\"pass2\" size=24 class=\"required\">";
+if(Settings::get('PassChecker'))
+	print "<br><a href=\"javascript:void(0)\" onclick=\"create_password();\"><button>Generate Password</button></a>: <span id=\"password\"></span>";
+print "
+				</td>
 		</tr>
 		<tr>
 			<td class=\"cell2 center\">

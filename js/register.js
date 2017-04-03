@@ -42,3 +42,25 @@ $(function () {
 		$('#note').html('<small>' + message + '</small>')
 	})
 })
+
+function create_password(){
+
+	var characters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+	var min = 8;
+	var max = 16;
+	var diff = max - min;
+
+	var lenght = document.getElementById('lenght').value;
+
+	var ugh = 0;
+	var password = "";
+
+	while(ugh < lenght){
+	   password+=characters.charAt(Math.round(Math.random()*characters.length));
+	   ugh++;
+	}
+
+	document.getElementById('password').value=password;
+
+}
