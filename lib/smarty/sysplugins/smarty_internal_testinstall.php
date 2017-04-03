@@ -359,7 +359,7 @@ class Smarty_Internal_TestInstall
         // test if sysplugins are available
         $source = SMARTY_SYSPLUGINS_DIR;
         if (is_dir($source)) {
-            $expectedSysplugins = array('smartycompilerexception.php' => true, 'smartyexception.php' => true,
+            $expectedSysplugins = ['smartycompilerexception.php' => true, 'smartyexception.php' => true,
                                         'smarty_cacheresource.php' => true, 'smarty_cacheresource_custom.php' => true,
                                         'smarty_cacheresource_keyvaluestore.php' => true, 'smarty_data.php' => true,
                                         'smarty_internal_block.php' => true,
@@ -495,7 +495,7 @@ class Smarty_Internal_TestInstall
                                         'smarty_template_config.php' => true,
                                         'smarty_template_resource_base.php' => true,
                                         'smarty_template_source.php' => true, 'smarty_undefined_variable.php' => true,
-                                        'smarty_variable.php' => true,);
+                                        'smarty_variable.php' => true,];
             $iterator = new DirectoryIterator($source);
             foreach ($iterator as $file) {
                 if (!$file->isDot()) {
@@ -533,7 +533,7 @@ class Smarty_Internal_TestInstall
         $source = SMARTY_PLUGINS_DIR;
         if (is_dir($source)) {
             $expectedPlugins =
-                array('block.textformat.php' => true, 'function.counter.php' => true, 'function.cycle.php' => true,
+                ['block.textformat.php' => true, 'function.counter.php' => true, 'function.cycle.php' => true,
                       'function.fetch.php' => true, 'function.html_checkboxes.php' => true,
                       'function.html_image.php' => true, 'function.html_options.php' => true,
                       'function.html_radios.php' => true, 'function.html_select_date.php' => true,
@@ -554,7 +554,7 @@ class Smarty_Internal_TestInstall
                       'outputfilter.trimwhitespace.php' => true, 'shared.escape_special_chars.php' => true,
                       'shared.literal_compiler_param.php' => true, 'shared.make_timestamp.php' => true,
                       'shared.mb_str_replace.php' => true, 'shared.mb_unicode.php' => true,
-                      'shared.mb_wordwrap.php' => true, 'variablefilter.htmlspecialchars.php' => true,);
+                      'shared.mb_wordwrap.php' => true, 'variablefilter.htmlspecialchars.php' => true,];
             $iterator = new DirectoryIterator($source);
             foreach ($iterator as $file) {
                 if (!$file->isDot()) {

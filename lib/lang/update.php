@@ -15,7 +15,7 @@ $headerline = fgets($handle);
 $headervals = explode("\t", $headerline);
 
 $langcount = count($headervals)-2;
-$langs = array();
+$langs = [];
 
 while (($buffer = fgets($handle, 4096)) !== false)
 {

@@ -51,7 +51,7 @@ $isHidden = !HasPermission('forum.viewforum', $forum['id'], true);
 
 $tags = ParseThreadTags($thread['title']);
 $urlname = $isHidden?'':$tags[0];
-MakeCrumbs(forumCrumbs($forum) + array(actionLink("thread", $tid, '', $urlname) => $tags[0], '' => __("Edit thread")));
+MakeCrumbs(forumCrumbs($forum) + [actionLink("thread", $tid, '', $urlname) => $tags[0], '' => __("Edit thread")]);
 
 $ref = $_SERVER['HTTP_REFERER'] ?: actionLink('thread', $tid, '', $urlname);
 
@@ -161,10 +161,10 @@ if($_GET['action']=="close" && $canClose) {
 }
 
 
-$fields = array();
+$fields = [];
 
 if ($canRename) {
-	$match = array();
+	$match = [];
 	if (preg_match("@^img/icons/icon(\d+)\..{3,}\$@si", $thread['icon'], $match))
 		$iconid = $match[1];
 	elseif($thread['icon'] == "") //Has no icon
@@ -226,12 +226,12 @@ echo "
 	<script src=\"".resourceLink("js/threadtagging.js")."\"></script>
 	<form action=\"".htmlentities(actionLink("editthread"))."\" method=\"post\">";
 	
-RenderTemplate('form_editthread', array(
+RenderTemplate('form_editthread', [
 	'fields' => $fields,
 	'canRename' => $canRename,
 	'canClose' => $canClose,
 	'canStick' => $canStick,
-	'canMove' => $canMove));
+	'canMove' => $canMove]);
 	
 echo "
 		<input type=\"hidden\" name=\"id\" value=\"$tid\">

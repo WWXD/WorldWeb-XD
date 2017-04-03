@@ -27,9 +27,9 @@ if ($page['canedit'])
 	$links .= actionLinkTagItem('Edit', 'wikiedit', $urltitle);
 
 if ($page['ismain'])
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wikidiff', $urltitle, 'rev='.$rev) => 'Main page: Diff'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', actionLink('wikidiff', $urltitle, 'rev='.$rev) => 'Main page: Diff'], $links);
 else
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $nicetitle, actionLink('wikidiff', $urltitle, 'rev='.$rev) => 'Diff'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $nicetitle, actionLink('wikidiff', $urltitle, 'rev='.$rev) => 'Diff'], $links);
 	
 if ($page['new']) Kill('This page has not been created yet.');
 if ($page['revision'] <= 1) Kill('This page has not been edited since its creation.');
@@ -73,7 +73,7 @@ function dodiff($cur, $prev)
 	$cur = str_replace("\r", '', $cur);
 	$prev = str_replace("\r", '', $prev);
 	
-	$diff = new Text_Diff('native', array(explode("\n",$prev), explode("\n",$cur)));
+	$diff = new Text_Diff('native', [explode("\n",$prev), explode("\n",$cur)]);
 	$renderer = new Text_Diff_Renderer_inline();
 	
 	$stuff = nl2br($renderer->render($diff));

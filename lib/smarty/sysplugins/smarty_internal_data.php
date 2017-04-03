@@ -47,7 +47,7 @@ class Smarty_Internal_Data
      *
      * @var Smarty_Variable[]
      */
-    public $tpl_vars = array();
+    public $tpl_vars = [];
 
     /**
      * parent template (if any)
@@ -61,7 +61,7 @@ class Smarty_Internal_Data
      *
      * @var string[]
      */
-    public $config_vars = array();
+    public $config_vars = [];
 
     /**
      * extension handler

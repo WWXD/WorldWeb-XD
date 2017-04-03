@@ -29,15 +29,15 @@ class Text_Diff_Engine_native {
 
     function diff($from_lines, $to_lines)
     {
-        array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
-        array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
+        array_walk($from_lines, ['Text_Diff', 'trimNewlines']);
+        array_walk($to_lines, ['Text_Diff', 'trimNewlines']);
 
         $n_from = count($from_lines);
         $n_to = count($to_lines);
 
-        $this->xchanged = $this->ychanged = array();
-        $this->xv = $this->yv = array();
-        $this->xind = $this->yind = array();
+        $this->xchanged = $this->ychanged = [];
+        $this->xv = $this->yv = [];
+        $this->xind = $this->yind = [];
         unset($this->seq);
         unset($this->in_seq);
         unset($this->lcs);
@@ -89,14 +89,14 @@ class Text_Diff_Engine_native {
         $this->_shiftBoundaries($to_lines, $this->ychanged, $this->xchanged);
 
         // Compute the edit operations.
-        $edits = array();
+        $edits = [];
         $xi = $yi = 0;
         while ($xi < $n_from || $yi < $n_to) {
             assert($yi < $n_to || $this->xchanged[$xi]);
             assert($xi < $n_from || $this->ychanged[$yi]);
 
             // Skip matching "snake".
-            $copy = array();
+            $copy = [];
             while ($xi < $n_from && $yi < $n_to
                    && !$this->xchanged[$xi] && !$this->ychanged[$yi]) {
                 $copy[] = $from_lines[$xi++];
@@ -107,12 +107,12 @@ class Text_Diff_Engine_native {
             }
 
             // Find deletes & adds.
-            $delete = array();
+            $delete = [];
             while ($xi < $n_from && $this->xchanged[$xi]) {
                 $delete[] = $from_lines[$xi++];
             }
 
-            $add = array();
+            $add = [];
             while ($yi < $n_to && $this->ychanged[$yi]) {
                 $add[] = $to_lines[$yi++];
             }
@@ -154,7 +154,7 @@ class Text_Diff_Engine_native {
              * shortest sequence is in X. */
             $flip = true;
             list ($xoff, $xlim, $yoff, $ylim)
-                = array($yoff, $ylim, $xoff, $xlim);
+                = [$yoff, $ylim, $xoff, $xlim];
         }
 
         if ($flip) {
@@ -169,8 +169,8 @@ class Text_Diff_Engine_native {
 
         $this->lcs = 0;
         $this->seq[0]= $yoff - 1;
-        $this->in_seq = array();
-        $ymids[0] = array();
+        $this->in_seq = [];
+        $ymids[0] = [];
 
         $numer = $xlim - $xoff + $nchunks - 1;
         $x = $xoff;
@@ -214,16 +214,16 @@ class Text_Diff_Engine_native {
             }
         }
 
-        $seps[] = $flip ? array($yoff, $xoff) : array($xoff, $yoff);
+        $seps[] = $flip ? [$yoff, $xoff] : [$xoff, $yoff];
         $ymid = $ymids[$this->lcs];
         for ($n = 0; $n < $nchunks - 1; $n++) {
             $x1 = $xoff + (int)(($numer + ($xlim - $xoff) * $n) / $nchunks);
             $y1 = $ymid[$n] + 1;
-            $seps[] = $flip ? array($y1, $x1) : array($x1, $y1);
+            $seps[] = $flip ? [$y1, $x1] : [$x1, $y1];
         }
-        $seps[] = $flip ? array($ylim, $xlim) : array($xlim, $ylim);
+        $seps[] = $flip ? [$ylim, $xlim] : [$xlim, $ylim];
 
-        return array($this->lcs, $seps);
+        return [$this->lcs, $seps];
     }
 
     function _lcsPos($ypos)

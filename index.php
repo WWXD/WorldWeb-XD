@@ -26,10 +26,10 @@ $tpl->assign('logusername', htmlspecialchars($loguser['displayname'] ?: $loguser
 $tpl->assign('loguser', $loguser);
 $tpl->assign('loguserlink', UserLink($loguser));
 
-$metaStuff = array(
+$metaStuff = [
 	'description' => Settings::get('metaDescription'),
 	'tags' => Settings::get('metaTags')
-);
+];
 
 
 //Use buffering to draw the page.
@@ -37,9 +37,9 @@ $metaStuff = array(
 $useBuffering = true;
 //Support for running pages from the terminal.
 if(isset($argv)) {
-	$_GET = array();
+	$_GET = [];
 
-	$_SERVER = array();
+	$_SERVER = [];
 	$_SERVER["REMOTE_ADDR"] = "0.0.0.0";
 
 	$ajaxPage = true;
@@ -279,7 +279,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';
 
 	if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
-		RenderTemplate('defaultboard', array(
+		RenderTemplate('defaultboard', [
 			'layout_contents' => $layout_contents,
 			'layout_crumbs' => $layout_crumbs,
 			'layout_actionlinks' => $layout_actionlinks,
@@ -299,9 +299,9 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 			'board_credits' => $layout_credits,
 			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
 			'mobileswitch' => $mobileswitch,
-			'perfdata' => $perfdata));
+			'perfdata' => $perfdata]);
 	} else {
-		RenderTemplate('default', array(
+		RenderTemplate('default', [
 			'layout_contents' => $layout_contents,
 			'layout_crumbs' => $layout_crumbs,
 			'layout_actionlinks' => $layout_actionlinks,
@@ -322,7 +322,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 			'logo' => $logo,
 			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
 			'mobileswitch' => $mobileswitch,
-			'perfdata' => $perfdata));
+			'perfdata' => $perfdata]);
 	}
 ?>
 </body>

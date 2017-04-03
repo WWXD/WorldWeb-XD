@@ -39,9 +39,9 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
             $params = implode(',', $single_modifier);
             // check if we know already the type of modifier
             if (isset($compiler->known_modifier_type[ $modifier ])) {
-                $modifier_types = array($compiler->known_modifier_type[ $modifier ]);
+                $modifier_types = [$compiler->known_modifier_type[ $modifier ]];
             } else {
-                $modifier_types = array(1, 2, 3, 4, 5, 6);
+                $modifier_types = [1, 2, 3, 4, 5, 6];
             }
             foreach ($modifier_types as $type) {
                 switch ($type) {

@@ -44,7 +44,7 @@ $title = $forum['title'];
 $urlname = HasPermission('forum.viewforum', $fid, true) ? $title : '';
 
 
-$links = array();
+$links = [];
 if($loguserid)
 	$links[] = actionLinkTag(__("Mark forum read"), "forum", $fid, "action=markasread", $urlname);
 
@@ -138,7 +138,7 @@ function ForumJump() {
 	$viewhidden = HasPermission('user.viewhiddenforums');
 
 	$rCats = Query("SELECT id, name FROM {categories} WHERE board={0} ORDER BY corder, id", $forum['board']);
-	$cats = array();
+	$cats = [];
 	while ($cat = Fetch($rCats))
 		$cats[$cat['id']] = $cat['name'];
 
@@ -149,7 +149,7 @@ function ForumJump() {
 						WHERE f.id IN ({0c})".(!$viewhidden ? " AND f.hidden=0" : '')."
 						ORDER BY f.forder, f.id", $viewableforums);
 
-	$fora = array();
+	$fora = [];
 	while($forum = Fetch($rFora))
 		$fora[$forum['catid']][] = $forum;
 
@@ -170,7 +170,7 @@ function ForumJump() {
 		.$theList
 		.'</select>';
 
-	RenderTemplate('forumjump', array('forumlist' => $theList));
+	RenderTemplate('forumjump', ['forumlist' => $theList]);
 }
 
 ?>

@@ -22,7 +22,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $required_attributes = array('var');
+    public $required_attributes = ['var'];
 
     /**
      * Attribute definition: Overwrites base class.
@@ -30,7 +30,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $optional_attributes = array('assign');
+    public $optional_attributes = ['assign'];
 
     /**
      * Attribute definition: Overwrites base class.
@@ -38,7 +38,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $shorttag_order = array('var', 'assign');
+    public $shorttag_order = ['var', 'assign'];
 
     /**
      * Compiles code for the {eval} tag

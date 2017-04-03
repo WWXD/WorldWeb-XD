@@ -1,8 +1,7 @@
 <?php
 if (!defined('BLARG')) die();
 
-$bbcodeCallbacks = array
-(
+$bbcodeCallbacks = [
 	"[b" => "bbcodeBold",
 	"[i" => "bbcodeItalics",
 	"[u" => "bbcodeUnderline",
@@ -54,7 +53,7 @@ $bbcodeCallbacks = array
 	"[rouge"  => "bbcodecolorrouge",
 	"[grey"   => "bbcodecolorgrey",
 	"[gray"   => "bbcodecolorgray",
-);
+];
 
 //Allow plugins to register their own callbacks (new bbcode tags)
 $bucket = "bbcode"; include(__DIR__."/pluginloader.php");

@@ -155,7 +155,7 @@ class Smarty_Internal_Templatelexer
      *
      * @var array
      */
-    public $state_name = array(1 => 'TEXT', 2 => 'TAG', 3 => 'TAGBODY', 4 => 'LITERAL', 5 => 'DOUBLEQUOTEDSTRING',);
+    public $state_name = [1 => 'TEXT', 2 => 'TAG', 3 => 'TAGBODY', 4 => 'LITERAL', 5 => 'DOUBLEQUOTEDSTRING',];
 
     /**
      * storage for assembled token patterns
@@ -177,7 +177,7 @@ class Smarty_Internal_Templatelexer
      *
      * @var array
      */
-    public $smarty_token_names = array(        // Text for parser error messages
+    public $smarty_token_names = [        // Text for parser error messages
                                                'NOT' => '(!,not)', 'OPENP' => '(', 'CLOSEP' => ')', 'OPENB' => '[',
                                                'CLOSEB' => ']', 'PTR' => '->', 'APTR' => '=>', 'EQUAL' => '=',
                                                'NUMBER' => 'number', 'UNIMATH' => '+" , "-', 'MATH' => '*" , "/" , "%',
@@ -191,7 +191,7 @@ class Smarty_Internal_Templatelexer
                                                'PHP' => '"<?php", "<%", "{php}" tag',
                                                'LOGOP' => '"<", "==" ... logical operator',
                                                'TLOGOP' => '"lt", "eq" ... logical operator; "is div by" ... if condition',
-                                               'SCOND' => '"is even" ... if condition',);
+                                               'SCOND' => '"is even" ... if condition',];
 
     /**
      * constructor
@@ -234,7 +234,7 @@ class Smarty_Internal_Templatelexer
 
     private $_yy_state = 1;
 
-    private $_yy_stack = array();
+    private $_yy_stack = [];
 
     public function yylex()
     {

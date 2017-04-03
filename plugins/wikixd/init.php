@@ -30,13 +30,13 @@ function getWikiPage($id, $rev = 0)
 		$ptitle, $rev);
 	if (!NumRows($page))
 	{
-		$page = array(
+		$page = [
 			'id' => $ptitle,
 			'revision' => 0,
 			'flags' => 0,
 			'text' => '',
 			'new' => 1
-		);
+		];
 
 		header('HTTP/1.1 404 Not Found');
 		header('Status: 404 Not Fount');
@@ -138,7 +138,7 @@ function wikiFilter($text, $nocontbox)
 	// run the post parser on it and call it good
 	$text = CleanUpPost($text, '', false, false);
 	
-	$hlevels = array('cur'=>0, 'curtag'=>-1);
+	$hlevels = ['cur'=>0, 'curtag'=>-1];
 	$contentsbox = '';
 	$text = preg_replace_callback('@^<(h[1-6]).*?>(.+?)</\1.*?>$@mi', 'headingHandler', $text);
 	

@@ -66,7 +66,7 @@ function smarty_function_html_options($params)
 
             case 'selected':
                 if (is_array($_val)) {
-                    $selected = array();
+                    $selected = [];
                     foreach ($_val as $_sel) {
                         if (is_object($_sel)) {
                             if (method_exists($_sel, "__toString")) {

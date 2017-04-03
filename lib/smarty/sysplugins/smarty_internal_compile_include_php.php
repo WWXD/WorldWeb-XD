@@ -22,7 +22,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $required_attributes = array('file');
+    public $required_attributes = ['file'];
 
     /**
      * Attribute definition: Overwrites base class.
@@ -30,7 +30,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $shorttag_order = array('file');
+    public $shorttag_order = ['file'];
 
     /**
      * Attribute definition: Overwrites base class.
@@ -38,7 +38,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @var array
      * @see Smarty_Internal_CompileBase
      */
-    public $optional_attributes = array('once', 'assign');
+    public $optional_attributes = ['once', 'assign'];
 
     /**
      * Compiles code for the {include_php} tag

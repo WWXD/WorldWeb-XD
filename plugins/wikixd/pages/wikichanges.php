@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 $title = 'Wiki &raquo; Recent changes';
-MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wikichanges') => 'Recent changes'), $links);
+MakeCrumbs([actionLink('wiki') => 'Wiki', actionLink('wikichanges') => 'Recent changes'], $links);
 
 $mydatefmt = 'm-d-Y';
 if ($loguserid) $mydatefmt = $loguser['dateformat'];
@@ -10,7 +10,7 @@ if ($loguserid) $mydatefmt = $loguser['dateformat'];
 $time = (int)$_GET['time'];
 if (!$time) $time = 86400;
 
-$spans = array(86400=>'Today', 604800=>'This week', 2592000=>'This month');
+$spans = [86400=>'Today', 604800=>'This week', 2592000=>'This month'];
 $spanList = "";
 foreach($spans as $span=>$text)
 {

@@ -36,7 +36,7 @@ class Smarty_Internal_Runtime_UpdateCache
         $content = ob_get_clean();
         unset($cached->hashes[ $_template->compiled->nocache_hash ]);
         if (!empty($cached->hashes)) {
-            $hash_array = array();
+            $hash_array = [];
             foreach ($cached->hashes as $hash => $foo) {
                 $hash_array[] = "/{$hash}/";
             }

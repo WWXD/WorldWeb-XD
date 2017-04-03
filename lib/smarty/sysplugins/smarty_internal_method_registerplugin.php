@@ -44,7 +44,7 @@ class Smarty_Internal_Method_RegisterPlugin
         } elseif (!is_callable($callback)) {
             throw new SmartyException("Plugin \"{$name}\" not callable");
         } else {
-            $smarty->registered_plugins[ $type ][ $name ] = array($callback, (bool) $cacheable, (array) $cache_attr);
+            $smarty->registered_plugins[ $type ][ $name ] = [$callback, (bool) $cacheable, (array) $cache_attr];
         }
         return $obj;
     }

@@ -156,8 +156,8 @@
 	if(ini_get('register_globals'))
 		die($header."PHP, as it is running on this server, has the <code>register_globals</code> setting turned on. This is something of a security hazard, and is a <a href=\"http://en.wikipedia.org/wiki/Deprecation\" target=\"_blank\">deprecated function</a>. For more information on this topic, please refer to the <a href=\"http://php.net/manual/en/security.globals.php\" target=\"_blank\">PHP manual</a>.<br><br>At any rate, this is designed to run with <code>register_globals</code> turned <em>off</em>. You can try adding the line <code>php_flag register_globals off</code> to an <code>.htaccess</code> file on your website root directory (often something like <code>public_html</code>). If not, ask your provider to edit the <code>php.ini</code> file accordingly and make the internet a little safer for all of us.".$footer);
 
-	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.4', '=<'))
-		die($header.'Sorry, WorldWeb XD requires PHP version 5.4 or above, while you are currently running '. PHP_VERSION .'. Please update to the latest, and <a href="javascript:window.history.back();">try again</a>.'.$footer);
+	if (!function_exists('version_compare') || version_compare(PHP_VERSION, '5.5', '=<'))
+		die($header.'Sorry, WorldWeb XD requires PHP version 5.5 or above, while you are currently running '. PHP_VERSION .'. Please update to the latest, and <a href="javascript:window.history.back();">try again</a>.'.$footer);
 
 	$footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></div></div></body></html>';
 

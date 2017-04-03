@@ -12,8 +12,8 @@ if(isset($_GET['gfx']))
 		$id = $loguserid;
 
 	$forums = Query("select id, title from {forums} order by id");
-	$names = array();
-	$posts = array();
+	$names = [];
+	$posts = [];
 	while($forum = Fetch($forums))
 	{
 		$names[] = $forum['title'];
@@ -31,7 +31,7 @@ if(isset($_GET['gfx']))
 	$sz = 16;
 
 	$data_sum = array_sum($posts);
-	$angle = array();
+	$angle = [];
 	for($i = 0; $i <= count($posts); $i++)
 	{
 		$angle[$i] = (($posts[$i] / $data_sum) * 360);

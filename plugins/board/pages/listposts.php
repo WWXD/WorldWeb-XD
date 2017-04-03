@@ -61,20 +61,20 @@ $uname = $user["name"];
 if($user["displayname"])
 	$uname = $user["displayname"];
 
-MakeCrumbs(array(actionLink("profile", $id, "", $user["name"]) => htmlspecialchars($uname),'' =>  __("List of posts")));
+MakeCrumbs([actionLink("profile", $id, "", $user["name"]) => htmlspecialchars($uname),'' =>  __("List of posts")]);
 
 $pagelinks = PageLinks(actionLink("listposts", $id, "from=", $user['name']), $ppp, $from, $total);
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 
 if(NumRows($rPosts))
 {
 	while($post = Fetch($rPosts))
-		MakePost($post, POST_NORMAL, array('threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1));
+		MakePost($post, POST_NORMAL, ['threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1]);
 }
 else
 	Alert('This user has no posts.', 'Notice');
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'bottom']);
 
 ?>

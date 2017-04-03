@@ -43,7 +43,7 @@ class Smarty_Internal_Filter_Handler
                         $output = $plugin_name($output, $template);
                     } elseif (class_exists($plugin_name, false)) {
                         // loaded class of filter plugin
-                        $output = call_user_func(array($plugin_name, 'execute'), $output, $template);
+                        $output = call_user_func([$plugin_name, 'execute'], $output, $template);
                     }
                 } else {
                     // nothing found, throw exception

@@ -41,12 +41,12 @@ function actionLink($action, $id="", $args="", $urlname="") {
 
 }
 
-function pageLink($page, $params=array(), $extra='') {
+function pageLink($page, $params=[], $extra='') {
 	global $router;
 	return $router->generate($page, $params) . ($extra != '' ? '?' . $extra : '');
 }
 
-function pageLinkTag($text, $page, $params=array(), $extra='', $title="") {
+function pageLinkTag($text, $page, $params=[], $extra='', $title="") {
 	return '<a href="'.htmlentities(pageLink($page, $params, $extra)).'" title="'. $title . '">'.$text.'</a>';
 }
 
@@ -54,7 +54,7 @@ function actionLinkTag($text, $action, $id='', $args="", $urlname="", $title="")
 	return '<a href="'.htmlentities(actionLink($action, $id, $args, $urlname)).'" title="'. $title . '">'.$text.'</a>';
 }
 
-function pageLinkTagItem($text, $page, $params=array(), $extra='', $title="") {
+function pageLinkTagItem($text, $page, $params=[], $extra='', $title="") {
 	return '<li><a href="'.htmlentities(pageLink($page, $params, $extra)).'" title="'. $title . '">'.$text.'</a></li>';
 }
 
@@ -195,10 +195,10 @@ function userLink($user, $showMinipic = false, $customID = false) {
 
 	$title = htmlspecialchars($user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
 	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
-	return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", array(
+	return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", [
 		'id' => $user['id'],
 		'name' => slugify($user['name'])
-	));
+	]);
 }
 
 function userLinkById($id) {
@@ -209,7 +209,7 @@ function userLinkById($id) {
 		if(NumRows($rUser))
 			$userlinkCache[$id] = getDataPrefix(Fetch($rUser), "u_");
 		else
-			$userlinkCache[$id] = array('id' => 0, 'name' => "Unknown User", 'sex' => 0, 'primarygroup' => -1);
+			$userlinkCache[$id] = ['id' => 0, 'name' => "Unknown User", 'sex' => 0, 'primarygroup' => -1];
 	}
 	return UserLink($userlinkCache[$id]);
 }
@@ -257,7 +257,7 @@ function pageLinks($url, $epp, $from, $total) {
 	$next = ($from < $total - $epp) ? " <a class=\"pagelink nextpage\"  href=\"".makeFromUrl($url, $next)."\">&#x203A;</a>" : "";
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink lastpage\"  href=\"".makeFromUrl($url, $last)."\">&#x00BB;</a>" : "";
 
-	$pageLinks = array();
+	$pageLinks = [];
 	for($p = $page - 5; $p < $page + 5; $p++) {
 		if($p < 1 || $p > $numPages)
 			continue;
@@ -292,7 +292,7 @@ function pageLinksInverted($url, $epp, $from, $total) {
 	$next = ($from < $total - $epp) ? " <a class=\"pagelink\"  href=\"".makeFromUrl($url, $next)."\">&#x2039;</a>" : "";
 	$last = ($from < $total - $epp) ? " <a class=\"pagelink\"  href=\"".makeFromUrl($url, $last)."\">&#x00AB;</a>" : "";
 
-	$pageLinks = array();
+	$pageLinks = [];
 	for($p = $page + 5; $p >= $page - 5; $p--) {
 		if($p < 1 || $p > $numPages)
 			continue;
@@ -342,7 +342,7 @@ function getFullURL() {
 // ----------------------------------------------------------------------------
 
 function smarty_function_pageLink($params, $template) {
-	$passParams = isset($params['params']) ? $params['params'] : array();
+	$passParams = isset($params['params']) ? $params['params'] : [];
 	return pageLink($params['name'], $passParams);
 }
 

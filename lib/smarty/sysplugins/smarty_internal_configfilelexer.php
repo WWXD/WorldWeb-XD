@@ -103,8 +103,8 @@ class Smarty_Internal_Configfilelexer
      *
      * @var array
      */
-    public $state_name = array(1 => 'START', 2 => 'VALUE', 3 => 'NAKED_STRING_VALUE', 4 => 'COMMENT', 5 => 'SECTION',
-                               6 => 'TRIPPLE');
+    public $state_name = [1 => 'START', 2 => 'VALUE', 3 => 'NAKED_STRING_VALUE', 4 => 'COMMENT', 5 => 'SECTION',
+                               6 => 'TRIPPLE'];
 
     /**
      * storage for assembled token patterns
@@ -128,8 +128,8 @@ class Smarty_Internal_Configfilelexer
      *
      * @var array
      */
-    public $smarty_token_names = array(        // Text for parser error messages
-    );
+    public $smarty_token_names = [        // Text for parser error messages
+    ];
 
     /**
      * constructor
@@ -169,7 +169,7 @@ class Smarty_Internal_Configfilelexer
 
     private $_yy_state = 1;
 
-    private $_yy_stack = array();
+    private $_yy_stack = [];
 
     public function yylex()
     {
@@ -421,7 +421,7 @@ class Smarty_Internal_Configfilelexer
     {
 
         if (!$this->configBooleanize ||
-            !in_array(strtolower($this->value), Array("true", "false", "on", "off", "yes", "no"))
+            !in_array(strtolower($this->value), ["true", "false", "on", "off", "yes", "no"])
         ) {
             $this->yypopstate();
             $this->yypushstate(self::NAKED_STRING_VALUE);

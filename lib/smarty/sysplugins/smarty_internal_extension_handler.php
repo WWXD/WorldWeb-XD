@@ -41,11 +41,11 @@ class Smarty_Internal_Extension_Handler
      *
      * @var array
      */
-    private $_property_info = array('AutoloadFilters' => 0, 'DefaultModifiers' => 0, 'ConfigVars' => 0,
+    private $_property_info = ['AutoloadFilters' => 0, 'DefaultModifiers' => 0, 'ConfigVars' => 0,
                                     'DebugTemplate' => 0, 'RegisteredObject' => 0, 'StreamVariable' => 0,
-                                    'TemplateVars' => 0,);#
+                                    'TemplateVars' => 0,];#
 
-    private $resolvedProperties = array();
+    private $resolvedProperties = [];
 
     /**
      * Call external Method
@@ -86,16 +86,16 @@ class Smarty_Internal_Extension_Handler
                 }
             }
             if (class_exists($class)) {
-                $callback = array($smarty->ext->$name = new $class(), $name);
+                $callback = [$smarty->ext->$name = new $class(), $name];
             }
         } else {
-            $callback = array($smarty->ext->$name, $name);
+            $callback = [$smarty->ext->$name, $name];
         }
         array_unshift($args, $data);
         if (isset($callback) && $callback[ 0 ]->objMap | $data->_objType) {
             return call_user_func_array($callback, $args);
         }
-        return call_user_func_array(array(new Smarty_Internal_Undefined(), $name), $args);
+        return call_user_func_array([new Smarty_Internal_Undefined(), $name], $args);
     }
 
     /**
@@ -141,7 +141,7 @@ class Smarty_Internal_Extension_Handler
      */
     public function __call($name, $args)
     {
-        return call_user_func_array(array(new Smarty_Internal_Undefined(), $name), array($this));
+        return call_user_func_array([new Smarty_Internal_Undefined(), $name], [$this]);
     }
 
 }

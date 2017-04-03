@@ -1,7 +1,7 @@
 <?php
 if (!defined('BLARG')) die();
 
-$userMenu = array();
+$userMenu = [];
 
 if($loguserid)
 {

@@ -15,7 +15,7 @@ class Smarty_Internal_Runtime_TplFunction
      *
      * @var array
      */
-    private $tplFunctions = array();
+    private $tplFunctions = [];
 
     /**
      * Call template function
@@ -130,8 +130,8 @@ class Smarty_Internal_Runtime_TplFunction
                             }
                             $tplPtr->smarty->ext->_updateCache->write($cache, $tplPtr,
                                                                       preg_replace('/\s*\?>\s*$/', "\n", $content) .
-                                                                      "\n" . preg_replace(array('/^\s*<\?php\s+/',
-                                                                                                '/\s*\?>\s*$/',), "\n",
+                                                                      "\n" . preg_replace(['/^\s*<\?php\s+/',
+                                                                                                '/\s*\?>\s*$/',], "\n",
                                                                                           $match[ 0 ]));
                         }
                     }
@@ -151,7 +151,7 @@ class Smarty_Internal_Runtime_TplFunction
     public function saveTemplateVariables(Smarty_Internal_Template $tpl, $name)
     {
         $tpl->_cache[ 'varStack' ][] =
-            array('tpl' => $tpl->tpl_vars, 'config' => $tpl->config_vars, 'name' => "_tplFunction_{$name}");
+            ['tpl' => $tpl->tpl_vars, 'config' => $tpl->config_vars, 'name' => "_tplFunction_{$name}"];
     }
 
     /**

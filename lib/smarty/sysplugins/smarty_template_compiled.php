@@ -186,8 +186,8 @@ class Smarty_Template_Compiled extends Smarty_Template_Resource_Base
      */
     public function compileTemplateSource(Smarty_Internal_Template $_template)
     {
-        $this->file_dependency = array();
-        $this->includes = array();
+        $this->file_dependency = [];
+        $this->includes = [];
         $this->nocache_hash = null;
         $this->unifunc = null;
         // compile locking

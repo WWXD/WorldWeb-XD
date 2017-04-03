@@ -1,5 +1,5 @@
 <?php
-$languagePack = array(
+$languagePack = [
 
 // plugins/userbadgemanager/adminleft.php
 'Manage User Badges' =>
@@ -3344,4 +3344,4 @@ $languagePack = array(
 'Value' =>
 'Wartość',
 
-);
+];

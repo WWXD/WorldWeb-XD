@@ -35,14 +35,14 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
      *
      * @var array
      */
-    public $local_var = array();
+    public $local_var = [];
 
     /**
      * array of callbacks called when the normal compile process of template is finished
      *
      * @var array
      */
-    public $postCompileCallbacks = array();
+    public $postCompileCallbacks = [];
 
     /**
      * prefix code
@@ -89,7 +89,7 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
           then written to compiled files. */
         // init the lexer/parser to compile the template
         $this->parser =
-            new $this->parser_class(new $this->lexer_class(str_replace(array("\r\n", "\r"), "\n", $_content), $this),
+            new $this->parser_class(new $this->lexer_class(str_replace(["\r\n", "\r"], "\n", $_content), $this),
                                     $this);
         if ($isTemplateSource && $this->template->caching) {
             $this->parser->insertPhpCode("<?php\n\$_smarty_tpl->compiled->nocache_hash = '{$this->nocache_hash}';\n?>\n");
@@ -146,7 +146,7 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
      * @param bool     $replace   if true replace existing keyed callback
      *
      */
-    public function registerPostCompileCallback($callback, $parameter = array(), $key = null, $replace = false)
+    public function registerPostCompileCallback($callback, $parameter = [], $key = null, $replace = false)
     {
         array_unshift($parameter, $callback);
         if (isset($key)) {

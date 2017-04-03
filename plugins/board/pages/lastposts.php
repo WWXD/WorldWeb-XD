@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 $title = __("Last posts");
-MakeCrumbs(array(actionLink("lastposts") => __("Last posts")));
+MakeCrumbs([actionLink("lastposts") => __("Last posts")]);
 
 $allowedforums = ForumsWithPermission('forum.viewforum');
 
@@ -15,19 +15,19 @@ if ($show != 'threads' && $show != 'posts') $show = 'threads';
 $from = (int)$_GET['from'];
 $fparam = $from ? '&from='.$from : '';
 
-$spans = array(3600=>__('1 hour'), 86400=>__('1 day'), 259200=>__('3 days'), 604800=>__('1 week'), 'new'=>__('New posts'));
-$options = array();
+$spans = [3600=>__('1 hour'), 86400=>__('1 day'), 259200=>__('3 days'), 604800=>__('1 week'), 'new'=>__('New posts')];
+$options = [];
 foreach($spans as $span=>$desc) {
 	if ($span == $time)
 		$options[] = $desc;
 	else
 		$options[] = actionLinkTag($desc, 'lastposts', '', 'time='.$span.'&show='.$show.$fparam);
 }
-$options2 = array();
+$options2 = [];
 $options2[] = ($show=='threads') ? __('List threads') : actionLinkTag(__('Show threads'), 'lastposts', '', 'time='.$time.'&show=threads'.$fparam);
 $options2[] = ($show=='posts') ? __('Show posts') : actionLinkTag(__('Show posts'), 'lastposts', '', 'time='.$time.'&show=posts'.$fparam);
 
-RenderTemplate('lastposts_options', array('timelinks' => $options, 'misclinks' => $options2));
+RenderTemplate('lastposts_options', ['timelinks' => $options, 'misclinks' => $options2]);
 
 $mindate = ($time=='new') ? ($loguserid ? 'IFNULL(tr.date,0)' : '{2}') : '{1}';
 $total = FetchResult("SELECT COUNT(".($show=='threads'?'DISTINCT p.thread':'*').") FROM {posts} p LEFT JOIN {threads} t ON t.id=p.thread ".
@@ -83,12 +83,12 @@ if ($show == 'threads') {
 						WHERE p.date>{$mindate} AND f.id IN ({5c})
 						ORDER BY date DESC LIMIT {3u}, {4u}", $loguserid, time()-$time, time()-900, $from, $perpage, $allowedforums);
 
-	RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
+	RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 
 	while($post = Fetch($rPosts))
-		MakePost($post, POST_NORMAL, array('threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1));
+		MakePost($post, POST_NORMAL, ['threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1]);
 
-	RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
+	RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'bottom']);
 }
 
 ?>

@@ -63,7 +63,7 @@ abstract class Smarty_Template_Resource_Base
      *
      * @var array
      */
-    public $file_dependency = array();
+    public $file_dependency = [];
 
     /**
      * Content buffer
@@ -77,14 +77,14 @@ abstract class Smarty_Template_Resource_Base
      *
      * @var array
      */
-    public $required_plugins = array();
+    public $required_plugins = [];
 
     /**
      * Included subtemplates
      *
      * @var array
      */
-    public $includes = array();
+    public $includes = [];
 
     /**
      * Flag if this is a cache resource

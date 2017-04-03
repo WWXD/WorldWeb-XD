@@ -7,12 +7,12 @@ function loadSmilies() {
 	global $smilies, $smiliesReplaceOrig, $smiliesReplaceNew;
 
 	$rSmilies = Query("select * from {smilies} order by length(code) desc");
-	$smilies = array();
+	$smilies = [];
 
 	while($smiley = Fetch($rSmilies))
 		$smilies[] = $smiley;
 
-	$smiliesReplaceOrig = $smiliesReplaceNew = array();
+	$smiliesReplaceOrig = $smiliesReplaceNew = [];
 	for ($i = 0; $i < count($smilies); $i++) {
 		$smiliesReplaceOrig[] = "/(?<!\w)".preg_quote($smilies[$i]['code'], "/")."(?!\w)/";
 		$smiliesReplaceNew[] = "<img class=\"smiley\" alt=\"\" src=\"".resourceLink("img/smilies/".$smilies[$i]['image'])."\" />";

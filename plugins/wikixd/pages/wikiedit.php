@@ -4,14 +4,14 @@ if (!defined('BLARG')) die();
 if (isset($_GET['createnew']))
 {
 	$ptitle = title2url($_POST['title']);
-	$page = array(
+	$page = [
 		'id' => $ptitle,
 		'revision' => 0,
 		'flags' => 0,
 		'text' => '',
 		'new' => 2,
 		'canedit' => $canedit
-	);
+	];
 }
 else
 {
@@ -67,11 +67,11 @@ if (isset($_POST['saveaction']))
 }
 
 if ($page['new'] == 2)
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', '' => 'New page'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', '' => 'New page'], $links);
 else if ($page['ismain'])
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', '' => 'Edit main page'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', '' => 'Edit main page'], $links);
 else
-	MakeCrumbs(array(actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $nicetitle, '' => 'Edit'), $links);
+	MakeCrumbs([actionLink('wiki') => 'Wiki', actionLink('wiki', $urltitle) => $nicetitle, '' => 'Edit'], $links);
 
 echo '
 		<table class="outline margin">

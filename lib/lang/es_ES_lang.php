@@ -1,5 +1,5 @@
 <?php
-$languagePack = array(
+$languagePack = [
 
 // footer.php
 'MySQL query' =>
@@ -3100,4 +3100,4 @@ $languagePack = array(
 'Value' =>
 'Valor',
 
-);
+];

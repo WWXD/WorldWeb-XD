@@ -79,14 +79,14 @@ else
 	$from = 0;
 
 
-$links = array();
+$links = [];
 
 $links[] = ($showWhat==0) ? __("Show received") : actionLinkTag(__("Show received"), "private", "", substr($userGet,1));
 $links[] = ($showWhat==1) ? __("Show sent") : actionLinkTag(__("Show sent"), "private", "", "show=1".$userGet);
 $links[] = ($showWhat==2) ? __("Show drafts") : actionLinkTag(__("Show drafts"), "private", "", "show=2".$userGet);
 $links[] = actionLinkTag(__("Send new PM"), "sendprivate");
 
-MakeCrumbs(array(actionLink("private") => __("Private messages")), $links);
+MakeCrumbs([actionLink("private") => __("Private messages")], $links);
 
 $rPM = Query("
 	SELECT 
@@ -104,12 +104,12 @@ $user, $deleted, $from, $ppp, -1);
 
 $pagelinks = PageLinks(actionLink("private", "", "$show$userGet&from="), $ppp, $from, $total);
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'top'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 
-$pms = array();
+$pms = [];
 while($pm = Fetch($rPM)) {
-	$pmdata = array();
-
+	$pmdata = [];
+	
 	if ($showWhat == 1 && $pm['userto'] == -1) {
 		$pmdata['userlink'] = 'Staff';
 	} else if ($pm['drafting']) {
@@ -139,12 +139,12 @@ while($pm = Fetch($rPM)) {
 echo "
 	<form method=\"post\" action=\"\" id=\"pmform\">";
 	
-RenderTemplate('pmlist', array(
+RenderTemplate('pmlist', [
 	'pms' => $pms,
 	'inbox' => !$showWhat,
 	'deleteCheckAll' => "<input type=\"checkbox\" id=\"ca\" onchange=\"checkAll();\">",
 	'deleteCheckedLink' => "<a href=\"javascript:void();\" onclick=\"document.getElementById('pmform').submit();\">".__("Delete checked")."</a>",
-));
+]);
 
 echo "
 		<input type=\"hidden\" name=\"action\" value=\"multidel\">
@@ -152,4 +152,4 @@ echo "
 	</form>
 ";
 
-RenderTemplate('pagelinks', array('pagelinks' => $pagelinks, 'position' => 'bottom'));
+RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'bottom']);

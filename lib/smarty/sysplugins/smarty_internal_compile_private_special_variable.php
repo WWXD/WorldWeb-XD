@@ -43,10 +43,10 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
                         $class = 'Smarty_Internal_Compile_' . ucfirst($variable);
                         Smarty_Internal_TemplateCompilerBase::$_tag_objects[ $variable ] = new $class;
                     }
-                    return Smarty_Internal_TemplateCompilerBase::$_tag_objects[ $variable ]->compileSpecialVariable(array(), $compiler, $_index);
+                    return Smarty_Internal_TemplateCompilerBase::$_tag_objects[ $variable ]->compileSpecialVariable([], $compiler, $_index);
                 case 'capture':
                     if (class_exists('Smarty_Internal_Compile_Capture')) {
-                        return Smarty_Internal_Compile_Capture::compileSpecialVariable(array(), $compiler, $_index);
+                        return Smarty_Internal_Compile_Capture::compileSpecialVariable([], $compiler, $_index);
                     }
                     return '';
                 case 'now':
