@@ -4,7 +4,7 @@ WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storag
 
 ## Requirements
 
-PHP version (minimum): 5.4. It will work on 7.0.    
+PHP version (minimum): 5.5. It will work on 7.0.    
 PHP extentions: mcrypt & PHP-GD
 
 You will also need `mod-rewrite` for apache2 and allow `override all` for rewritten URLS
@@ -28,7 +28,7 @@ We recommend you take some time and make your own website themes and banner to g
 
 If you want to have a image logo, just be sure to put it in the `img` directory, under the name `logo.png`.
 
-If you want plugins, they're here: https://github.com/WorldWeb-XD/Plugins      
+If you want addons, they're here: https://github.com/WorldWeb-XD/Addons      
 If you want themes, they're here: https://github.com/WorldWeb-XD/Themes     
 If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets
 
