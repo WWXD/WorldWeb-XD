@@ -99,8 +99,8 @@ if (isset($_COOKIE['forcelayout'])) {
 } else
 	$mobileLayout = false;
 
-$oldAndroid = false;
 if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;
+else $oldAndroid = false;
 
 $browserName = $name;
 $browserVers = (float)$version;

@@ -25,6 +25,7 @@ ipban: ['GET|POST', '/admin/ipban', 'ipbans']
 secondary: ['GET', '/admin/secgroups', 'secgroups']
 addsec: ['GET|POST', '/admin/secgroups/add', 'addsecgroups']
 removesec: ['GET|POST', '/admin/secgroups/remove', 'removesecgroups']
+editsettings: ['GET|POST', '/admin/editsettings', 'editsettings']
 
 # ehh
 irc: ['GET', '/misc/irc', 'irc']

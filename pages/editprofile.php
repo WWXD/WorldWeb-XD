@@ -825,7 +825,7 @@ foreach ($epFields as $catid => $cfields) {
 
 
 print "
-	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\">
+	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"actionsave.disabled = true; return true;\">
 ";
 
 RenderTemplate('form_editprofile', [

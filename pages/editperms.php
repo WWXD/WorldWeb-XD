@@ -89,7 +89,7 @@ $permlist = [];
 $fpermlist = [];
 
 echo '
-	<form action="" method="POST">
+	<form action="" method="POST" onsubmit="saveaction.disabled = true; return true;">
 		<table class="layout-table">
 		<tr><td style="width:50%;vertical-align:top;padding-right:0.5em;">
 		<table class="outline margin">

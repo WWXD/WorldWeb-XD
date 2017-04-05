@@ -113,7 +113,7 @@ $fields = [
 	'btnForgotPass' => $forgotPass,
 ];
 
-echo "<form name=\"loginform\" action=\"".htmlentities(pageLink("login"))."\" method=\"post\">";
+echo "<form name=\"loginform\" action=\"".htmlentities(pageLink("login"))."\" method=\"post\" onsubmit=\"actionlogin.disabled = true; return true;\">";
 
 RenderTemplate('form_login', ['fields' => $fields]);
 

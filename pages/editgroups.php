@@ -67,7 +67,7 @@ $permlist = [];
 $fpermlist = [];
 
 echo '
-	<form action="" method="POST">
+	<form action="" method="POST" onsubmit="saveaction.disabled = true; return true;">
 		<table class="outline margin">
 			<tr class="header1"><th colspan="2">'.__('Editing group ').htmlspecialchars($group['title']).'</th></tr>
 			<tr>

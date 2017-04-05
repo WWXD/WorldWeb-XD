@@ -10,7 +10,7 @@ if(isset($_POST['google'])) {
 print "	<table>
 		<tr>
 			<td style=\"width: 70%; border: 0px none; vertical-align: top; padding-right: 1em; padding-bottom: 1em;\">
-	<form name=\"searchform\"  action=\"".actionLink("search")."\" method=\"post\">
+	<form name=\"searchform\"  action=\"".actionLink("search")."\" method=\"post\" >
 		<table class=\"outline margin\">
 			<tr class=\"header0\"><th>
 				<strong>".__("Google search")."</strong>

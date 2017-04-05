@@ -61,7 +61,7 @@ write("
 	</tr>
 	{0}
 </table>
-<form action=\"".actionLink("userbadges")."\" method=\"post\">
+<form action=\"".actionLink("userbadges")."\" method=\"post\" onsubmit=\"action.disabled = true; return true;\">
 	<table class=\"outline margin width50\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">

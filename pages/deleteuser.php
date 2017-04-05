@@ -121,7 +121,7 @@ if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 &
 	}
 
 	echo "
-	<form name=\"confirmform\" action=\"".actionLink("deleteuser", $uid)."\" method=\"post\">
+	<form name=\"confirmform\" action=\"".actionLink("deleteuser", $uid)."\" method=\"post\" onsubmit=\"actionlogin.disabled = true; return true;\">
 		<table class=\"outline margin width50\">
 			<tr class=\"header0\">
 				<th colspan=\"2\">

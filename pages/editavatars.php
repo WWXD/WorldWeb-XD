@@ -112,7 +112,7 @@ while($mood = Fetch($rMoods)) {
 }
 
 $newField = "
-				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\" enctype=\"multipart/form-data\">
+				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\" enctype=\"multipart/form-data\" onsubmit=\"actionadd.disabled = true; return true;\">
 					".__("Name:")." <input type=\"text\" id=\"newName\" name=\"name\" size=80 maxlength=60><br/>
 					".__("Image:")." <input type=\"file\" id=\"pic\" name=\"picture\"><br/>
 					<input type=\"submit\" name=\"actionadd\" value=\"".__("Add")."\">

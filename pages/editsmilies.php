@@ -9,21 +9,16 @@ MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("editsmilies") => __(
 if (isset($_POST['action']) && $loguser['token'] != $_POST['key'])
 	Kill(__("No."));
 
-if($_POST['action'] == "Apply")
-{
+if($_POST['action'] == "Apply") {
 	$rSmilies = Query("select * from {smilies}");
 	$numSmilies = NumRows($rSmilies);
 
-	for($i = 0; $i <= $numSmilies; $i++)
-	{
-		if($_POST['code_'.$i] != $_POST['oldcode_'.$i] || $_POST['image_'.$i] != $_POST['oldimage_'.$i])
-		{
-			if($_POST['code_'.$i] == "")
-			{
+	for($i = 0; $i <= $numSmilies; $i++) {
+		if($_POST['code_'.$i] != $_POST['oldcode_'.$i] || $_POST['image_'.$i] != $_POST['oldimage_'.$i]) {
+			if($_POST['code_'.$i] == "") {
 				$act = "deleted";
 				$rSmiley = Query("delete from {smilies} where code={0}", $_POST['oldcode_'.$i]);
-			} else
-			{
+			} else {
 				$act = "edited to \"".$_POST['image_'.$i]."\"";
 				$rSmiley = Query("update {smilies} set code={0}, image={1} where code={2}", $_POST['code_'.$i], $_POST['image_'.$i], $_POST['oldcode_'.$i]);
 			}
@@ -31,8 +26,7 @@ if($_POST['action'] == "Apply")
 		}
 	}
 
-	if($_POST['code_add'] && $_POST['image_add'])
-	{
+	if($_POST['code_add'] && $_POST['image_add']) {
 		$rSmiley = Query("insert into {smilies} (code,image) value ({0}, {1})", $_POST['code_add'], $_POST['image_add']);
 		$log .= "Smiley \"".$_POST['code_add']."\" added.<br />";
 	}
@@ -42,8 +36,7 @@ if($_POST['action'] == "Apply")
 
 $smileyList = "";
 $rSmilies = Query("select * from {smilies}");
-while($smiley = Fetch($rSmilies))
-{
+while($smiley = Fetch($rSmilies)) {
 	$cellClass = ($cellClass+1) % 2;
 	$i++;
 
@@ -73,7 +66,7 @@ write(
 		To edit, change either code or image fields to <em>not</em> match their hidden counterparts.
 	</div>
 
-	<form method=\"post\" action=\"".htmlentities(actionLink("editsmilies"))."\">
+	<form method=\"post\" action=\"".htmlentities(pageLink("editsmilies"))."\" onsubmit=\"action.disabled = true; return true;\">
 
 		<table class=\"outline margin\" style=\"width: 30%;\">
 			<tr class=\"header1\">

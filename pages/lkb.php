@@ -7,8 +7,7 @@ $title = "Last known browsers";
 $isMod = HasPermission('admin.viewips');
 $sort = "id asc";
 $ual = "";
-if(isset($_GET['byua']))
-{
+if(isset($_GET['byua'])) {
 	$sort = "lastknownbrowser asc";
 	$ual .= "byua&amp;";
 }

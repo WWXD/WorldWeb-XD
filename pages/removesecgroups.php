@@ -24,7 +24,7 @@ if ($http->post('submit')) {
 }
 ?>
 <table class="outline"><tr class="header1"><th colspan="2" class="center">Remove secondary groups</th></tr>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="submit.disabled = true; return true;">
 <tr class="cell2"><td>User ID</td><td><input type="text" name="userid"></td></tr>
 <tr class="cell1"><td>Group ID</td><td><input type="text" name="groupid"></td></tr>
 <tr><td colspan="2" class="cell2"><input type="submit" name="submit" value="Remove"></td></tr>

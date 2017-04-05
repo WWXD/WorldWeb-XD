@@ -165,12 +165,10 @@ function bbcodeUser($contents, $arg, $parenttag)
 	return UserLinkById((int)$arg);
 }
 
-function bbcodeThread($contents, $arg, $parenttag)
-{
+function bbcodeThread($contents, $arg, $parenttag) {
 	global $threadLinkCache, $loguser;
 	$id = (int)$arg;
-	if(!isset($threadLinkCache[$id]))
-	{
+	if(!isset($threadLinkCache[$id])) {
 		$rThread = Query("select t.id, t.title, t.forum from {threads} t where t.id={0} AND t.forum IN ({1c})", $id, ForumsWithPermission('forum.viewforum'));
 		if(NumRows($rThread))
 		{

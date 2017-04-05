@@ -335,7 +335,7 @@ while($comment = Fetch($rComments)) {
 $commentField = '';
 if($canComment) {
 	$commentField = "
-		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\">
+		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\" onsubmit=\"actionpost.disabled = true; return true;\">
 			<input type=\"hidden\" name=\"id\" value=\"$id\">
 			<input type=\"text\" name=\"text\" style=\"width: 80%;\" maxlength=\"255\">
 			<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">

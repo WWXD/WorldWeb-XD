@@ -99,7 +99,7 @@ if (isset($_GET['unban'])) {
 }
 
 echo '
-	<form action="" method="POST">';
+	<form action="" method="POST" onsubmit="ban.disabled = true; return true;">';
 
 RenderTemplate($template, ['fields' => $fields]);
 

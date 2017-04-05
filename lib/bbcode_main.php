@@ -99,7 +99,8 @@ function securityPostFilter($s) {
 
 	$s = preg_replace("'-moz-binding'si"," -mo<em></em>z-binding", $s);
 	//$s = preg_replace("'filter:'si","filter<em></em>:>", $s);
-	//$s = preg_replace("'javascript:'si","javascript<em></em>:>", $s);
+	//$s = preg_replace("'javascript:'si","javascript<em></em>:", $s);
+	//$s = preg_replace("'data:'si","data<em></em>:", $s);
 
 	// TODO do it more nicely
 	$s = preg_replace_callback("@(href|src)\s*=\s*\"([^\"]+)\"@si", "FilterJS", $s);

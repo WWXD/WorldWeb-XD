@@ -62,7 +62,7 @@ if($http->get('id'))) {
 	MakeCrumbs([actionLink('login') => __('Log in'), '' => __('Request password reset')]);
 
 	echo "
-	<form action=\"".htmlentities(pageLink("lostpass"))."\" method=\"post\">";
+	<form action=\"".htmlentities(pageLink("lostpass"))."\" method=\"post\" onsubmit=\"action.disabled = true; return true;\">";
 
 	$fields = [
 		'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24>",

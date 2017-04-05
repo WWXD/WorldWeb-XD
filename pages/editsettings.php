@@ -69,9 +69,9 @@ if(isset($_POST["_plugin"])) {
 		Settings::save($plugin);
 		if(isset($_POST["_exit"])) {
 			if($plugin == "main")
-				die(header("Location: $boardroot".actionLink("admin")));
+				die(header("Location: $boardroot".pageLink("admin")));
 			else
-				die(header("Location: $boardroot".actionLink("addonmanager")));
+				die(header("Location: $boardroot".pageLink("addonmanager")));
 		} else
 			Alert(__("Settings were successfully saved!"));
 	} else
@@ -80,7 +80,7 @@ if(isset($_POST["_plugin"])) {
 
 
 echo "
-	<form action=\"".htmlentities(actionLink("editsettings"))."\" method=\"post\">
+	<form action=\"".htmlentities(pageLink("editsettings"))."\" method=\"post\">
 		<input type=\"hidden\" name=\"_plugin\" value=\"$plugin\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">";
 
