@@ -192,9 +192,8 @@
 		if ($ownerpassword !== $ownpassconf)
 			die($header.'The passwords you entered don\'t match.'.$footer);
 
-		$test = new mysqli($_POST['dbserver'], $_POST['dbusername'], $_POST['dbpassword'], $_POST['dbname']);
-		if ($test->connect_error)
-			die($header.'Failed to connect to the MySQL server: '.$test->connect_error.'<br><br>Check your parameters.'.$footer);
+		if(!sqlConnect())
+			die($header."Could not connect to the database.<br><br>Check your parameters.".$footer);
 
 		$test->close();
 
