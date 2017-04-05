@@ -128,7 +128,7 @@ require(__DIR__.'/layouts/userpanel.php');
 require(__DIR__.'/layouts/menus.php');
 
 $mobileswitch = '';
-if ($mobileLayout) $mobileswitch .= 'Mobile view (Requires JS enabled for it to work.) - ';
+if ($mobileLayout) $mobileswitch .= 'Mobile view <noscript>(Requires JS enabled for it to work.)</noscript> - ';
 if (isset($_COOKIE['forcelayout']) && $_COOKIE['forcelayout']) $mobileswitch .= '<a href="?forcelayout=0" rel="nofollow">Auto view</a>';
 else if ($mobileLayout) $mobileswitch .= '<a href="?forcelayout=-1" rel="nofollow">Force normal view</a>';
 else $mobileswitch .= '<a href="?forcelayout=1" rel="nofollow">Force mobile view [BETA]</a>';
