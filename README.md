@@ -2,6 +2,8 @@
 
 WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates (might change), Font Awesome for the icons and jQuery.
 
+# Do not use right now. I accidently broke the page. The next commit will fix this.
+
 ## Requirements
 
 PHP version (minimum): 5.5. It will work on 7.0.    
