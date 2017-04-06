@@ -9,16 +9,16 @@ CheckPermission('admin.manageipbans');
 
 MakeCrumbs([actionLink("admin") => __("Admin"), actionLink("ipbans") => __("IP ban manager")]);
 
-if(isset($_POST['actionadd'])) {
-	if(isIPBanned($_POST['ip']))
+if(isset($http->post('actionadd'))) {
+	if(isIPBanned($http->post('ip')))
 		Alert("Already banned IP!");
 	else {
-		$whitelist = $_POST['whitelisted'] ? 'TRUE' : 'FALSE';
-		$rIPBan = Query("insert into {ipbans} (ip, reason, date, whitelisted) values ({0}, {1}, {2}, $whitelist)", $_POST['ip'], $_POST['reason'], ((int)$_POST['days'] > 0 ? time() + ((int)$_POST['days'] * 86400) : 0));
+		$whitelist = $http->post('whitelisted') ? 'TRUE' : 'FALSE';
+		$rIPBan = Query("insert into {ipbans} (ip, reason, date, whitelisted) values ({0}, {1}, {2}, $whitelist)", $http->post('ip'), $http->post('reason'), ((int)$http->post('days') > 0 ? time() + ((int)$http->post('days') * 86400) : 0));
 		Alert(__("Added."), __("Notice"));
 	}
-} elseif($_GET['action'] == "delete") {
-	$rIPBan = Query("delete from {ipbans} where ip={0} limit 1", $_GET['ip']);
+} elseif($http->get('action') == "delete") {
+	$rIPBan = Query("delete from {ipbans} where ip={0} limit 1", $http->get('ip'));
 	Alert(__("Removed."), __("Notice"));
 }
 
@@ -53,7 +53,7 @@ print "
 	$banList
 </table>
 
-<form action=\"".htmlentities(actionLink("ipbans"))."\" method=\"post\" onsubmit=\"actionadd.disabled = true; return true;\">
+<form action=\"".htmlentities(pageLink("ipbans"))."\" method=\"post\" onsubmit=\"actionadd.disabled = true; return true;\">
 	<table class=\"outline margin width50\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">

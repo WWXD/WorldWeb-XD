@@ -11,7 +11,7 @@ if(!$loguserid)
 
 $showIPs = HasPermission('admin.viewips');
 
-$time = (int)$_GET['time'];
+$time = (int)$http->get('time');
 if(!$time) $time = 300;
 
 $rUsers = Query("select * from {users} where lastactivity > {0} order by lastactivity desc", (time()-$time));
@@ -27,21 +27,20 @@ foreach($spans as $span) {
 
 $userList = [];
 $i = 1;
-while($user = Fetch($rUsers))
-{
+while($user = Fetch($rUsers)) {
 	$udata = [];
 	$udata['num'] = $i++;
-	
+
 	$udata['link'] = UserLink($user);
-	
+
 	$udata['lastPost'] = ($user['lastposttime'] ? cdate("d-m-y G:i:s",$user['lastposttime']) : __("Never"));
 	$udata['lastView'] = cdate("d-m-y G:i:s", $user['lastactivity']);
-	
+
 	if($user['lasturl'])
 		$udata['lastURL'] = "<a href=\"".FilterURL($user['lasturl'])."\">".FilterURL($user['lasturl'])."</a>";
 	else
 		$udata['lastURL'] = __("None");
-		
+
 	if ($showIPs) $udata['ip'] = formatIP($user['lastip']);
 
 	$userList[] = $udata;
@@ -68,28 +67,27 @@ function FilterURL($url) {
 
 function listGuests($rGuests) {
 	global $showIPs;
-	
+
 	$guestList = [];
 	$i = 1;
-	while($guest = Fetch($rGuests))
-	{
+	while($guest = Fetch($rGuests)) {
 		$gdata = [];
 		$gdata['num'] = $i++;
-		
+
 		if ($showIPs)
 			$gdata['userAgent'] = '<span title="'.htmlspecialchars($guest['useragent']).'">'.htmlspecialchars(substr($guest['useragent'],0,65)).'</span>';
-		
+
 		$gdata['lastView'] = cdate("d-m-y G:i:s", $guest['date']);
-		
+
 		if($guest['date'])
 			$gdata['lastURL'] = "<a href=\"".FilterURL($guest['lasturl'])."\">".FilterURL($guest['lasturl'])."</a>";
 		else
 			$gdata['lastURL'] = __("None");
-			
+
 		if ($showIPs) $gdata['ip'] = formatIP($guest['ip']);
 
 		$guestList[] = $gdata;
 	}
-	
+
 	return $guestList;
 }
