@@ -238,6 +238,17 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<meta http-equiv="X-UA-Compatible" content="IE=10">
 	<meta name="description" content="<?php print $metaStuff['description']; ?>">
 	<meta name="keywords" content="<?php print $metaStuff['tags']; ?>">
+	<?php if ($mobileLayout) { ?>
+		<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script src="<?php echo resourceLink('js/mobile.js'); ?>"></script>
+		<?php if ($oldAndroid) { ?>
+			<style>
+				#mobile-sidebar { height: auto!important; max-height: none!important; }
+				#realbody { max-height: none!important; max-width: none!important; overflow: scroll!important; }
+			</style>
+		<?php }
+	} ?>
 
 	<base href="<?php echo getServerURLNoSlash($ishttps)?>" /><!--[if IE]></base><![endif]-->
 	<link rel="shortcut icon" href="<?php print $favicon;?>">
@@ -259,18 +270,6 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
 
 	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
-
-	<?php if ($mobileLayout) { ?>
-	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width">
-	<script src="<?php echo resourceLink('js/mobile.js'); ?>"></script>
-	<?php if ($oldAndroid) { ?>
-	<style>
-	#mobile-sidebar { height: auto!important; max-height: none!important; }
-	#realbody { max-height: none!important; max-width: none!important; overflow: scroll!important; }
-	</style>
-	<?php } ?>
-
-	<?php } ?>
 </head>
 <body style="width:100%; font-size: <?php echo $loguser['fontsize']; ?>%;">
 <form action="<?php echo htmlentities(pageLink('logout')); ?>" method="post" id="logout" style="display:none;"><input type="hidden" name="action" value="logout"></form>
