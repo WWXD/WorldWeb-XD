@@ -52,8 +52,10 @@ function Upgrade() {
 			}
 			if(isset($tableSchema['special']))
 				$create .= ",\n\t".$tableSchema['special'];
-			$create .= "\n) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;";
-			//print "<pre>".$create."</pre>";
+			if(isset($tableSchema['meta']))
+				$create .= "\n) " . $tableSchema['meta'];
+			else
+				$create .= "\n) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;";
 			Query($create);
 		} else {
 			$primaryKey = "";

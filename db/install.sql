@@ -7,6 +7,8 @@
 	* smilies
 */
 
+SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
 INSERT INTO `{$dbpref}categories` (`id`, `name`, `corder`, `board`) VALUES
 (1, 'Sample category', 0, ''),
 (2, 'End', 0, '');

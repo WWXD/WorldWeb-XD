@@ -70,79 +70,6 @@ if (!defined('BLARG')) die();
 			"name" => "Board language",
 			'category' => 'Presentation'
 		],
-		"tagsDirection" => [
-			"type" => "options",
-			"options" => ['Left' => 'Left', 'Right' => 'Right'],
-			"default" => 'Right',
-			"name" => "Direction of thread tags",
-			'category' => 'Presentation'
-		],
-		"alwaysMinipic" => [
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Show minipics everywhere",
-			'category' => 'Presentation'
-		],
-		"showExtraSidebar" => [
-			"type" => "boolean",
-			"default" => "1",
-			"name" => "Show extra info in post sidebar",
-			'category' => 'Presentation'
-		],
-		"profilePreviewText" => [
-			"type" => "textbbcode",
-			"default" => "This is a sample post. You [b]probably[/b] [i]already[/i] [u]know[/u] what this is for.
-
-[quote=Goomba][quote=Mario]Woohoo! [url=http://www.mariowiki.com/Super_Mushroom]That's what I needed![/url][/quote]Oh, nooo! *stomp*[/quote]
-
-Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perhaps how to do the classic infinite loop?
-[source=c]while(true){
-    printf(\"Hello World!
-\");
-}[/source]",
-			"name" => "Post preview text",
-			'category' => 'Presentation'
-		],
-
-
-		"Syndromes" => [
-			"type" => "options",
-			"options" => ['0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'],
-			"default" => '1',
-			"name" => "Syndromes",
-			'category' => 'Functionality'
-		],
-		"postLayoutType" => [
-			"type" => "options",
-			"options" => ['0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'],
-			"default" => '2',
-			"name" => "Post layout type",
-			'category' => 'Functionality'
-		],
-		"postAttach" => [
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Allow post attachments",
-			'category' => 'Functionality'
-		],
-		"customTitleThreshold" => [
-			"type" => "integer",
-			"default" => "100",
-			"name" => "Custom title threshold (posts)",
-			'category' => 'Functionality'
-		],
-		"oldThreadThreshold" => [
-			"type" => "integer",
-			"default" => "3",
-			"name" => "Old thread threshold (months)",
-			'category' => 'Functionality'
-		],
-		"minwords" => [
-			"type" => "integer",
-			"default" => "5",
-			"name" => "Minimum post word count",
-			'category' => 'Functionality'
-		],
 		"viewcountInterval" => [
 			"type" => "integer",
 			"default" => "10000",
@@ -167,12 +94,6 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"default" => "",
 			"name" => "Password Reset email sender",
 			"help" => "Email address used to send the pasword reset e-mails. If left blank, the password reset feature is disabled.",
-			'category' => 'Functionality'
-		],
-		"floodProtectionInterval" => [
-			"type" => "integer",
-			"default" => "10",
-			"name" => "Minimum time between user posts (seconds)",
 			'category' => 'Functionality'
 		],
 		"nofollow" => [
@@ -275,32 +196,6 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Turn off registration",
 			"help" => "Usefull when your site is hit with a spam attack.",
 			'category' => 'RegistrationSec'
-		],
-
-
-		'newsForum' => [
-			'type' => 'forum',
-			'default' => '0',
-			'name' => 'Latest News forum',
-			'category' => 'Forum settings',
-		],
-		'anncForum' => [
-			'type' => 'forum',
-			'default' => '0',
-			'name' => 'Announcements forum',
-			'category' => 'Forum settings',
-		],
-		"trashForum" => [
-			"type" => "forum",
-			"default" => "0",
-			"name" => "Trash forum",
-			'category' => 'Forum settings',
-		],
-		"secretTrashForum" => [
-			"type" => "forum",
-			"default" => "0",
-			"name" => "Deleted threads forum",
-			'category' => 'Forum settings',
 		],
 
 
