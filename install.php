@@ -192,8 +192,9 @@
 		if ($ownerpassword !== $ownpassconf)
 			die($header.'The passwords you entered don\'t match.'.$footer);
 
-		if(!sqlConnect())
-			die($header."Could not connect to the database.<br><br>Check your parameters.".$footer);
+		$test = new mysqli($_POST['dbserver'], $_POST['dbusername'], $_POST['dbpassword'], $_POST['dbname']);
+		if ($test->connect_error)
+			die($header.'Failed to connect to the MySQL server: '.$test->connect_error.'<br><br>Check your parameters.'.$footer);
 
 		$test->close();
 
@@ -230,7 +231,6 @@
 
 		Query("insert into {users} (id, name, password, pss, primarygroup, regdate, lastactivity, lastip, email, sex, theme) values ({0}, {1}, {2}, {3}, {4}, {5}, {5}, {6}, {7}, {8}, {9})", 
 			1, $ownerusername, $sha, $newsalt, 4, time(), $_SERVER['REMOTE_ADDR'], '', 2, 'blargboard');
-		query("ALTER DATABASE ".$_POST['dbname']." COLLATE utf8_unicode_ci");
 
 		echo '</div></div></div>';
 		//4th page ends here
