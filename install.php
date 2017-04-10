@@ -219,7 +219,8 @@
 		require(__DIR__.'/db/functions.php');
 		$debugMode = 1;
 
-		echo '<div class="container"><div class="outline"><div class="box header center">Installing...</div><div class="box cell center">';
+		//4th page starts here
+		echo '<div class="container" id="page3"><div class="outline"><div class="box header center">Installing...</div><div class="box cell center">';
 
 		Upgrade();
 		Import(__DIR__.'/db/install.sql');
@@ -232,9 +233,11 @@
 		query("ALTER DATABASE ".$_POST['dbname']." COLLATE utf8_unicode_ci");
 
 		echo '</div></div></div>';
+		//4th page ends here
 
 	?>
-		<div class="container">
+		//5th page starts here
+		<div class="container" id="page4">
 			<div class="outline">
 				<div class="box header center">
 					Congratulations!
@@ -244,6 +247,7 @@
 				</div>
 			</div>
 		</div>
+		//5th page ends here
 	<?php
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
@@ -251,6 +255,7 @@
 	} else {
 	?>
 		<div class="container">
+			//Content that should be shown on every page starts here.
 			<div class="outline">
 				<div class="box cell">
 					<div id="title">
@@ -267,7 +272,9 @@
 					This version of WorldWeb XD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
 				</div>
 			</div>
-			<div class="outline">
+			//Content that should be shown on every page ends here
+			//1st page starts here.
+			<div class="outline" id="page0">
 				<div class="box cell center">
 					Welcome to WorldWeb XD. Before getting started, we need some information on the database. You will need to know the following items before proceeding.
 						<ol>
@@ -282,7 +289,8 @@
 				</div>
 			</div>
 				<form action="" method="POST">
-					<div class="outline">
+					//second page starts here
+					<div class="outline" id="page1">
 						<div class="box col2 center">
 							MySQL Parameters
 						</div>
@@ -302,6 +310,10 @@
 							Table Prefix: <input type="text" name="dbprefix" size="30" value=""><br>
 							<small>Change this if the websites's database is shared with other applications. Leaving this blank is fine.</small>
 						</div>
+					</div>
+					//Second page ends here
+					//Third Page starts here
+					<div class="outline" id="page2">
 						<div class="box col2 center">
 							Owner Credentials
 						</div>
@@ -319,6 +331,7 @@
 							<input type="submit" name="submit" value="Install WorldWeb XD">
 						</div>
 					</div>
+					//third page ends here.
 				</form>
 			</div>
 		</div>
