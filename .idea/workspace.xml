@@ -2,84 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d83f83-a115-48ae-97a3-33805753db3c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/adminpanel.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/anncbar.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/boardstats.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/default.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/defaultboard.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/editfora_list.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_attachfiles.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_banuser.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_editcategory.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_editforum.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_editpost.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_editprofile.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_editthread.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_login.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_lostpass.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_memberlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_newreply.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_newthread.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_quickreply.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_reportpost.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_search.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_sendprivate.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_settings.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/form_unbanuser.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/forumjump.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/forumlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/forumlist2.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/grouplist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/homepage.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/info.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/lastposts_options.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/memberlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/messagebox.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/moodavatars.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/newspost.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/onlinelist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/pagelinks.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/pluginlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/pmlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/poll.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/postbox.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/postbox_deleted.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/profile.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/ranks.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/searchresults.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/threadlist.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/bbxd/threadreview.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/layouts/mobile/defaultboard.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/banhammer.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/downloads.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/ipbanned.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/maintenance.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.php" afterPath="$PROJECT_DIR$/db/schema.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/install.php" afterPath="$PROJECT_DIR$/install.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/tricks.js" afterPath="$PROJECT_DIR$/js/tricks.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layouts/menus.php" afterPath="$PROJECT_DIR$/layouts/menus.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/layouts/mobile/default.tpl" afterPath="$PROJECT_DIR$/layouts/mobile/default.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/browsers.php" afterPath="$PROJECT_DIR$/lib/browsers.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/common.php" afterPath="$PROJECT_DIR$/lib/common.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/firewall.php" afterPath="$PROJECT_DIR$/lib/firewall.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/layout.php" afterPath="$PROJECT_DIR$/lib/layout.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/links.php" afterPath="$PROJECT_DIR$/lib/links.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/loguser.php" afterPath="$PROJECT_DIR$/lib/loguser.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mysql.php" afterPath="$PROJECT_DIR$/lib/mysql.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/notifications.php" afterPath="$PROJECT_DIR$/lib/notifications.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/permissions.php" afterPath="$PROJECT_DIR$/lib/permissions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/settingsfile.php" afterPath="$PROJECT_DIR$/lib/settingsfile.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/login.php" afterPath="$PROJECT_DIR$/pages/login.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/memberlist.php" afterPath="$PROJECT_DIR$/pages/memberlist.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/profile.php" afterPath="$PROJECT_DIR$/pages/profile.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/register.php" afterPath="$PROJECT_DIR$/pages/register.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/board/pages/forum.php" afterPath="$PROJECT_DIR$/plugins/board/pages/forum.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/board/pages/newthread.php" afterPath="$PROJECT_DIR$/plugins/board/pages/newthread.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/board/plugin.settings" afterPath="$PROJECT_DIR$/plugins/board/plugin.settings" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/board/userpanel.php" afterPath="$PROJECT_DIR$/plugins/board/userpanel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/gravatar/plugin.settings" afterPath="$PROJECT_DIR$/plugins/gravatar/plugin.settings" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -91,16 +18,26 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
               <caret line="24" column="10" lean-forward="false" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
               <folding>
-                <marker date="1492188922699" expanded="false" signature="9413:9473" ph="..." />
-                <marker date="1492188922699" expanded="false" signature="9572:9585" ph="..." />
-                <marker date="1492188922699" expanded="true" signature="9706:9843" ph="..." />
+                <marker date="1492190702351" expanded="false" signature="9413:9473" ph="..." />
+                <marker date="1492190702351" expanded="false" signature="9572:9585" ph="..." />
+                <marker date="1492190702351" expanded="true" signature="9706:9843" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tricks.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/tricks.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -116,6 +53,7 @@
         <option value="$PROJECT_DIR$/preinstall.php" />
         <option value="$PROJECT_DIR$/install.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/js/tricks.js" />
       </list>
     </option>
   </component>
@@ -319,7 +257,7 @@
         <state relative-caret-position="189">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <marker date="1492130923797" expanded="true" signature="7724:7896" ph="insert into " />
+            <marker date="1492190702436" expanded="true" signature="7724:7896" ph="insert into " />
           </folding>
         </state>
       </provider>
@@ -329,7 +267,7 @@
         <state relative-caret-position="148">
           <caret line="325" column="24" lean-forward="true" selection-start-line="325" selection-start-column="24" selection-end-line="325" selection-end-column="24" />
           <folding>
-            <marker date="1492130971503" expanded="true" signature="7721:7893" ph="insert into " />
+            <marker date="1492194052125" expanded="true" signature="7724:7896" ph="insert into " />
           </folding>
         </state>
       </provider>
@@ -339,10 +277,18 @@
         <state relative-caret-position="504">
           <caret line="24" column="10" lean-forward="false" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
           <folding>
-            <marker date="1492188922699" expanded="false" signature="9413:9473" ph="..." />
-            <marker date="1492188922699" expanded="false" signature="9572:9585" ph="..." />
-            <marker date="1492188922699" expanded="true" signature="9706:9843" ph="..." />
+            <marker date="1492190702351" expanded="false" signature="9413:9473" ph="..." />
+            <marker date="1492190702351" expanded="false" signature="9572:9585" ph="..." />
+            <marker date="1492190702351" expanded="true" signature="9706:9843" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/tricks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

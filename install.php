@@ -9,11 +9,11 @@
 			@import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
 
 			html, body { width: 100%; height: 100%; }
-
+			
 			#page0, #page1, #page2, #page4 {
 				display:none;
 			}
-
+			
 			body {
 				background: #0d0d0d;
 				font-family: 'Roboto', sans-serif;
@@ -243,6 +243,7 @@
 
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
+		unlink(__DIR__.'/preinstall.php');
 //		unlink(__DIR__.'/config/database_sample.php'); I'm commenting this out until I get around to actually making that file
 	} else {
 	?>
@@ -283,7 +284,7 @@
 							<li>Table prefix (if the websites's database is shared with other applications)</li>
 						</ol>
 					<br/><br/>
-					We�re going to use this information to create a <samp>database.php</samp> file. <b>If for any reason this automatic file creation doesn�t work, don�t worry. All this does is fill in the database information to a configuration file. You may also simply open <samp>database-sample.php</samp> in a text editor, fill in your information, and save it as <samp>database.php</samp>.</b>
+					We are going to use this information to create a <samp>database.php</samp> file. <b>If, for any reason, this automatic file creation does not work, do not worry. All this does is fill in the database information to a configuration file. You may also simply open <samp>database-sample.php</samp> in a text editor, fill in your information, and save it as <samp>database.php</samp>.</b>
 					<br><button onclick="$('#page0').hide();$('#page1').show();">Next</button>
 				</div>
 			</div>

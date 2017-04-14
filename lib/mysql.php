@@ -1,31 +1,17 @@
 <?php
-// WorldWeb XD support - MySQL database wrapper functions
+// AcmlmBoard XD support - MySQL database wrapper functions
 if (!defined('BLARG')) die();
 
+include(__DIR__."/../config/database.php");
+
 $queries = 0;
-$dberror = "";
-function sqlConnect() {
-	global $dbserv, $dbuser, $dbpass, $dbname, $dblink, $dberror;
-	$dblink = new mysqli($dbserv, $dbuser, $dbpass);
-	if($dblink->connect_error) {
-		$dberror = $dblink->connect_error;
-		return false;
-	}
-	if(!$dblink->select_db($dbname)) {
-		$dberror = "Database does not exist";
-		return false;
-	}
-	$dblink->set_charset('utf8');
-	if (!$dblink->set_charset("utf8mb4")) {
-        $dberror = "Error setting UTF8 charset";
-		return false;
-	}
-	mysqli_query($dblink, 'SET SESSION sql_mode = "MYSQL40"');
 
-	unset($dbpass);
+$dblink = new mysqli($dbserv, $dbuser, $dbpass, $dbname);
+unset($dbpass);
 
-	return true;
-}
+$dblink->set_charset('utf8');
+
+mysqli_query($dblink, 'SET SESSION sql_mode = "MYSQL40"');
 
 function SqlEscape($text) {
 	global $dblink;

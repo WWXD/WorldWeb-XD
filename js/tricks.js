@@ -18,11 +18,6 @@ function setCookie(name,value,days) {
 	document.cookie = name+"="+value+expires+"; path=/";
 }
 
-function enableMobileLayout(val) {
-	setCookie("forcelayout", val, 20*365*24*60*60, "/");
-	location.reload();
-}
-
 function toggleCat(id) {
 	$('#cat_'+id).toggle();
 	$('#cat_'+id+'_lolz').toggle();
@@ -612,3 +607,8 @@ $(document).ready(function()
 {
 	$(".spoilerbutton").click(toggleSpoiler);
 });
+
+function enableMobileLayout(val) {
+	setCookie("forcelayout", val, 20*365*24*60*60, "/");
+	location.reload();
+}
