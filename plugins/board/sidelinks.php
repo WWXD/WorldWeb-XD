@@ -23,5 +23,4 @@ $sidelinks[actionLink('board') => [
 			'text' => 'Search',
 			'icon' => 'search'
 		],
-		actionLink('lastposts') => 'Last posts',
 ]
