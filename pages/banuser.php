@@ -3,7 +3,7 @@ if (!defined('BLARG')) die();
 
 CheckPermission('admin.banusers');
 
-$id = (int)$_GET['id'];
+$id = (int)$http->get('id');
 $user = Fetch(Query("SELECT u.(_userfields) FROM {users} u WHERE u.id={0}", $id));
 if (!$user)
 	Kill('Invalid user ID.');
@@ -11,18 +11,18 @@ if (!$user)
 if ($targetrank >= $loguserGroup['rank'])
 	Kill('You may not ban a user whose level is equal to or above yours.');
 
-if ($_POST['ban']) {
-	if ($_POST['token'] !== $loguser['token'])
+if ($http->post('ban')) {
+	if ($http->post('token') !== $loguser['token'])
 		Kill('No.');
 
 	if ($user['u_primarygroup'] = Settings::get('bannedGroup'))
 		Kill(__('This user is already banned.'));
 
-	if ($_POST['permanent'] ) {
+	if ($http->post('permanent') ) {
 		$time = 0;
 		$expire = 0;
 	} else  {
-		$time = $_POST['time'] * $_POST['timemult'];
+		$time = $http->post('time') * $http->post('timemult');
 		$expire = time() + $time;
 	}
 
@@ -31,18 +31,18 @@ if ($_POST['ban']) {
 	else
 		$bantitle = __('Banned permanently');
 
-	if (trim($_POST['reason']))
+	if (trim($http->post('reason')))
 		$bantitle .= __(': ').$_POST['reason'];
 
 	Query("update {users} set tempbanpl = {0}, tempbantime = {1}, primarygroup = {4}, title = {3} where id = {2}", 
 		$user['u_primarygroup'], $expire, $id, $bantitle, Settings::get('bannedGroup'));
 
 	Report($loguser['name'].' banned '.$user['u_name'].($expire ? ' for '.TimeUnits($time) : ' permanently').
-		($_POST['reason'] ? ': '.$_POST['reason']:'.'), true);
+		($http->post('reason') ? ': '.$http->post('reason'):'.'), true);
 
 	die(header('Location: '.actionLink('profile', $id, '', $user['name'])));
-} else if ($_POST['unban']) {
-	if ($_POST['token'] !== $loguser['token'])
+} else if ($http->post('unban')) {
+	if ($http->post('token') !== $loguser['token'])
 		Kill('No.');
 	if ($user['u_primarygroup'] != Settings::get('bannedGroup'))
 		Kill(__('This user is not banned.'));
@@ -56,7 +56,7 @@ if ($_POST['ban']) {
 }
 
 
-if (isset($_GET['unban'])) {
+if (isset($http->get('unban'))) {
 	$title = __('Unban user');
 
 	MakeCrumbs([actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
@@ -99,7 +99,7 @@ if (isset($_GET['unban'])) {
 }
 
 echo '
-	<form action="" method="POST" onsubmit="ban.disabled = true; return true;">';
+	<form action="" method="POST">';
 
 RenderTemplate($template, ['fields' => $fields]);
 

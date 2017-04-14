@@ -215,7 +215,7 @@ function getDataPrefix($data, $pref) {
 
 
 $fieldLists = [
-	"userfields" => "id,name,displayname,primarygroup,sex,minipic"
+	"userfields" => "id,name,displayname,primarygroup,sex,picture,minipic"
 ];
 
 function loadFieldLists() {

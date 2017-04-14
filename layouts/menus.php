@@ -7,14 +7,22 @@ $headerlinks = [
 
 $sidelinks = [
 	Settings::get('menuMainName') => [
-		actionLink('home') => 'Home page',
-		actionLink('board') => 'Forums',
-		actionLink('faq') => 'FAQ',
-		actionLink('memberlist') => 'Member list',
-		actionLink('ranks') => 'Ranks',
-		actionLink('online') => 'Online users',
-		actionLink('lastposts') => 'Last posts',
-		actionLink('search') => 'Search',
+		actionLink('home') => [
+			'text' => 'Home Page',
+			'icon' => 'home'
+		],
+		actionLink('FAQ') => [
+			'text' => 'FAQ',
+			'icon' => 'question'
+		],
+		actionLink('memberlist') => [
+			'text' => 'Member list',
+			'icon' => 'group'
+		],
+		actionLink('online') => [
+			'text' => 'Online Users',
+			'icon' => 'eye-open'
+		],
 	],
 ];
 

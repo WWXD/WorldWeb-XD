@@ -141,7 +141,7 @@ function prettyRainbow($s) {
 $poptart = mt_rand(0,359);
 $dorainbow = -1;
 
-function userLink($user, $showMinipic = false, $customID = false) {
+function userLink($user, $showMinipic = false, $customID = false, $returnOnlyHref = false) {
 	global $usergroups;
 	global $poptart, $dorainbow, $newToday;
 	global $luckybastards;
@@ -193,12 +193,16 @@ function userLink($user, $showMinipic = false, $customID = false) {
 	if ($customID)
 		$classing .= " id=\"$customID\"";
 
-	$title = htmlspecialchars($user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
-	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
-	return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", [
-		'id' => $user['id'],
-		'name' => slugify($user['name'])
-	]);
+	$title = htmlspecialchars($user['displayname'] ? $user['displayname'] : $user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
+	if ($returnOnlyHref) {
+		return pageLink('profile', $user['id'], false, $fname);
+	} else {
+		return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", [
+			'id' => $user['id'],
+			'name' => slugify($user['name'])
+		]);
+	}
+	;
 }
 
 function userLinkById($id) {

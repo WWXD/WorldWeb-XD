@@ -19,11 +19,14 @@ function RenderTemplate($template, $options=null) {
 	if ($mobileLayout) {
 		$tplname = $tplroot.'mobile/'.$template.'.tpl';
 		if (!file_exists($tplname))
-			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
+			$tplname = $tplroot.'wwxd/'.$template.'.tpl';
 	} else {
-		$tplname = $tplroot.Settings::get('defaultLayout').$template.'.tpl';
+		if (Settings::get('defaultLayout') == "")
+			$tplname = $tplroot.Settings::get('defaultLayout').$template.'.tpl';
+		else
+			$tplname = $tplroot.'wwxd/'.$template.'.tpl';
 		if (!file_exists($tplname))
-			$tplname = $tplroot.'bbxd/'.$template.'.tpl';
+			$tplname = $tplroot.'wwxd/'.$template.'.tpl';
 	}
 
 	if ($options)

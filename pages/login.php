@@ -99,10 +99,10 @@ if($http->post('action') === "logout" && $loguserid) {
 $title = __('Log in');
 MakeCrumbs(['' => __('Log in')]);
 
-$forgotPass = '';
-
 if(Settings::get("mailResetSender") != "")
 	$forgotPass = "<button onclick=\"document.location = '".htmlentities(pageLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
+else
+	$forgotPass = '';
 
 $fields = [
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",

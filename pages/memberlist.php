@@ -154,6 +154,10 @@ while($user = Fetch($rUsers)) {
 	$udata['posts'] = $user['posts'];
 	$udata['birthday'] = ($user['birthday'] ? cdate('M jS', $user['birthday']) : '');
 	$udata['regdate'] = cdate('M jS Y', $user['regdate']);
+	$udata['banlink'] = return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "banuser", [
+			'id' => $user['id'],
+			'name' => slugify($user['name'])
+		]);
 
 	$users[] = $udata;
 	$i++;

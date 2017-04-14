@@ -21,7 +21,7 @@ define('DATA_URL', URL_ROOT.'data/');
 setlocale(LC_ALL, 'en_US.UTF8');
 
 if(!is_file(__DIR__.'/../config/database.php'))
-	die(header('Location: install.php'));
+	die(header('Location: preinstall.php'));
 
 if (!function_exists('password_hash'))
 	require_once('passhash.php');

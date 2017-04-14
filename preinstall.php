@@ -10,10 +10,10 @@
 
 			html, body { width: 100%; height: 100%; }
 
-			#page0, #page1, #page2, #page4 {
+			#page1, #page2, #page3, #page4 {
 				display:none;
 			}
-
+			
 			body {
 				background: #0d0d0d;
 				font-family: 'Roboto', sans-serif;
@@ -241,13 +241,24 @@
 		echo '</div></div></div>';
 		//4th page ends here
 
+	?>
+		<div class="container" id="page4">
+			<div class="outline">
+				<div class="box header center">
+					Congratulations!
+				</div>
+				<div class="box cell center">
+					The WorldWeb XD installation was successful. You may now <a href="./">proceed to your website</a> and <a href="./login/">login</a>. Make sure you edit the website's setting. Thanks for choosing WorldWeb XD!
+				</div>
+			</div>
+		</div>
+	<?php
 		unlink(__DIR__.'/db/install.sql');
 		unlink(__DIR__.'/install.php');
 //		unlink(__DIR__.'/config/database_sample.php'); I'm commenting this out until I get around to actually making that file
 	} else {
 	?>
 		<div class="container">
-			
 			<div class="outline">
 				<div class="box cell">
 					<div id="title">
@@ -264,14 +275,6 @@
 					This version of WorldWeb XD may have <em>serious vulnerabilites</em> and (some features) might <em>not work at all</em>.
 				</div>
 			</div>
-			<div class="outline"id="page4">
-				<div class="box header center">
-					Congratulations!
-				</div>
-				<div class="box cell center">
-					The WorldWeb XD installation was successful. You may now <a href="./">proceed to your website</a> and <a href="./login/">login</a>. Make sure you edit the website's setting. Thanks for choosing WorldWeb XD!
-				</div>
-			</div>
 			<div class="outline" id="page0">
 				<div class="box cell center">
 					Welcome to WorldWeb XD. Before getting started, we need some information on the database. You will need to know the following items before proceeding.
@@ -283,22 +286,8 @@
 							<li>Table prefix (if the websites's database is shared with other applications)</li>
 						</ol>
 					<br/><br/>
-					We�re going to use this information to create a <samp>database.php</samp> file. <b>If for any reason this automatic file creation doesn�t work, don�t worry. All this does is fill in the database information to a configuration file. You may also simply open <samp>database-sample.php</samp> in a text editor, fill in your information, and save it as <samp>database.php</samp>.</b>
+					We’re going to use this information to create a <samp>database.php</samp> file. <b>If for any reason this automatic file creation doesn’t work, don’t worry. All this does is fill in the database information to a configuration file. You may also simply open <samp>database-sample.php</samp> in a text editor, fill in your information, and save it as <samp>database.php</samp>.</b>
 					<br><button onclick="$('#page0').hide();$('#page1').show();">Next</button>
-				</div>
-			</div>
-			<div class="outline useless" id="page3">
-				<div class="box cell center">
-					<b>Todo:</b><br>
-					<ol>
-					<li>Let page 3 be readable and let user be able to interact</li>
-					<li>Show page 4</li>
-					</ol>
-					<p>Because of me wanting to test also page 5 I put a button here:</p>
-					<br><button onclick="$('#page3').hide();$('#page4').show();">Page 5</button>
-					<br><p>Btw, if you want to show page 5 from page 4 the code is <samp>$('#page3').hide();$('#page4').show();</samp><br>
-					this div (has class of <samp>useless</samp>) will need to be deleted as soon as these problems get solved.
-					</p>
 				</div>
 			</div>
 				<form action="install.php" method="POST">

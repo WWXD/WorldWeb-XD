@@ -7,9 +7,13 @@ if (!defined('BLARG')) die();
 
 $title = __("Register");
 
-$haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings::get('captcha');
+$haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings::get('captcha') == "1" && !$loguser['root'];
+$havebotdetect = is_file(resourceLink('lib/botdetect.php')) && Settings::get('captcha') == "2" && !$loguser['root'];
 $RegisterWord = Settings::get('RegWordKey') !== "";
 $Math = Settings::get('Math');
+
+if ($haveSecurimage || $havebotdetect)
+	session_start();
 
 MakeCrumbs(['register' => __('Register')]);
 
@@ -26,7 +30,7 @@ else if(Settings::get('DisReg') && !$loguser['root'])
 	Alert(__("Registering is currently disabled, but you are a root."));
 
 if($http->post('register')) {
-	if ((IsProxy() || IsProxyFSpamList()) && !$loguser['root']) {
+	if (IsProxy() && !$loguser['root']) {
 		$adminemail = Settings::get('ownerEmail');
 
 		if ($adminemail)
@@ -56,6 +60,13 @@ if($http->post('register')) {
 				break;
 		}
 
+		$rLoginBans = Query("select name from {loginbans}");
+		while($LoginBans = Fetch($rLoginBans)) {
+			$uban = trim(str_replace(" ", "", strtolower($LoginBans['name'])));
+			if($uban == $cname)
+				break;
+		}
+
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
 		//This makes testing faster.
@@ -68,6 +79,8 @@ if($http->post('register')) {
 			$err = __('Enter a username and try again.');
 		if ($uname == $cname)
 			$err = __("This user name is already taken by someone else. Please choose another one.");
+		if ($uban == $cname)
+			$err = __("This user name is not allowed to be used. Please choose another one.");
 		if ($ipKnown >= 1)
 			$err = __("You already have an account.");
 		if (!$http->post('readFaq'))
@@ -105,6 +118,13 @@ if($http->post('register')) {
 			include("securimage/securimage.php");
 			$securimage = new Securimage();
 			if($securimage->check($http->post('captcha_code')) == false)
+				$err = __("You got the CAPTCHA wrong.");
+		}
+
+		if($havebotdetect) {
+			require("lib/botdetect.php");
+			$isHuman = $ExampleCaptcha->Validate();
+			if(!$isHuman)
 				$err = __("You got the CAPTCHA wrong.");
 		}
 
@@ -189,7 +209,11 @@ if(Settings::get('PassChecker')) {
 			<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 }
 
-print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
+if($havebotdetect) {
+	print "<link type=\"text/css\" rel=\"Stylesheet\" href=".CaptchaUrls::LayoutStylesheetUrl()." />";
+}
+
+print "<form action=\"".htmlentities(pageLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
 	<table class=\"outline margin form form_register\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">
@@ -255,6 +279,22 @@ if($haveSecurimage) {
 				<img width=\"200\" height=\"80\" id=\"captcha\" src=\"".actionLink("captcha", shake())."\" alt=\"CAPTCHA Image\" />
 				<button onclick=\"document.getElementById('captcha').src = '".actionLink("captcha", shake())."?' + Math.random(); return false;\">".__("New")."</button><br />
 				<input type=\"text\" name=\"captcha_code\" size=\"10\" maxlength=\"6\" class=\"required\" />
+			</td>
+		</tr>";
+} else if($havebotdetect) {
+		print "
+		<tr>
+			<td class=\"cell2\">
+				".__("Captcha")."
+			</td>
+			<td class=\"cell1\">";
+
+			$ExampleCaptcha = new Captcha("ExampleCaptcha");
+			$ExampleCaptcha->UserInputID = "CaptchaCode";
+			echo $ExampleCaptcha->Html(); 
+
+			print "
+				<input name=\"CaptchaCode\" id=\"CaptchaCode\" type=\"text\" />
 			</td>
 		</tr>";
 }

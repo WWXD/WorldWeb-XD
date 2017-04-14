@@ -9,6 +9,7 @@
 			<th style="width:75px;">Average</th>
 			<th style="width:100px;">Birthday</th>
 			<th style="width:150px;">Registered on</th>
+			<th style="width:75px;">Ban User Link</th>
 		</tr>
 		<tr class="cell2">
 			<td colspan=7>Search results &mdash; {plural num=$numUsers what='user'} found</td>
@@ -23,6 +24,7 @@
 			<td class="center">{$user.average}</td>
 			<td class="center">{$user.birthday}</td>
 			<td class="center">{$user.regdate}</td>
+			<td class="center">{$user.banlink}</td>
 		</tr>
 		{/foreach}
 		

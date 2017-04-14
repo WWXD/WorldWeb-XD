@@ -96,7 +96,9 @@ if (isset($_COOKIE['forcelayout'])) {
 		$mobileLayout = true;
 	else if ($_COOKIE['forcelayout'] == -1)
 		$mobileLayout = false;
-} else
+} else if (Settings::get('defaultLayout') == "mobile")
+	$mobileLayout = true;
+else
 	$mobileLayout = false;
 
 if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;

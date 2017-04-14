@@ -172,9 +172,10 @@ if (!defined('BLARG')) die();
 		],
 		"Captcha" => [
 			"type" => "boolean",
+			"options" => ['0' => 'None', '1' => 'PHPCaptcha', '2' => 'BotDetect Captcha'],
 			"default" => "0",
 			"name" => "Captcha",
-			"help" => "You'll need to download Securimage from http://www.phpcaptcha.org and extract it into a /securimage folder.",
+			"help" => "You'll need to download the files seperately... You can either download <a href=\"http://www.phpcaptcha.org/\">PHPCaptcha</a> and extract it into a /securimage/ folder, or you can download <a href=\"https://captcha.com/\">BotDetect Captcha</a> and extract it into the /lib/ folder.",
 			'category' => 'RegistrationSec'
 		],
 		"AdminVer" => [
