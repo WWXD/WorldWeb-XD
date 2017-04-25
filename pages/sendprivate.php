@@ -17,7 +17,7 @@ $replyTo = 0;
 $convStart = 0;
 $urlargs = [];
 
-$pid = (int)$_GET['pid'];
+$pid = (int)$http->get('pid');
 if($pid) {
 	$urlargs[] = 'pid='.$pid;
 
@@ -48,32 +48,32 @@ if($pid) {
 			else
 				$trefill = "Re: ".$pm['title'];
 
-			if(!isset($_POST['to']))
-			$_POST['to'] = $user['name'];
+			if(!isset($http->post('to')))
+			$http->post('to') = $user['name'];
 		} else {
 			$draftID = $pid;
 			$convStart = $pm['conv_start'];
 
-			$_POST['to'] = $pm['draft_to'];
+			$http->post('to') = $pm['draft_to'];
 		}
 	} else
 		Kill(__("Unknown PM."));
 }
 
-$uid = (int)$_GET['uid'];
-if($uid && !$_POST['to']) {
+$uid = (int)$http->get('uid');
+if($uid && !$http->post('to')) {
 	$urlargs[] = 'uid='.$uid;
 
 	$rUser = Query("select name from {users} where id = {0}", $uid);
 	if(NumRows($rUser)) {
 		$user = Fetch($rUser);
-		$_POST['to'] = $user['name'];
+		$http->post('to') = $user['name'];
 	} else
 		Kill(__("Unknown user."));
 }
 
 
-if ($_POST['actiondelete'] && $draftID) {
+if ($http->post('actiondelete') && $draftID) {
 	Query("DELETE FROM {pmsgs} WHERE id={0} AND drafting=1", $draftID);
 	Query("DELETE FROM {pmsgs_text} WHERE pid={0}", $draftID);
 
@@ -85,8 +85,8 @@ LoadPostToolbar();
 
 
 $recipIDs = [];
-if($_POST['to']) {
-	$recipients = explode(";", $_POST['to']);
+if($http->post('to')) {
+	$recipients = explode(";", $http->post('to'));
 	foreach($recipients as $to) {
 		$to = trim(htmlentities($to));
 		if($to == "")
@@ -108,47 +108,47 @@ if($_POST['to']) {
 		$errors .= __("Too many recipients.");
 	if($errors != "") {
 		Alert($errors);
-		unset($_POST['actionsend']);
-		unset($_POST['actionsave']);
+		unset($http->post('actionsend'));
+		unset($http->post('actionsave'));
 	}
 } else {
-	if($_POST['actionsend'] || $_POST['actionsave']) {
+	if($http->post('actionsend') || $http->post('actionsave')) {
 		Alert("Enter a recipient and try again.", "Your PM has no recipient.");
-		unset($_POST['actionsend']);
-		unset($_POST['actionsave']);
+		unset($http->post('actionsend'));
+		unset($http->post('actionsave'));
 	}
 }
 
-if($_POST['actionsend'] || $_POST['actionsave']) {
-	if($_POST['title']) {
-		$_POST['title'] = $_POST['title'];
+if($http->post('actionsend') || $http->post('actionsave')) {
+	if($http->post('title')) {
+		$http->post('title') = $http->post('title');
 
-		if($_POST['text']) {
-			$wantDraft = ($_POST['actionsave'] ? 1:0);
+		if($http->post('text')) {
+			$wantDraft = ($http->post('actionsave') ? 1:0);
 
-			if(str_word_count($_POST["text"]) < Settings::get("minwords")) {
+			if(str_word_count($http->post("text")) < Settings::get("minwords")) {
 				Alert(__("Error: Could not post."), __("Your post is too short."));
 				$rejected = true;
 			}
 
 			$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
-			$post = $_POST['text'];
+			$post = $http->post('text');
 			$post = preg_replace("'/me '","[b]* ".htmlspecialchars($loguser['name'])."[/b] ", $post); //to prevent identity confusion
 
 			if($wantDraft) {
 				if ($draftID) {
 					Query("UPDATE {pmsgs_text} SET title={0}, text={1} WHERE pid={2}",
-						$_POST['title'], $post, $draftID);
+						$http->post('title'), $post, $draftID);
 					Query("UPDATE {pmsgs} SET conv_start={0}, draft_to={1} WHERE id={2} AND drafting=1",
-						$convStart, $_POST['to'], $draftID);
+						$convStart, $http->post('to'), $draftID);
 				} else {
 					Query("insert into {pmsgs_text} (title,text) values ({0}, {1})", 
-						$_POST['title'], $post);
+						$http->post('title'), $post);
 					$pid = InsertId();
 
 					Query("insert into {pmsgs} (id, userto, userfrom, conv_start, date, ip, drafting, draft_to) values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", 
-						$pid, 0, $loguserid, $convStart, time(), $_SERVER['REMOTE_ADDR'], 1, $_POST['to']);
+						$pid, 0, $loguserid, $convStart, time(), $_SERVER['REMOTE_ADDR'], 1, $http->post('to'));
 				}
 
 				die(header("Location: ".actionLink("private", "", "show=2")));
@@ -158,7 +158,7 @@ if($_POST['actionsend'] || $_POST['actionsave']) {
 					Query("DELETE FROM {pmsgs} WHERE id={0} AND drafting=1", $pid);
 				} else {
 					Query("insert into {pmsgs_text} (title,text) values ({0}, {1})", 
-						$_POST['title'], $post);
+						$http->post('title'), $post);
 					$pid = InsertId();
 				}
 
@@ -181,13 +181,13 @@ if($_POST['actionsend'] || $_POST['actionsave']) {
 	}
 }
 
-if($_POST['text'])
-	$prefill = $_POST['text'];
+if($http->post('text'))
+	$prefill = $http->post('text');
 
-if($_POST['title'])
-	$trefill = $_POST['title'];
+if($http->post('title'))
+	$trefill = $http->post('title');
 
-if($_POST['actionpreview'] || $draftID) {
+if($http->post('actionpreview') || $draftID) {
 	if($prefill) {
 		$previewPost['text'] = $prefill;
 		$previewPost['num'] = 0;
@@ -203,7 +203,7 @@ if($_POST['actionpreview'] || $draftID) {
 }
 
 $fields = [
-	'to' => "<input type=\"text\" name=\"to\" size=40 maxlength=\"128\" value=\"".htmlspecialchars($_POST['to'])."\">",
+	'to' => "<input type=\"text\" name=\"to\" size=40 maxlength=\"128\" value=\"".htmlspecialchars($http->post('to'))."\">",
 	'title' => "<input type=\"text\" name=\"title\" size=80 maxlength=\"60\" value=\"".htmlspecialchars($trefill)."\">",
 	'text' => "<textarea id=\"text\" name=\"text\" rows=\"16\">\n".htmlspecialchars($prefill)."</textarea>",
 

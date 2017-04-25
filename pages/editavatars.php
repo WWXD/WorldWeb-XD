@@ -12,20 +12,20 @@ CheckPermission('user.editavatars');
 MakeCrumbs([actionLink('profile', $loguserid, '', $loguser['name']) => htmlspecialchars($loguser['displayname']?$loguser['displayname']:$loguser['name']),
 	actionLink("editavatars") => __("Mood avatars")]);
 
-if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POST['actionadd'])) {
-	$mid = (int)$_POST['mid'];
-	if($_POST['actionrename']) {
-		Query("update {moodavatars} set name={0} where mid={1} and uid={2}", $_POST['name'], $mid, $loguserid);
-		
+if(isset($http->post('actionrename')) || isset($http->post('actiondelete')) || isset($http->post('actionadd'))) {
+	$mid = (int)$http->post('mid');
+	if($http->post('actionrename')) {
+		Query("update {moodavatars} set name={0} where mid={1} and uid={2}", $http->post('name'), $mid, $loguserid);
+
 		die(header('Location: '.actionLink('editavatars')));
-	} else if($_POST['actiondelete']) {
+	} else if($http->post('actiondelete')) {
 		Query("delete from {moodavatars} where uid={0} and mid={1}", $loguserid, $mid);
 		Query("update {posts} set mood=0 where user={0} and mood={1}", $loguserid, $mid);
 		if(file_exists(DATA_DIR."avatars/".$loguserid."_".$mid))
 			unlink(DATA_DIR."avatars/".$loguserid."_".$mid);
-			
+
 		die(header('Location: '.actionLink('editavatars')));
-	} else if($_POST['actionadd']) {
+	} else if($http->post('actionadd')) {
 		$highest = FetchResult("select mid from {moodavatars} where uid={0} order by mid desc limit 1", $loguserid);
 		if($highest < 1)
 			$highest = 1;
@@ -57,10 +57,10 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 				$tmpfile = $_FILES['picture']['tmp_name'];
 				$file = DATA_DIR."avatars/".$loguserid."_".$mid;
 
-				if($_POST['name'] == "")
-					$_POST['name'] = "#".$mid;
+				if($http->post('name') == "")
+					$http->post('name') = "#".$mid;
 
-				Query("insert into {moodavatars} (uid, mid, name) values ({0}, {1}, {2})", $loguserid, $mid, $_POST['name']);
+				Query("insert into {moodavatars} (uid, mid, name) values ({0}, {1}, {2})", $loguserid, $mid, $http->post('name'));
 
 				list($width, $height, $type) = getimagesize($tmpfile);
 

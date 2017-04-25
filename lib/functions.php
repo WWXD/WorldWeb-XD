@@ -51,12 +51,12 @@ function QueryURL($url) {
 		$page = curl_init($url);
 		if ($page === FALSE)
 			return FALSE;
-		
+
 		curl_setopt($page, CURLOPT_TIMEOUT, 10);
 		curl_setopt($page, CURLOPT_CONNECTTIMEOUT, 10);
 		curl_setopt($page, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($page, CURLOPT_USERAGENT, 'Blargboard/'.BLARG_VERSION);
-			
+
 		$result = curl_exec($page);
 		curl_close($page);
 		return $result;
@@ -121,7 +121,7 @@ function OptimizeLayouts($text) {
 
 
 function LoadPostToolbar() {
-	echo "<script type=\"text/javascript\">window.addEventListener(\"load\", hookUpControls, false);</script>";
+	echo "<script>window.addEventListener(\"load\", hookUpControls, false);</script>";
 }
 
 function TimeUnits($sec) {
@@ -219,12 +219,12 @@ function relativedate($date) {
 	$diff = time() - $date;
 	if ($diff < 1) return 'right now';
 	if ($diff >= 3*86400) return formatdate($date);
-	
+
 	if ($diff < 60) { $num = $diff; $unit = 'second'; }
 	elseif ($diff < 3600) { $num = intval($diff/60); $unit = 'minute'; }
 	elseif ($diff < 86400) { $num = intval($diff/3600); $unit = 'hour'; }
 	else { $num = intval($diff/86400); $unit = 'day'; }
-	
+
 	return $num.' '.$unit.($num>1?'s':'').' ago';
 }
 
@@ -284,10 +284,10 @@ function IP2C($ip) {
 
 function getBirthdaysText($ret = true) {
 	global $luckybastards, $loguser;
-	
+
 	$luckybastards = [];
 	$today = gmdate('m-d', time()+$loguser['timezone']);
-	
+
 	$rBirthdays = Query("select u.birthday, u.(_userfields) from {users} u where u.birthday > 0 and u.primarygroup!={0} order by u.name", Settings::get('bannedGroup'));
 	$birthdays = [];
 	while($user = Fetch($rBirthdays)) {
@@ -331,12 +331,10 @@ function getKeywords($stuff) {
 }
 
 function forumRedirectURL($redir) {
-	if ($redir[0] == ':')
-	{
+	if ($redir[0] == ':') {
 		$redir = explode(':', $redir);
 		return actionLink($redir[1], $redir[2], $redir[3], $redir[4]);
-	}
-	else
+	} else
 		return $redir;
 }
 

@@ -3,8 +3,8 @@ if (!defined('BLARG')) die();
 
 CheckPermission('admin.ipsearch');
 
-if (isset($_GET["id"])) {
-	$ip = long2ip_better($_GET["id"]);
+if (isset($http->get("id"))) {
+	$ip = long2ip_better($http->get("id"));
 	if(!filter_var($ip, FILTER_VALIDATE_IP))
 		Kill("Invalid IP");
 } else

@@ -80,7 +80,7 @@ function getForm($action, $id='') {
 }
 
 function resourceLink($what) {
-	return BOARD_ROOT.$what;
+	return URL_ROOT.$what;
 }
 
 function themeResourceLink($what) {

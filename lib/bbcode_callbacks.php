@@ -33,7 +33,6 @@ $bbcodeCallbacks = [
     '[gist' => 'bbcodeGist',
 
 	"[instameme" => "bbcodeMeme",
-	"[ugotbanned" => "bbcodeBan",
 	
 	//Color BBCode Starts here
 	"[color"  => "bbcodecolordefault",
@@ -390,12 +389,6 @@ function bbcodeMeme($contents, $arg, $parenttag) {
 	//If a number was found that is not in the collection
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/insta404.jpg" alt="Instameme404"/>';
-}
-
-function bbcodeBan($contents, $arg, $parenttag) {
-	//Put this here for a 100% true statement to run code under it
-	if ('1' == '1')
-		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';
 }
 
 //Code for Color BBCode Starts Here.

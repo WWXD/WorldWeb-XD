@@ -114,8 +114,8 @@ loadFieldLists();
 require_once(__DIR__."/loguser.php");
 require_once(__DIR__."/permissions.php");
 
-if (Settings::get('maintenance') && !$loguser['root'] && (!isset($_GET['page']) || $_GET['page'] != 'login'))
-	$_GET["page"] = "maintenance";
+if (Settings::get('maintenance') && !$loguser['root'] && (!isset($http->get('page')) || $http->get('page') != 'login'))
+	die('The board is currently in maintenance mode, please try again later. Our apologies for the inconvenience.');
 
 require_once(__DIR__."/notifications.php");
 require_once(__DIR__."/firewall.php");
@@ -138,7 +138,7 @@ $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['ti
 $tpl->assign('loguserid', $loguserid);
 $tpl->setCompileDir('/tmp/templates_compiled');
 $tpl->setCacheDir('/tmp/templates_cache');
-require_once(__DIR__."/../class/PipeMenuBuilder.php");
+require_once(__DIR__."/PipeMenuBuilder.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 

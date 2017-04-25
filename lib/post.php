@@ -353,6 +353,5 @@ function makePost($post, $type, $params=[]) {
 	$post['contents'] = makePostText($post, $poster);
 
 	//PRINT THE POST!
-
 	RenderTemplate('postbox', ['post' => $post]);
 }

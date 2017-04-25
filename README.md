@@ -1,6 +1,6 @@
 # WorldWeb XD
 
-WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates (might change), Font Awesome for the icons and jQuery.
+WorldWeb XD is a website maker written in PHP. It uses MySQL for Database storage, Smarty for its templates, Font Awesome for the icons and jQuery.
 
 ## Requirements
 
@@ -11,14 +11,12 @@ You will also need `mod-rewrite` for apache2 and allow `override all` for rewrit
 
 Knowledge in PHP: No, but if you do, you can add your own nifty features. Just be sure to send in a pull request, so other users can use it as well.
 
-MySQL minimum: None, but you should have a recent version. We might make it to be MySQL 5.6 for a better IP checker but most likely not, because it isn't widely available.
-
-MariaDB also works with this.
+MySQL/MariaDB minimum: None, but you should have a recent version. We might make it to be MySQL 5.6 for a better IP checker but most likely not, because it isn't widely available yet.
 
 
 ## How to install and use
 
-1. Go to any webhost of your desire (if you want a freehost, we recommend [h05t.gq](http://h05t.gq/)) and sign up. You should be getting an email with CPanel info.
+1. Go to any webhost of your desire (if you want a freehost, we recommend [nector.ga](http://nector.ga/)) and sign up. You should be getting an email with CPanel info.
 2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
 3. Get the FTP data of your new host and upload all the files there. You can use FileZilla to do so.
 4. Make a MySQL database, and take notes of needed info.
@@ -30,9 +28,9 @@ We recommend you take some time and make your own website themes and banner to g
 
 If you want to have a image logo, just be sure to put it in the `img` directory, under the name `logo.png`.
 
-If you want addons, they're here: https://github.com/WorldWeb-XD/Addons      
-If you want themes, they're here: https://github.com/WorldWeb-XD/Themes     
-If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets
+If you want addons (that are currently broken), they're here: https://github.com/WorldWeb-XD/Addons-broken/      
+If you want themes, they're here: https://github.com/WorldWeb-XD/Themes/     
+If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets/
 
 ## How to update your website
 
@@ -47,13 +45,13 @@ Everything else is safe to overwrite.
 
  * Flexible permission system
  * Add-on system
- * Templates (in the works, about 80% done). This uses the Smarty system, though, we would like to change that to something else.
+ * Templates (in the works, about 80% done).
  * URL rewriting, enables human-readable forum and thread URLs for public content
  * Post layouts
  * more Acmlmboard feel
  * typical messageboard features
  * Smiley Box.
- * Instameme (thanks Jon)
+ * Instameme
 
 ## Website owner's tips
 
@@ -69,7 +67,7 @@ How to add/remove secondary groups to someone: add to/remove from the secondaryg
 
 WARNING: when banning someone, make sure that the secondary groups' permissions won't override the banned group's permissions. If that happens, you'll need to delete the secondarygroups assignments for the user.
 
-How to (insert action): first look into your board's admin panel, settings panel, etc... then if you still can't find, ask us. But please don't be a noob and ask us about every little thing.
+How to (insert action): first look into your board's admin panel, settings panel, etc... then if you still can't find, ask us. But please don't be a noob and ask us about every little thing. Also, please take note that the action you want to do might not be in WorldWeb XD.
 
 ## Support, troubleshooting, etc
 
@@ -86,9 +84,25 @@ https://github.com/WWXD/WorldWeb-XD/projects/1
  
 ## Credits
 
-http://maorninja.h05t.gq/credits
-
-Edit: I need to add @Repflez to the page, but I don't have the database password anymore, so once I get the database password back (max: next week), I'll make sure to credit him on the page.
+<table class="outline">
+	<tr class="header0"><th>Credits</th></tr>
+	<tr class="cell0"><td>
+		This software was created by the following contributors, in no special order.<br>
+	<ul>
+		<li>Kawa — Originally created Acmlmboard XD ("ABXD")</li>
+		<li>Dirbaio — Contributed to ABXD 3.0, which parts of this board are based off of</li>
+		<li>StapleButter — Created Blargboard (a fork of Acmlmboard XD)</li>
+		<li>Maorninja322 — Created WorldWeb XD (a fork of Blargboard), coder</li>
+		<li>MoonlightCapital — Made a password generator.</li>
+		<li>JeDaYoshi — Ported all the Acmlmboard XD plugins to Blargboard, ported the RPG, coder</li>
+		<li>Phase — Added compatibility to 5.7 MySQL databases, JSON ranksets, etc...</li>
+		<li>Repflez - Fixed bugs, and made a private fork of Blargboard, which got merged here, did a full URL rewritting system, etc...</li>
+		<li>DankMemeItTheFrog - Made Instameme, and ported the Layout Maker, while adding some of his changes.</li>
+		<li>LifeMushroom — Themes</li>
+		<li>Everyone behind <a href="https://fortawesome.github.io/Font-Awesome/">Font Awesome</a>, <a href="https://jquery.com/">jQuery</a>, Smarty, and any other libraries this software uses</li>
+	</ul>
+	</td></tr>
+</table>
 
 -------------------------------------------------------------------------------
 

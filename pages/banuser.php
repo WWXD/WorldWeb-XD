@@ -32,7 +32,7 @@ if ($http->post('ban')) {
 		$bantitle = __('Banned permanently');
 
 	if (trim($http->post('reason')))
-		$bantitle .= __(': ').$_POST['reason'];
+		$bantitle .= __(': ').$http->post('reason');
 
 	Query("update {users} set tempbanpl = {0}, tempbantime = {1}, primarygroup = {4}, title = {3} where id = {2}", 
 		$user['u_primarygroup'], $expire, $id, $bantitle, Settings::get('bannedGroup'));
@@ -60,7 +60,7 @@ if (isset($http->get('unban'))) {
 	$title = __('Unban user');
 
 	MakeCrumbs([actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
-		actionLink('banhammer', $id, 'unban=1') => __('Unban user')]);
+		actionLink('banuser', $id, 'unban=1') => __('Unban user')]);
 
 	$userlink = userLink(getDataPrefix($user, 'u_'));
 	$fields = [
@@ -72,7 +72,7 @@ if (isset($http->get('unban'))) {
 	$title = __('Ban user');
 
 	MakeCrumbs([actionLink("profile", $id, '', $user['u_name']) => htmlspecialchars($user['u_displayname']?$user['u_displayname']:$user['u_name']), 
-		actionLink('banhammer', $id) => __('Ban user')]);
+		actionLink('banuser', $id) => __('Ban user')]);
 
 	$duration = '
 	<label><input type="radio" name="permanent" value="0"> For: </label>

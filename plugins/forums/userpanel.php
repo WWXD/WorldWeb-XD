@@ -1,8 +1,8 @@
 <?php
 
-if($loguserid){
+if($loguserid) {
 	$userMenu[
 		pageLink('favorites') = __('Favorites');
-	]
+	];
 }
 ?>

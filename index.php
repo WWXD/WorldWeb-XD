@@ -93,7 +93,7 @@ if (!$fakeerror) {
 					require_once(__DIR__.'/pages/404.php');
 			} else {
 				// Check now for core pages.
-				$page = $page = __DIR__.'/pages/'.$pageName.'.php';
+				$page = __DIR__.'/pages/'.$pageName.'.php';
 
 				if (file_exists($page))
 					require_once($page);
@@ -177,21 +177,21 @@ if($title != '')
 //=======================
 // Board logo and theme
 
-if (file_exists(__DIR__.'/themes/$theme/logo.png')) {
+if (file_exists(URL_ROOT.'/themes/$theme/logo.png')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/themes/$theme/logo.jpg')) {
+} else if (file_exists(URL_ROOT.'/themes/$theme/logo.jpg')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/themes/$theme/logo.jpeg')) {
+} else if (file_exists(URL_ROOT.'/themes/$theme/logo.jpeg')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/themes/$theme/logo.gif')) {
+} else if (file_exists(URL_ROOT.'/themes/$theme/logo.gif')) {
 	$logo = '<img id="theme_banner" src="themes/$theme/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/img/logo.png')) {
+} else if (file_exists(URL_ROOT.'/img/logo.png')) {
 	$logo = '<img id="theme_banner" src="img/logo.png" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/img/logo.jpg')) {
+} else if (file_exists(URL_ROOT.'/img/logo.jpg')) {
 	$logo = '<img id="theme_banner" src="img/logo.jpg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/img/logo.jpeg')) {
+} else if (file_exists(URL_ROOT.'/img/logo.jpeg')) {
 	$logo = '<img id="theme_banner" src="img/logo.jpeg" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
-} else if (file_exists(__DIR__.'/img/logo.gif')) {
+} else if (file_exists(URL_ROOT.'/img/logo.gif')) {
 	$logo = '<img id="theme_banner" src="img/logo.gif" alt="'.$layout_boardtitle.'" title="'.$layout_boardtitle.'">';
 } else {
 	$logo = '<h1>'.$layout_boardtitle.'</h1><h3>'.$layout_description.'</h3>';
@@ -220,7 +220,7 @@ if(!file_exists(__DIR__.'/'.$themefile))
 
 $layout_credits =
 '<img src="'.resourceLink('img/poweredbywwxd.png').'" style="float: left; margin-right: 3px;">WorldWeb XD 0.0.1 &middot; by MaorNinja322, Repflez <a href="'.pageLink('credits').'">et al</a><br>
-Based <i>heavily</i> off Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
+Based off of Blargboard by StapleButter & ABXD by Dirbaio, Kawa & co.<br>';
 
 
 $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
@@ -259,7 +259,11 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<link rel="stylesheet" href="<?php print resourceLink('css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php print resourceLink('css/w3.css'); ?>">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://www.w3schools.com/lib/w3.js"></script>
 	<script src="<?php print resourceLink("js/jquery.js");?>"></script>
 	<script src="<?php print resourceLink("js/tricks.js");?>"></script>
 	<script src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
@@ -279,52 +283,28 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	if (Settings::get('maintenance'))
 		echo '<div style="font-size:30px; font-weight:bold; color:red; background:black; padding:5px; border:2px solid red; position:absolute; top:30px; left:30px;">MAINTENANCE MODE</div>';
 
-	if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
-		RenderTemplate('defaultboard', [
-			'layout_contents' => $layout_contents,
-			'layout_crumbs' => $layout_crumbs,
-			'layout_actionlinks' => $layout_actionlinks,
-			'headerlinks' => $headerlinks,
-			'dropdownlinks' => $dropdownlinks,
-			'sidelinks' => $sidelinks,
-			'layout_userpanel' => $layout_userpanel,
-			'notifications' => $notifications,
-			'boardname' => Settings::get('boardname'),
-			'poratitle' => Settings::get('PoRATitle'),
-			'poratext' => parseBBCode(Settings::get('PoRAText')),
-			'layout_logopic' => $logo,
-			'layout_time' => $layout_time,
-			'layout_views' => $layout_views,
-			'layout_onlineusers' => $layout_onlineusers,
-			'layout_birthdays' => $layout_birthdays,
-			'board_credits' => $layout_credits,
-			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
-			'mobileswitch' => $mobileswitch,
-			'perfdata' => $perfdata]);
-	} else {
-		RenderTemplate('default', [
-			'layout_contents' => $layout_contents,
-			'layout_crumbs' => $layout_crumbs,
-			'layout_actionlinks' => $layout_actionlinks,
-			'headerlinks' => $headerlinks,
-			'dropdownlinks' => $dropdownlinks,
-			'sidelinks' => $sidelinks,
-			'layout_userpanel' => $layout_userpanel,
-			'notifications' => $notifications,
-			'boardname' => Settings::get('boardname'),
-			'poratitle' => Settings::get('PoRATitle'),
-			'poratext' => parseBBCode(Settings::get('PoRAText')),
-			'layout_logopic' => $logo,
-			'layout_time' => $layout_time,
-			'layout_views' => $layout_views,
-			'layout_onlineusers' => $layout_onlineusers,
-			'layout_birthdays' => $layout_birthdays,
-			'board_credits' => $layout_credits,
-			'logo' => $logo,
-			'layout_credits' => parseBBCode(Settings::get('layout_credits')),
-			'mobileswitch' => $mobileswitch,
-			'perfdata' => $perfdata]);
-	}
+	RenderTemplate('default', [
+		'layout_contents' => $layout_contents,
+		'layout_crumbs' => $layout_crumbs,
+		'layout_actionlinks' => $layout_actionlinks,
+		'headerlinks' => $headerlinks,
+		'dropdownlinks' => $dropdownlinks,
+		'sidelinks' => $sidelinks,
+		'layout_userpanel' => $layout_userpanel,
+		'notifications' => $notifications,
+		'boardname' => Settings::get('boardname'),
+		'poratitle' => Settings::get('PoRATitle'),
+		'poratext' => parseBBCode(Settings::get('PoRAText')),
+		'layout_logopic' => $logo,
+		'layout_time' => $layout_time,
+		'layout_views' => $layout_views,
+		'layout_onlineusers' => $layout_onlineusers,
+		'layout_birthdays' => $layout_birthdays,
+		'board_credits' => $layout_credits,
+		'logo' => $logo,
+		'layout_credits' => parseBBCode(Settings::get('layout_credits')),
+		'mobileswitch' => $mobileswitch,
+		'perfdata' => $perfdata]);
 ?>
 </body>
 </html>

@@ -132,7 +132,7 @@ $tables = [
 			"name" => "varchar(45)".$notNull,
 			"whitelisted" => $bool,
 		],
-		"special" => "unique key `name` (`name`), key `date` (`date`)"
+		"special" => "unique key `name` (`name`)"
 	],
 
 	"misc" => [

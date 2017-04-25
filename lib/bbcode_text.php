@@ -19,6 +19,15 @@ function loadSmilies() {
 	}
 }
 
+function loadSmiliesOrdered()
+{
+	global $smiliesOrdered;
+	$rSmilies = Query("select * from {smilies}");
+	$smilies = array();
+	while($smiley = Fetch($rSmilies))
+		$smiliesOrdered[] = $smiley;
+}
+
 // lol
 function funhax($s)
 {

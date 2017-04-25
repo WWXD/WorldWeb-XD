@@ -367,7 +367,7 @@ if (!$mobileLayout) {
 			$previewPost['u_'.$key] = $value;
 
 		MakePost($previewPost, POST_PROFILE);
-	} else if (!$user['bio'] && file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+	} else if (!$user['bio'] && file_exists(URL_ROOT.'/plugins/forum/enabled.txt')) {
 		$previewPost['text'] = Settings::get("profilePreviewText");
 
 		$previewPost['num'] = 0;

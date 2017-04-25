@@ -1,9 +1,7 @@
 <?php
 if (!defined('BLARG')) die();
 
-$headerlinks = [
-	pageLink('irc') => 'IRC',
-];
+$headerlinks = [];
 
 $sidelinks = [
 	Settings::get('menuMainName') => [

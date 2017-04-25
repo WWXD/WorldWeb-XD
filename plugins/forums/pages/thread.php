@@ -1,6 +1,6 @@
 <?php
-//  BlargBoard XD - Thread display page
-//  Access: all
+//  WorldWeb XD - Thread display page
+
 if (!defined('BLARG')) die();
 
 if(isset($_GET['pid'])) {
@@ -40,7 +40,7 @@ if(isset($_GET['vote'])) {
 	if($thread['closed'])
 		Alert(__("Poll's closed!"));
 	if(!$thread['poll'])
-		Kill(__("This is not a poll."));
+		Alert(__("This is not a poll."));
 	if ($loguser['token'] != $_GET['token'])
 		Kill(__("Invalid token."));
 
@@ -121,15 +121,11 @@ if ($loguserid) {
 		$links[] = actionLinkTag(__("Bump"), "editthread", $tid, "action=bump&key=".$loguser['token']);
 	}
 
-	if (HasPermission('mod.trashthreads', $fid) && Settings::get('trashForum')) {
-		if($forum['id'] != Settings::get('trashForum'))
-			$links[] = actionLinkTag(__("Trash"), "editthread", $tid, "action=trash&key=".$loguser['token']);
-	}
+	if (HasPermission('mod.trashthreads', $fid) && Settings::get('trashForum') && $forum['id'] != Settings::get('trashForum'))
+		$links[] = actionLinkTag(__("Trash"), "editthread", $tid, "action=trash&key=".$loguser['token']);
 
-	if (HasPermission('mod.deletethreads', $fid) && Settings::get('secretTrashForum')) {
-		if ($forum['id'] != Settings::get('secretTrashForum'))
-			$links[] = actionLinkTagConfirm(__("Delete"), __("Are you sure you want to just up and delete this whole thread?"), "editthread", $tid, "action=delete&key=".$loguser['token']);
-	}
+	if (HasPermission('mod.deletethreads', $fid) && Settings::get('secretTrashForum') && $forum['id'] != Settings::get('secretTrashForum'))
+		$links[] = actionLinkTagConfirm(__("Delete"), __("Are you sure you want to just up and delete this whole thread?"), "editthread", $tid, "action=delete&key=".$loguser['token']);
 }
 
 $OnlineUsersFid = $fid;
@@ -145,7 +141,7 @@ if($thread['poll']) {
 						 WHERE p.id={0}", $thread['poll']));
 
 	if(!$poll)
-		Kill(__("Poll not found"));
+		Alert(__("Poll not found"));
 
 	$totalVotes = $poll['users'];
 
