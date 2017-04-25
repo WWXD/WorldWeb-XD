@@ -153,8 +153,7 @@ function startPoraUpdate() {
 var onlineFID = 0;
 
 function startOnlineUsers() {
-	var tmrid = window.setInterval(getOnlineUsers, 10000);
-
+	var tmrid = window.setInterval(function() { getOnlineUsers(); }, 10000);
 	$(window).blur(function() {
 		if (tmrid != -9999) {
 			window.clearInterval(tmrid);
@@ -165,7 +164,7 @@ function startOnlineUsers() {
 	$(window).focus(function() {
 		getOnlineUsers();
 		if (tmrid == -9999)
-			tmrid = window.setInterval(getOnlineUsers, 10000);
+			tmrid = window.setInterval(function() { getOnlineUsers(); }, 10000);
 	});
 }
 
@@ -236,24 +235,24 @@ function ConstructToolbar() {
 	toolbar.className = "postToolbar";
 
 	var buttons = [
-		{ icon: "bold", title: "Bold", insert: "b" }, 
-		{ icon: "italic", title: "Italic", insert: "i" }, 
-		{ icon: "underline", title: "Underlined", insert: "u" }, 
-		{ icon: "strikethrough", title: "Strikethrough", insert: "s" }, 
+		{ icon: "bold", title: "Bold", insert: "b" },
+		{ icon: "italic", title: "Italic", insert: "i" },
+		{ icon: "underline", title: "Underlined", insert: "u" },
+		{ icon: "strikethrough", title: "Strikethrough", insert: "s" },
 		{ separator: true },
-		{ icon: "superscript", title: "Superscript", insert: "sup", html: true }, 
+		{ icon: "superscript", title: "Superscript", insert: "sup", html: true },
 		{ icon: "subscript", title: "Subscript", insert: "sub", html: true },
  		{ separator: true },
  		{ icon: "user", title: "User", insert: "user=", close: true },
  		{ icon: "comment", title: "Thread", insert: "thread=", close: true },
- 		{ icon: "list", title: "Forum", insert: "forum=", close: true }, 
+ 		{ icon: "list", title: "Forum", insert: "forum=", close: true },
 		{ separator: true },
  		{ icon: "link", title: "Link", insert: "url" },
- 		{ icon: "picture", title: "Resized image", insert: "imgs" }, 
-		{ icon: "youtube-play", title: "Youtube video", insert: "youtube" }, 
+ 		{ icon: "picture", title: "Resized image", insert: "imgs" },
+		{ icon: "youtube-play", title: "Youtube video", insert: "youtube" },
 		{ separator: true },
  		{ icon: "quote-left", title: "Quote", insert: "quote" },
- 		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" }, 
+ 		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" },
 		{ icon: "code", title: "Code", insert: "code" },
 
 	];
@@ -336,8 +335,7 @@ function insert(stuff, html) {
 var refreshUrl = "";
 
 function startPageUpdate() {
-	var tmrid = window.setInterval(doPageUpdate, 30000);
-
+	var tmrid = window.setInterval(function() { doPageUpdate(); }, 30000);
 	$(window).blur(function() {
 		if (tmrid != -9999) {
 			window.clearInterval(tmrid);
@@ -348,7 +346,7 @@ function startPageUpdate() {
 	$(window).focus(function() {
 		doPageUpdate();
 		if (tmrid == -9999)
-			tmrid = window.setInterval(doPageUpdate, 30000);
+			tmrid = window.setInterval(function() { doPageUpdate(); }, 30000);
 	});
 }
 
@@ -527,7 +525,7 @@ function searchThemes(query) {
 		themes = document.getElementsByClassName("theme");
 
 		window.themeNames = {};
-		
+
 		for (var i = 0; i < themes.length; i++) {
 			window.themeNames[themes[i].title] = i;
 		}
@@ -544,6 +542,6 @@ function searchThemes(query) {
 	}
 }
 
-$(document).ready(function()  {
+$(document).ready(function() {
 	$(".spoilerbutton").click(toggleSpoiler);
 });
