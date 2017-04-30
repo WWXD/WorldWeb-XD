@@ -77,7 +77,8 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 foreach($knownBrowsers as $code => $name) {
 	if (strpos($ua, $code) !== FALSE) {
 		$versionStart = strpos($ua, $code) + strlen($code);
-		if ($code != "dwb" || $code != "rekonq") $version = GetVersion($ua, $versionStart);
+		if ($code != "dwb" || $code != "rekonq")
+			$version = GetVersion($ua, $versionStart);
 
 		//Opera Mini wasn't detected properly because of the Opera 10 hack.
 		if ((strpos($ua, "Opera/9.80") !== FALSE && $code != "Opera Mini" || $code == "Safari") && strpos($ua, "Version/") !== FALSE)
@@ -95,8 +96,11 @@ $browserVers = (float)$version;
 
 $os = "";
 foreach($knownOSes as $code => $name) {
-	if (strpos($ua, "X11")) $suffix = " (X11)";
-	else if (strpos($ua, "textmode")) $suffix = " (text mode)";
+	if (strpos($ua, "X11"))
+		$suffix = " (X11)";
+	else if (strpos($ua, "textmode"))
+		$suffix = " (text mode)";
+
 	if (strpos($ua, $code) !== FALSE) {
 		$os = $name;
 		if(strpos($name, "%") !== FALSE) {
@@ -106,8 +110,10 @@ foreach($knownOSes as $code => $name) {
 		}
 		//If we're using the default Android browser, just report the version of Android being used ~Nina
 		$lkbhax = explode(' ', $lastKnownBrowser);
-		if ($lkbhax[0] == "Android") break;
-		if (isset($suffix)) $os = $os . $suffix;
+		if ($lkbhax[0] == "Android")
+			break;
+		if (isset($suffix))
+			$os = $os . $suffix;
 		if (in_array($code, $mobileBrowsers))
 			$mobileLayout = true;
 		$lastKnownBrowser = format(__("{0} on {1}"), $lastKnownBrowser, $os);

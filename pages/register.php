@@ -2,7 +2,7 @@
 //  WorldWeb XD - User account registration page
 //  Access: Guests
 //  Todo: Make it use templates
-//      - See bottom
+//	  - See bottom
 if (!defined('BLARG')) die();
 
 $title = __("Register");
@@ -125,20 +125,6 @@ if($http->post('register')) {
 			$isHuman = $ExampleCaptcha->Validate();
 			if(!$isHuman)
 				$err .= "<ul>You got the CAPTCHA wrong.</ul>";
-		}
-
-		$reasons = [];
-		if(IsTorExitPoint()) {
-			$reasons[] = 'tor';
-		}
-		$s = new StopForumSpam($stopForumSpamKey);
-		if($s->is_spammer(['email' => $http->post('email'), 'ip' => $_SERVER['REMOTE_ADDR'] ])) {
-			$reasons[] = 'sfs';
-		}
-		if(count($reasons)) {
-			$reason = implode(',', $reasons);
-			$bucket = "regfail"; include("lib/pluginloader.php");
-			$err .= '<ul>An unknown error occured, please try again.</ul>';
 		}
 	}
 
@@ -393,4 +379,18 @@ function isValidPassword($password, $hash, $uid) {
 	}
 
 	return true;
+}
+
+function IsProxy() {
+	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
+		return true;
+
+	$result = QueryURL('http://api.stopforumspam.com/api?ip='.urlencode($_SERVER['REMOTE_ADDR']).'&email='$cemail);
+	if (!$result)
+		return false;
+
+	if (stripos($result, '<appears>yes</appears>') !== FALSE)
+		return true;
+
+	return false;
 }

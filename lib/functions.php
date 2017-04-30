@@ -125,7 +125,7 @@ function LoadPostToolbar() {
 }
 
 function TimeUnits($sec) {
-	if($sec <    60) return "$sec sec.";
+	if($sec <	60) return "$sec sec.";
 	if($sec <  3600) return floor($sec/60)." min.";
 	if($sec < 86400) return floor($sec/3600)." hour".($sec >= 7200 ? "s" : "");
 	return floor($sec/86400)." day".($sec >= 172800 ? "s" : "");

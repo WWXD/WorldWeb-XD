@@ -610,7 +610,7 @@ if (is_dir($dir)) {
 			$themes[$file]['num'] = 0;
 	}
 		closedir($dh);
-    }
+	}
 }
 
 $countdata = Query("SELECT theme, COUNT(id) num FROM {users} GROUP BY theme");

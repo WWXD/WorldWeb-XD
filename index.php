@@ -259,11 +259,8 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<link rel="stylesheet" href="<?php print resourceLink('css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php print resourceLink('css/w3.css'); ?>">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://www.w3schools.com/lib/w3.js"></script>
 	<script src="<?php print resourceLink("js/jquery.js");?>"></script>
 	<script src="<?php print resourceLink("js/tricks.js");?>"></script>
 	<script src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>

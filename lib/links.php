@@ -312,7 +312,7 @@ function pageLinksInverted($url, $epp, $from, $total) {
 
 function absoluteActionLink($action, $id=0, $args="") {
 	global $serverport;
-    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
+	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
 }
 
 function getRequestedURL() {
@@ -329,8 +329,8 @@ function getServerURL($https = false) {
 }
 
 function getServerURLNoSlash($https = false) {
-    global $serverport;
-    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
+	global $serverport;
+	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
 
 function getFullRequestedURL($https = false) {

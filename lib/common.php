@@ -64,7 +64,7 @@ $http = new Input();
 
 require_once(__DIR__."/debug.php");
 require_once(__DIR__."/mysql.php");
-require_once(__DIR__."/../config/database.php");
+require_once(URL_ROOT."/config/database.php");
 if(!fetch(query("SHOW TABLES LIKE '{misc}'")))
 	die("The boards tables are empty. Please copy the db folder and install.php to your board root and delete the config folder from the root. Overwrite any files if nessesary.");
 require_once(__DIR__."/settingssystem.php");
@@ -105,7 +105,7 @@ $routes = spyc_load_file(__DIR__."/urls.yaml");
 
 // Map our routes
 foreach ($routes as $route_name => $params) {
-    $router->map($params[0], $params[1], $params[2], $route_name);
+	$router->map($params[0], $params[1], $params[2], $route_name);
 }
 
 require_once(__DIR__."/browsers.php");
@@ -136,9 +136,10 @@ require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
-$tpl->setCompileDir('/tmp/templates_compiled');
-$tpl->setCacheDir('/tmp/templates_cache');
+$tpl->setCompileDir(URL_ROOT."/tmp/templates_compiled");
+$tpl->setCacheDir(URL_ROOT."tmp/templates_cache");
 require_once(__DIR__."/PipeMenuBuilder.php");
+require_once(__DIR__."/Browserdetection.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 

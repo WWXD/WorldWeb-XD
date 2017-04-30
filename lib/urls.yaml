@@ -1,8 +1,9 @@
-########################################################################################################################
-##                                         WorldWeb XD URL Configuration File                                         ##
-##                              Look at the wiki for information on setting up this file                              ##
-##                            We only use GET and POST, not PUT, PATCH, or DELETE... yet                              ##
-########################################################################################################################
+##########################################################################################
+##                          WorldWeb XD URL Configuration File                          ##
+##               Look at the wiki for information on setting up this file               ##
+##             We only use GET and POST, not PUT, PATCH, or DELETE... yet               ##
+##  ToDo: Allow for URLS by page name and allow for URL Name to be set inside the page  ##
+##########################################################################################
 
 # Basic pages
 home: ['GET', '/', 'home']
