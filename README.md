@@ -16,9 +16,9 @@ MySQL/MariaDB minimum: None, but you should have a recent version. We might make
 
 ## How to install and use
 
-1. Go to any webhost of your desire (if you want a freehost, we recommend [nector.ga](http://nector.ga/)) and sign up. You should be getting an email with CPanel info.
-2. Download WorldWeb XD. If you want some stable software, go to the release page and press download for the .zip files
-3. Get the FTP data of your new host and upload all the files there. You can use FileZilla to do so.
+1. Go to any webhost of your desire and sign up. You should be getting an email with CPanel info. You can skip this step if you already have one.
+2. Download WorldWeb XD. If you want some stable software, go to the Releases page and press Download for the .zip file.
+3. Get the FTP data of your host and upload all the files there. You can use FileZilla to do so.
 4. Make a MySQL database, and take notes of needed info.
 5. Go to your domain and follow the on-screen prompts.
 
@@ -28,24 +28,22 @@ We recommend you take some time and make your own website themes and banner to g
 
 If you want to have a image logo, just be sure to put it in the `img` directory, under the name `logo.png`.
 
-If you want addons (that are currently broken), they're here: https://github.com/WorldWeb-XD/Addons-broken/      
-If you want themes, they're here: https://github.com/WorldWeb-XD/Themes/     
-If you want ranksets, they're here: https://github.com/WorldWeb-XD/Ranksets/
+If you want addons (that are currently unstable), they're there: https://github.com/WWXD/Add-ons-unstable     
+If you want themes, they're there: https://github.com/WWXD/Themes
+If you want ranksets, they're there: https://github.com/WWXD/Ranksets
 
 ## How to update your website
 
 1. Download the most recent WorldWeb XD package (be it an official release or a Git package).
-2. Copy the files over your existing board's files.
-WARNING: Make sure to not overwrite/delete the config directory, especially config/salt.php! Lose that one and you'll have fun resetting everyone's passwords.
-Everything else is safe to overwrite.
+2. Copy the files over your existing board's files. (WARNING: Make sure to not overwrite/delete the config directory, especially config/salt.php! Lose that one and you'll have fun resetting everyone's passwords. Be sure to backup your logo and/or icon on img/, either way! Everything else is safe to overwrite.)
 3. Check your original install.sql and the new one.
-4. Make the nessesary changes on phpmyadmin accordingly
+4. Make the neccesary changes on phpMyAdmin accordingly.
 
 ## Features
 
  * Flexible permission system
  * Add-on system
- * Templates (in the works, about 80% done).
+ * Templates (WIP, about 80% done).
  * URL rewriting, enables human-readable forum and thread URLs for public content
  * Post layouts
  * more Acmlmboard feel
