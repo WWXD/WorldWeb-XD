@@ -16,7 +16,7 @@ MySQL/MariaDB minimum: None, but you should have a recent version. We might make
 
 ## How to install and use
 
-1. Go to any webhost of your desire and sign up. You should be getting an email with CPanel info. You can skip this step if you already have one.
+1. Go to any webhost of your desire and sign up. You should be getting an email with CPanel info. You can skip this step if you already have one. We suggest [InfinityFree](https://infinityfree.net/) if you are searching a free one.
 2. Download WorldWeb XD. If you want some stable software, go to the Releases page and press Download for the .zip file.
 3. Get the FTP data of your host and upload all the files there. You can use FileZilla to do so.
 4. Make a MySQL database, and take notes of needed info.
