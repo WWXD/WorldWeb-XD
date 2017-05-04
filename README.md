@@ -38,13 +38,13 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 <tr><th>Sticky</th><td>Only 2</td><td>Only 2</td><td>Multiple levels...</td></tr>
 <tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
 <tr><th>Permanently delete from database</th>
-	<td>You can delete users(plugin needed)</td>
+	<td>You can delete users (plugin needed)</td>
 	<td>ABXD plugin broken, needs port...</td>
 	<td>You can delete posts and users.</td></tr>
 <tr><th>Captcha</th>
-	<td>PHPCaptcha</td>
-	<td>KuriChallenge (broken, according to darkeater38)</td>
-	<td>PHPCaptcha and BotCaptcha</td></tr>
+	<td>PHPCaptcha (need external files)</td>
+	<td>KuriChallenge (broken, according to darkeater38) (intergrated)</td>
+	<td>PHPCaptcha and BotCaptcha (need external files)</td></tr>
 <tr><th>Proxy Protection</th>
 	<td>None</td>
 	<td>StopForumSpam, checks IPs (broken, uses old URL)</td>
