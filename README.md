@@ -15,22 +15,40 @@ MySQL/MariaDB minimum: None, but you should have a recent version. We might make
 
 ## Why use WorldWeb XD?
 
+Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the differences between the 3. Besides, WWXD started from these two, so if I bash them, I'm also bashing what started WWXD.
+
 <table>
 <tr><th></th><th>ABXD</th><th>Blargboard</th><th>WorldWeb XD</th></tr>
-<tr><th>Templates</th><td>No</td><td>Yes, using Smarty</td><td>Yes, using Smarty</td></tr>
+<tr><th>Templates</th>
+	<td>No</td>
+	<td>Yes, using Smarty</td>
+	<td>Yes, using Smarty</td>
+</tr>
 <tr><th>Password</th>
 	<td>SHA256 with Global & User Salt, included password checker</td>
 	<td>SHA256 with Global & User Salt</td>
 	<td>PHP 5.5 password_hash, included password checker and generator.</td>
 </tr>
-<tr><th>Change Main Layout</th><td>Yes, using settings</td><td>You must edit the files</td><td>Yes, using settings</td></tr>
+<tr><th>Change Main Layout</th>
+	<td>Yes, using settings</td>
+	<td>You must edit the files</td>
+	<td>Yes, using settings</td></tr>
 <tr><th>Ranksets</th><td>Yes, PHP</td><td>Yes, PHP</td><td>Yes, JSON or PHP</td></tr>
 <tr><th>Bump threads</th><td>No</td><td>No</td><td>Yes</td></tr>
-<tr><th>Sticky</th><td>Yes</td><td>Yes</td><td>Multiple levels...</td></tr>
+<tr><th>Sticky</th><td>Only 2</td><td>Only 2</td><td>Multiple levels...</td></tr>
 <tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
-<tr><th>Permanently delete from database</th><td>You can delete users</td><td>No</td><td>You can delete posts and users.</td></tr>
-<tr><th>Captcha</th><td>PHPCaptcha</td><td>KuriChallenge (broken, according to darkeater38)</td><td>PHPCaptcha and BotCaptcha</td></tr>
-<tr><th>Proxy Protection</th><td>None</td><td>StopForumSpam, checks IPs (broken, uses old URL)</td><td>StopForumSpam, checks IPs and emails</td></tr>
+<tr><th>Permanently delete from database</th>
+	<td>You can delete users</td>
+	<td>No</td>
+	<td>You can delete posts and users.</td></tr>
+<tr><th>Captcha</th>
+	<td>PHPCaptcha</td>
+	<td>KuriChallenge (broken, according to darkeater38)</td>
+	<td>PHPCaptcha and BotCaptcha</td></tr>
+<tr><th>Proxy Protection</th>
+	<td>None</td>
+	<td>StopForumSpam, checks IPs (broken, uses old URL)</td>
+	<td>StopForumSpam, checks IPs and emails</td></tr>
 </table>
 
 ## How to install and use
