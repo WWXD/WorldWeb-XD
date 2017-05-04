@@ -29,7 +29,7 @@ MySQL/MariaDB minimum: None, but you should have a recent version. We might make
 <tr><th>Sticky Levels</th><td>No</td><td>No</td><td>Yes</td></tr>
 <tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
 <tr><th>Permanently delete from database</th><td>You can delete users</td><td>No</td><td>You can delete posts and users.</td></tr>
-<tr><th>Captcha</th><td>PHPCaptcha</td><td>None</td><td>PHPCaptcha and BotCaptcha</td></tr>
+<tr><th>Captcha</th><td>PHPCaptcha</td><td>KuriChallenge (broken, according to darkeater38)</td><td>PHPCaptcha and BotCaptcha</td></tr>
 <tr><th>Proxy Protection</th><td>None</td><td>StopForumSpam, checks IPs (broken, uses old URL)</td><td>StopForumSpam, checks IPs and emails</td></tr>
 </table>
 
