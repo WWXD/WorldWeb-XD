@@ -38,8 +38,8 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 <tr><th>Sticky</th><td>Only 2</td><td>Only 2</td><td>Multiple levels...</td></tr>
 <tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
 <tr><th>Permanently delete from database</th>
-	<td>You can delete users</td>
-	<td>No</td>
+	<td>You can delete users(plugin needed)</td>
+	<td>ABXD plugin broken, needs port...</td>
 	<td>You can delete posts and users.</td></tr>
 <tr><th>Captcha</th>
 	<td>PHPCaptcha</td>
