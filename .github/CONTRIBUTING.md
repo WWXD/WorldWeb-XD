@@ -16,7 +16,7 @@ Here is a table of alternatives that you **should** use. We're not forcing you t
 
 <table>
 <tr><th>Use</th><th>Instead of</th></tr>
-<tr><td>''</td><td>""</td></tr>
+<tr><td>' '</td><td>" "</td></tr>
 <tr><td>echo</td><td>print</td></tr>
 <tr><td>include()</td><td>include_once</td></tr>
 <tr><td>strtr</td><td>str_replace</td></tr>
