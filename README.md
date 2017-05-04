@@ -13,6 +13,23 @@ Knowledge in PHP: No, but if you do, you can add your own nifty features. Just b
 
 MySQL/MariaDB minimum: None, but you should have a recent version. We might make it to be MySQL 5.6 for a better IP checker but most likely not, because it isn't widely available yet.
 
+## Why use WorldWeb XD?
+
+<table>
+<tr><th></th><th>ABXD</th><th>Blargboard</th><th>WorldWeb XD</th></tr>
+<tr><th>Templates</th><td>No</td><td>Yes, using Smarty</td><td>Yes, using Smarty</td></tr>
+<tr><th>Password</th>
+	<td>SHA256 with Global & User Salt, included password checker</td>
+	<td>SHA256 with Global & User Salt</td>
+	<td>PHP 5.5 password_hash, included password checker and generator.</td>
+</tr>
+<tr><th>Change Main Layout</th><td>Yes, using settings</td><td>You must edit the files</td><td>Yes, using settings</td></tr>
+<tr><th>Ranksets</th><td>Yes, PHP</td><td>Yes, PHP</td><td>Yes, JSON or PHP</td></tr>
+<tr><th>Bump threads</th><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><th>Permanently delete from database</th><td>You can delete users</td><td>No</td><td>You can delete posts and users.</td></tr>
+<tr><th>Captcha</th><td>PHPCaptcha</td><td>None</td><td>PHPCaptcha and BotCaptcha</td></tr>
+<tr><th>Proxy Protection</th><td>None</td><td>StopForumSpam, checks IPs (broken, uses old URL)</td><td>StopForumSpam, checks IPs and emails</td></tr>
+</table>
 
 ## How to install and use
 
@@ -82,9 +99,9 @@ https://github.com/WWXD/WorldWeb-XD/projects/1
  
 ## Credits
 
-<table class="outline">
-	<tr class="header0"><th>Credits</th></tr>
-	<tr class="cell0"><td>
+<table>
+	<tr><th>Credits</th></tr>
+	<tr><td>
 		This software was created by the following contributors, in no special order.<br>
 	<ul>
 		<li>Kawa — Originally created Acmlmboard XD ("ABXD")</li>
