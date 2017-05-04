@@ -26,6 +26,8 @@ MySQL/MariaDB minimum: None, but you should have a recent version. We might make
 <tr><th>Change Main Layout</th><td>Yes, using settings</td><td>You must edit the files</td><td>Yes, using settings</td></tr>
 <tr><th>Ranksets</th><td>Yes, PHP</td><td>Yes, PHP</td><td>Yes, JSON or PHP</td></tr>
 <tr><th>Bump threads</th><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><th>Sticky Levels</th><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
 <tr><th>Permanently delete from database</th><td>You can delete users</td><td>No</td><td>You can delete posts and users.</td></tr>
 <tr><th>Captcha</th><td>PHPCaptcha</td><td>None</td><td>PHPCaptcha and BotCaptcha</td></tr>
 <tr><th>Proxy Protection</th><td>None</td><td>StopForumSpam, checks IPs (broken, uses old URL)</td><td>StopForumSpam, checks IPs and emails</td></tr>
