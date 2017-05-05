@@ -132,7 +132,7 @@ require_once(__DIR__."/layout.php");
 
 //Classes
 
-require_once(__DIR__."/smarty/Smarty.class.php");
+require_once(__DIR__."/smarty/libs/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
