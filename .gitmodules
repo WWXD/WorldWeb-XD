@@ -1,0 +1,4 @@
+[submodule "Smarty"]
+	path = lib/smarty
+	url = https://github.com/smarty-php/smarty.git
+	ignore = dirty
