@@ -20,42 +20,42 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 <table>
 <tr><th></th><th>ABXD</th><th>Blargboard</th><th>WorldWeb XD (with the forums plugin)</th></tr>
 <tr><th>Templates</th>
-	<td>No</td>
-	<td colspan=2>Yes, using Smarty</td>
+	<td style="text-align: center">No</td>
+	<td style="text-align: center" colspan=2>Yes, using Smarty</td>
 </tr>
 <tr><th>Password</th>
-	<td>SHA256 with Global & User Salt, included password checker</td>
-	<td>SHA256 with Global & User Salt</td>
-	<td>PHP 5.5 password_hash, included password checker and generator.</td>
+	<td style="text-align: center">SHA256 with Global & User Salt, included password checker</td>
+	<td style="text-align: center">SHA256 with Global & User Salt</td>
+	<td style="text-align: center">PHP 5.5 password_hash, included password checker and generator.</td>
 </tr>
 <tr><th>Change Main Layout</th>
-	<td>Yes, using settings</td>
-	<td>You must edit the files</td>
-	<td>Yes, using settings</td></tr>
+	<td style="text-align: center">Yes, using settings</td>
+	<td style="text-align: center">You must edit the files</td>
+	<td style="text-align: center">Yes, using settings</td></tr>
 <tr><th>Ranksets</th>
-	<td colspan=2>Yes, PHP</td>
-	<td>Yes, JSON or PHP</td></tr>
+	<td style="text-align: center" colspan=2>Yes, PHP</td>
+	<td style="text-align: center">Yes, JSON or PHP</td></tr>
 <tr><th>Bump threads</th>
-	<td colspan=2>You must post in them</td>
-	<td>Just click the "Bump" button</td></tr>
+	<td style="text-align: center" colspan=2>You must post in them</td>
+	<td style="text-align: center">Just click the "Bump" button</td></tr>
 <tr><th>Sticky</th>
-	<td colspan=2>Only 2</td>
-	<td>Multiple levels...</td></tr>
+	<td style="text-align: center" colspan=2>Only 2</td>
+	<td style="text-align: center">Multiple levels...</td></tr>
 <tr><th>Thread description</th>
-	<td colspan=2>No</td>
-	<td>Yes</td></tr>
+	<td style="text-align: center" colspan=2>No</td>
+	<td style="text-align: center">Yes</td></tr>
 <tr><th>Permanently delete from database</th>
-	<td>You can delete users (plugin needed)</td>
-	<td>ABXD plugin broken, needs port...</td>
-	<td>You can delete posts and users.</td></tr>
+	<td style="text-align: center">You can delete users (plugin needed)</td>
+	<td style="text-align: center">ABXD plugin broken, needs port...</td>
+	<td style="text-align: center">You can delete posts and users.</td></tr>
 <tr><th>Captcha</th>
-	<td>PHPCaptcha (need external files)</td>
-	<td>KuriChallenge (broken, according to darkeater38) (intergrated)</td>
-	<td>PHPCaptcha and BotCaptcha (need external files)</td></tr>
+	<td style="text-align: center">PHPCaptcha (need external files)</td>
+	<td style="text-align: center">KuriChallenge (broken, according to darkeater38) (intergrated)</td>
+	<td style="text-align: center">PHPCaptcha and BotCaptcha (need external files)</td></tr>
 <tr><th>Proxy Protection</th>
-	<td>None</td>
-	<td>StopForumSpam, checks IPs (broken, uses old URL)</td>
-	<td>StopForumSpam, checks IPs and emails</td></tr>
+	<td style="text-align: center">None</td>
+	<td style="text-align: center">StopForumSpam, checks IPs (broken, uses old URL)</td>
+	<td style="text-align: center">StopForumSpam, checks IPs and emails</td></tr>
 </table>
 
 ## How to install and use
