@@ -13,16 +13,15 @@ Knowledge in PHP: No, but if you do, you can add your own nifty features. Just b
 
 MySQL/MariaDB minimum: None, but you should have a recent version. We might make it to be MySQL 5.6 for a better IP checker but most likely not, because it isn't widely available yet.
 
-## Why use WorldWeb XD?
+## Simularities and differences between this, ABXD and Blargboard
 
 Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the differences between the 3. Besides, WWXD started from these two, so if I bash them, I'm also bashing what started WWXD.
 
 <table>
-<tr><th></th><th>ABXD</th><th>Blargboard</th><th>WorldWeb XD</th></tr>
+<tr><th></th><th>ABXD</th><th>Blargboard</th><th>WorldWeb XD (with the forums plugin)</th></tr>
 <tr><th>Templates</th>
 	<td>No</td>
-	<td>Yes, using Smarty</td>
-	<td>Yes, using Smarty</td>
+	<td colspan=2>Yes, using Smarty</td>
 </tr>
 <tr><th>Password</th>
 	<td>SHA256 with Global & User Salt, included password checker</td>
@@ -33,10 +32,18 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 	<td>Yes, using settings</td>
 	<td>You must edit the files</td>
 	<td>Yes, using settings</td></tr>
-<tr><th>Ranksets</th><td>Yes, PHP</td><td>Yes, PHP</td><td>Yes, JSON or PHP</td></tr>
-<tr><th>Bump threads</th><td>No</td><td>No</td><td>Yes</td></tr>
-<tr><th>Sticky</th><td>Only 2</td><td>Only 2</td><td>Multiple levels...</td></tr>
-<tr><th>Thread description</th><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><th>Ranksets</th>
+	<td colspan=2>Yes, PHP</td>
+	<td>Yes, JSON or PHP</td></tr>
+<tr><th>Bump threads</th>
+	<td colspan=2>You must post in them</td>
+	<td>Just click the "Bump" button</td></tr>
+<tr><th>Sticky</th>
+	<td colspan=2>Only 2</td>
+	<td>Multiple levels...</td></tr>
+<tr><th>Thread description</th>
+	<td colspan=2>No</td>
+	<td>Yes</td></tr>
 <tr><th>Permanently delete from database</th>
 	<td>You can delete users (plugin needed)</td>
 	<td>ABXD plugin broken, needs port...</td>
