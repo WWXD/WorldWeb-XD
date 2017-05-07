@@ -23,6 +23,10 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 	<td style="text-align: center;">No</td>
 	<td style="text-align: center;" colspan=2>Yes, using Smarty</td>
 </tr>
+<tr><th>Groups and Permissions</th>
+	<td style="text-align: center;">Global Permissions (not customizable), forced 5 powerlevels</td>
+	<td style="text-align: center;" colspan=2>Role-based, (sub)forum-based and user-based permissions</td>
+</tr>
 <tr><th>Password</th>
 	<td style="text-align: center;">SHA256 with Global & User Salt, included password checker</td>
 	<td style="text-align: center;">SHA256 with Global & User Salt</td>
@@ -49,9 +53,9 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 	<td style="text-align: center;">ABXD plugin broken, needs port...</td>
 	<td style="text-align: center;">You can delete posts and users.</td></tr>
 <tr><th>Captcha</th>
-	<td style="text-align: center;">PHPCaptcha (need external files)</td>
-	<td style="text-align: center;">KuriChallenge (broken, according to darkeater38) (intergrated)</td>
-	<td style="text-align: center;">PHPCaptcha and BotCaptcha (need external files)</td></tr>
+	<td style="text-align: center;">PHPCaptcha (need external files) (Optional)</td>
+	<td style="text-align: center;">KuriChallenge (broken, according to darkeater38) (intergrated) (forced)</td>
+	<td style="text-align: center;">PHPCaptcha and BotCaptcha (need external files) (optional)</td></tr>
 <tr><th>Proxy Protection</th>
 	<td style="text-align: center;">None</td>
 	<td style="text-align: center;">StopForumSpam, checks IPs (broken, uses old URL)</td>
