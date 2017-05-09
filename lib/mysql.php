@@ -91,13 +91,13 @@ function query() {
 	// expand compacted field lists
 	$query = str_replace("@(\w+)\.\(\*\)@s", '$1.*', $query);
 	$query = str_replace(".(_userfields)", ".(".$fieldLists["userfields"].")", $query);
-	$query = str_replace_callback("@(\w+)\.\(([\w,\s]+)\)@s", 'Query_ExpandFieldLists', $query);
+	$query = preg_replace_callback("@(\w+)\.\(([\w,\s]+)\)@s", 'Query_ExpandFieldLists', $query);
 
 	// add table prefixes
-	$query = str_replace_callback("@\{([a-z]\w*)\}@si", "Query_MangleTables", $query);
+	$query = preg_replace_callback("@\{([a-z]\w*)\}@si", "Query_MangleTables", $query);
 
 	// add the user input
-	$query = str_replace_callback("@\{(\d+\w?)\}@s", 'Query_AddUserInput', $query);
+	$query = preg_replace_callback("@\{(\d+\w?)\}@s", 'Query_AddUserInput', $query);
 
 	return RawQuery($query);
 }
