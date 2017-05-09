@@ -89,15 +89,15 @@ function query() {
 	$query = $args[0];
 
 	// expand compacted field lists
-	$query = preg_replace("@(\w+)\.\(\*\)@s", '$1.*', $query);
+	$query = str_replace("@(\w+)\.\(\*\)@s", '$1.*', $query);
 	$query = str_replace(".(_userfields)", ".(".$fieldLists["userfields"].")", $query);
-	$query = preg_replace_callback("@(\w+)\.\(([\w,\s]+)\)@s", 'Query_ExpandFieldLists', $query);
+	$query = str_replace_callback("@(\w+)\.\(([\w,\s]+)\)@s", 'Query_ExpandFieldLists', $query);
 
 	// add table prefixes
-	$query = preg_replace_callback("@\{([a-z]\w*)\}@si", "Query_MangleTables", $query);
+	$query = str_replace_callback("@\{([a-z]\w*)\}@si", "Query_MangleTables", $query);
 
 	// add the user input
-	$query = preg_replace_callback("@\{(\d+\w?)\}@s", 'Query_AddUserInput', $query);
+	$query = str_replace_callback("@\{(\d+\w?)\}@s", 'Query_AddUserInput', $query);
 
 	return RawQuery($query);
 }
@@ -145,7 +145,7 @@ function rawQuery($query) {
 
 	if($debugMode) {
 		$mysqlCellClass = ($mysqlCellClass+1)%2;
-		$querytext .= "<tr class=\"cell$mysqlCellClass\"><td><pre style=\"white-space:pre-wrap;\">".htmlspecialchars(preg_replace('/^\s*/m', "", $query))."</pre></td><td>";
+		$querytext .= "<tr class=\"cell$mysqlCellClass\"><td><pre style=\"white-space:pre-wrap;\">".htmlspecialchars(str_replace('/^\s*/m', "", $query))."</pre></td><td>";
 		if(function_exists("backTrace"))
 			$querytext .= backTrace();
 	}

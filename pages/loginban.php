@@ -28,7 +28,7 @@ while($Loginban = Fetch($rLoginBan)) {
 	</tr>";
 }
 
-print "
+echo "
 <table class=\"outline margin width50\">
 	<tr class=\"header1\">
 		<th>".__("Name")."</th>

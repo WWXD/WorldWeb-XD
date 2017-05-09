@@ -367,10 +367,10 @@ class Spyc {
   private function _doLiteralBlock($value,$indent) {
 	if ($value === "\n") return '\n';
 	if (strpos($value, "\n") === false && strpos($value, "'") === false) {
-	  return sprintf ("'%s'", $value);
+		return sprintf ("'%s'", $value);
 	}
 	if (strpos($value, "\n") === false && strpos($value, '"') === false) {
-	  return sprintf ('"%s"', $value);
+		return sprintf ('"%s"', $value);
 	}
 	$exploded = explode("\n",$value);
 	$newValue = '|';
@@ -381,11 +381,11 @@ class Spyc {
 	$indent += $this->_dumpIndent;
 	$spaces   = str_repeat(' ',$indent);
 	foreach ($exploded as $line) {
-	  $line = trim($line);
-	  if (strpos($line, '"') === 0 && strrpos($line, '"') == (strlen($line)-1) || strpos($line, "'") === 0 && strrpos($line, "'") == (strlen($line)-1)) {
-		$line = substr($line, 1, -1);
-	  }
-	  $newValue .= "\n" . $spaces . ($line);
+		$line = trim($line);
+		if (strpos($line, '"') === 0 && strrpos($line, '"') == (strlen($line)-1) || strpos($line, "'") === 0 && strrpos($line, "'") == (strlen($line)-1)) {
+			$line = substr($line, 1, -1);
+		}
+		$newValue .= "\n" . $spaces . ($line);
 	}
 	return $newValue;
   }
@@ -516,7 +516,7 @@ class Spyc {
 
 	  // Strip out comments
 	  if (strpos ($line, '#')) {
-		  $line = preg_replace('/\s*#([^"\']+)$/','',$line);
+		  $line = str_replace('/\s*#([^"\']+)$/','',$line);
 	  }
 
 	  while (++$i < $cnt && self::greedilyNeedNextLine($line)) {
@@ -618,7 +618,7 @@ class Spyc {
 	}
 
 	if (strpos($value, ' #') !== false && !$is_quoted)
-	  $value = preg_replace('/\s+#(.+)$/','',$value);
+	  $value = str_replace('/\s+#(.+)$/','',$value);
 
 	if ($first_character == '[' && $last_character == ']') {
 	  // Take out strings sequences and mappings
@@ -709,7 +709,7 @@ class Spyc {
 	$regex = '/("")|(\'\')/';
 	if (preg_match_all($regex,$inline,$strings)) {
 	  $saved_empties = $strings[0];
-	  $inline  = preg_replace($regex,'YAMLEmpty',$inline);
+	  $inline  = str_replace($regex,'YAMLEmpty',$inline);
 	}
 	unset($regex);
 
@@ -717,7 +717,7 @@ class Spyc {
 	$regex = '/(?:(")|(?:\'))((?(1)[^"]+|[^\']+))(?(1)"|\')/';
 	if (preg_match_all($regex,$inline,$strings)) {
 	  $saved_strings = $strings[0];
-	  $inline  = preg_replace($regex,'YAMLString',$inline);
+	  $inline  = str_replace($regex,'YAMLString',$inline);
 	}
 	unset($regex);
 
@@ -729,13 +729,13 @@ class Spyc {
 	// Check for sequences
 	while (preg_match('/\[([^{}\[\]]+)\]/U',$inline,$matchseqs)) {
 	  $seqs[] = $matchseqs[0];
-	  $inline = preg_replace('/\[([^{}\[\]]+)\]/U', ('YAMLSeq' . (count($seqs) - 1) . 's'), $inline, 1);
+	  $inline = str_replace('/\[([^{}\[\]]+)\]/U', ('YAMLSeq' . (count($seqs) - 1) . 's'), $inline, 1);
 	}
 
 	// Check for mappings
 	while (preg_match('/{([^\[\]{}]+)}/U',$inline,$matchmaps)) {
 	  $maps[] = $matchmaps[0];
-	  $inline = preg_replace('/{([^\[\]{}]+)}/U', ('YAMLMap' . (count($maps) - 1) . 's'), $inline, 1);
+	  $inline = str_replace('/{([^\[\]{}]+)}/U', ('YAMLMap' . (count($maps) - 1) . 's'), $inline, 1);
 	}
 
 	if ($i++ >= 10) break;
@@ -777,7 +777,7 @@ class Spyc {
 	if (!empty($saved_strings)) {
 	  foreach ($explode as $key => $value) {
 		while (strpos($value,'YAMLString') !== false) {
-		  $explode[$key] = preg_replace('/YAMLString/',$saved_strings[$stringi],$value, 1);
+		  $explode[$key] = str_replace('/YAMLString/',$saved_strings[$stringi],$value, 1);
 		  unset($saved_strings[$stringi]);
 		  ++$stringi;
 		  $value = $explode[$key];
@@ -790,7 +790,7 @@ class Spyc {
 	if (!empty($saved_empties)) {
 	  foreach ($explode as $key => $value) {
 		while (strpos($value,'YAMLEmpty') !== false) {
-		  $explode[$key] = preg_replace('/YAMLEmpty/', '', $value, 1);
+		  $explode[$key] = str_replace('/YAMLEmpty/', '', $value, 1);
 		  $value = $explode[$key];
 		}
 	  }

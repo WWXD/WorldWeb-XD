@@ -11,8 +11,7 @@ $here = substr($full, 0, strrpos($full, "/"))."/";
 $there = "./"; //"/";
 
 $logR = Query("select * from {reports} order by time desc");
-while($item = Fetch($logR))
-{
+while($item = Fetch($logR)) {
 	//print $item['text'];
 	$blar = $item['text'];
 	$blar = htmlspecialchars($blar);

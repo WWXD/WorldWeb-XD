@@ -25,7 +25,7 @@ while ($group = Fetch($g)) {
 		$allgroups['staff'] = __('(all staff)');
 		$allgroups[__('Secondary')] = null;
 	}
-	
+
 	$allgroups[$group['id']] = $group['name'];
 }
 
@@ -61,10 +61,10 @@ RenderTemplate('form_memberlist', ['fields' => $fields]);
 
 echo '
 	</form>';
-	
-	
+
+
 $getArgs = [];
-	
+
 $tpp = $loguser['threadsperpage'];
 if($tpp<1) $tpp=50;
 

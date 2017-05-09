@@ -13,7 +13,7 @@ define('BOARD_ROOT', dirname(__DIR__).'/');
 define('DATA_DIR', BOARD_ROOT.'data/');
 define('LIB_DIR', BOARD_ROOT.'lib/');
 
-$boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
+$boardroot = str_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
 
 define('URL_ROOT', $boardroot);
 define('DATA_URL', URL_ROOT.'data/');

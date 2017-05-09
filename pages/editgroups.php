@@ -109,7 +109,7 @@ echo '
 		<table style="width:100%;"><tr><td style="vertical-align:top;width:50%;padding-right:0.5em;">
 		<table class="outline margin">
 			<tr class="header1"><th colspan="2">'.__('General permissions').'</th></tr>';
-		
+
 $perms = Query("SELECT * FROM {permissions} WHERE applyto=0 AND id={0} AND perm!={1} AND arg=0 ORDER BY perm", $gid, 'forum.viewforum');
 while ($perm = Fetch($perms))
 	$permlist[$perm['perm']] = $perm['value'];
@@ -118,7 +118,7 @@ PermTable('user');
 PermTable('forum');
 PermTable('mod');
 PermTable('admin');
-		
+
 echo '
 		</table>
 		</td><td style="vertical-align:top;padding-left:0.5em;">
@@ -155,7 +155,7 @@ echo '
 		</table>
 		<input type="hidden" name="token" value="'.htmlspecialchars($loguser['token']).'">
 	</form>';
-	
+
 
 // yay copypasta
 function makeSelect($fieldName, $checkedIndex, $choicesList, $extras = "")
@@ -179,17 +179,17 @@ function PermSwitch($field, $val) {
 
 function PermTable($cat) {
 	global $permlist, $permCats, $permDescs;
-	
+
 	echo '
 			<tr class="header0">
 				<th colspan="2">'.htmlspecialchars($permCats[$cat]).'</th>
 			</tr>';
-	
+
 	foreach ($permDescs[$cat] as $permid=>$permname) {
 		if ($permid == 'forum.viewforum') continue;
-		
+
 		$pkey = 'perm_'.str_replace('.', '_', $permid);
-		
+
 		echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>
@@ -235,7 +235,7 @@ function ForumPermTable($fid, $fpl=[]) {
 
 		foreach ($perms as $permid=>$permname) {
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
-		
+
 			echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>

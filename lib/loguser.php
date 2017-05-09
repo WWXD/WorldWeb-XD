@@ -192,10 +192,10 @@ $ipban = isIPBanned($_SERVER['REMOTE_ADDR']);
 
 if($ipban) {
 	$adminemail = Settings::get('ownerEmail');
-	
-	print "You have been IP-banned from this board".($ipban['date'] ? " until ".gmdate("M jS Y, G:i:s",$ipban['date'])." (GMT). That's ".TimeUnits($ipban['date']-time())." left" : "").". Attempting to get around this in any way will result in worse things.";
-	print '<br>Reason: '.$ipban['reason'];
-	if ($adminemail) print '<br><br>If you were erroneously banned, contact the board owner at: '.$adminemail;
+
+	echo "You have been IP-banned from this board".($ipban['date'] ? " until ".gmdate("M jS Y, G:i:s",$ipban['date'])." (GMT). That's ".TimeUnits($ipban['date']-time())." left" : "").". Attempting to get around this in any way will result in worse things.";
+	echo '<br>Reason: '.$ipban['reason'];
+	if ($adminemail) echo '<br><br>If you were erroneously banned, contact the board owner at: '.$adminemail;
 	exit();
 }
 

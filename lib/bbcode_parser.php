@@ -168,7 +168,7 @@ function filterText($s, $parentTag, $parentMask) {
 
 	// prevent unwanted shit
 	$s = str_replace(['<', '>'], ['&lt;', '&gt;'], $s);
-	//$s = preg_replace('@&([a-z0-9]*[^a-z0-9;])@', '&amp;$1', $s);
+	//$s = str_replace('@&([a-z0-9]*[^a-z0-9;])@', '&amp;$1', $s);
 
 	if (!($parentMask & TAG_NOBR)) $s = nl2br($s);
 	$s = postDoReplaceText($s, $parentTag, $parentMask);
@@ -282,7 +282,7 @@ function parseBBCode($text) {
 				$followingtext = substr($next,$j+1);
 
 				if ($tagmask & TAG_BLOCK)
-					$followingtext = preg_replace("@^\r?\n@", '', $followingtext);
+					$followingtext = str_replace("@^\r?\n@", '', $followingtext);
 
 				if ($isclosing) {
 					$tgood = false;

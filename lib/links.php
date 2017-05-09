@@ -8,10 +8,10 @@ $siteURL = 'http' . $ishttps ? 's' : '' . '://' . SITE_URL . '/';
 function urlNamify($urlname) {
 	$urlname = strtolower($urlname);
 	$urlname = str_replace("&", "and", $urlname);
-	$urlname = preg_replace("/[^a-zA-Z0-9]/", "-", $urlname);
-	$urlname = preg_replace("/-+/", "-", $urlname);
-	$urlname = preg_replace("/^-/", "", $urlname);
-	$urlname = preg_replace("/-$/", "", $urlname);
+	$urlname = str_replace("/[^a-zA-Z0-9]/", "-", $urlname);
+	$urlname = str_replace("/-+/", "-", $urlname);
+	$urlname = str_replace("/^-/", "", $urlname);
+	$urlname = str_replace("/-$/", "", $urlname);
 	return $urlname;
 }
 
@@ -233,7 +233,7 @@ function makeThreadLink($thread) {
 
 function makeFromUrl($url, $from) {
 	if($from == 0) {
-		$url = preg_replace('@(?:&amp;|&|\?)\w+=$@', '', $url);
+		$url = str_replace('@(?:&amp;|&|\?)\w+=$@', '', $url);
 		return $url;
 	}
 	else return $url.$from;

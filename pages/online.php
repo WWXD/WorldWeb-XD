@@ -61,7 +61,7 @@ RenderTemplate('onlinelist', [
 function FilterURL($url) {
 	//$url = str_replace('_', ' ', urldecode($url)); // what?
 	$url = htmlspecialchars($url);
-	$url = preg_replace("@(&amp;)?(key|token)=[0-9a-f]{40,64}@i", '', $url);
+	$url = str_replace("@(&amp;)?(key|token)=[0-9a-f]{40,64}@i", '', $url);
 	return $url;
 }
 

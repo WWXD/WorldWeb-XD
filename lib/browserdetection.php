@@ -1533,9 +1533,9 @@ class BrowserDetection
 	protected function cleanVersion($version)
 	{
 		//Clear anything that is in parentheses (and the parentheses themselves) - will clear started but unclosed ones too
-		$cleanVer = preg_replace('/\([^)]+\)?/', '', $version);
+		$cleanVer = str_replace('/\([^)]+\)?/', '', $version);
 		//Replace with a space any character which is NOT an alphanumeric, dot (.), hyphen (-), underscore (_) or space
-		$cleanVer = preg_replace('/[^0-9.a-zA-Z_ -]/', ' ', $cleanVer);
+		$cleanVer = str_replace('/[^0-9.a-zA-Z_ -]/', ' ', $cleanVer);
 		//Remove trailing and leading spaces
 		$cleanVer = trim($cleanVer);
 		//Remove double spaces if any

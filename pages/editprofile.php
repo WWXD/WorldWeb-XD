@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 if(Settings::get('PassChecker')) {
-	print "<script src=\"".resourceLink('js/register.js')."\"></script>
+	echo "<script src=\"".resourceLink('js/register.js')."\"></script>
 	<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 }
 
@@ -43,7 +43,7 @@ if($editUserMode && $loguserid != $userid && $usergroup['rank'] > $loguserGroup[
 $uname = $user['name'];
 if($user['displayname'])
 	$uname = $user['displayname'];
-	
+
 $title = __('Edit profile');
 
 makeCrumbs([actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")]);
@@ -561,7 +561,7 @@ function HandleDisplayname($field, $item) {
 		$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $http->post($field));
 		if($dispCheck) {
 			return format(__("The display name you entered, \"{0}\", is already taken."), SqlEscape($http->post($field)));
-		} else if($http->post($field) !== ($http->post($field) = preg_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
+		} else if($http->post($field) !== ($http->post($field) = str_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
 			return __("The display name you entered cannot contain control characters.");
 		}
 	}
@@ -575,7 +575,7 @@ function HandleUsername($field, $item) {
 	$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $http->post($field));
 	if($dispCheck) {
 		return format(__("The login name you entered, \"{0}\", is already taken."), SqlEscape($http->post($field)));
-	} else if($http->post($field) !== ($http->post($field) = preg_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
+	} else if($http->post($field) !== ($http->post($field) = str_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
 		return __("The login name you entered cannot contain control characters.");
 	}
 }
@@ -824,7 +824,7 @@ foreach ($epFields as $catid => $cfields) {
 }
 
 
-print "
+echo "
 	<form action=\"".htmlentities(pageLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"actionsave.disabled = true; return true;\">
 ";
 
@@ -835,7 +835,7 @@ RenderTemplate('form_editprofile', [
 	'selectedTab' => $selectedTab,
 	'btnEditProfile' => "<input type=\"submit\" id=\"submit\" name=\"actionsave\" value=\"".__("Save")."\">"]);
 
-print "
+echo "
 		<input type=\"hidden\" name=\"editusermode\" value=\"1\">
 		<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">
@@ -844,7 +844,7 @@ print "
 
 
 function IsReallyEmpty($subject) {
-	$trimmed = trim(preg_replace("/&.*;/", "", $subject));
+	$trimmed = trim(str_replace("/&.*;/", "", $subject));
 	return strlen($trimmed) == 0;
 }
 

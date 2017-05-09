@@ -33,7 +33,7 @@ $bbcodeCallbacks = [
 	'[gist' => 'bbcodeGist',
 
 	"[instameme" => "bbcodeMeme",
-	
+
 	//Color BBCode Starts here
 	"[color"  => "bbcodecolordefault",
 	"[colour" => "bbcodecolourdefault",

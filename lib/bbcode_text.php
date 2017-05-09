@@ -19,8 +19,7 @@ function loadSmilies() {
 	}
 }
 
-function loadSmiliesOrdered()
-{
+function loadSmiliesOrdered() {
 	global $smiliesOrdered;
 	$rSmilies = Query("select * from {smilies}");
 	$smilies = array();
@@ -29,24 +28,20 @@ function loadSmiliesOrdered()
 }
 
 // lol
-function funhax($s)
-{
+function funhax($s) {
 	return 'DU'.str_repeat('R', strlen($s[0])-2);
 }
 
-function rainbowify($s)
-{
+function rainbowify($s) {
 	$r = mt_rand(0,359);
 	$len = strlen($s);
 	$out = '';
-	for ($i = 0; $i < $len; $i++)
-	{
-		if ($s[$i] == ' ')
-		{
+	for ($i = 0; $i < $len; $i++) {
+		if ($s[$i] == ' ') {
 			$out .= ' ';
 			continue;
 		}
-		
+
 		$out .= '<span style="color:hsl('.$r.',100%,80.4%);">'.$s[$i].'</span>';
 		$r += 31;
 		$r %= 360;
@@ -59,7 +54,7 @@ function postDoReplaceText($s, $parentTag, $parentMask) {
 	global $postNoSmilies, $postPoster, $smiliesReplaceOrig, $smiliesReplaceNew;
 
 	if($postPoster)
-		$s = preg_replace("'/me '","<b>* ".htmlspecialchars($postPoster)."</b> ", $s);
+		$s = str_replace("'/me '","<b>* ".htmlspecialchars($postPoster)."</b> ", $s);
 
 	// silly filters
 	//$s = preg_replace_callback('@\._+\.@', 'funhax', $s);
@@ -69,14 +64,13 @@ function postDoReplaceText($s, $parentTag, $parentMask) {
 	if(!$postNoSmilies) {
 		if(!isset($smiliesReplaceOrig))
 			LoadSmilies();
-		$s = preg_replace($smiliesReplaceOrig, $smiliesReplaceNew, $s);
+		$s = str_replace($smiliesReplaceOrig, $smiliesReplaceNew, $s);
 	}
-	
+
 	//Automatic links
 	// does it really have to be that complex?! we're not phpBB
 	//$s = preg_replace_callback('((?:(?:view-source:)?(?:[Hh]t|[Ff])tps?://(?:(?:[^:&@/]*:[^:@/]*)@)?|\bwww\.)[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*(?::[0-9]+)?(?:/(?:->(?=\S)|&amp;|[\w\-/%?=+#~:\'@*^$!]|[.,;\'|](?=\S)|(?:(\()|(\[)|\{)(?:->(?=\S)|[\w\-/%&?=+;#~:\'@*^$!.,;]|(?:(\()|(\[)|\{)(?:->(?=\S)|l[\w\-/%&?=+;#~:\'@*^$!.,;])*(?(3)\)|(?(4)\]|\})))*(?(1)\)|(?(2)\]|\})))*)?)', 'bbcodeURLAuto', $s);
-	if (!($parentMask & TAG_NOAUTOLINK))
-	{
+	if (!($parentMask & TAG_NOAUTOLINK)) {
 		$s = preg_replace_callback('@(?:(?:http|ftp)s?://|\bwww\.)[\w\-/%&?=+#~\'\@*^$\.,;!:]+[\w\-/%&?=+#~\'\@*^$]@i', 'bbcodeURLAuto', $s);
 	}
 

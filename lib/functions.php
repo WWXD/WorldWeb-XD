@@ -75,7 +75,7 @@ function format() {
 	$output = $args[0];
 	for($i = 1; $i < $argc; $i++) {
 		// TODO kill that hack
-		$splicethis = preg_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
+		$splicethis = str_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
 		$output = str_replace("{".($i-1)."}", $splicethis, $output);
 	}
 	return $output;
@@ -92,7 +92,7 @@ function write() {
 	$output = $args[0];
 	for($i = 1; $i < $argc; $i++) {
 		// TODO kill that hack
-		$splicethis = preg_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
+		$splicethis = str_replace("'\{([0-9]+)\}'", "&#x7B;\\1&#x7D;", $args[$i]);
 		$output = str_replace("{".($i-1)."}", $splicethis, $output);
 	}
 	echo $output;
@@ -105,7 +105,7 @@ function OptimizeLayouts($text) {
 	$regexps = ["@<style(.*?)</style(.*?)>(\r?\n?)@si", "@<link(.*?)>(\r?\n?)@si", "@<script(.*?)</script(.*?)>(\r?\n?)@si"];
 	foreach ($regexps as $regexp) {
 		preg_match_all($regexp, $text, $temp, PREG_PATTERN_ORDER);
-		$text = preg_replace($regexp, "", $text);
+		$text = str_replace($regexp, "", $text);
 		$bucket = array_merge($bucket, $temp[0]);
 	}
 
@@ -314,8 +314,8 @@ function getKeywords($stuff) {
 
 	$stuff = strtolower($stuff);
 	$stuff = str_replace('\'s', '', $stuff);
-	$stuff = preg_replace('@[^\w\s]+@', '', $stuff);
-	$stuff = preg_replace('@\s+@', ' ', $stuff);
+	$stuff = str_replace('@[^\w\s]+@', '', $stuff);
+	$stuff = str_replace('@\s+@', ' ', $stuff);
 
 	$stuff = explode(' ', $stuff);
 	$stuff = array_unique($stuff);
@@ -323,7 +323,7 @@ function getKeywords($stuff) {
 	foreach ($stuff as $word) {
 		if (strlen($word) < 3 && !is_numeric($word)) continue;
 		if (in_array($word, $common)) continue;
-		
+
 		$finalstuff .= $word.' ';
 	}
 

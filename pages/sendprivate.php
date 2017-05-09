@@ -134,7 +134,7 @@ if($http->post('actionsend') || $http->post('actionsave')) {
 			$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
 			$post = $http->post('text');
-			$post = preg_replace("'/me '","[b]* ".htmlspecialchars($loguser['name'])."[/b] ", $post); //to prevent identity confusion
+			$post = str_replace("'/me '","[b]* ".htmlspecialchars($loguser['name'])."[/b] ", $post); //to prevent identity confusion
 
 			if($wantDraft) {
 				if ($draftID) {

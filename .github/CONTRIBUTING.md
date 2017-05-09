@@ -20,7 +20,7 @@ Here is a table of alternatives that you **should** use. We're not forcing you t
 <tr><td>echo</td><td>print</td></tr>
 <tr><td>include()</td><td>include_once</td></tr>
 <tr><td>strtr</td><td>str_replace</td></tr>
-<tr><td>strtr</td><td>preg_replace</td></tr>
+<tr><td>str_replace</td><td>preg_replace</td></tr>
 <tr><td>isset()</td><td>sizeof(), count() & strlen()</td></tr>
 <tr><td>$_SERVER[’REQUEST_TIME’]</td><td>time()</td></tr>
 </table>

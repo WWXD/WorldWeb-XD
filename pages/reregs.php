@@ -2,7 +2,7 @@
 if (!defined('BLARG')) die();
 
 CheckPermission('admin.ipsearch');
-	
+
 $title = 'Rereg radar';
 MakeCrumbs([actionLink("admin") => "Admin", actionLink('reregs') => 'Rereg radar']);
 
@@ -10,7 +10,7 @@ $ipm = Query("SELECT u.(_userfields), u.(lastactivity,lastip) FROM {users} u WHE
 $ipmatches = [];
 while ($match = Fetch($ipm))
 	$ipmatches[$match['u_lastip']][] = $match;
-	
+
 foreach ($ipmatches as $ip=>$match)
 {
 	$date = 0;
@@ -19,7 +19,7 @@ foreach ($ipmatches as $ip=>$match)
 		if ($user['u_lastactivity'] > $date)
 			$date = $user['u_lastactivity'];
 	}
-	
+
 	$ipmatches[$ip]['date'] = $date;
 }
 
@@ -60,7 +60,7 @@ while ($match = Fetch($passm))
 	{
 		$date = formatdate($match['date']);
 		unset($match['date']);
-		
+
 		$userlist = '';
 		foreach ($match as $user)
 		{
@@ -68,9 +68,9 @@ while ($match = Fetch($passm))
 			$userlist .= userLink($userdata).', ';
 		}
 		$userlist = substr($userlist,0,-2);
-		
+
 		$fip = formatIP($ip);
-		
+
 		echo '
 		<tr class="cell'.$c.'">
 			<td class="center">'.$date.'</td>
@@ -101,9 +101,9 @@ while ($match = Fetch($passm))
 			$ulcache[$uid] = $userdata;
 		}
 		$ul1 = userLink($ulcache[$uid]);
-		
+
 		$date = formatdate($match['m_date']);
-		
+
 		$users = explode(',', $match['m_matches']);
 		$userlist = '';
 		foreach ($users as $u)
@@ -117,7 +117,7 @@ while ($match = Fetch($passm))
 			$userlist .= userLink($ulcache[$u]).', ';
 		}
 		$userlist = substr($userlist,0,-2);
-		
+
 		echo '
 		<tr class="cell'.$c.'">
 			<td class="center">'.$date.'</td>

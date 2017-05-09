@@ -27,7 +27,7 @@ function ParseThreadTags($title) {
 }
 
 function filterPollColors($input) {
-	return preg_replace("@[^#0123456789abcdef]@si", "", $input);
+	return str_replace("@[^#0123456789abcdef]@si", "", $input);
 }
 
 function loadBlockLayouts() {
@@ -59,9 +59,9 @@ function applyTags($text, $tags) {
 	foreach($tags as $tag => $val)
 		$s = str_replace("&".$tag."&", $val, $s);
 	if(is_numeric($tags['postcount']))
-		$s = preg_replace_callback('@&(\d+)&@si', [new MaxPosts($tags), 'max_posts_callback'], $s);
+		$s = str_replace('@&(\d+)&@si', [new MaxPosts($tags), 'max_posts_callback'], $s);
 	else
-		$s = preg_replace("'&(\d+)&'si", "preview", $s);
+		$s = str_replace("'&(\d+)&'si", "preview", $s);
 	return $s;
 }
 
@@ -127,9 +127,9 @@ function makePostText($post, $poster) {
 			$url = URL_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
 			$linkurl = $ispreview ? '#' : $url;
 			$filesize = filesize(DATA_DIR.'uploads/'.$attach['physicalname']);
-			
+
 			$attachblock .= '<br/><div class="post_attachment">';
-			
+
 			$fext = strtolower(substr($attach['filename'], -4));
 			if ($fext == '.png' || $fext == '.jpg' || $fext == 'jpeg' || $fext == '.gif') {
 				$alt = htmlspecialchars($attach['filename']).' &mdash; '.BytesToSize($filesize).', viewed '.Plural($attach['downloads'], 'time');
@@ -289,7 +289,7 @@ function makePost($post, $type, $params=[]) {
 	$sidebar = [];
 
 	// quit abusing custom syndromes.
-	$poster['title'] = preg_replace('@Affected by \'?.*?Syndrome\'?@si', '', $poster['title']);
+	$poster['title'] = str_replace('@Affected by \'?.*?Syndrome\'?@si', '', $poster['title']);
 
 	$sidebar['rank'] = GetRank($poster['rankset'], $poster['posts']);
 

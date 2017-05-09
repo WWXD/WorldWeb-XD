@@ -54,7 +54,7 @@ $showWhat = 0;
 
 if(isset($http->get('show'))) {
 	$showWhat = (int)$http->get('show');
-	
+
 	$show = "&show=".$showWhat;
 	if($showWhat == 1)
 		$deleted = 1;
@@ -109,7 +109,7 @@ RenderTemplate('pagelinks', ['pagelinks' => $pagelinks, 'position' => 'top']);
 $pms = [];
 while($pm = Fetch($rPM)) {
 	$pmdata = [];
-	
+
 	if ($showWhat == 1 && $pm['userto'] == -1) {
 		$pmdata['userlink'] = 'Staff';
 	} else if ($pm['drafting']) {
@@ -138,7 +138,7 @@ while($pm = Fetch($rPM)) {
 
 echo "
 	<form method=\"post\" action=\"\" id=\"pmform\">";
-	
+
 RenderTemplate('pmlist', [
 	'pms' => $pms,
 	'inbox' => !$showWhat,

@@ -70,7 +70,7 @@ if ($userdeleteperms && $myrank >= $targetrank && $targetrank =< $myrank) {
 					left join {threads} t on p.thread = t.id
 					where t.user={0}", $uid);
 
-			//Delete posts by user			
+			//Delete posts by user
 			query("delete pt from {posts_text} pt
 					left join {posts} p on pt.pid = p.id
 					where p.user={0}", $uid);
