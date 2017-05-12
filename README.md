@@ -27,6 +27,14 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 	<td style="text-align: center;">Global Permissions (not customizable), forced 5 powerlevels</td>
 	<td style="text-align: center;" colspan=2>Role-based, (sub)forum-based and user-based permissions</td>
 </tr>
+<tr><th>Peer Ratings</th>
+<td>Yes</td>
+<td colspan=2>No</td>
+</tr>
+<tr><th>Syndrones (classic acmlmboard feature)</th>
+<td colspan=2>Classic</td>
+<td>Classic, Netric Net, acmlmboard 2.0, vizzed</td>
+</tr>
 <tr><th>Password</th>
 	<td style="text-align: center;">SHA256 with Global & User Salt, included password checker</td>
 	<td style="text-align: center;">SHA256 with Global & User Salt</td>
