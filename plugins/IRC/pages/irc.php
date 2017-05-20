@@ -18,7 +18,7 @@ $bad = ["~", "&", "@", "?", "!", ".", ",", "=", "+", "%", "*"];
 $handle = str_replace(" ", "", $loguser['name']);
 $handle = str_replace($badchars, "_", $handle);
 // KiwiIRC Client
-$kiwilink = "https://kiwiirc.com/client/".$net."/?nick=".$handle."/?#".$chan;
+$kiwilink = "https://kiwiirc.com/client/".$net."/?nick=".$handle."?#".$chan;
 $kiwiclient = "<iframe src=\"".$kiwilink."\" style=\"border:0; width:100%; height:525px;\"><\iframe>";
 ?>
 <table class="outline">
