@@ -2,12 +2,12 @@
 	$settings = array(
 		"ircserver" => [
 			"type" => "text",
-			"default" => "irc.fortytwo.tech",
+			"default" => "irc.42net.org",
 			"name" => "Server Name"
 		],
 		"ircchannel" => [
 			"type" => "text",
-			"default" => "42net",
+			"default" => "42Net",
 			"name" => "Channel"
 		],
 	);
