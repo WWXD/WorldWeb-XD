@@ -69,9 +69,9 @@ if(isset($http->post("_plugin"))) {
 		Settings::save($plugin);
 		if(isset($http->post("_exit"))) {
 			if($plugin == "main")
-				die(header("Location: $boardroot".pageLink("admin")));
+				die(header("Location: ".htmlentities(actionLink("admin"))));
 			else
-				die(header("Location: $boardroot".pageLink("addonmanager")));
+				die(header("Location: ".htmlentities(actionLink("pluginmanager"))));
 		} else
 			Alert(__("Settings were successfully saved!"));
 	} else
