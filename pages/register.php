@@ -102,7 +102,7 @@ if($http->post('register')) {
 			$err .= "<ul>You already have an account.</ul>";
 		if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
 			$err .= "<ul>You didn't imput your email correctly.</ul>";
-		if (($http->post('pass') || $http->post('pass2')) === $cname)
+		if ($http->post('pass') === $cname)
 			$err .= "<ul>Don't put your username as your password. You'll impose high security risk to your account.</ul>";
 		if (!$http->post('math') && Settings::get('math'))
 			$err .= "<ul>You forgot to answer the math question.</ul>";
