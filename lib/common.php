@@ -64,7 +64,7 @@ $http = new Input();
 
 require_once(__DIR__."/debug.php");
 require_once(__DIR__."/mysql.php");
-require_once(URL_ROOT."/config/database.php");
+require_once(__DIR__."/../config/database.php");
 if(!fetch(query("SHOW TABLES LIKE '{misc}'")))
 	die("The boards tables are empty. Please copy the db folder and install.php to your board root and delete the config folder from the root. Overwrite any files if nessesary.");
 require_once(__DIR__."/settingssystem.php");
