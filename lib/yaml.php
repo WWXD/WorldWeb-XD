@@ -729,7 +729,7 @@ class Spyc {
 	// Check for sequences
 	while (preg_match('/\[([^{}\[\]]+)\]/U',$inline,$matchseqs)) {
 	  $seqs[] = $matchseqs[0];
-	  $inline = str_replace('/\[([^{}\[\]]+)\]/U', ('YAMLSeq' . (count($seqs) - 1) . 's'), $inline, 1);
+	  $inline = preg_replace('/\[([^{}\[\]]+)\]/U', ('YAMLSeq' . (count($seqs) - 1) . 's'), $inline, 1);
 	}
 
 	// Check for mappings
