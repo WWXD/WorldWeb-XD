@@ -777,7 +777,7 @@ class Spyc {
 	if (!empty($saved_strings)) {
 	  foreach ($explode as $key => $value) {
 		while (strpos($value,'YAMLString') !== false) {
-		  $explode[$key] = str_replace('/YAMLString/',$saved_strings[$stringi],$value, 1);
+		  $explode[$key] = preg_replace('/YAMLString/',$saved_strings[$stringi],$value, 1);
 		  unset($saved_strings[$stringi]);
 		  ++$stringi;
 		  $value = $explode[$key];
@@ -790,7 +790,7 @@ class Spyc {
 	if (!empty($saved_empties)) {
 	  foreach ($explode as $key => $value) {
 		while (strpos($value,'YAMLEmpty') !== false) {
-		  $explode[$key] = str_replace('/YAMLEmpty/', '', $value, 1);
+		  $explode[$key] = preg_replace('/YAMLEmpty/', '', $value, 1);
 		  $value = $explode[$key];
 		}
 	  }
