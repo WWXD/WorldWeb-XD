@@ -58,7 +58,7 @@ Disclaimer: I'm not trying to bash ABXD or Blargboard. I'm just posting the diff
 <tr><th>Thread description</th>
 	<td style="text-align: center;" colspan=2>No</td>
 	<td style="text-align: center;">Yes</td></tr>
-<tr><th>Permanently delete from database</th>
+<tr><th>Permanently delete users from database</th>
 	<td style="text-align: center;">You can delete users (plugin needed)</td>
 	<td style="text-align: center;">ABXD plugin broken, needs port...</td>
 	<td style="text-align: center;">You can delete posts and users.</td></tr>
