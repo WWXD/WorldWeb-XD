@@ -735,7 +735,7 @@ class Spyc {
 	// Check for mappings
 	while (preg_match('/{([^\[\]{}]+)}/U',$inline,$matchmaps)) {
 	  $maps[] = $matchmaps[0];
-	  $inline = str_replace('/{([^\[\]{}]+)}/U', ('YAMLMap' . (count($maps) - 1) . 's'), $inline, 1);
+	  $inline = preg_replace('/{([^\[\]{}]+)}/U', ('YAMLMap' . (count($maps) - 1) . 's'), $inline, 1);
 	}
 
 	if ($i++ >= 10) break;
