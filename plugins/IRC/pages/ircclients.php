@@ -1,3 +1,6 @@
+<?php
+$title = __("IRC Clients");
+makeCrumbs([actionlink('ircclients') => __("IRC Clients")]);?>
 <table class="outline"><tr class="header0"><th>IRC Clients</th></tr>
 <tr class="cell0 center"><td>
 <h2>List of irc clients for common platforms</h2><br>
