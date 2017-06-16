@@ -94,14 +94,14 @@ echo '
 		<tr><td style="width:50%;vertical-align:top;padding-right:0.5em;">
 		<table class="outline margin">
 			<tr class="header1"><th colspan="2">'.__('General permissions').'</th></tr>';
-
+		
 $perms = Query("SELECT * FROM {permissions} WHERE applyto={0} AND id={1} AND perm!={2} AND arg=0 ORDER BY perm", $applyto, $id, 'forum.viewforum');
 while ($perm = Fetch($perms))
 	$permlist[$perm['perm']] = $perm['value'];
 
 foreach ($permCats as $cat=>$blarg)
 	PermTable($cat);
-
+		
 echo '
 		</table>
 		</td><td style="vertical-align:top;padding-left:0.5em;">
@@ -172,7 +172,7 @@ function PermTable($cat) {
 
 	foreach ($permDescs[$cat] as $permid=>$permname) {
 		if ($permid == 'forum.viewforum') continue;
-
+		
 		$pkey = 'perm_'.str_replace('.', '_', $permid);
 		$isforumperm = (substr($permid,0,6) == 'forum.' || substr($permid,0,4) == 'mod.');
 
@@ -221,7 +221,7 @@ function ForumPermTable($fid, $fpl=[]) {
 
 		foreach ($perms as $permid=>$permname) {
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
-
+		
 			echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>
@@ -229,7 +229,7 @@ function ForumPermTable($fid, $fpl=[]) {
 			</tr>';
 		}
 	}
-
+	
 	if (!$fid) {
 		echo '
 			<tr class="header0">

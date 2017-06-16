@@ -32,8 +32,8 @@ if (!defined('BLARG')) die();
 			"name" => "Custom Credits",
 			'category' => 'Board identity'
 		],
-
-
+		
+		
 		"dateformat" => [
 			"type" => "text",
 			"default" => "m-d-y, h:i a",

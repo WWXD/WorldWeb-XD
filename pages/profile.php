@@ -135,7 +135,7 @@ if($user['rankset']) {
 		$toNextRank = Plural($toNextRank, "post");
 }
 if($user['title'])
-	$title = str_replace('@<br.*?>\s*(\S)@i', ' &bull; $1', strip_tags(CleanUpPost($user['title'], "", true), "<b><strong><i><em><span><s><del><img><a><br><br/><small>"));
+	$title = preg_replace('@<br.*?>\s*(\S)@i', ' &bull; $1', strip_tags(CleanUpPost($user['title'], "", true), "<b><strong><i><em><span><s><del><img><a><br><br/><small>"));
 
 if($user['homepageurl']) {
 	$nofollow = "";
@@ -420,6 +420,6 @@ MakeCrumbs([pageLink("profile", [
 $title = format(__("Profile for {0}"), htmlspecialchars($uname));
 
 function IsReallyEmpty($subject) {
-	$trimmed = trim(str_replace("/&.*;/", "", $subject));
+	$trimmed = trim(preg_replace("/&.*;/", "", $subject));
 	return strlen($trimmed) == 0;
 }

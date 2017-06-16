@@ -85,22 +85,22 @@ function securityPostFilter($s) {
 
 	$s = EatThatPork($s);
 
-	$s = str_replace("@(on)(\w+?\s*?)=@si", '$1$2&#x3D;', $s);
+	$s = preg_replace("@(on)(\w+?\s*?)=@si", '$1$2&#x3D;', $s);
 
-	$s = str_replace('@<(/?(?:script|meta|xmp|plaintext|noscript|iframe|embed|object|base|textarea))@si', '&lt;$1', $s);
+	$s = preg_replace('@<(/?(?:script|meta|xmp|plaintext|noscript|iframe|embed|object|base|textarea))@si', '&lt;$1', $s);
 
 	// convert youtube tags now that we ran the security filter
-	$s = str_replace('@\[youtube\]([a-zA-Z0-9-_]{11})\[/youtube\]@i', 
+	$s = preg_replace('@\[youtube\]([a-zA-Z0-9-_]{11})\[/youtube\]@i', 
 		'<iframe width="560" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>', $s);
 
 	// Now do the same for vimeo
-	$s = str_replace('@\[vimeo\]([a-zA-Z0-9-_]{9})\[/vimeo\]@i', 
+	$s = preg_replace('@\[vimeo\]([a-zA-Z0-9-_]{9})\[/vimeo\]@i', 
 		'<iframe width="560" height="315" src="//player.vimeo.com/video/$1?portrait=0&color=333" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>', $s);
 
-	$s = str_replace("'-moz-binding'si"," -mo<em></em>z-binding", $s);
-	//$s = str_replace("'filter:'si","filter<em></em>:>", $s);
-	//$s = str_replace("'javascript:'si","javascript<em></em>:", $s);
-	//$s = str_replace("'data:'si","data<em></em>:", $s);
+	$s = preg_replace("'-moz-binding'si"," -mo<em></em>z-binding", $s);
+	//$s = preg_replace("'filter:'si","filter<em></em>:>", $s);
+	//$s = preg_replace("'javascript:'si","javascript<em></em>:", $s);
+	//$s = preg_replace("'data:'si","data<em></em>:", $s);
 
 	// TODO do it more nicely
 	$s = preg_replace_callback("@(href|src)\s*=\s*\"([^\"]+)\"@si", "FilterJS", $s);

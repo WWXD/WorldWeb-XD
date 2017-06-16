@@ -108,7 +108,7 @@ $faq = Settings::get("faqText");
 
 $faq = str_replace("<colortable />", $colortable, $faq);
 if("" == Settings::get("registrationWord"))
-	$faq = str_replace("'<iftheword>(.*)</iftheword>'s", "", $faq);
+	$faq = preg_replace("'<iftheword>(.*)</iftheword>'s", "", $faq);
 else
 	$faq = str_replace("<theword />", Settings::get("registrationWord"), $faq);
 

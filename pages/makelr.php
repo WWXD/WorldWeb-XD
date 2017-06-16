@@ -15,16 +15,16 @@ maketree(0, 1);
 function maketree($level, $curval)
 {
 	global $forums;
-
+	
 	foreach ($forums as $id=>$f)
 	{
 		if ($f['done']) continue;
-
+		
 		$parent = $f['parent'];
 		if ($parent == $level)
 		{
 			$forums[$id]['l'] = $curval++;
-
+			
 			foreach ($forums as $cf)
 			{
 				if ($cf['parent'] == $id)
@@ -33,12 +33,12 @@ function maketree($level, $curval)
 					break;
 				}
 			}
-
+			
 			$forums[$id]['r'] = $curval++;
 			$forums[$id]['done'] = true;
 		}
 	}
-
+	
 	return $curval;
 }
 
@@ -47,12 +47,12 @@ function maketree($level, $curval)
 foreach ($forums as $id=>$f)
 {
 	echo '<tr><td>FORUM #'.$id.':<td>'.$f['title'].'<td>parent='.$f['parent'].'<td>l='.$f['l'].'<td>r='.$f['r'];
-
+	
 	$old = Fetch(Query("SELECT l, r FROM {forums} WHERE id={0}", $id));
 	echo '<td>oldl='.$old['l'].'<td>oldr='.$old['r'];
-
+	
 	Query("UPDATE {forums} SET l={0}, r={1} WHERE id={2}", $f['l'], $f['r'], $id);
-
+	
 	if ($old['l'] == $f['l'] && $old['r'] == $f['r'])
 		echo '<td style="color:#0f0;">OK';
 	else

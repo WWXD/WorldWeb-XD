@@ -232,16 +232,16 @@ $tc = 1;
 $end = floor(time() / 86400);
 for ($d = floor($timewarp / 86400); $d <= $end; $d++) {
 	if (!isset($stats[$d])) continue;
-
+	
 	$date = gmdate($mydatefmt, $d*86400);
-
+	
 	$unew = (int)$stats[$d]['u'];
 	$tnew = (int)$stats[$d]['t'];
 	$pnew = (int)$stats[$d]['p'];
 	$utotal += $unew;
 	$ttotal += $tnew;
 	$ptotal += $pnew;
-
+	
 	echo '
 	<tr class="cell'.$tc.'">
 		<td class="cell0">'.$date.'</td>
@@ -252,7 +252,7 @@ for ($d = floor($timewarp / 86400); $d <= $end; $d++) {
 		<td>'.$tnew.'</td>
 		<td>'.$pnew.'</td>
 	</tr>';
-
+	
 	$tc = ($tc==1) ? 2:1;
 }
 

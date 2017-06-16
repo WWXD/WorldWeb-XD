@@ -5,7 +5,7 @@ $title = __("Mood avatars");
 
 if(!$loguserid)
 	Kill(__("You must be logged in to edit your avatars."));
-
+	
 CheckPermission('user.editprofile');
 CheckPermission('user.editavatars');
 
@@ -83,7 +83,7 @@ if(isset($http->post('actionrename')) || isset($http->post('actiondelete')) || i
 				} else
 					$error.="<li>Invalid format.</li>";
 			}
-
+				
 			if (!$error)
 				die(header('Location: '.actionLink('editavatars')));
 			else
@@ -107,7 +107,7 @@ while($mood = Fetch($rMoods)) {
 					<input type=\"submit\" name=\"actiondelete\" value=\"".__("Delete")."\" 
 						onclick=\"if(!confirm('".__('Really delete this avatar? All posts using it will be changed to use your default avatar.')."'))return false;\">
 				</form>";
-
+			
 	$moodRows[] = $row;
 }
 
@@ -117,5 +117,5 @@ $newField = "
 					".__("Image:")." <input type=\"file\" id=\"pic\" name=\"picture\"><br/>
 					<input type=\"submit\" name=\"actionadd\" value=\"".__("Add")."\">
 				</form>";
-
+				
 RenderTemplate('moodavatars', ['avatars' => $moodRows, 'newField' => $newField]);

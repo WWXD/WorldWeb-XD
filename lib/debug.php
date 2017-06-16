@@ -20,7 +20,7 @@ function backTrace() {
 				$args .= var_export($a, true);
 		}
 		$bt["file"] = substr($bt["file"], strlen($_SERVER["DOCUMENT_ROOT"]));
-
+		
 		if(strlen($args) > 50)
 			$args = substr($args, 0, 50)."...";
 		$output .= htmlspecialchars($bt['file']).":".htmlspecialchars($bt['line'])." &nbsp; ";

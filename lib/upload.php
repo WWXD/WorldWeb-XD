@@ -6,10 +6,10 @@ define('POST_ATTACHMENT_CAP', 10*1024*1024);
 function UploadFile($file, $parenttype, $parentid, $cap, $description='', $temporary=false) {
 	global $loguser, $loguserid;
 	$targetdir = DATA_DIR.'uploads';
-
+	
 	$filedata = $_FILES[$file];
 	$filename = $filedata['name'];
-
+		
 	if($filedata['size'] == 0)
 		return true;
 	else if($filedata['size'] > $cap)
@@ -49,7 +49,7 @@ function DeleteUpload($path, $userid) {
 
 function CleanupUploads() {
 	$targetdir = DATA_DIR.'uploads';
-
+	
 	$timebeforedel = time()-604800; // one week
 	$todelete = Query("SELECT physicalname, user, filename FROM {uploadedfiles} WHERE deldate!=0 AND deldate<{0}", $timebeforedel);
 	if (NumRows($todelete)) {
@@ -85,7 +85,7 @@ function HandlePostAttachments($postid, $final) {
 
 	foreach ($_FILES as $file=>$data) {
 		if (in_array($data['name'], $attachs)) continue;
-
+		
 		$res = UploadFile($file, 'post_attachment', $postid, POST_ATTACHMENT_CAP, '', !$final);
 		if ($res === false) return $res;
 		if ($res === true) continue;

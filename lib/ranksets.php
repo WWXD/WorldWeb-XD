@@ -80,7 +80,7 @@ function getRank($rankset, $posts) {
 			break;
 		$ret = $row;
 	}
-
+	
 	if(!$ret) return "";
 	return getRankHtml($rankset, $ret);
 }

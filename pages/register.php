@@ -203,24 +203,24 @@ if($http->post('register')) {
 }
 
 if(Settings::get('PassChecker')) {
-	echo '<script src="'.resourceLink('js/register.js').'"></script>
-			<script src="'.resourceLink('js/zxcvbn.js').'"></script>';
+	print "<script src=\"".resourceLink('js/register.js')."\"></script>
+			<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 }
 
 if($havebotdetect) {
-	echo '<link type="text/css" rel="Stylesheet" href='.CaptchaUrls::LayoutStylesheetUrl().' />';
+	print "<link type=\"text/css\" rel=\"Stylesheet\" href=".CaptchaUrls::LayoutStylesheetUrl()." />";
 }
 
-echo "<form action=\"".htmlentities(pageLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
+print "<form action=\"".htmlentities(pageLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
 	<table class=\"outline margin form form_register\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">
-				Register
+				".__("Register")."
 			</th>
 		</tr>
 		<tr>
 			<td class=\"cell2 center\" style=\"width:20%;\">
-				User name
+				<label for=\"un\">".__("User name")."</label>
 			</td>
 			<td class=\"cell0\">
 				<input type=\"text\" id=\"un\" name=\"name\" maxlength=20 size=24 autocorrect=off autocapitalize=words value=\"".htmlspecialchars($http->post('name'))."\" class=\"required\">
@@ -234,8 +234,8 @@ echo "<form action=\"".htmlentities(pageLink("register"))."\" method=\"post\" on
 			<td class=\"cell1\">
 				<input type=\"password\" id=\"pw\" name=\"pass\" size=24 class=\"required\"> | Confirm: <input type=\"password\" id=\"pw2\" name=\"pass2\" size=24 class=\"required\">";
 if(Settings::get('PassChecker'))
-	echo "<br><a href=\"javascript:void(0)\" onclick=\"create_password();\"><button>Generate Password</button></a>: <noscript>Sorry, but Javascript is required for this function to work</noscript> <span id=\"password\"></span>";
-echo "
+	print "<br><a href=\"javascript:void(0)\" onclick=\"create_password();\"><button>Generate Password</button></a>: <noscript>Sorry, but Javascript is required for this function to work</noscript> <span id=\"password\"></span>";
+print "
 				</td>
 		</tr>
 		<tr>
@@ -245,8 +245,8 @@ echo "
 			<td class=\"cell0\">
 				<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($http->post('email'))."\" maxlength=\"60\" size=24";
 if (Settings::get('emailVerification'))
-	echo "class=\"required\"";
-echo "
+	print "class=\"required\"";
+print "
 				>
 			</td>
 		</tr>
@@ -268,7 +268,7 @@ echo "
 		</tr>";
 
 if($haveSecurimage) {
-	echo "
+	print "
 		<tr>
 			<td class=\"cell2\">
 				".__("Captcha")."
@@ -280,7 +280,7 @@ if($haveSecurimage) {
 			</td>
 		</tr>";
 } else if($havebotdetect) {
-		echo "
+		print "
 		<tr>
 			<td class=\"cell2\">
 				".__("Captcha")."
@@ -291,14 +291,14 @@ if($haveSecurimage) {
 			$ExampleCaptcha->UserInputID = "CaptchaCode";
 			echo $ExampleCaptcha->Html(); 
 
-			echo "
+			print "
 				<input name=\"CaptchaCode\" id=\"CaptchaCode\" type=\"text\" />
 			</td>
 		</tr>";
 }
 
 if(isset($math)) {
-	echo "
+	print "
 		<tr>
 			<td class=\"cell2\">
 				".__("Math question")."
@@ -311,7 +311,7 @@ if(isset($math)) {
 }
 
 if($RegisterWord) {
-	echo "
+	print "
 		<tr>
 			<td class=\"cell2\">
 				".__("Registration Key")."
@@ -324,7 +324,7 @@ if($RegisterWord) {
 		</tr>";
 }
 
-echo "
+print "
 		<tr>
 			<td class=\"cell2\"></td>
 			<td class=\"cell0\">
@@ -342,11 +342,11 @@ echo "
 			<td colspan=\"2\" class=\"cell0 smallFonts\" style=\"padding:0.7em;\">";
 
 if (Settings::get('emailVerification'))
-	echo "Specifying an email address is a requirement. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
+	print "Specifying an email address is a requirement. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 else
-	echo "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
+	print "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 
-echo "		</td>
+print "		</td>
 		</tr>
 		<tr>
 			<td colspan=\"2\" class=\"cell1 smallFonts\" style=\"padding:0.7em;\">

@@ -13,7 +13,7 @@ define('BOARD_ROOT', dirname(__DIR__).'/');
 define('DATA_DIR', BOARD_ROOT.'data/');
 define('LIB_DIR', BOARD_ROOT.'lib/');
 
-$boardroot = str_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
+$boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
 
 define('URL_ROOT', $boardroot);
 define('DATA_URL', URL_ROOT.'data/');
@@ -132,7 +132,7 @@ require_once(__DIR__."/layout.php");
 
 //Classes
 
-require_once(__DIR__."/smarty/libs/Smarty.class.php");
+require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
