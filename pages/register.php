@@ -385,11 +385,11 @@ function IsProxy() {
 	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
 		return true;
 
-	$result = QueryURL('http://api.stopforumspam.com/api?ip='.urlencode($_SERVER['REMOTE_ADDR']).'&email='$cemail);
-	if (!$result)
-		return false;
+	//SFS checker
+	$page = file_get_contents('http://api.stopforumspam.org/api?ip='.$_SERVER['REMOTE_ADDR'].'&json&notorexit');
+	$a = json_decode($page);
 
-	if (stripos($result, '<appears>yes</appears>') !== FALSE)
+	if($a->ip->torexit == 1)
 		return true;
 
 	return false;
