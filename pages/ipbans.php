@@ -85,13 +85,13 @@ print "
 			</td>
 		</tr>
 		<tr>
-			<td class=\"cell2\">
-				".__("Whitelisted")."
-			</td>
-			<td class=\"cell1\">
-				<input type=\"checkbox\" name=\"whitelisted\" size=\"13\" maxlength=\"13\" />
-			</td>
-		</tr>
+            <td class=\"cell2\">
+                ".__("Whitelisted")."
+            </td>
+            <td class=\"cell1\">
+                <input type=\"checkbox\" name=\"whitelisted\" size=\"13\" maxlength=\"13\" />
+            </td>
+        </tr>
 		<tr class=\"cell2\">
 			<td></td>
 			<td>

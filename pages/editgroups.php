@@ -17,7 +17,7 @@ $gdisplays = [
 	1 => __('Staff')
 ];
 
-if (!$http->post('saveaction')) {
+if (!$_POST['saveaction']) {
 	$groups = Query("SELECT * FROM {usergroups} WHERE rank<={0} ORDER BY type, rank", $loguserGroup['rank']);
 	$gdata = [];
 
@@ -32,8 +32,8 @@ if (!$http->post('saveaction')) {
 	RenderTemplate('grouplist', ['groups' => $gdata]);
 }
 
-if (isset($http->get('id'))) {
-	$gid = (int)$http->get('id');
+if (isset($_GET['id'])) {
+	$gid = (int)$_GET['id'];
 	$group = Fetch(Query("SELECT * FROM {usergroups} WHERE id={0}", $gid));
 	if (!$group)
 		Kill(__('Invalid group ID.'));
@@ -51,12 +51,13 @@ if (isset($http->get('id'))) {
 }
 
 $error = '';
-if ($http->post('saveaction')) {
-	if ($http->post('token') !== $loguser['token'])
+if ($_POST['saveaction']) {
+	if ($_POST['token'] !== $loguser['token'])
 		Kill(__('No.'));
 
 	// save shit
-} else
+}
+else
 	$_POST = $group;
 
 if ($error)
@@ -71,34 +72,34 @@ echo '
 			<tr class="header1"><th colspan="2">'.__('Editing group ').htmlspecialchars($group['title']).'</th></tr>
 			<tr>
 				<td class="cell2 center" style="width:150px;">'.__('Title').'</td>
-				<td class="cell1"><input type="text" name="title" value="'.htmlspecialchars($http->post('title')).'" style="width:98%;" maxlength="256"></td>
+				<td class="cell1"><input type="text" name="title" value="'.htmlspecialchars($_POST['title']).'" style="width:98%;" maxlength="256"></td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Rank').'</td>
 				<td class="cell1">
-					<input type="text" name="rank" value="'.htmlspecialchars($http->post('rank')).'" size="8" maxlength="8">
+					<input type="text" name="rank" value="'.htmlspecialchars($_POST['rank']).'" size="8" maxlength="8">
 					'.($canPromoteHigher ? '' : 'Maximum value: '.$loguserGroup['rank']).'
 				</td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Type').'</td>
-				<td class="cell1">'.makeSelect('type', $http->post('type'), $gtypes).'</td>
+				<td class="cell1">'.makeSelect('type', $_POST['type'], $gtypes).'</td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Display').'</td>
-				<td class="cell1">'.makeSelect('display', $http->post('display'), $gdisplays).'</td>
+				<td class="cell1">'.makeSelect('display', $_POST['display'], $gdisplays).'</td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Male name color').'</td>
-				<td class="cell1"><input type="text" name="color_male" value="'.htmlspecialchars($http->post('color_male')).'" size="8" maxlength="8"></td>
+				<td class="cell1"><input type="text" name="color_male" value="'.htmlspecialchars($_POST['color_male']).'" size="8" maxlength="8"></td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Female name color').'</td>
-				<td class="cell1"><input type="text" name="color_female" value="'.htmlspecialchars($http->post('color_female')).'" size="8" maxlength="8"></td>
+				<td class="cell1"><input type="text" name="color_female" value="'.htmlspecialchars($_POST['color_female']).'" size="8" maxlength="8"></td>
 			</tr>
 			<tr>
 				<td class="cell2 center">'.__('Unspec name color').'</td>
-				<td class="cell1"><input type="text" name="color_unspec" value="'.htmlspecialchars($http->post('color_unspec')).'" size="8" maxlength="8"></td>
+				<td class="cell1"><input type="text" name="color_unspec" value="'.htmlspecialchars($_POST['color_unspec']).'" size="8" maxlength="8"></td>
 			</tr>
 		</table>
 		<table class="outline margin">
@@ -170,14 +171,65 @@ function makeSelect($fieldName, $checkedIndex, $choicesList, $extras = "")
 	return $result;
 }
 
-function PermSwitch($field, $val) {
+/*function PermSelect($field, $cats)
+{
+	global $permCats, $permDescs;
+	static $allperms = null;
+	if (!$allperms)
+	{
+		$allperms = array();
+		
+		foreach ($permDescs as $id=>$desc)
+		{
+			$pcat = substr($id,0,strpos($id,'.'));
+			if (!in_array($pcat, $cats)) continue;
+			$allperms[$pcat][$id] = $desc;
+		}
+		
+		foreach ($allperms as $k=>$v)
+			asort($allperms[$k]);
+	}
+	
+	$ret = '
+					<select name="'.$field.'">';
+	
+	$lastcat = -1;
+	foreach ($allperms as $cat=>$perms)
+	{
+		if ($lastcat != -1)
+		{
+			$ret .= '
+						</optgroup>';
+			$lastcat = $cat;
+		}
+		
+		$ret .= '
+						<optgroup label="'.htmlspecialchars($permCats[$cat]).'">';
+						
+		foreach ($perms as $id=>$desc)
+		{
+			$ret .= '
+							<option value="'.htmlspecialchars(str_replace('.','_',$id)).'">'.htmlspecialchars($desc).'</option>';
+		}
+	}
+	
+	$ret .= '
+						</optgroup>
+					</select>';
+	
+	return $ret;
+}*/
+
+function PermSwitch($field, $val)
+{
 	return '
 					<label><input type="radio" name="'.$field.'" value="-1"'.(($val==-1) ? ' checked="checked"':'').'> '.__('Deny').'</label>
 					<label><input type="radio" name="'.$field.'" value="0"'.(($val==0) ? ' checked="checked"':'').'> '.__('Neutral').'</label>
 					<label><input type="radio" name="'.$field.'" value="1"'.(($val==1) ? ' checked="checked"':'').'> '.__('Allow').'</label>';
 }
 
-function PermTable($cat) {
+function PermTable($cat)
+{
 	global $permlist, $permCats, $permDescs;
 	
 	echo '
@@ -185,7 +237,8 @@ function PermTable($cat) {
 				<th colspan="2">'.htmlspecialchars($permCats[$cat]).'</th>
 			</tr>';
 	
-	foreach ($permDescs[$cat] as $permid=>$permname) {
+	foreach ($permDescs[$cat] as $permid=>$permname)
+	{
 		if ($permid == 'forum.viewforum') continue;
 		
 		$pkey = 'perm_'.str_replace('.', '_', $permid);
@@ -193,15 +246,17 @@ function PermTable($cat) {
 		echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>
-				<td class="cell1">'.PermSwitch($pkey, isset($http->post($pkey)) ? $http->post($pkey) : $permlist[$permid]).'</td>
+				<td class="cell1">'.PermSwitch($pkey, isset($_POST[$pkey]) ? $_POST[$pkey] : $permlist[$permid]).'</td>
 			</tr>';
 	}
 }
 
-function ForumPermTable($fid, $fpl=[]) {
+function ForumPermTable($fid, $fpl=[])
+{
 	global $permCats, $permDescs;
 
-	if (!$fid) {
+	if (!$fid)
+	{
 		echo '
 			<tr class="header0">
 				<th colspan="2">'.__('Add permission set').'</th>
@@ -213,7 +268,9 @@ function ForumPermTable($fid, $fpl=[]) {
 			<tr class="header0">
 				<th colspan="2" style="height:6px;"></th>
 			</tr>';
-	} else {
+	}
+	else
+	{
 		echo '
 			<tr class="header0">
 				<th colspan="2">'.htmlspecialchars($fpl['_ftitle']).'</th>
@@ -223,8 +280,10 @@ function ForumPermTable($fid, $fpl=[]) {
 
 	$lastcat = -1;
 	$pd = ['forum' => $permDescs['forum'], 'mod' => $permDescs['mod']];
-	foreach ($pd as $cat=>$perms) {
-		if ($lastcat != $cat) {
+	foreach ($pd as $cat=>$perms)
+	{
+		if ($lastcat != $cat)
+		{
 			if ($lastcat != -1)
 				echo '
 			<tr class="header0">
@@ -233,18 +292,20 @@ function ForumPermTable($fid, $fpl=[]) {
 			$lastcat = $cat;
 		}
 
-		foreach ($perms as $permid=>$permname) {
+		foreach ($perms as $permid=>$permname)
+		{
 			$pkey = 'fperm_'.$fid.'_'.str_replace('.', '_', $permid);
 		
 			echo '
 			<tr>
 				<td class="cell2 center" style="width: 250px;">'.htmlspecialchars($permname).'</td>
-				<td class="cell1">'.PermSwitch($pkey, isset($http->post($pkey)) ? $http->post($pkey) : $fpl[$permid]).'</td>
+				<td class="cell1">'.PermSwitch($pkey, isset($_POST[$pkey]) ? $_POST[$pkey] : $fpl[$permid]).'</td>
 			</tr>';
 		}
 	}
 
-	if (!$fid) {
+	if (!$fid)
+	{
 		echo '
 			<tr class="header0">
 				<th colspan="2" style="height:6px;"></th>

@@ -10,16 +10,16 @@ if(Settings::get('PassChecker')) {
 if(!$loguserid)
 	Kill(__("You must be logged in to edit your profile."));
 
-if (isset($http->post('action')) && $loguser['token'] != $http->post('key'))
+if (isset($_POST['action']) && $loguser['token'] != $_POST['key'])
 	Kill(__("No."));
 
-if(isset($http->post('editusermode')) && $http->post('editusermode') != 0)
-	$http->get('id') = $http->post('userid');
+if(isset($_POST['editusermode']) && $_POST['editusermode'] != 0)
+	$_GET['id'] = $_POST['userid'];
 
 $editUserMode = false;
 
 if (HasPermission('admin.editusers')) {
-	$userid = (isset($http->get('id'))) ? (int)$http->get('id') : $loguserid;
+	$userid = (isset($_GET['id'])) ? (int)$_GET['id'] : $loguserid;
 	$editUserMode = true;
 } else {
 	CheckPermission('user.editprofile');
@@ -74,7 +74,7 @@ $epCategories = [];
 $epFields = [];
 
 
-// GENERAL TAB
+// EDITPROFILE TAB -- GENERAL -------------------------------------------------
 AddPage('general', __('General'));
 
 AddCategory('general', 'appearance', __('Appearance'));
@@ -111,7 +111,7 @@ $blockall = $pltype ? __('Hide post layouts') : __('Hide signatures');
 AddField('general', 'options', 'blocklayouts', $blockall, 'checkbox');
 
 
-// PERSONAL TAB
+// EDITPROFILE TAB -- PERSONAL ------------------------------------------------
 AddPage('personal', __('Personal'));
 
 AddCategory('personal', 'personal', __('Personal information'));
@@ -133,7 +133,7 @@ AddField('personal', 'contact', 'homepageurl', __('Homepage URL'), 'text', ['wid
 AddField('personal', 'contact', 'homepagename', __('Homepage name'), 'text', ['width'=>60, 'length'=>60]);
 
 
-// ACCOUNT TAB
+// EDITPROFILE TAB -- ACCOUNT -------------------------------------------------
 AddPage('account', __('Account settings'));
 
 AddCategory('account', 'confirm', __('Password confirmation'));
@@ -157,7 +157,8 @@ AddField('account', 'email', 'email', __('Email address'), 'email', ['width'=>24
 AddField('account', 'email', 'showemail', __('Make email address public'), 'checkbox');
 
 
-if ($editUserMode) {
+if ($editUserMode)
+{
 	AddCategory('account', 'admin', __('Administrative stuff'));
 
 	if ($isroot)
@@ -177,8 +178,8 @@ if ($editUserMode) {
 }
 
 
-// POST LAYOUT TAB
-if ($editUserMode || HasPermission('user.editpostlayout')) {
+// EDITPROFILE TAB -- LAYOUT --------------------------------------------------
+if (file_exists(BOARD_ROOT.'/plugins/board/enabled.txt') && ($editUserMode || HasPermission('user.editpostlayout'))) {
 	$pltext = $pltype ? __('Post layout') : __('Signature');
 	AddPage('layout', $pltext);
 
@@ -195,7 +196,7 @@ if ($editUserMode || HasPermission('user.editpostlayout')) {
 		AddField('layout', 'postlayout', 'fulllayout', __('Apply layout to whole post box'), 'checkbox');
 }
 
-// THEME TAB
+// EDITPROFILE TAB -- THEME ---------------------------------------------------
 AddPage('theme', __('Theme'));
 
 AddCategory('theme', 'theme', __('Theme'));
@@ -204,24 +205,26 @@ AddField('theme', 'theme', 'theme', '', 'themeselector');
 
 
 //Allow plugins to add their own fields
-$bucket = "editprofile"; include(URL_ROOT."lib/pluginloader.php");
+$bucket = "editprofile"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
-$http->post('actionsave') = (isset($http->post('actionsave')) ? $http->post('actionsave') : '');
+$_POST['actionsave'] = (isset($_POST['actionsave']) ? $_POST['actionsave'] : '');
 
-// QUERY
+/* QUERY PART
+ * ----------
+ */
 
 $failed = false;
 
-if($http->post('actionsave')) {
+if($_POST['actionsave']) {
 	// catch spamvertisers early
 	if ((time() - $user['regdate']) < 300 && preg_match('@^\w+\d+$@', $user['name'])) {
-		$lolbio = strtolower($http->post('bio'));
+		$lolbio = strtolower($_POST['bio']);
 
 		if ((substr($lolbio,0,7) == 'http://'
 				|| substr($lolbio,0,12) == '[url]http://'
 				|| substr($lolbio,0,12) == '[url=http://')
-			&& ((substr($http->post('email'),0,strlen($user['name'])) == $user['name'])
+			&& ((substr($_POST['email'],0,strlen($user['name'])) == $user['name'])
 				|| (substr($user['name'],0,6) == 'iphone')))
 		{
 			Query("UPDATE {users} SET primarygroup={0}, title={1} WHERE id={2}",
@@ -234,23 +237,15 @@ if($http->post('actionsave')) {
 
 	$passwordEntered = false;
 
-	if($http->post('currpassword') != "") {
-		if (password_verify($http->post('currpassword'), $loguser['password']))
+	if($_POST['currpassword'] != "") {
+		if (password_verify($_POST['currpassword'], $loguser['password']))
 			$passwordEntered = true;
 		else {
-			$sha = doHash($http->post('currpassword').SALT.$loguser['pss']);
-			if ($loguser['password'] == $sha) {
-				$password = password_hash($http->post("currpassword"), PASSWORD_DEFAULT);
+			Alert(__("Invalid password"));
+			$failed = true;
+			$selectedTab = "account";
 
-				Query("UPDATE {users} SET password = {0} WHERE id={1}", $loguser['password'], $loguserid);
-				$passwordEntered = true;
-			} else {
-				Alert(__("Invalid password"));
-				$failed = true;
-				$selectedTab = "account";
-
-				$epFields['account.confirm']['currpassword']['fail'] = true;
-			}
+			$epFields['account.confirm']['currpassword']['fail'] = true;
 		}
 	}
 
@@ -281,19 +276,19 @@ if($http->post('actionsave')) {
 				case "text":
 				case "textarea":
 				case 'themeselector':
-					$sets[] = $field." = '".SqlEscape(utfmb4String($http->post($field)))."'";
+					$sets[] = $field." = '".SqlEscape(utfmb4String($_POST[$field]))."'";
 					break;
 				case "password":
-					if($http->post($field))
-						$sets[] = $field." = '".SqlEscape($http->post($field))."'";
+					if($_POST[$field])
+						$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
 					break;
 				case "select":
-					$val = $http->post($field);
+					$val = $_POST[$field];
 					if (array_key_exists($val, $item['options']))
 						$sets[] = $field." = '".sqlEscape($val)."'";
 					break;
 				case "number":
-					$num = (int)$http->post($field);
+					$num = (int)$_POST[$field];
 					if($num < 1)
 						$num = $item['min'];
 					elseif($num > $item['max'])
@@ -301,37 +296,38 @@ if($http->post('actionsave')) {
 					$sets[] = $field." = ".$num;
 					break;
 				case "datetime":
-					if($http->post($item['presetname']) != -1)
-						$http->post($field) = $http->post($item['presetname']);
-					$sets[] = $field." = '".SqlEscape($http->post($field))."'";
+					if($_POST[$item['presetname']] != -1)
+						$_POST[$field] = $_POST[$item['presetname']];
+					$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
 					break;
 				case "checkbox":
-					$val = (int)($http->post($field) == "on");
+					$val = (int)($_POST[$field] == "on");
 					if($item['negative'])
-						$val = (int)($http->post($field) != "on");
+						$val = (int)($_POST[$field] != "on");
 					$sets[] = $field." = ".$val;
 					break;
 				case "radiogroup":
-					if (array_key_exists($http->post($field), $item['options']))
-						$sets[] = $field." = '".SqlEscape($http->post($field))."'";
+					if (array_key_exists($_POST[$field], $item['options']))
+						$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
 					break;
 				case "birthday":
-					if($http->post($field.'M') && $http->post($field.'D') && $http->post($field.'Y')) {
-						$val = @mktime(0, 0, 0, (int)$http->post($field.'M'), (int)$http->post($field.'D'), (int)$http->post($field.'Y'));
+					if($_POST[$field.'M'] && $_POST[$field.'D'] && $_POST[$field.'Y']) {
+						$val = @mktime(0, 0, 0, (int)$_POST[$field.'M'], (int)$_POST[$field.'D'], (int)$_POST[$field.'Y']);
 						if($val > time())
 							$val = 0;
-					} else
+					}
+					else
 						$val = 0;
 					$sets[] = $field." = '".$val."'";
 					break;
 				case "timezone":
-					$val = ((int)$http->post($field.'H') * 3600) + ((int)$http->post($field.'M') * 60) * ((int)$http->post($field.'H') < 0 ? -1 : 1);
+					$val = ((int)$_POST[$field.'H'] * 3600) + ((int)$_POST[$field.'M'] * 60) * ((int)$_POST[$field.'H'] < 0 ? -1 : 1);
 					$sets[] = $field." = ".$val;
 					break;
 
 				case "displaypic":
 				case "minipic":
-					if($http->post('remove'.$field)) {
+					if($_POST['remove'.$field]) {
 						$res = true;
 						$sets[] = $field." = ''";
 					} else {
@@ -364,13 +360,13 @@ if($http->post('actionsave')) {
 					break;
 
 				case "email":
-					$sets[] = $field." = '".SqlEscape($http->post($field))."'";
+					$sets[] = $field." = '".SqlEscape($_POST[$field])."'";
 					break;
 
 				case "bitmask":
 					$val = 0;
-					if ($http->post($field)) {
-						foreach ($http->post($field) as $bit)
+					if ($_POST[$field]) {
+						foreach ($_POST[$field] as $bit)
 							if ($bit && array_key_exists($bit, $item['options']))
 								$val |= $bit;
 					}
@@ -383,16 +379,16 @@ if($http->post('actionsave')) {
 	}
 
 	//Force theme names to be alphanumeric to avoid possible directory traversal exploits ~Dirbaio
-	if(preg_match("/^[a-zA-Z0-9_]+$/", $http->post('theme')))
-		$sets[] = "theme = '".SqlEscape($http->post('theme'))."'";
+	if(preg_match("/^[a-zA-Z0-9_]+$/", $_POST['theme']))
+		$sets[] = "theme = '".SqlEscape($_POST['theme'])."'";
 
 	$sets[] = "pluginsettings = '".SqlEscape(serialize($pluginSettings))."'";
-	if ($editUserMode && ((int)$http->post('primarygroup') != $user['primarygroup'] || $http->post('dopermaban')))  {
+	if ($editUserMode && ((int)$_POST['primarygroup'] != $user['primarygroup'] || $_POST['dopermaban']))  {
 		$sets[] = "tempbantime = 0";
-		if ((int)$http->post('primarygroup') != $user['primarygroup'])
+		if ((int)$_POST['primarygroup'] != $user['primarygroup'])
 			$sets[] = "tempbanpl = ".(int)$user['primarygroup'];
 
-		Report($user['name']."'s primary group was changed from ".$groups[$user['primarygroup']]." to ".$groups[(int)$http->post('primarygroup')]);
+		Report($user['name']."'s primary group was changed from ".$groups[$user['primarygroup']]." to ".$groups[(int)$_POST['primarygroup']]);
 	}
 
 	$query .= join($sets, ", ")." WHERE id = ".$userid;
@@ -406,7 +402,7 @@ if($http->post('actionsave')) {
 			$his = HisHer($user['sex']);
 		Report("[b]".$loguser['name']."[/] edited ".$his." profile. -> [g]#HERE#?uid=".$userid, 1);
 
-		die(header("Location: ".actionLink("profile", $userid, '', $http->post('name')?:$user['name'])));
+		die(header("Location: ".actionLink("profile", $userid, '', $_POST['name']?:$user['name'])));
 	}
 }
 
@@ -423,13 +419,13 @@ foreach ($epFields as $catid => $cfields) {
 				$item['value'] = $user[$field];
 		} else {
 			if ($item['type'] == 'checkbox')
-				$item['value'] = ($http->post($field) == 'on') ^ $item['negative'];
+				$item['value'] = ($_POST[$field] == 'on') ^ $item['negative'];
 			elseif ($item['type'] == 'timezone')
-				$item['value'] = ((int)$http->post($field.'H') * 3600) + ((int)$http->post($field.'M') * 60) * ((int)$http->post($field.'H') < 0 ? -1 : 1);
+				$item['value'] = ((int)$_POST[$field.'H'] * 3600) + ((int)$_POST[$field.'M'] * 60) * ((int)$_POST[$field.'H'] < 0 ? -1 : 1);
 			elseif ($item['type'] == 'birthday')
-				$item['value'] = @mktime(0, 0, 0, (int)$http->post($field.'M'), (int)$http->post($field.'D'), (int)$http->post($field.'Y'));
+				$item['value'] = @mktime(0, 0, 0, (int)$_POST[$field.'M'], (int)$_POST[$field.'D'], (int)$_POST[$field.'Y']);
 			else
-				$item['value'] = $http->post($field);
+				$item['value'] = $_POST[$field];
 		}
 
 		$epFields[$catid][$field] = $item;
@@ -438,7 +434,7 @@ foreach ($epFields as $catid => $cfields) {
 
 
 if($failed)
-	$loguser['theme'] = $http->post('theme');
+	$loguser['theme'] = $_POST['theme'];
 
 
 function dummycallback($field, $item) {
@@ -502,7 +498,7 @@ function HandlePicture($field, $type, &$usepic) {
 			//Just copy it over.
 			copy($tempFile, DATA_DIR.$targetFile);
 		} else {
-			//Resample it!
+			//Resample that mother!
 			$ratio = $width / $height;
 			if($ratio > 1) {
 				$targetImage = imagecreatetruecolor($maxDim, floor($maxDim / $ratio));
@@ -534,16 +530,16 @@ function HandlePicture($field, $type, &$usepic) {
 // Special field-specific callbacks
 function HandlePassword($field, $item) {
 	global $sets, $user, $loguser, $loguserid;
-	if($http->post($field) != "" && $http->post('repeat'.$field) != "" && $http->post('repeat'.$field) !== $http->post($field)) {
+	if($_POST[$field] != "" && $_POST['repeat'.$field] != "" && $_POST['repeat'.$field] !== $_POST[$field]) {
 		return __("To change your password, you must type it twice without error.");
 	}
 
-	if($http->post($field) != "" && $http->post('repeat'.$field) == "")
-		$http->post($field) = "";
+	if($_POST[$field] != "" && $_POST['repeat'.$field] == "")
+		$_POST[$field] = "";
 
-	if($http->post($field)) {
-		$pwd = $http->post($field);
-	$http->post($field) = password_hash($http->post($field), PASSWORD_DEFAULT);
+	if($_POST[$field]) {
+		$pwd = $_POST[$field];
+		$_POST[$field] = password_hash($_POST[$field], PASSWORD_DEFAULT);
 
 		//Now logout all the sessions that aren't this one, for security.
 		Query("DELETE FROM {sessions} WHERE id != {0} and user = {1}", doHash($_COOKIE['logsession'].SALT), $user['id']);
@@ -554,14 +550,15 @@ function HandlePassword($field, $item) {
 
 function HandleDisplayname($field, $item) {
 	global $user;
-	if(IsReallyEmpty($http->post($field)) || $http->post($field) == $user['name']) {
+	if(IsReallyEmpty($_POST[$field]) || $_POST[$field] == $user['name']) {
 		// unset the display name if it's really empty or the same as the login name.
-		$http->post($field) = "";
+		$_POST[$field] = "";
 	} else {
-		$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $http->post($field));
+		$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $_POST[$field]);
 		if($dispCheck) {
-			return format(__("The display name you entered, \"{0}\", is already taken."), SqlEscape($http->post($field)));
-		} else if($http->post($field) !== ($http->post($field) = preg_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
+
+			return format(__("The display name you entered, \"{0}\", is already taken."), SqlEscape($_POST[$field]));
+		} else if($_POST[$field] !== ($_POST[$field] = preg_replace('/(?! )[\pC\pZ]/u', '', $_POST[$field]))) {
 			return __("The display name you entered cannot contain control characters.");
 		}
 	}
@@ -569,19 +566,22 @@ function HandleDisplayname($field, $item) {
 
 function HandleUsername($field, $item) {
 	global $user;
-	if(IsReallyEmpty($http->post($field)))
-		$http->post($field) = $user[$field];
+	if(IsReallyEmpty($_POST[$field]))
+		$_POST[$field] = $user[$field];
 
-	$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $http->post($field));
+	$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $_POST[$field]);
 	if($dispCheck) {
-		return format(__("The login name you entered, \"{0}\", is already taken."), SqlEscape($http->post($field)));
-	} else if($http->post($field) !== ($http->post($field) = preg_replace('/(?! )[\pC\pZ]/u', '', $http->post($field)))) {
+
+		return format(__("The login name you entered, \"{0}\", is already taken."), SqlEscape($_POST[$field]));
+	} else if($_POST[$field] !== ($_POST[$field] = preg_replace('/(?! )[\pC\pZ]/u', '', $_POST[$field]))) {
 		return __("The login name you entered cannot contain control characters.");
 	}
 }
 
 
-// EDITOR PART
+/* EDITOR PART
+ * -----------
+ */
 
 //Dirbaio: Rewrote this so that it scans the themes dir.
 $dir = "themes/";
@@ -610,7 +610,7 @@ if (is_dir($dir)) {
 			$themes[$file]['num'] = 0;
 	}
 		closedir($dh);
-	}
+    }
 }
 
 $countdata = Query("SELECT theme, COUNT(id) num FROM {users} GROUP BY theme");
@@ -695,7 +695,7 @@ foreach($themes as $themeKey => $themeData) {
 if(!isset($selectedTab)) {
 	$selectedTab = "general";
 	foreach($epPages as $id => $name) {
-		if(isset($http->get($id))) {
+		if(isset($_GET[$id])) {
 			$selectedTab = $id;
 			break;
 		}
@@ -825,7 +825,7 @@ foreach ($epFields as $catid => $cfields) {
 
 
 print "
-	<form action=\"".htmlentities(pageLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"actionsave.disabled = true; return true;\">
+	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"actionsave.disabled = true; return true;\">
 ";
 
 RenderTemplate('form_editprofile', [

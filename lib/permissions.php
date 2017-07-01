@@ -71,19 +71,23 @@ function LoadGroups() {
 	//Language people told me its easier to code in so I just added it in.
 
 	if (isset($user)) {
-		$myrank = $loguserGroup['rank'];										//My Rank
-		$targetrank = $usergroups[$user['primarygroup']]['rank'];				//The Targets Rank
+		$myrank = $loguserGroup['rank'];														//My Rank
+		$targetrank = $usergroups[$user['primarygroup']]['rank'];					//The Targets Rank
 		$Iamroot = ($loguserGroup['id'] == Settings::get('rootGroup'));			//I am Root/Owner
 		$Iamowner = ($loguserGroup['id'] == Settings::get('rootGroup'));		//I am Root/Owner
-		$Iambanned = ($loguserGroup['id'] == Settings::get('bannedGroup'));		//I am banned
-		$myGroup = $usergroups[$loguser['primarygroup']];						//My Group
-		$Iamloggedin = $loguser["id"];											//I am logged in
-		$Iamnotloggedin = !$loguser["id"];										//I am not logged in
+		$Iambanned = ($loguserGroup['id'] == Settings::get('bannedGroup'));//I am banned
+		$myGroup = $usergroups[$loguser['primarygroup']];							//My Group
+		$Iamloggedin = $loguser["id"];															//I am logged in
+		$Iamnotloggedin = !$loguser["id"];													//I am not logged in
 	}
 }
 
 function HasPermission($perm, $arg=0, $guest=false) {
-	global $guestPermset, $loguserPermset;
+	global $guestPermset, $loguserPermset, $loguserid;
+
+	// Root user always has permission, no matter what,
+	if ($loguserid == 1)
+		return true;
 
 	$permset = $guest ? $guestPermset : $loguserPermset;
 

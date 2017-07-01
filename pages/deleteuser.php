@@ -4,20 +4,21 @@ $title = __("Delete the user");
 
 makeCrumbs([actionlink('deleteuser') => __("Delete User")]);
 
-/*	Make 16 checks:
+/*	Make 18 checks:
 	1) If the user can edit his own profile: you don't want to be a hypocrite. This one is checked twice, with one of them being a message, while the other is displaying the page.
 	2) If the user can edit other profiles. This is also checked twice, with one of them displaying the page and the other is a message.
 	3) If the user has the delete permission set to on. 
 	4) If the user has the ban permission set to on: You need to ban the user in order to delete, so it logical that you need that permission on. This is checked twice, one for the message and one to display the delete page. 
-	5) If the user trying to delete another user is even logged in.
-	6) If the user being deleted even exists.
-	7) If the user trying to delete is banned and all the nessesary permissions are deactivated (it should normally be deactivated, but who knows) :P: Just because you're banned doesn't mean you have to go nuts and delete users. It'll be a strongly worded message to put some sence into them. Not like the end user will get some sence due to that user getting banned.
-	8) If the user trying to delete has a lower rank than the one being deleted. This is checked 4 times, twice being the message, while the other two is displaying the nuke page.
+	5) If the user is above rank ID -1, it'll block it. It'll only delete the user if the user is below rank ID 0. This one is checked four times, twice being a message and the other two being to display the page. You'll need to ban the user before you delete him.
+	6) If the user trying to delete another user is even logged in.
+	7) If the user being deleted even exists.
+	8) If the user trying to delete is banned and all the nessesary permissions are deactivated (it should normally be deactivated, but who knows) :P: Just because you're banned doesn't mean you have to go nuts and delete users. It'll be a strongly worded message to put some sence into them. Not like the end user will get some sence due to that user getting banned.
+	9) If the user trying to delete has a lower rank than the one being deleted. This is checked 4 times, twice being the message, while the other two is displaying the nuke page.
 
 	Yes, I know, its a lot of checks, but you have to be secure. Otherwise, you'll have a destroyed board: The delete feature is very powerfull. If ever someone got a hold of the nuke plugin pre-security updates with the nuke permission, your board can be done for, especially considering that recalc is only allowed to be ran by owner. (And no, I'm not going to make it being ran by permissions, at least, not right now.) I'm not sure how MyBB does it (and I don't want to know; it doesn't interest me.).
 	*/
 
-$uid = (int)$http->get("id");
+$uid = (int)$_GET["id"];
 
 $user = fetch(query("select * from {users} where id={0}", $uid));
 
@@ -30,7 +31,7 @@ if (!$userdeleteperms && $loguser['banned'])
 	Kill(__("You may not use the user nuke due to you being banned. Look, just because your banned doesn't mean you have to ruin it for everyone else who's in your banned user club. Try improving, instead of trying to get revenge on the staff like an immature freak."));
 
 if (!HasPermission('user.editprofile'))
-	Kill(__("Don't be such a hypocrite. Before you decide to delete other users, how about check yourself?"));
+	Kill(__("Don't be such a hypocrite. Before you decide to delete other users, how about check yourself."));
 
 if (!HasPermission('admin.editusers'))
 	Kill(__("The deleting function is part of the editing other users function."));
@@ -41,25 +42,27 @@ if (!HasPermission('admin.banusers'))
 if(!$user)
 	Kill(__("You cannot delete a user that doesn't exist."));
 
-if ($targetrank >= $myrank || $myrank =< $targetrank)
+if ($targetrank >= $myrank)
 	Kill(__("You may not delete a user whose level is equal to or above yours."));
+
+if($myrank =< $targetrank)
+	Kill(__("You may not delete a user whose level is equal to or above yours."));
+
+if($user["primarygroup"] > 0)
+	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
+
+if($user["primarygroup"] < 1)
+	Kill(__('You can\'t delete a staff member or a normal user. Ban him/her first.'));
 
 if($user['tempbantime'])
 	Kill(__('You can\'t delete a temporarely banned user.'))
 
-if ($userdeleteperms && $myrank >= $targetrank && $targetrank =< $myrank) {
+if ($userdeleteperms && $user["primarygroup"] < 1 && $user["primarygroup"] > 0 && $myrank >= $targetrank && $targetrank =< $myrank) {
 	$passwordFailed = false;
 
-	if(isset($http->post("currpassword"))) {
-		$sha = doHash($http->post('currpassword').SALT.$loguser['pss']);
-		if(isValidPassword($http->post("currpassword"), $loguser['password'], $loguserid) || $loguser['password'] == $sha) {
-
-			//Converts Deleter's password to the new hashing method if its old (Unrelated to the nuke, but it'll be better to do this...)
-			if ($loguser['password'] == $sha) {
-				$password = password_hash($http->post("currpassword"), PASSWORD_DEFAULT);
-
-				Query("UPDATE {users} SET password = {0} WHERE id={1}", $loguser['password'], $loguserid);
-			}
+	if(isset($_POST["currpassword"])) {
+		$sha = doHash($_POST['currpassword'].SALT.$loguser['pss']);
+		if($loguser['password'] == $sha) {
 
 			//Delete posts from threads by user
 			query("delete pt from {posts_text} pt
@@ -91,9 +94,6 @@ if ($userdeleteperms && $myrank >= $targetrank && $targetrank =< $myrank) {
 				where p.userfrom={0} or p.userto={0}", $uid);
 			query("delete p from {pmsgs} p
 				where p.userfrom={0} or p.userto={0}", $uid);
-
-			//Delete all the badges of the user.
-			Query("delete from {badges} where owner = {0}", $uid);
 
 			//Delete THE USER ITSELF
 			query("delete from {users}
@@ -156,15 +156,3 @@ if ($userdeleteperms && $myrank >= $targetrank && $targetrank =< $myrank) {
 } else 
 	Kill(__("You may not use the user delete function."));
 
-function isValidPassword($password, $hash, $uid) {
-	if (!password_verify($password, $hash))
-		return false;
-
-	if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
-		$hash = password_hash($password, PASSWORD_DEFAULT);
-
-		Query('UPDATE {users} SET password = {0} WHERE id = {1}', $hash, $uid);
-	}
-
-	return true;
-}

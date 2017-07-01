@@ -19,7 +19,7 @@ else
 
 if ($forum['redirect'])
 	die(header('Location: '.forumRedirectURL($forum['redirect'])));
-
+	
 if($loguserid) {
 	if($_GET['action'] == "markasread") {
 		Query("REPLACE INTO {threadsread} (id,thread,date) SELECT {0}, {threads}.id, {1} FROM {threads} WHERE {threads}.forum={2}",
@@ -111,7 +111,7 @@ ForumJump();
 
 function fj_forumBlock($fora, $catid, $selID, $indent) {
 	$ret = '';
-
+	
 	foreach ($fora[$catid] as $forum) {
 		if ($forum['redirect'])
 			$forumlink = forumRedirectURL($forum['redirect']);

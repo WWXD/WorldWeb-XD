@@ -111,6 +111,20 @@ if (!defined('BLARG')) die();
 		],
 
 
+		"ircserver" => [
+			"type" => "text",
+			"default" => "irc.fortytwo.tech",
+			"name" => "Server Name",
+			'category' => 'IRC'
+		],
+		"ircchannel" => [
+			"type" => "text",
+			"default" => "42net",
+			"name" => "Channel",
+			'category' => 'IRC'
+		],
+
+
 		'PoRATitle' => [
 			'type' => 'text',
 			'default' => 'Blargbox',
@@ -119,7 +133,7 @@ if (!defined('BLARG')) die();
 		],
 		"PoRAText" => [
 			"type" => "textbox",
-			"default" => "Welcome to your new WorldWeb XD Website! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br/>Enjoy WorldWeb XD!",
+			"default" => "Welcome to Blargboard. Edit this.",
 			"name" => "Info box text",
 			'category' => 'Information',
 		],
@@ -137,52 +151,51 @@ if (!defined('BLARG')) die();
 		],
 
 
-		"EmailVerification" => [
+		"email" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Email Verification (Verification part not working just yet)",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"math" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Math question",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"RegWordKey" => [
 			"type" => "text",
 			"default" => "",
 			"name" => "Registration Key",
 			"help" => "This is the actual registration key used. Leave blank in order to not use this function.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"Captcha" => [
 			"type" => "boolean",
-			"options" => ['0' => 'None', '1' => 'PHPCaptcha', '2' => 'BotDetect Captcha'],
 			"default" => "0",
 			"name" => "Captcha",
-			"help" => "You'll need to download the files seperately... You can either download <a href=\"http://www.phpcaptcha.org/\">PHPCaptcha</a> and extract it into a /securimage/ folder, or you can download <a href=\"https://captcha.com/\">BotDetect Captcha</a> and extract it into the /lib/ folder.",
-			'category' => 'Registration settings'
+			"help" => "You'll need to download Securimage from http://www.phpcaptcha.org and extract it into a /securimage folder.",
+			'category' => 'RegistrationSec'
 		],
 		"AdminVer" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Admin Verification",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"PassChecker" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "A Password checker.",
 			"help" => "Straitly ported from ABXD.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"DisReg" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Turn off registration",
 			"help" => "Usefull when your site is hit with a spam attack.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 
 

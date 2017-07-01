@@ -70,9 +70,9 @@ function HandlePostAttachments($postid, $final) {
 
 	$attachs = [];
 
-	if (isset($http->post('files')) && !empty($http->post('files'))) {
-		foreach ($http->post('files') as $fileid=>$blarg) {
-			if (isset($http->post('deletefile')) && $http->post('deletefile')[$fileid]) {
+	if (isset($_POST['files']) && !empty($_POST['files'])) {
+		foreach ($_POST['files'] as $fileid=>$blarg) {
+			if (isset($_POST['deletefile']) && $_POST['deletefile'][$fileid]) {
 				$todelete = Query("SELECT physicalname, user FROM {uploadedfiles} WHERE id={0}", $fileid);
 				DeleteUpload($targetdir.'/'.$entry['physicalname'], $entry['user']);
 				Query("DELETE FROM {uploadedfiles} WHERE id={0}", $fileid);

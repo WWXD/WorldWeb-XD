@@ -13,9 +13,9 @@ $bool = "tinyint(1) NOT NULL DEFAULT '0'";
 $notNull = " NOT NULL DEFAULT ''";
 $text = "text DEFAULT ''"; //NOT NULL breaks in certain versions/settings.
 $postText = "mediumtext$utf8ci DEFAULT ''";
-$var128 = "varchar(128)".$utf8ci.$notNull;
-$var256 = "varchar(256)".$utf8ci.$notNull;
-$var1024 = "varchar(1024)".$utf8ci.$notNull;
+$var128 = "varchar(128)".$notNull;
+$var256 = "varchar(256)".$notNull;
+$var1024 = "varchar(1024)".$notNull;
 $AI = "int(11) NOT NULL AUTO_INCREMENT";
 $keyID = "primary key (`id`)";
 
@@ -27,6 +27,15 @@ $tables = [
 			"color" => $smallerInt,
 		],
 		"special" => "unique key `steenkinbadger` (`owner`,`name`)"
+	],
+
+	"settings" => [
+		"fields" => [
+			"plugin" => $var128,
+			"name" => $var128,
+			"value" => $text,
+		],
+		"special" => "unique key `mainkey` (`plugin`,`name`)"
 	],
 
 	//Weird column names: An entry means that "blockee" has blocked the layout of "user"
@@ -75,8 +84,6 @@ $tables = [
 			"lastpostuser" => $genericInt,
 			"lastpostid" => $genericInt,
 			"hidden" => $bool,
-			'lastpostname' => "varchar(100)".$utf8ci.$notNull,
-			'level' => $smallerInt,
 			"forder" => $smallerInt,
 			"board" => "varchar(16)".$notNull,
 			"l" => $genericInt,
@@ -125,14 +132,6 @@ $tables = [
 			"whitelisted" => $bool,
 		],
 		"special" => "unique key `ip` (`ip`), key `date` (`date`)"
-	],
-
-	"loginbans" => [
-		"fields" => [
-			"name" => "varchar(45)".$notNull,
-			"whitelisted" => $bool,
-		],
-		"special" => "unique key `name` (`name`)"
 	],
 
 	"misc" => [
@@ -335,15 +334,6 @@ $tables = [
 			"lasttime" => $genericInt,
 		],
 		"special" => $keyID.", key `user` (`user`), key `expiration` (`expiration`)"
-	],
-
-	"settings" => [
-		"fields" => [
-			"plugin" => $var128,
-			"name" => $var128,
-			"value" => $text,
-		],
-		"special" => "unique key `mainkey` (`plugin`,`name`)"
 	],
 
 	"smilies" => [

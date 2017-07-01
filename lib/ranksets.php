@@ -10,12 +10,12 @@ function loadRanksets() {
 
 	$dir = "img/ranksets/";
 
-	if (is_dir($dir)) {
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
+    if (is_dir($dir)) {
+        if ($dh = opendir($dir)) {
+            while (($file = readdir($dh)) !== false) {
 				if(filetype($dir . $file) != "dir") continue;
 				if($file == ".." || $file == ".") continue;
-				$jsoninfofile = $dir.$file."/rankset.json";
+                $jsoninfofile = $dir.$file."/rankset.json";
 				$phpinfofile = $dir.$file."/rankset.php";
 				if(file_exists($jsoninfofile)) {
 					switch (json_last_error()) {

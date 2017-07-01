@@ -51,8 +51,8 @@ $fid = $forum['id'];
 
 $total = $forum['numthreads'];
 
-if(isset($http->get('from')))
-	$from = (int)$http->get('from');
+if(isset($_GET['from']))
+	$from = (int)$_GET['from'];
 else
 	$from = 0;
 

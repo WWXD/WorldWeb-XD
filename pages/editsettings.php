@@ -8,13 +8,13 @@ $title = __("Edit settings");
 CheckPermission('admin.editsettings');
 
 $plugin = "main";
-if(isset($http->get('id')))
-	$plugin = $http->get('id');
-if(isset($http->post('_plugin')))
-	$plugin = $http->post('_plugin');
+if(isset($_GET['id']))
+	$plugin = $_GET['id'];
+if(isset($_POST['_plugin']))
+	$plugin = $_POST['_plugin'];
 
-if (isset($http->get('field'))) {
-	$htmlfield = $http->get('field');
+if (isset($_GET['field'])) {
+	$htmlfield = $_GET['field'];
 	if (!isset($settings[$htmlfield]))
 		Kill(__('No.'));
 	if ($settings[$htmlfield]['type'] != 'texthtml')
@@ -36,8 +36,8 @@ $settings = Settings::getSettingsFile($plugin);
 $oursettings = Settings::$settingsArray[$plugin];
 $invalidsettings = [];
 
-if(isset($http->post("_plugin"))) {
-	if ($http->post('key') !== $loguser['token'])
+if(isset($_POST["_plugin"])) {
+	if ($_POST['key'] !== $loguser['token'])
 		Kill(__('No.'));
 
 	//Save the settings.
@@ -67,11 +67,11 @@ if(isset($http->post("_plugin"))) {
 
 	if($valid) {
 		Settings::save($plugin);
-		if(isset($http->post("_exit"))) {
+		if(isset($_POST["_exit"])) {
 			if($plugin == "main")
-				die(header("Location: ".actionLink("admin")));
+				die(header("Location: $boardroot".pageLink("admin")));
 			else
-				die(header("Location: ".actionLink("addonmanager")));
+				die(header("Location: $boardroot".pageLink("addonmanager")));
 		} else
 			Alert(__("Settings were successfully saved!"));
 	} else

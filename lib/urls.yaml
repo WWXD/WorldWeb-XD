@@ -1,9 +1,8 @@
-##########################################################################################
-##                          WorldWeb XD URL Configuration File                          ##
-##               Look at the wiki for information on setting up this file               ##
-##             We only use GET and POST, not PUT, PATCH, or DELETE... yet               ##
-##  ToDo: Allow for URLS by page name and allow for URL Name to be set inside the page  ##
-##########################################################################################
+########################################################################################################################
+##                                         WorldWeb XD URL Configuration File                                         ##
+##                              Look at the wiki for information on setting up this file                              ##
+##                            We only use GET and POST, not PUT, PATCH, or DELETE... yet                              ##
+########################################################################################################################
 
 # Basic pages
 home: ['GET', '/', 'home']
@@ -22,7 +21,7 @@ profile: ['GET|POST', '/members/[i:id]-[s:name]/?', 'profile']
 admin: ['GET', '/admin', 'admin']
 lkb: ['GET', '/admin/lastknownbrowsers', 'lkb']
 addons: ['GET|POST', '/admin/addons', 'addonmanager']
-ipban: ['GET|POST', '/banhammer/ip', 'ipbans']
+ipban: ['GET|POST', '/admin/ipban', 'ipbans']
 secondary: ['GET', '/admin/secgroups', 'secgroups']
 addsec: ['GET|POST', '/admin/secgroups/add', 'addsecgroups']
 removesec: ['GET|POST', '/admin/secgroups/remove', 'removesecgroups']
@@ -33,4 +32,3 @@ irc: ['GET', '/misc/irc', 'irc']
 credits: ['GET', '/misc/credits', 'credits']
 online: ['GET', '/misc/online', 'online']
 records: ['GET', '/misc/records', 'records']
-FAQ: ['GET', '/misc/FAQ', 'FAQ']

@@ -1,26 +1,20 @@
 <?php
 if (!defined('BLARG')) die();
 
-$headerlinks = [];
+$headerlinks = [
+	pageLink('irc') => 'IRC',
+];
 
 $sidelinks = [
 	Settings::get('menuMainName') => [
-		actionLink('home') => [
-			'text' => 'Home Page',
-			'icon' => 'home'
-		],
-		actionLink('FAQ') => [
-			'text' => 'FAQ',
-			'icon' => 'question'
-		],
-		actionLink('memberlist') => [
-			'text' => 'Member list',
-			'icon' => 'group'
-		],
-		actionLink('online') => [
-			'text' => 'Online Users',
-			'icon' => 'eye-open'
-		],
+		actionLink('home') => 'Home page',
+		actionLink('board') => 'Forums',
+		actionLink('faq') => 'FAQ',
+		actionLink('memberlist') => 'Member list',
+		actionLink('ranks') => 'Ranks',
+		actionLink('online') => 'Online users',
+		actionLink('lastposts') => 'Last posts',
+		actionLink('search') => 'Search',
 	],
 ];
 

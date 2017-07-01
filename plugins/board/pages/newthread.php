@@ -222,7 +222,7 @@ if (isset($_POST['saveuploads'])) {
 
 		$rPostsText = Query("insert into {posts_text} (pid,text) values ({0},{1})", $pid, $post);
 
-		$rFora = Query("update {forums} set numthreads=numthreads+1, numposts=numposts+1, lastpostdate={0}, lastpostuser={1}, lastpostid={2}, lastpostname={3} where id={4} limit 1", time(), $loguserid, $pid, $_POST['title'], $fid);
+		$rFora = Query("update {forums} set numthreads=numthreads+1, numposts=numposts+1, lastpostdate={0}, lastpostuser={1}, lastpostid={2} where id={3} limit 1", time(), $loguserid, $pid, $fid);
 
 		Query("update {threads} set date={2}, firstpostid={0}, lastpostid = {0} where id = {1}", $pid, $tid, time());
 

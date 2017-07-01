@@ -7,24 +7,24 @@ CheckPermission('admin.assignbadges');
 
 $title = __("Badge Manager");
 
-if($http->post('action') == __("Add")) {
-	if($http->post('color') == -1 || empty($http->post('userid')) || empty($http->post('name')))
+if($_POST['action'] == __("Add")) {
+	if($_POST['color'] == -1 || empty($_POST['userid']) || empty($_POST['name']))
 		Kill(__("Please review your settings before adding a user badge."));
 	else {
 		query("insert into {badges} values ({0}, {1}, {2})",
-		(int)$http->post('userid'), $http->post('name'), (int)$http->post('color'));
-		Alert(__("Added."), __("Notice"));
+		(int)$_POST['userid'], $_POST['name'], (int)$_POST['color']);
+		alert(__("Added."), __("Notice"));
 	}
-} elseif($http->get('action') == "delete") {
+} elseif($_GET['action'] == "delete") {
 	query("delete from {badges} where owner = {0} and name = {1}",
-		(int)$http->get('userid'), $http->get('name'));
+		(int)$_GET['userid'], $_GET['name']);
 	alert(__("Removed."), __("Notice"));
-} elseif($http->get('action') == "deleteall") {
-	Query("delete from {badges} where owner = {0}",
-	(int)$http->get('userid'));
-	Alert(__("Removed all badges of the user."), __("Notice"));
-} elseif($http->get('action') == "newbadge") {
-	$userID = "value=\"".((int)$http->get('userid'))."\"";
+} elseif($_GET['action'] == "deleteall") {
+	query("delete from {badges} where owner = {0}",
+	(int)$_GET['userid']);
+	alert(__("Removed all badges of the user."), __("Notice"));
+} elseif($_GET['action'] == "newbadge") {
+	$userID = "value=\"".((int)$_GET['userid'])."\"";
 }
 // Fetch badges
 $qBadge = "SELECT owner, {badges}.name, {badges}.color, {users}.name username, {users}.sex sex, {users}.primarygroup primarygroup FROM {badges} JOIN {users} where owner = id";

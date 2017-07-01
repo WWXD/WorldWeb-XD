@@ -8,9 +8,7 @@ function do403() {
 }
 
 function do404() {
-	header("HTTP/1.0 404 Not Found");
 	header('HTTP/1.1 404 Not Found');
-	header("HTTP/2.0 404 Not Found");
 	header('Status: 404 Not Found');
 	die('404 Not Found');
 }
@@ -37,7 +35,7 @@ if ($isBot) {
 	// keep SE bots out of certain pages that don't interest them anyway
 	// TODO move that code to those individual pages
 	$forbidden = ['register', 'login', 'online', 'referrals', 'records', 'lastknownbrowsers'];
-	if (in_array($http->get('page'), $forbidden))
+	if (in_array($_GET['page'], $forbidden))
 		do403();
 }
 
@@ -1108,3 +1106,162 @@ $emaildomainsblock = [
 '@zyk6fly-qac.com',
 '@zyrqehpq.ru',
 ];
+
+//Proxy protect functions
+
+class StopForumSpam {
+    /**
+    * The API key.
+    *
+    * @var string
+    */
+    private $api_key;
+    /**
+    * The base url, for tha API/
+    *
+    * @var string
+    */
+    private $endpoint = 'http://www.stopforumspam.com/';
+    /**
+    * Constructor.
+    *
+    * @param string $api_key Your API Key, optional (unless adding to database).
+    */
+    public function __construct( $api_key = null ) {
+        // store variables
+        $this->api_key = $api_key;
+    }
+    /**
+    * Add to the database
+    *
+    * @param array $args associative array containing email, ip, username and optionally, evidence
+    * e.g. $args = array('email' => 'user@example.com', 'ip_addr' => '8.8.8.8', 'username' => 'Spammer?', 'evidence' => 'My favourite website http://www.example.com' );
+    * @return boolean Was the update succesfull or not.
+    */
+    public function add( $args ) {
+        // check for mandatory arguments
+        if (empty($args['username']) || empty($args['ip_addr']) || empty($args['email']) ) {
+            return false;
+        }
+        // known?
+        $is_spammer = $this->is_spammer($args);
+        if (!$is_spammer || $is_spammer['known']) {
+            return false;
+        }
+        // add api key
+        $args['api_key'] = $this->api_key;
+        // url to poll
+        $url = $this->endpoint.'add.php?'.http_build_query($args, '', '&');
+        // execute
+        $response = file_get_contents($url);
+        return (false == $response ? false : true);
+    }
+    /**
+    * Get record from spammers database.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip.
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return object Response.
+    */
+    public function get( $args ) {
+        // should check first if not already in database
+        // url to poll
+        $url = $this->endpoint.'api?f=json&'.http_build_query($args, '', '&');
+        //
+        return $this->poll_json( $url );
+    }
+    /**
+    * Check if either details correspond to a known spammer. Checking for username is discouraged.
+    *
+    * @param array $args associative array containing either one (or all) of these: username / email / ip
+    * e.g. $args = array('email' => 'user@example.com', 'ip' => '8.8.8.8', 'username' => 'Spammer?' );
+    * @return boolean
+    */
+    public function is_spammer( $args ) {
+        // poll database
+        $record = $this->get( $args );
+        if ( !isset($record->success) ) {
+            return false;
+        }
+        // give the benefit of the doubt
+        $spammer = false;
+        // are all datapoints on SFS?
+        $known = true;
+        // parse database record
+        $datapoint_count = 0;
+        $known_datapoints = 0;
+        foreach( $record as $datapoint ) {
+            // not 'success'
+            if ( isset($datapoint->appears) && $datapoint->appears ) {
+                $datapoint_count++;
+                // are ANY of the datapoints on SFS?
+                if ( $datapoint->appears == true)
+                {
+                    $known_datapoints++;
+                    $spammer = true;
+                }
+            }
+        }
+        // are ANY of the datapoints not on SFS
+        if ( $datapoint_count > $known_datapoints) {
+            $known = false;
+        }
+		return $spammer;
+        return [
+            'spammer' => $spammer,
+            'known' => $known
+        ];
+    }
+    /**
+    * Get json and decode. Currently used for polling the database, but hoping for future
+    * json response support, when adding.
+    *
+    * @param string $url The url to get
+    * @return object Response.
+    */
+    protected static function poll_json( $url )
+    {
+        $json = file_get_contents( $url );
+        $object = json_decode($json);
+        return $object;
+    }
+}
+function IsTorExitPoint(){
+    if (gethostbyname(ReverseIPOctets($_SERVER['REMOTE_ADDR']).".".$_SERVER['SERVER_PORT'].".".ReverseIPOctets($_SERVER['SERVER_ADDR']).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
+        return true;
+    } else {
+       return false;
+    }
+}
+function ReverseIPOctets($inputip){
+    $ipoc = explode(".",$inputip);
+    return $ipoc[3].".".$ipoc[2].".".$ipoc[1].".".$ipoc[0];
+}
+
+function IsProxy() {
+	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
+		return true;
+
+	$result = QueryURL('http://www.stopforumspam.com/api?ip='.urlencode($_SERVER['REMOTE_ADDR']));
+	if (!$result)
+		return false;
+
+	if (stripos($result, '<appears>yes</appears>') !== FALSE)
+		return true;
+
+	return false;
+}
+
+function IsProxyFSpamList() {
+	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
+		return true;
+
+	$result = QueryURL('http://www.fspamlist.com/api.php?key=ba28d1c4aca5&spammer='.$cemail.','.$cname.','.urlencode($_SERVER['REMOTE_ADDR']));
+	if (!$result)
+		return false;
+
+	if (stripos($result, '<isspammer>true</isspammer>') !== FALSE)
+		return true;
+
+	return false;
+}

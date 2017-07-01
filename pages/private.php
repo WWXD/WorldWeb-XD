@@ -8,8 +8,8 @@ $title = __("Private messages");
 if(!$loguserid)
 	Kill(__("You must be logged in to view your private messages."));
 
-if(isset($http->get('user')) && $user !== $loguserid && HasPermission('admin.viewpms')) {
-	$user = (int)$http->get('user');
+if(isset($_GET['user']) && $user !== $loguserid && HasPermission('admin.viewpms')) {
+	$user = (int)$_GET['user'];
 	$snoop = "&snooping=1";
 	$userGet = "&user=".$user;
 } else {
@@ -18,12 +18,12 @@ if(isset($http->get('user')) && $user !== $loguserid && HasPermission('admin.vie
 	$snoop = '';
 }
 
-if(isset($http->post('action'))) {
-	if ($http->post('token') !== $loguser['token'])
+if(isset($_POST['action'])) {
+	if ($_POST['token'] !== $loguser['token'])
 		Kill('No.');
 
-	if($http->post('action') == 'multidel' && $http->post('delete') && !$snoop) {
-		foreach($http->post('delete') as $pid => $on) {
+	if($_POST['action'] == 'multidel' && $_POST['delete'] && !$snoop) {
+		foreach($_POST['delete'] as $pid => $on) {
 			$rPM = Query("select userto,userfrom,deleted,drafting from {pmsgs} where id = {0} and (userto = {1} or userfrom = {1})", $pid, $loguserid);
 			if(NumRows($rPM)) {
 				$pm = Fetch($rPM);
@@ -52,8 +52,8 @@ $staffpms = '';
 
 $showWhat = 0;
 
-if(isset($http->get('show'))) {
-	$showWhat = (int)$http->get('show');
+if(isset($_GET['show'])) {
+	$showWhat = (int)$_GET['show'];
 	
 	$show = "&show=".$showWhat;
 	if($showWhat == 1)
@@ -73,8 +73,8 @@ $total = FetchResult("select count(*) from {pmsgs} p where ({$whereFrom}{$staffp
 
 $ppp = $loguser['threadsperpage'];
 
-if(isset($http->get('from')))
-	$from = (int)$http->get('from');
+if(isset($_GET['from']))
+	$from = (int)$_GET['from'];
 else
 	$from = 0;
 

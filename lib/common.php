@@ -21,7 +21,7 @@ define('DATA_URL', URL_ROOT.'data/');
 setlocale(LC_ALL, 'en_US.UTF8');
 
 if(!is_file(__DIR__.'/../config/database.php'))
-	die(header('Location: preinstall.php'));
+	die(header('Location: install.php'));
 
 if (!function_exists('password_hash'))
 	require_once('passhash.php');
@@ -105,7 +105,7 @@ $routes = spyc_load_file(__DIR__."/urls.yaml");
 
 // Map our routes
 foreach ($routes as $route_name => $params) {
-	$router->map($params[0], $params[1], $params[2], $route_name);
+    $router->map($params[0], $params[1], $params[2], $route_name);
 }
 
 require_once(__DIR__."/browsers.php");
@@ -114,8 +114,8 @@ loadFieldLists();
 require_once(__DIR__."/loguser.php");
 require_once(__DIR__."/permissions.php");
 
-if (Settings::get('maintenance') && !$loguser['root'] && $http->get('page') != 'login')
-	die('The board is currently in maintenance mode, please try again later. Our apologies for the inconvenience.');
+if (Settings::get('maintenance') && !$loguser['root'] && (!isset($_GET['page']) || $_GET['page'] != 'login'))
+	$_GET["page"] = "maintenance";
 
 require_once(__DIR__."/notifications.php");
 require_once(__DIR__."/firewall.php");
@@ -136,10 +136,9 @@ require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
-$tpl->setCompileDir(URL_ROOT."/tmp/templates_compiled");
-$tpl->setCacheDir(URL_ROOT."tmp/templates_cache");
-require_once(__DIR__."/PipeMenuBuilder.php");
-require_once(__DIR__."/Browserdetection.php");
+$tpl->setCompileDir('/tmp/templates_compiled');
+$tpl->setCacheDir('/tmp/templates_cache');
+require_once(__DIR__."/../class/PipeMenuBuilder.php");
 
 $bucket = "init"; include(__DIR__."/pluginloader.php");
 

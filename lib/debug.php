@@ -1,7 +1,8 @@
 <?php
 if (!defined('BLARG')) die();
 
-function backTrace() {
+function backTrace()
+{
 	$backtrace = debug_backtrace();
 	foreach ($backtrace as $bt) {
 		$args = '';

@@ -1,5 +1,5 @@
 <?php
-//  WorldWeb XD - Login page
+//  AcmlmBoard XD - Login page
 //  Access: guests
 if (!defined('BLARG')) die();
 
@@ -85,11 +85,6 @@ if($http->post('action') === "logout" && $loguserid) {
 
 					Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $testuser['id']);
 					$matches[] = $testuser['id'];
-				} else if($testuser['password'] === $pass) {
-					$password = password_hash($pass, PASSWORD_DEFAULT);
-
-					Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $testuser['id']);
-					$matches[] = $testuser['id'];
 				}
 			}
 		}
@@ -102,12 +97,12 @@ if($http->post('action') === "logout" && $loguserid) {
 }
 
 $title = __('Log in');
-MakeCrumbs(['login' => __('Log in')]);
+MakeCrumbs(['' => __('Log in')]);
+
+$forgotPass = '';
 
 if(Settings::get("mailResetSender") != "")
 	$forgotPass = "<button onclick=\"document.location = '".htmlentities(pageLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
-else
-	$forgotPass = '';
 
 $fields = [
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=50>",

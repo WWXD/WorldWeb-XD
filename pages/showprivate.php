@@ -19,7 +19,7 @@ $pmid = $id;
 $staffpms = '';
 if (HasPermission('admin.viewstaffpms')) $staffpms = ' OR userto={2}';
 
-$snoop = isset($http->get('snooping')) && HasPermission('admin.viewpms');
+$snoop = isset($_GET['snooping']) && HasPermission('admin.viewpms');
 
 if($snoop) {
 	$rPM = Query("select * from {pmsgs} left join {pmsgs_text} on pid = {pmsgs}.id where {pmsgs}.id = {0}", $id);
@@ -50,7 +50,7 @@ if(!$snoop && $pm['userto'] == $loguserid) {
 	DismissNotification('pm', $pm['id'], $loguserid);
 
 	$links[] = actionLinkTag(__("Send reply"), "sendprivate", "", "pid=".$pm['id']);
-} else if ($http->get('markread')) {
+} else if ($_GET['markread']) {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
 	DismissNotification('pm', $pm['id'], -1);
 

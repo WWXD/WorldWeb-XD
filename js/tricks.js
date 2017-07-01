@@ -1,11 +1,13 @@
 "use strict";
 
 var boardroot = "";
-function resourceLink(url) {
+function resourceLink(url)
+{
 	return boardroot + url;
 }
 
-// collapsible categories inspired from Neritic Net
+// collapsible categories
+// code inspired from Neritic Net
 function setCookie(name,value,days) {
 	if (days) {
 		var date = new Date();
@@ -23,6 +25,7 @@ function toggleCat(id) {
 }
 
 //Spoiler buttons
+
 function toggleSpoiler() {
 	var button = this.parentNode.children[0];
 	var div = this.parentNode.children[1];
@@ -38,7 +41,12 @@ function toggleSpoiler() {
 	}
 }
 
-//Quote Support
+
+
+/* Quote support
+   -------------
+   Thanks to Mega-Mario for the idea
+ */
 function insertQuote(pid) {
 	$.get(boardroot+"ajaxcallbacks.php", "a=q&id="+pid, function(data) {
 		var editor = $("#text")[0]; //we want the HTMLTextElement kthx
@@ -62,10 +70,17 @@ function insertChanLink(pid) {
 	editor.scrollTop = editor.scrollHeight;
 }
 
-//Smilies tricks
+
+
+
+/* Smiley tricks
+   -------------
+   Inspired by Mega-Mario's quote system.
+ */
+ 
 var smiliesOpened = false;
 var usingSmilies = false;
-
+ 
 function insertSmiley(smileyCode) {
 	var editor = document.getElementById("text");
 	editor.focus();
@@ -101,7 +116,7 @@ function showSmiliesBox(btn) {
 		hideSmiliesBox();
 		return;
 	}
-
+	
 	var btnpos = $(btn).offset();
 	$('#smilies').show();
 	$('#smilies').offset({ top: btnpos.top - $('#smilies').outerHeight() + $(btn).outerHeight(), left: btnpos.left + $(btn).outerWidth() });
@@ -139,6 +154,8 @@ function GetXmlHttpObject() {
 	return xmlHttp;
 }
 
+
+
 function startPoraUpdate() {
 	var ta = document.getElementById("editbox");
 	var tt = document.getElementById("title");
@@ -147,13 +164,19 @@ function startPoraUpdate() {
 
 	prt.innerHTML = ta.value;//.replace("\n", "<br />");
 	pri.textContent = tt.value;
+	//setTimeout("startPoraUpdate();", 100);
 }
 
 
 var onlineFID = 0;
 
 function startOnlineUsers() {
-	var tmrid = window.setInterval(function() { getOnlineUsers(); }, 10000);
+	//onlineFID = fid;
+	//setTimeout("getOnlineUsers()", 10000);
+	//var onlineUsersBar = $('.header0').get(1);
+	//onlineUsersBar.id="onlineUsersBar";
+	var tmrid = window.setInterval(getOnlineUsers, 10000);
+
 	$(window).blur(function() {
 		if (tmrid != -9999) {
 			window.clearInterval(tmrid);
@@ -164,7 +187,7 @@ function startOnlineUsers() {
 	$(window).focus(function() {
 		getOnlineUsers();
 		if (tmrid == -9999)
-			tmrid = window.setInterval(function() { getOnlineUsers(); }, 10000);
+			tmrid = window.setInterval(getOnlineUsers, 10000);
 	});
 }
 
@@ -189,7 +212,7 @@ function getOnlineUsers() {
 
 	// notifications
 	$.getJSON(boardroot+"ajaxcallbacks.php", "a=no", function(data) {
-		var notiflist = '';
+	    var notiflist = '';
 		for (var i=0; i < data.length; i++)
 			notiflist += '<li>' + data[i].text + '<br/><small>' + data[i].formattedDate + '</small>';
 
@@ -235,24 +258,24 @@ function ConstructToolbar() {
 	toolbar.className = "postToolbar";
 
 	var buttons = [
-		{ icon: "bold", title: "Bold", insert: "b" },
-		{ icon: "italic", title: "Italic", insert: "i" },
-		{ icon: "underline", title: "Underlined", insert: "u" },
-		{ icon: "strikethrough", title: "Strikethrough", insert: "s" },
+		{ icon: "bold", title: "Bold", insert: "b" }, 
+		{ icon: "italic", title: "Italic", insert: "i" }, 
+		{ icon: "underline", title: "Underlined", insert: "u" }, 
+		{ icon: "strikethrough", title: "Strikethrough", insert: "s" }, 
 		{ separator: true },
-		{ icon: "superscript", title: "Superscript", insert: "sup", html: true },
+		{ icon: "superscript", title: "Superscript", insert: "sup", html: true }, 
 		{ icon: "subscript", title: "Subscript", insert: "sub", html: true },
  		{ separator: true },
  		{ icon: "user", title: "User", insert: "user=", close: true },
  		{ icon: "comment", title: "Thread", insert: "thread=", close: true },
- 		{ icon: "list", title: "Forum", insert: "forum=", close: true },
+ 		{ icon: "list", title: "Forum", insert: "forum=", close: true }, 
 		{ separator: true },
  		{ icon: "link", title: "Link", insert: "url" },
- 		{ icon: "picture", title: "Resized image", insert: "imgs" },
-		{ icon: "youtube-play", title: "Youtube video", insert: "youtube" },
+ 		{ icon: "picture", title: "Resized image", insert: "imgs" }, 
+		{ icon: "youtube-play", title: "Youtube video", insert: "youtube" }, 
 		{ separator: true },
  		{ icon: "quote-left", title: "Quote", insert: "quote" },
- 		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" },
+ 		{ icon: "ellipsis-horizontal", title: "Spoiler", insert: "spoiler" }, 
 		{ icon: "code", title: "Code", insert: "code" },
 
 	];
@@ -334,8 +357,10 @@ function insert(stuff, html) {
 
 var refreshUrl = "";
 
-function startPageUpdate() {
-	var tmrid = window.setInterval(function() { doPageUpdate(); }, 30000);
+function startPageUpdate()
+{
+	var tmrid = window.setInterval(doPageUpdate, 30000);
+
 	$(window).blur(function() {
 		if (tmrid != -9999) {
 			window.clearInterval(tmrid);
@@ -346,51 +371,63 @@ function startPageUpdate() {
 	$(window).focus(function() {
 		doPageUpdate();
 		if (tmrid == -9999)
-			tmrid = window.setInterval(function() { doPageUpdate(); }, 30000);
+			tmrid = window.setInterval(doPageUpdate, 30000);
 	});
 }
 
-function doPageUpdate() {
-	$.get(refreshUrl, "", function(data) {
+function doPageUpdate()
+{
+	$.get(refreshUrl, "", function(data)
+	{
 		$("#page_contents").html(data);
 	});
 }
 
 
 
-// Live theme changer
-function ChangeTheme(newtheme) {
-	$.get(boardroot+"ajaxcallbacks.php", "a=tf&t="+newtheme, function(data) {
+// Live theme changer by Mega-Mario
+function ChangeTheme(newtheme)
+{
+	$.get(boardroot+"ajaxcallbacks.php", "a=tf&t="+newtheme, function(data)
+	{
 		var stuff = data.split('|');
 		$("#theme_css")[0].href = stuff[0];
 		$("#theme_banner")[0].src = stuff[1];
 	});
 }
 
+
+
 //Search page pager
-function ChangePage(newpage) {
-	var pagenums = document.getElementsByClassName('pagenum');
-	for (i = 0; i < pagenums.length; i++)
-		pagenums[i].href = '#';
+function ChangePage(newpage)
+{
+        var pagenums = document.getElementsByClassName('pagenum');
+        for (i = 0; i < pagenums.length; i++)
+                pagenums[i].href = '#';
 
-	pagenums = document.getElementsByClassName('pagenum'+newpage);
-	for (i = 0; i < pagenums.length; i++)
-		pagenums[i].removeAttribute('href');
+        pagenums = document.getElementsByClassName('pagenum'+newpage);
+        for (i = 0; i < pagenums.length; i++)
+                pagenums[i].removeAttribute('href');
 
-	var pages = document.getElementsByClassName('respage');
-	for (i = 0; i < pages.length; i++)
-		pages[i].style.display = 'none';
+        var pages = document.getElementsByClassName('respage');
+        for (i = 0; i < pages.length; i++)
+                pages[i].style.display = 'none';
 
-	pages = document.getElementsByClassName('respage'+newpage);
-	for (i = 0; i < pages.length; i++)
-		pages[i].style.display = '';
+        pages = document.getElementsByClassName('respage'+newpage);
+        for (i = 0; i < pages.length; i++)
+                pages[i].style.display = '';
 }
 
-function expandTable(tableName, button) {
+
+
+
+function expandTable(tableName, button)
+{
 	var table = document.getElementById(tableName);
 	var rows = table.getElementsByTagName("tr");
 
-	for(var i = 0; i < rows.length; i++) {
+	for(var i = 0; i < rows.length; i++)
+	{
 		//alert(rows[i].className + ", " + rows[i].style['display']);
 		if(rows[i].className == "header1")
 			continue;
@@ -402,12 +439,14 @@ function expandTable(tableName, button) {
 	}
 }
 
-function hideTricks(pid) {
+function hideTricks(pid)
+{
 	$("#dyna_"+pid).hide(200);//, function()
 	$("#meta_"+pid).show(200);
 }
 
-function showRevisions(pid) {
+function showRevisions(pid)
+{
 	$("#meta_"+pid).hide(200);//, function()
 	$("#dyna_"+pid).load(boardroot+"ajaxcallbacks.php", "a=srl&id="+pid, function()
 	{
@@ -415,17 +454,21 @@ function showRevisions(pid) {
 	});
 }
 
-function showRevision(pid, rev) {
+function showRevision(pid, rev)
+{
 	var post = $("#post_"+pid);
-	$.get(boardroot+"ajaxcallbacks.php", "a=sr&id="+pid+"&rev="+rev, function(data) {
-		post.fadeOut(200, function() {
+	$.get(boardroot+"ajaxcallbacks.php", "a=sr&id="+pid+"&rev="+rev, function(data)
+	{
+		post.fadeOut(200, function()
+		{
 			post[0].innerHTML = data;
 			post.fadeIn(200);
 		});
 	});
 }
 
-function deletePost(link) {
+function deletePost(link)
+{
 	var reason = prompt('Enter a reason for deleting the post, or leave blank for no reason.');
 	if (reason == null) return;
 
@@ -433,7 +476,8 @@ function deletePost(link) {
 	document.location.href = href;
 }
 
-function checkAll() {
+function checkAll()
+{
 	var ca = document.getElementById("ca");
 	var checked = ca.checked;
 	var checks = document.getElementsByTagName("INPUT");
@@ -441,25 +485,32 @@ function checkAll() {
 		checks[i].checked = checked;
 }
 
-function hookUploadCheck(id, type, size) {
+
+function hookUploadCheck(id, type, size)
+{
 	var obj = document.getElementById(id);
-	if(type == 0) {
-		obj.onchange = function() {
+	if(type == 0)
+	{
+		obj.onchange = function()
+		{
 			var submit = document.getElementById("submit");
 			var sizeWarning = document.getElementById("sizeWarning");
 			var typeWarning = document.getElementById("typeWarning");
 
 			submit.disabled = (obj.value == "");
 
-			if(obj.files != undefined) {
+			if(obj.files != undefined)
+			{
 				var file = obj.files[0];
 				var fileSize = 0;
 				if(file != undefined)
 					fileSize = file.size;
 				sizeWarning.style['display'] = (fileSize > size) ? "inline" : "none";
 				submit.disabled = (fileSize > size);
-				if(file != undefined) {
-					switch(file.type) {
+				if(file != undefined)
+				{
+					switch(file.type)
+					{
 						case "image/jpeg":
 						case "image/png":
 						case "image/gif":
@@ -472,22 +523,28 @@ function hookUploadCheck(id, type, size) {
 				}
 			}
 		};
-	} else if(type == 1) {
-		obj.onchange = function() {
+	}
+	else if(type == 1)
+	{
+		obj.onchange = function()
+		{
 			var submit = document.getElementById("submit");
 			var sizeWarning = document.getElementById("sizeWarning");
 			var typeWarning = document.getElementById("typeWarning");
 
 			submit.disabled = (obj.value == "");
-			if(obj.files != undefined) {
+			if(obj.files != undefined)
+			{
 				var file = obj.files[0];
 				var fileSize = 0;
 				if(file != undefined)
 					fileSize = file.size;
 				sizeWarning.style['display'] = (fileSize > size) ? "inline" : "none";
 				submit.disabled = (fileSize > size);
-				if(file != undefined) {
-					switch(file.type) {
+				if(file != undefined)
+				{
+					switch(file.type)
+					{
 						case "application/x-msdownload":
 						case "text/html":
 							typeWarning.style['display'] = "inline";
@@ -502,21 +559,25 @@ function hookUploadCheck(id, type, size) {
 	}
 }
 
-function replacePost(id, opened) {
-	$.get(boardroot+"ajaxcallbacks.php?a=rp"+(opened ? "&o":"")+"&id="+id, function(data) {
+function replacePost(id, opened)
+{
+	$.get(boardroot+"ajaxcallbacks.php?a=rp"+(opened ? "&o":"")+"&id="+id, function(data)
+	{
 		$("#post"+id).replaceWith(data);
 		$("#post"+id+" .spoilerbutton").click(toggleSpoiler);
 	});
 }
 
 window.onload = function() {
-	// Set the size of the rendered Emojis
-	// This can be set to 16x16, 36x36, or 72x72
-	twemoji.size = '16x16';
 
-	// Parse the document body and
-	// insert <img> tags in place of Unicode Emojis
-	twemoji.parse(document.body);
+  // Set the size of the rendered Emojis
+  // This can be set to 16x16, 36x36, or 72x72
+  twemoji.size = '16x16';
+
+  // Parse the document body and
+  // insert <img> tags in place of Unicode Emojis
+  twemoji.parse(document.body);
+
 }
 
 var themes;
@@ -525,7 +586,7 @@ function searchThemes(query) {
 		themes = document.getElementsByClassName("theme");
 
 		window.themeNames = {};
-
+		
 		for (var i = 0; i < themes.length; i++) {
 			window.themeNames[themes[i].title] = i;
 		}
@@ -542,6 +603,12 @@ function searchThemes(query) {
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function() 
+{
 	$(".spoilerbutton").click(toggleSpoiler);
 });
+
+function enableMobileLayout(val) {
+	setCookie("forcelayout", val, 20*365*24*60*60, "/");
+	location.reload();
+}

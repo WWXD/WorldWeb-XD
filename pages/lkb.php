@@ -7,7 +7,7 @@ $title = "Last known browsers";
 $isMod = HasPermission('admin.viewips');
 $sort = "id asc";
 $ual = "";
-if(isset($http->get('byua'))) {
+if(isset($_GET['byua'])) {
 	$sort = "lastknownbrowser asc";
 	$ual .= "byua&amp;";
 }
@@ -19,8 +19,8 @@ $numUsers = FetchResult("select count(*) from {users}");
 $ppp = $loguser['postsperpage'];
 if($ppp<1) $ppp=50;
 
-if(isset($http->get('from')))
-	$from = (int)$http->get('from');
+if(isset($_GET['from']))
+	$from = (int)$_GET['from'];
 else
 	$from = 0;
 

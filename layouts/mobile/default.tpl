@@ -43,7 +43,7 @@ input, textarea {
 				<tr class="header1"><th>{$cat}</th></tr>
 				{/if}
 				{foreach $links as $url=>$text}
-					<tr><td class="cell{cycle values='1,2'} link"><a href="{$url|escape}"{if isset($link.id)} id="{$link.id}"{/if}>{if isset($link.icon)}<span class="fa fa-{$link.icon}"></span>{/if}{$link.text}</a></td></tr>
+					<tr><td class="cell{cycle values='1,2'} link"><a href="{$url|escape}">{$text}</a></td></tr>
 				{/foreach}
 			{/foreach}
 

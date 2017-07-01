@@ -80,7 +80,7 @@ function getForm($action, $id='') {
 }
 
 function resourceLink($what) {
-	return URL_ROOT.$what;
+	return BOARD_ROOT.$what;
 }
 
 function themeResourceLink($what) {
@@ -141,7 +141,7 @@ function prettyRainbow($s) {
 $poptart = mt_rand(0,359);
 $dorainbow = -1;
 
-function userLink($user, $showMinipic = false, $customID = false, $returnOnlyHref = false) {
+function userLink($user, $showMinipic = false, $customID = false) {
 	global $usergroups;
 	global $poptart, $dorainbow, $newToday;
 	global $luckybastards;
@@ -193,16 +193,12 @@ function userLink($user, $showMinipic = false, $customID = false, $returnOnlyHre
 	if ($customID)
 		$classing .= " id=\"$customID\"";
 
-	$title = htmlspecialchars($user['displayname'] ? $user['displayname'] : $user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
-	if ($returnOnlyHref) {
-		return pageLink('profile', $user['id'], false, $fname);
-	} else {
-		return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", [
-			'id' => $user['id'],
-			'name' => slugify($user['name'])
-		]);
-	}
-	;
+	$title = htmlspecialchars($user['name']) . ' ('.$user["id"].') ['.htmlspecialchars($fgroup['title']).']';
+	if ($user['id'] == 0) return "<strong$classing class=\"userlink fake\">$fname</strong>";
+	return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "profile", [
+		'id' => $user['id'],
+		'name' => slugify($user['name'])
+	]);
 }
 
 function userLinkById($id) {
@@ -312,7 +308,7 @@ function pageLinksInverted($url, $epp, $from, $total) {
 
 function absoluteActionLink($action, $id=0, $args="") {
 	global $serverport;
-	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
+    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport.dirname($_SERVER['PHP_SELF']).substr(actionLink($action, $id, $args), 1);
 }
 
 function getRequestedURL() {
@@ -329,8 +325,8 @@ function getServerURL($https = false) {
 }
 
 function getServerURLNoSlash($https = false) {
-	global $serverport;
-	return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
+    global $serverport;
+    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
 
 function getFullRequestedURL($https = false) {

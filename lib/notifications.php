@@ -5,6 +5,8 @@ if (!defined('BLARG')) die();
 $NotifFormat = [
 	'pm' => 'FormatNotif_PM',
 	'profilecomment' => 'FormatNotif_ProfileComment',
+	'usermention' => 'FormatNotif_mention',
+	'favorites' => 'FormatNotif_favorites',
 ];
 
 // plugins should use an init hook to extend $NotifFormat

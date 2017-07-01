@@ -3,10 +3,10 @@ if (!defined('BLARG')) die();
 
 $title = 'Permissions editor';
 
-if (isset($http->get('uid'))) {
+if (isset($_GET['uid'])) {
 	CheckPermission('admin.editusers');
 	$applyto = 1;
-	$id = (int)$http->get('uid');
+	$id = (int)$_GET['uid'];
 
 	$user = Fetch(Query("SELECT name,displayname,primarygroup FROM {users} WHERE id={0}", $id));
 	if (!$user)
@@ -17,10 +17,10 @@ if (isset($http->get('uid'))) {
 
 	MakeCrumbs([actionLink('admin') => __('Admin'), 
 		'' => __('Edit permissions for user: ').htmlspecialchars($user['displayname']?$user['displayname']:$user['name'])]);
-} else if (isset($http->get('gid'))) {
+} else if (isset($_GET['gid'])) {
 	CheckPermission('admin.editgroups');
 	$applyto = 0;
-	$id = (int)$http->get('gid');
+	$id = (int)$_GET['gid'];
 
 	if (!$usergroups[$id]) Kill(__('Invalid group ID.'));
 	$targetrank = $usergroups[$id]['rank'];
@@ -34,12 +34,12 @@ if (isset($http->get('uid'))) {
 	Kill(__('Invalid parameters.'));
 
 
-if ($http->post('saveaction') || $http->post('addfpermaction')) {
-	if ($http->post('token') !== $loguser['token'])
+if ($_POST['saveaction'] || $_POST['addfpermaction']) {
+	if ($_POST['token'] !== $loguser['token'])
 		Kill(__('No.'));
 
-	if ($http->post('addfpermaction')) {
-		$fid = (int)$http->post('newforumid');
+	if ($_POST['addfpermaction']) {
+		$fid = (int)$_POST['newforumid'];
 
 		foreach ($_POST as $k=>$v) {
 			if (substr($k,0,8) != 'fperm_0_') continue;
@@ -52,11 +52,11 @@ if ($http->post('saveaction') || $http->post('addfpermaction')) {
 				$applyto, $id, $perm['perm'], $fid, $v);
 		}
 	}
-
+	
 	foreach ($_POST as $k=>$v) {
 		if (substr($k,0,5) != 'perm_' && substr($k,0,6) != 'fperm_') continue;
 		if (substr($k,0,8) == 'fperm_0_') continue;
-		if ($v == $http->post('orig_'.$k)) continue;
+		if ($v == $_POST['orig_'.$k]) continue;
 
 		$perm = PermData($k);
 		if (!CanEditPerm($perm['perm'], $perm['arg'])) continue;
@@ -138,7 +138,7 @@ echo '
 		</table>
 		<input type="hidden" name="token" value="'.htmlspecialchars($loguser['token']).'">
 	</form>';
-
+	
 
 function PermSwitch($field, $threeway, $_val) {
 	$val = $_val;
