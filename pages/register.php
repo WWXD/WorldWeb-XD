@@ -329,3 +329,30 @@ function MakeOptions($fieldName, $checkedIndex, $choicesList) {
 					</label>", $key, $fieldName, (isset($checks[$key]) ? $checks[$key] : ''), $val);
 	return $result;
 }
+
+function isValidPassword($password, $hash, $uid) {
+	if (!password_verify($password, $hash))
+		return false;
+
+	if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+
+		Query('UPDATE {users} SET password = {0} WHERE id = {1}', $hash, $uid);
+	}
+
+	return true;
+}
+
+function IsProxy() {
+	if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['HTTP_X_FORWARDED_FOR'] != $_SERVER['REMOTE_ADDR'])
+		return true;
+
+	//SFS checker
+	$page = file_get_contents('http://api.stopforumspam.org/api?ip='.$_SERVER['REMOTE_ADDR'].'&json&notorexit');
+	$a = json_decode($page);
+
+	if($a->ip->torexit == 1)
+		return true;
+
+	return false;
+}
