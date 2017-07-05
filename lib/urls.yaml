@@ -28,6 +28,8 @@ addsec: ['GET|POST', '/admin/secgroups/add', 'addsecgroups']
 removesec: ['GET|POST', '/admin/secgroups/remove', 'removesecgroups']
 editsettings: ['GET|POST', '/admin/editsettings', 'editsettings']
 
+catchall: ['GET|POST', '/[a:page]/[a:id]?-[s:name]?', 'catchall']
+
 # ehh
 irc: ['GET', '/misc/irc', 'irc']
 credits: ['GET', '/misc/credits', 'credits']
