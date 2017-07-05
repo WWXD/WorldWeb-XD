@@ -14,13 +14,9 @@ $knownBrowsers = [
 	"Opera Tablet" => "Opera Mobile (tablet)",
 	"Opera Mobile" => "Opera Mobile",
 	"Opera Mini" => "Opera Mini", //Opera/9.80 (J2ME/MIDP; Opera Mini/4.2.18887/764; U; nl) Presto/2.4.15
-	'iPod' => 'iPod',
-	'iPad' => 'iPad',
-	'iPhone' => 'iPhone',
 	"Nintendo Wii" => "Wii Internet Channel", //Opera/9.30 (Nintendo Wii; U; ; 3642; nl)
 	"Nintendo DSi" => "Nintendo DSi Browser", //Opera/9.50 (Nintendo DSi; Opera/507; U; en-US)
 	"Nitro" => "Nintendo DS Browser",
-	"Nintendo 3DS" => "Nintendo 3DS",
 	"Iceweasel" => "Iceweasel",
 	"Opera" => "Opera",
 	"MozillaDeveloperPreview" => "Firefox (Development build)",
@@ -48,10 +44,13 @@ $knownOSes = [
 	"Series 60" => "S60",
 	"Nexus" => "Android (Nexus %)",
 	"Android" => "Android",
+	"Windows 3.1" => "Windows 3.1",
+	"Windows 3.11" => "Windows 3.11",
 	"Windows 4.0" => "Windows 95",
 	"Windows 4.1" => "Windows 98",
 	"Windows 4.9" => "Windows ME",
-	"Windows NT 5.0" => "Windows NT",
+	"Windows NT 4.0" => "Windows NT 4.0",
+	"Windows NT 5.0" => "Windows 2000",
 	"Windows NT 5.1" => "Windows XP",
 	"Windows NT 5.2" => "Windows XP 64",
 	"Windows NT 6.0" => "Windows Vista",
@@ -78,10 +77,11 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 foreach($knownBrowsers as $code => $name) {
 	if (strpos($ua, $code) !== FALSE) {
 		$versionStart = strpos($ua, $code) + strlen($code);
-		if ($code != "dwb") $version = GetVersion($ua, $versionStart);
+		if ($code != "dwb" || $code != "rekonq")
+			$version = GetVersion($ua, $versionStart);
 
 		//Opera Mini wasn't detected properly because of the Opera 10 hack.
-		if (strpos($ua, "Opera/9.80") !== FALSE && $code != "Opera Mini" || $code == "Safari" && strpos($ua, "Version/") !== FALSE)
+		if ((strpos($ua, "Opera/9.80") !== FALSE && $code != "Opera Mini" || $code == "Safari") && strpos($ua, "Version/") !== FALSE)
 			$version = substr($ua, strpos($ua, "Version/") + 8);
 
 		if (in_array($code, $mobileBrowsers)) $mobileLayout = true;
@@ -91,24 +91,16 @@ foreach($knownBrowsers as $code => $name) {
 	}
 }
 
-if (isset($_COOKIE['forcelayout'])) {
-	if ($_COOKIE['forcelayout'] == 1)
-		$mobileLayout = true;
-	else if ($_COOKIE['forcelayout'] == -1)
-		$mobileLayout = false;
-} else
-	$mobileLayout = false;
-
-if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;
-else $oldAndroid = false;
-
 $browserName = $name;
 $browserVers = (float)$version;
 
 $os = "";
 foreach($knownOSes as $code => $name) {
-	if (strpos($ua, "X11")) $suffix = " (X11)";
-	else if (strpos($ua, "textmode")) $suffix = " (text mode)";
+	if (strpos($ua, "X11"))
+		$suffix = " (X11)";
+	else if (strpos($ua, "textmode"))
+		$suffix = " (text mode)";
+
 	if (strpos($ua, $code) !== FALSE) {
 		$os = $name;
 		if(strpos($name, "%") !== FALSE) {
@@ -118,8 +110,10 @@ foreach($knownOSes as $code => $name) {
 		}
 		//If we're using the default Android browser, just report the version of Android being used ~Nina
 		$lkbhax = explode(' ', $lastKnownBrowser);
-		if ($lkbhax[0] == "Android") break;
-		if (isset($suffix)) $os = $os . $suffix;
+		if ($lkbhax[0] == "Android")
+			break;
+		if (isset($suffix))
+			$os = $os . $suffix;
 		if (in_array($code, $mobileBrowsers))
 			$mobileLayout = true;
 		$lastKnownBrowser = format(__("{0} on {1}"), $lastKnownBrowser, $os);
@@ -164,3 +158,16 @@ function GetVersion($ua, $versionStart) {
 	}
 	return $version;
 }
+
+if (isset($_COOKIE['forcelayout'])) {
+	if ($_COOKIE['forcelayout'] == 1)
+		$mobileLayout = true;
+	else if ($_COOKIE['forcelayout'] == -1)
+		$mobileLayout = false;
+} else if (Settings::get('defaultLayout') == "mobile")
+	$mobileLayout = true;
+else
+	$mobileLayout = false;
+
+if ($name == 'Android' && $version[0] == '2') $oldAndroid = true;
+else $oldAndroid = false;

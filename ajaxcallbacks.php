@@ -15,8 +15,7 @@ if (isset($_GET['id']))
 else
 	$id = 0;
 $hideTricks = " <a href=\"javascript:void(0)\" onclick=\"hideTricks(".$id.")\">".__("Back")."</a>";
-if($action == "q")	//Quote
-{
+if($action == "q") {	//Quote
 	$qQuote = "	select
 					p.id, p.deleted, pt.text,
 					u.name poster
@@ -38,9 +37,7 @@ if($action == "q")	//Quote
 	$reply = "[quote=\"".$quote['poster']."\" id=\"".$quote['id']."\"]".$quote['text']."[/quote]";
 	$reply = str_replace("/me ", "[b]* ".htmlspecialchars($quote['poster'])."[/b]", $reply);
 	die($reply);
-}
-else if ($action == 'rp') // retrieve post
-{
+} else if ($action == 'rp') { // retrieve post
 	$rPost = Query("
 			SELECT
 				p.id, p.date, p.num, p.deleted, p.deletedby, p.reason, p.options, p.mood, p.ip,
@@ -67,52 +64,31 @@ else if ($action == 'rp') // retrieve post
 		die(__("No."));
 
 	die(MakePost($post, isset($_GET['o']) ? POST_DELETED_SNOOP : POST_NORMAL, ['tid'=>$post['thread'], 'fid'=>$post['fid']]));
-}
-else if($action == "ou")	//Online Users
-{
+} else if($action == "ou") {	//Online Users
 	die(OnlineUsers((int)$_GET['f'], false));
-}
-else if($action == "tf")	//Theme File
-{
+} else if($action == "tf") {	//Theme File
 	$theme = $_GET['t'];
 
 	$themeFile = "themes/$theme/style.css";
 	if(!file_exists($themeFile))
 		$themeFile = "themes/$theme/style.php";
 
-function checkForImage(&$image, $external, $file)
-{
-	if($image) return;
+	function checkForImage(&$image, $external, $file) {
+		if($image) return;
 
-	if($external)
-	{
-		if(file_exists(DATA_DIR.$file))
-			$image = DATA_URL.$file;
+		if($external) {
+			if(file_exists(DATA_DIR.$file))
+				$image = DATA_URL.$file;
+		} else {
+			if(file_exists($file))
+				$image = resourceLink($file);
+		}
 	}
-	else
-	{
-		if(file_exists($file))
-			$image = resourceLink($file);
-	}
-}
 
-	/*checkForImage($layout_logopic, true, "logos/logo_$theme.png");
-	checkForImage($layout_logopic, true, "logos/logo_$theme.jpg");
-	checkForImage($layout_logopic, true, "logos/logo_$theme.gif");
-	checkForImage($layout_logopic, true, "logos/logo.png");
-	checkForImage($layout_logopic, true, "logos/logo.jpg");
-	checkForImage($layout_logopic, true, "logos/logo.gif");
-	checkForImage($layout_logopic, false, "themes/$theme/logo.png");
-	checkForImage($layout_logopic, false, "themes/$theme/logo.jpg");
-	checkForImage($layout_logopic, false, "themes/$theme/logo.gif");
-	checkForImage($layout_logopic, false, "themes/$theme/logo.png");
-	checkForImage($layout_logopic, false, "img/logo.png");*/
 	$layout_logopic = 'img/logo.png';
 
 	die(resourceLink($themeFile)."|".$layout_logopic);
-}
-elseif($action == "srl")	//Show Revision List
-{
+} elseif($action == "srl") {	//Show Revision List
 	$qPost = "select currentrevision, thread from {posts} where id={0}";
 	$rPost = Query($qPost, $id);
 	if(NumRows($rPost))
@@ -142,16 +118,13 @@ elseif($action == "srl")	//Show Revision List
 
 
 	$reply = __("Show revision:")."<br />";
-	while($revision = Fetch($revs))
-	{
+	while($revision = Fetch($revs)) {
 		$reply .= " <a href=\"javascript:void(0)\" onclick=\"showRevision(".$id.",".$revision["revision"].")\">".format(__("rev. {0}"), $revision["revision"])."</a>";
 
-		if ($revision['ru_id'])
-		{
+		if ($revision['ru_id']) {
 			$ru_link = UserLink(getDataPrefix($revision, "ru_"));
 			$revdetail = " ".format(__("by {0} on {1}"), $ru_link, formatdate($revision['revdate']));
-		}
-		else
+		} else
 			$revdetail = '';
 		$reply .= $revdetail;
 		$reply .= "<br />";
@@ -160,9 +133,8 @@ elseif($action == "srl")	//Show Revision List
 	$hideTricks = " <a href=\"javascript:void(0)\" onclick=\"showRevision(".$id.",".$post["currentrevision"]."); hideTricks(".$id.")\">".__("Back")."</a>";
 	$reply .= $hideTricks;
 	die($reply);
-}
-elseif($action == "sr")	//Show Revision
-{
+} elseif($action == "sr") {	//Show Revision
+
 	global $loguser, $blocklayouts;
 	$rPost = Query("
 			SELECT
@@ -213,20 +185,14 @@ elseif($action == "sr")	//Show Revision
 	}
 
 	die(makePostText($post, $poster));
-}
-elseif($action == "em")	//Email
-{
+} elseif($action == "em") {	//Email
 	$privacy = HasPermission('admin.editusers') ? '' : ' and showemail=1';
 	$blah = FetchResult("select email from {users} where id={0}{$privacy}", $id);
 	die(htmlspecialchars($blah));
-}
-elseif($action == "vc")	//View Counter
-{
+} elseif($action == "vc") {	//View Counter
 	$blah = FetchResult("select views from {misc}");
 	die(number_format($blah));
-}
-else if ($action == 'no') // notification list
-{
+} else if ($action == 'no') { // notification list
 	$notif = getNotifications();
 	die(json_encode($notif));
 }

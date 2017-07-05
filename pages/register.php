@@ -2,14 +2,18 @@
 //  WorldWeb XD - User account registration page
 //  Access: Guests
 //  Todo: Make it use templates
-//      - See bottom
+//	  - See bottom
 if (!defined('BLARG')) die();
 
 $title = __("Register");
 
-$haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings::get('captcha');
+$haveSecurimage = is_file(resourceLink('securimage/securimage.php')) && Settings::get('captcha') == "1" && !$loguser['root'];
+$havebotdetect = is_file(resourceLink('lib/botdetect.php')) && Settings::get('captcha') == "2" && !$loguser['root'];
 $RegisterWord = Settings::get('RegWordKey') !== "";
 $Math = Settings::get('Math');
+
+if ($haveSecurimage || $havebotdetect)
+	session_start();
 
 MakeCrumbs(['register' => __('Register')]);
 
@@ -22,11 +26,12 @@ elseif($loguserid && $loguser['root'])
 
 if(Settings::get('DisReg') && !$loguser['root'])
 	Kill(__("Registering is currently disabled. Please try again later."));
-else if(Settings::get('DisReg') && !$loguser['root'])
+else if(Settings::get('DisReg') && $loguser['root'])
 	Alert(__("Registering is currently disabled, but you are a root."));
 
 if($http->post('register')) {
-	if ((IsProxy() || IsProxyFSpamList()) && !$loguser['root']) {
+	$err = "";
+	if (IsProxy() && !$loguser['root']) {
 		$adminemail = Settings::get('ownerEmail');
 
 		if ($adminemail)
@@ -34,7 +39,7 @@ if($http->post('register')) {
 		else
 			$halp = '';
 
-		$err = __('Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp);
+		$err .= 'Registrations from proxies are not allowed. Turn off your proxy and try again.'.$halp;
 	} else {
 		$name = trim($http->post('name'));
 		$cname = str_replace(" ","", strtolower($name));
@@ -56,6 +61,13 @@ if($http->post('register')) {
 				break;
 		}
 
+		$rLoginBans = Query("select name from {loginbans}");
+		while($LoginBans = Fetch($rLoginBans)) {
+			$uban = trim(str_replace(" ", "", strtolower($LoginBans['name'])));
+			if($uban == $cname)
+				break;
+		}
+
 		$ipKnown = FetchResult("select COUNT(*) from {users} where lastip={0}", $_SERVER['REMOTE_ADDR']);
 
 		//This makes testing faster.
@@ -63,68 +75,61 @@ if($http->post('register')) {
 			$ipKnown = 0;
 
 		if (stripos(in_array($cemail, $emaildomainsblock)) !== FALSE)
-			$err = __('An unknown error occured, please try again.');
+			$err .= '<ul>An unknown error occured, please try again.</ul>';
 		if (!$cname)
-			$err = __('Enter a username and try again.');
+			$err .= '<ul>Enter a username and try again.</ul>';
 		if ($uname == $cname)
-			$err = __("This user name is already taken by someone else. Please choose another one.");
+			$err .= "<ul>This user name is already taken by someone else. Please choose another one.</ul>";
+		if ($uban == $cname)
+			$err .= "<ul>This user name is not allowed to be used. Please choose another one.</ul>";
 		if ($ipKnown >= 1)
-			$err = __("You already have an account.");
+			$err .= "<ul>You already have an account.</ul>";
 		if (!$http->post('readFaq'))
-			$err = format(__("You really should {0}read the FAQ{1}&hellip;"), "<a href=\"".actionLink("faq")."\">", "</a>");
+			$err .= format("<ul>You really should {0}read the FAQ{1}&hellip;</ul>", "<a href=\"".actionLink("faq")."\">", "</a>");
 		if (!$http->post('pass')) //Yes, I know that it should be common sence that you need to enter a password and that the "Less than 8 characters" thing exist, but its actually better to show the user what he's doing wrong. Other than to act blind to him.
-			$err = __("You need to enter your password.");
-		if (strlen($http->post('pass')) < 8)
-			$err = __("Your password must be at least eight characters long.");
+			$err .= "<ul>You need to enter a password, for security reasons.</ul>";
+		if (strlen($http->post('pass')) < 8 && $http->post('pass') !== "")
+			$err .= "<ul>Your password must be at least eight characters long.</ul>";
 		if ($http->post('pass') !== $http->post('pass2'))
-			$err = __("The passwords you entered don't match.");
+			$err .= "<ul>The passwords you entered don't match.</ul>";
 		if (!$http->post('pass2')) //I don't know if this is actually checked before. If a message already exists, please notify me.
-			$err = __("You need to enter your password again.");
-		if (!$cemail && Settings::get('email'))
-			$err = __("You need to specify an email. Please specify one, and try again.");
+			$err .= "<ul>You need to enter your password again.</ul>";
+		if (!$cemail && Settings::get('emailVerification'))
+			$err .= "<ul>You forgot to specify an email.</ul>";
 		if ($http->post('botprot'))
-			$err = __("An unknown error occured, please try again.");
+			$err .= "<ul>An unknown error occured, please try again.";
 		if ($uemail == $cemail)
-			$err = __("You already have an account.");
+			$err .= "<ul>You already have an account.</ul>";
 		if (!filter_var($cemail, FILTER_VALIDATE_EMAIL))
-			$err = __("An unknown error occured, please try again.");
-		if (($http->post('pass') || $http->post('pass2')) === $cname)
-			$err = __("Don't put your username as your password. You'll impose high security risk to your account");
+			$err .= "<ul>You didn't imput your email correctly.</ul>";
+		if ($http->post('pass') === $cname)
+			$err .= "<ul>Don't put your username as your password. You'll impose high security risk to your account.</ul>";
 		if (!$http->post('math') && Settings::get('math'))
-			$err = __("You forgot to answer the math question.");
+			$err .= "<ul>You forgot to answer the math question.</ul>";
 		if ($http->post('math') !== "11")
-			$err = __("Wrong Math Answer. Please try again.");
+			$err .= "<ul>You got the Math answer wrong.</ul>";
 		if (!$http->post('KeyWord') && Settings::get("RegWordKey") !== "")
-			$err = __("You forgot to enter the Registration Word Key. Please try again. Remeber that you have to contact the admin, in order to recieve it.");
+			$err .= "<ul>You forgot to enter the Registration Word Key. Remeber that you have to contact the admin, in order to recieve it.</ul>";
 		if ($http->post('KeyWord') !== Settings::get("RegWordKey"))
-			$err = __("You entered the wrong registration key. Please try again, but this time, with the right Registration Key. Remember that you have to obtain this key from a admin.");
+			$err .= "<ul>You entered the wrong registration key. Remember that you have to obtain this key from a admin.</ul>";
 		if (strlen($cname)>20)
-			$err = __("The maximum limit for usernames are 20 characters. Please try again, but this time, with a shorter username");
+			$err .= "<ul>The maximum limit for usernames are 20 characters.</ul>";
 
 		if($haveSecurimage) {
 			include("securimage/securimage.php");
 			$securimage = new Securimage();
 			if($securimage->check($http->post('captcha_code')) == false)
-				$err = __("You got the CAPTCHA wrong.");
-		}
-
-		$reasons = [];
-		if(IsTorExitPoint()) {
-			$reasons[] = 'tor';
-		}
-		$s = new StopForumSpam($stopForumSpamKey);
-		if($s->is_spammer(['email' => $http->post('email'), 'ip' => $_SERVER['REMOTE_ADDR'] ])) {
-			$reasons[] = 'sfs';
-		}
-		if(count($reasons)) {
-			$reason = implode(',', $reasons);
-			$bucket = "regfail"; include("lib/pluginloader.php");
-			$err = 'An unknown error occured, please try again.';
+				$err .= "<ul>You got the CAPTCHA wrong.</ul>";
+		} else if($havebotdetect) {
+			require("lib/botdetect.php");
+			$isHuman = $ExampleCaptcha->Validate();
+			if(!$isHuman)
+				$err .= "<ul>You got the CAPTCHA wrong.</ul>";
 		}
 	}
 
-	if($err)
-		Alert($err, __('Error'));
+	if($err !== "")
+		Alert(__('There are some few errors with your registration field.<br/><ol>'.$err.'</ol><br/>Please fix all of these errors, and try again.'), __('Error'));
 	else {
 		$newsalt = Shake();
 		$password = password_hash($http->post('pass'), PASSWORD_DEFAULT);
@@ -157,9 +162,22 @@ if($http->post('register')) {
 			if($testuser['id'] == $user['id'])
 				continue;
 
-			$sha = doHash($http->post('pass').SALT.$testuser['pss']);
-			if($testuser['password'] === $sha)
+			if (isValidPassword($pass, $testuser['password'], $testuser['id']))
 				$matches[] = $testuser['id'];
+			else {
+				$sha = doHash($http->post('pass').SALT.$testuser['pss']);
+				if($testuser['password'] === $sha) {
+					$password = password_hash($pass, PASSWORD_DEFAULT);
+
+					Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $testuser['id']);
+					$matches[] = $testuser['id'];
+				} else if($testuser['password'] === $pass) {
+					$password = password_hash($pass, PASSWORD_DEFAULT);
+
+					Query("UPDATE {users} SET password = {0} WHERE id={1}", $password, $testuser['id']);
+					$matches[] = $testuser['id'];
+				}
+			}
 		}
 
 		if (count($matches) > 0)
@@ -175,13 +193,13 @@ if($http->post('register')) {
 			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], 0);
 			die(header("Location: ".actionLink('profile', $user['id'], '', $user['name'])));
 		} else
-			die(header("Location: ".actionLink("login")));
+			die(header("Location: ".pageLink("login")));
 	}
 } else {
-	$_POST['name'] = '';
-	$_POST['email'] = '';
-	$_POST['sex'] = 2;
-	$_POST['autologin'] = 0;
+	$http->post('name') = '';
+	$http->post('email') = '';
+	$http->post('sex') = 2;
+	$http->post('autologin') = 0;
 }
 
 if(Settings::get('PassChecker')) {
@@ -189,7 +207,11 @@ if(Settings::get('PassChecker')) {
 			<script src=\"".resourceLink('js/zxcvbn.js')."\"></script>";
 }
 
-print "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
+if($havebotdetect) {
+	print "<link type=\"text/css\" rel=\"Stylesheet\" href=".CaptchaUrls::LayoutStylesheetUrl()." />";
+}
+
+print "<form action=\"".htmlentities(pageLink("register"))."\" method=\"post\" onsubmit=\"register.disabled = true; return true;\">
 	<table class=\"outline margin form form_register\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">
@@ -222,7 +244,7 @@ print "
 			</td>
 			<td class=\"cell0\">
 				<input type=\"email\" id=\"email\" type=email name=\"email\" value=\"".htmlspecialchars($http->post('email'))."\" maxlength=\"60\" size=24";
-if (Settings::get('email'))
+if (Settings::get('emailVerification'))
 	print "class=\"required\"";
 print "
 				>
@@ -241,7 +263,7 @@ print "
 				Bot Protection
 			</td>
 			<td class=\"cell1\">
-				<input type=\"text\" id=\"botprot\" name=\"botprot\" style=\"display: none;\">
+				<input type=\"text\" id=\"botprot\" name=\"botprot\">
 			</td>
 		</tr>";
 
@@ -255,6 +277,22 @@ if($haveSecurimage) {
 				<img width=\"200\" height=\"80\" id=\"captcha\" src=\"".actionLink("captcha", shake())."\" alt=\"CAPTCHA Image\" />
 				<button onclick=\"document.getElementById('captcha').src = '".actionLink("captcha", shake())."?' + Math.random(); return false;\">".__("New")."</button><br />
 				<input type=\"text\" name=\"captcha_code\" size=\"10\" maxlength=\"6\" class=\"required\" />
+			</td>
+		</tr>";
+} else if($havebotdetect) {
+		print "
+		<tr>
+			<td class=\"cell2\">
+				".__("Captcha")."
+			</td>
+			<td class=\"cell1\">";
+
+			$ExampleCaptcha = new Captcha("ExampleCaptcha");
+			$ExampleCaptcha->UserInputID = "CaptchaCode";
+			echo $ExampleCaptcha->Html(); 
+
+			print "
+				<input name=\"CaptchaCode\" id=\"CaptchaCode\" type=\"text\" />
 			</td>
 		</tr>";
 }
@@ -303,7 +341,7 @@ print "
 		<tr>
 			<td colspan=\"2\" class=\"cell0 smallFonts\" style=\"padding:0.7em;\">";
 
-if (Settings::get('email'))
+if (Settings::get('emailVerification'))
 	print "Specifying an email address is a requirement. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
 else
 	print "Specifying an email address isn't a requirement, but is recommended. By default, your email is made private. You can change this setting later in the \"edit profile\" page if you desire to do so.";
@@ -312,7 +350,7 @@ print "		</td>
 		</tr>
 		<tr>
 			<td colspan=\"2\" class=\"cell1 smallFonts\" style=\"padding:0.7em;\">
-				Do you already have an account? Log into it <a href=\"/login/\">here</a>.
+				Do you already have an account? You should <a href=\"".pageLink("login")."\">log into it</a>, instead of making a new one. If you want to change your name, just ask the administrators to do it for you.
 			</td>
 		</tr>
 	</table>";

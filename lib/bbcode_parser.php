@@ -101,7 +101,6 @@ $TagList = [
 	'[trh'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 	'[td'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
 
-	'[ugotbanned'	=> 	TAG_GOOD | TAG_RAWCONTENTS,
 	'[instameme'	=> 	TAG_GOOD | TAG_RAWCONTENTS | TAG_CLOSEOPTIONAL,
 	'[youtube' 		=> 	TAG_GOOD | TAG_NOAUTOLINK,
 	'[gist' 		=> TAG_GOOD,

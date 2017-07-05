@@ -5,12 +5,12 @@ if (!defined('BLARG')) die();
 <table class="outline">
 	<tr class="header0"><th>Credits</th></tr>
 	<tr class="cell0"><td>
-		This board software was created by the following contributors, in no special order.<br>
+		This software was created by the following contributors, in no special order.<br>
 	<ul>
 		<li>Kawa — Originally created Acmlmboard XD ("ABXD")</li>
 		<li>Dirbaio — Contributed to ABXD 3.0, which parts of this board are based off of</li>
 		<li>StapleButter — Created Blargboard (a fork of Acmlmboard XD)</li>
-		<li>Maorninja322 — Created WorldWeb XD (a fork of Blargboard), coder</li>
+		<li>MaorNinja322 — Created WorldWeb XD (a fork of Blargboard), coder</li>
 		<li>MoonlightCapital — Made a password generator.</li>
 		<li>JeDaYoshi — Ported all the Acmlmboard XD plugins to Blargboard, ported the RPG, coder</li>
 		<li>Phase — Added compatibility to 5.7 MySQL databases, JSON ranksets, etc...</li>

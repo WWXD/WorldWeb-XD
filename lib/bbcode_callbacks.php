@@ -30,10 +30,9 @@ $bbcodeCallbacks = [
 
 	'[youtube' => 'bbcodeYoutube',
 	'[vidmeo' => 'bbcodeVidmeo',
-    '[gist' => 'bbcodeGist',
+	'[gist' => 'bbcodeGist',
 
 	"[instameme" => "bbcodeMeme",
-	"[ugotbanned" => "bbcodeBan",
 	
 	//Color BBCode Starts here
 	"[color"  => "bbcodecolordefault",
@@ -43,7 +42,7 @@ $bbcodeCallbacks = [
 	"[orange" => "bbcodecolororange",
 	"[violet" => "bbcodecolorviolet",
 	"[indigo" => "bbcodecolorindigo",
-	"[red"    => "bbcodecolorred",
+	"[red"	=> "bbcodecolorred",
 	"[blue"   => "bbcodecolorblue",
 	"[bleu"   => "bbcodecolorbleu",
 	"[pink"   => "bbcodecolorpink",
@@ -277,27 +276,27 @@ function bbcodeTableRowHeader($contents, $arg, $parenttag) {
 
 function getYoutubeIdFromUrl($url)
 {
-    $pattern =
-        '%^# Match any youtube URL
-        (?:https?://)?  # Optional scheme. Either http or https
-        (?:www\.)?      # Optional www subdomain
-        (?:             # Group host alternatives
-          youtu\.be/    # Either youtu.be,
-        | youtube\.com  # or youtube.com
-          (?:           # Group path alternatives
-            /embed/     # Either /embed/
-          | /v/         # or /v/
-          | /watch\?v=  # or /watch\?v=
-          )             # End path alternatives.
-        )               # End host alternatives.
-        ([\w-]{10,12})  # Allow 10-12 for 11 char youtube id.
-        $%x'
-        ;
-    $result = preg_match($pattern, $url, $matches);
-    if (false !== $result) {
-        return $matches[1];
-    }
-    return false;
+	$pattern =
+		'%^# Match any youtube URL
+		(?:https?://)?  # Optional scheme. Either http or https
+		(?:www\.)?	  # Optional www subdomain
+		(?:			 # Group host alternatives
+		  youtu\.be/	# Either youtu.be,
+		| youtube\.com  # or youtube.com
+		  (?:		   # Group path alternatives
+			/embed/	 # Either /embed/
+		  | /v/		 # or /v/
+		  | /watch\?v=  # or /watch\?v=
+		  )			 # End path alternatives.
+		)			   # End host alternatives.
+		([\w-]{10,12})  # Allow 10-12 for 11 char youtube id.
+		$%x'
+		;
+	$result = preg_match($pattern, $url, $matches);
+	if (false !== $result) {
+		return $matches[1];
+	}
+	return false;
 }
 
 function bbcodeYoutube($contents, $arg, $parenttag)
@@ -315,23 +314,23 @@ function bbcodeYoutube($contents, $arg, $parenttag)
 
 function getVimeoIdFromUrl($url)
 {
-    $pattern =
-        '%^# Match any youtube URL
-        (?:https?://)?	# Optional scheme. Either http or https
-        (?:www\.)?		# Optional www subdomain
-        vimeo.com/		# The host,
-          (?:			# Group path alternatives
-            /video/		# either /v/
-          | /			# or the root
-          )				# End path alternatives.
-        ([\w-]{8,10})	# Allow 8-10 for 9 char vimeo id.
-        $%x'
-        ;
-    $result = preg_match($pattern, $url, $matches);
-    if (false !== $result) {
-        return $matches[1];
-    }
-    return false;
+	$pattern =
+		'%^# Match any youtube URL
+		(?:https?://)?	# Optional scheme. Either http or https
+		(?:www\.)?		# Optional www subdomain
+		vimeo.com/		# The host,
+		  (?:			# Group path alternatives
+			/video/		# either /v/
+		  | /			# or the root
+		  )				# End path alternatives.
+		([\w-]{8,10})	# Allow 8-10 for 9 char vimeo id.
+		$%x'
+		;
+	$result = preg_match($pattern, $url, $matches);
+	if (false !== $result) {
+		return $matches[1];
+	}
+	return false;
 }
 
 function bbcodeVimeo($contents, $arg, $parenttag) {
@@ -347,23 +346,23 @@ function bbcodeVimeo($contents, $arg, $parenttag) {
 }
 
 function bbcodeGist($contents, $arg) {
-    if (!function_exists('curl_init')) {
-        return "<a href=\"https://gist.github.com/$contents\">View $contents on GitHub</a>";
-    }
-    else if (!preg_match("/([0-9_a-zA-Z]+)\/([0-9a-f]+)/", $contents)) {
-        return "<pre><code>Invalid Gist</code></pre>";
-    }
-    else {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://gist.githubusercontent.com/$contents/raw");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        $code = curl_exec($ch);
-        curl_close($ch);
-        return "<pre><code>$code</code></pre>";
-    }
+	if (!function_exists('curl_init')) {
+		return "<a href=\"https://gist.github.com/$contents\">View $contents on GitHub</a>";
+	}
+	else if (!preg_match("/([0-9_a-zA-Z]+)\/([0-9a-f]+)/", $contents)) {
+		return "<pre><code>Invalid Gist</code></pre>";
+	}
+	else {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "https://gist.githubusercontent.com/$contents/raw");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		$code = curl_exec($ch);
+		curl_close($ch);
+		return "<pre><code>$code</code></pre>";
+	}
 }
 
 function bbcodeMeme($contents, $arg, $parenttag) {
@@ -390,12 +389,6 @@ function bbcodeMeme($contents, $arg, $parenttag) {
 	//If a number was found that is not in the collection
 	else
 		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/insta404.jpg" alt="Instameme404"/>';
-}
-
-function bbcodeBan($contents, $arg, $parenttag) {
-	//Put this here for a 100% true statement to run code under it
-	if ('1' == '1')
-		return '<img class="imgtag" style="max-width:300px; max-height:300px;" src="../../img/instameme/banhammer.jpg" alt="You got banned"/>';
 }
 
 //Code for Color BBCode Starts Here.

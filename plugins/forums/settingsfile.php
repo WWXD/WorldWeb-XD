@@ -89,7 +89,7 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		"floodProtectionInterval" => [
 			"type" => "integer",
 			"default" => "10",
-			"name" => "Minimum time between user posts (seconds)",
+			"name" => "Minimum time between user posts (seconds)"
 		],
 	);
 ?>

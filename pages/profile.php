@@ -367,7 +367,7 @@ if (!$mobileLayout) {
 			$previewPost['u_'.$key] = $value;
 
 		MakePost($previewPost, POST_PROFILE);
-	} else if (!$user['bio'] && file_exists(BOARD_ROOT.'/plugins/board/enabled.txt')) {
+	} else if (!$user['bio'] && file_exists(URL_ROOT.'/plugins/forum/enabled.txt')) {
 		$previewPost['text'] = Settings::get("profilePreviewText");
 
 		$previewPost['num'] = 0;
@@ -385,9 +385,9 @@ $links = [];
 
 if (HasPermission('admin.banusers') && $loguserid != $id) {
 	if ($user['primarygroup'] != Settings::get('bannedGroup'))
-		$links[] = actionLinkTag('Ban user', 'banhammer', $id);
+		$links[] = actionLinkTag('Ban user', 'banuser', $id);
 	else
-		$links[] = actionLinkTag('Unban user', 'banhammer', $id, 'unban=1');
+		$links[] = actionLinkTag('Unban user', 'banuser', $id, 'unban=1');
 }
 
 if(HasPermission('admin.userdelete') && HasPermission('user.editprofile') && $loguserid == !$id && HasPermission('admin.editusers'))

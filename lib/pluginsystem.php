@@ -9,7 +9,7 @@ $plugintemplates = [];
 
 function registerSetting($settingname, $label, $check = false)
 {
-    // TODO: Make this function.
+	// TODO: Make this function.
 }
 
 function getSetting($settingname, $useUser = false) {

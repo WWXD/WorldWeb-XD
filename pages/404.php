@@ -3,8 +3,9 @@
 //  Access: all
 if (!defined('BLARG')) die();
 
-// Some servers use one response, some use another. For safety, use both.
+header("HTTP/1.0 404 Not Found");
 header('HTTP/1.1 404 Not Found');
+header("HTTP/2.0 404 Not Found");
 header('Status: 404 Not Found');
 
 $title = __("404 - Not found");

@@ -1,6 +1,6 @@
 <?php
-//  BlargBoard XD - Thread editing page
-//  Access: moderators
+//  WorldWeb XD - Thread editing page
+
 if (!defined('BLARG')) die();
 
 $title = __("Edit thread");

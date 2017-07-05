@@ -7,10 +7,10 @@ if (!defined('BLARG')) die();
 $title = __("Member list");
 
 
-if (!isset($_GET['group'])) 
-	$_GET['group'] = 'none';
-else if ($_GET['group'] !== 'staff' && $_GET['group'] !== 'none')
-	$_GET['group'] = (int)$_GET['group'];
+if (!isset($http->get('group'))) 
+	$http->get('group') = 'none';
+else if ($http->get('group') !== 'staff' && $http->get('group') !== 'none')
+	$_GET['group'] = (int)$http->get('group');
 
 
 $allgroups = [];
@@ -50,7 +50,7 @@ $fields = [
 			"asc" => __("Ascending"),
 		]),
 	'group' => makeSelect("group", $allgroups),
-	'name' => '<input type="text" name="name" size=24 maxlength=20 value="'.htmlspecialchars($_GET['name']).'">',
+	'name' => '<input type="text" name="name" size=24 maxlength=20 value="'.htmlspecialchars($http->get('name')).'">',
 
 	'btnSearch' => '<input type="submit" value="'.__('<i class=\"icon-search\"></i> Search').'">',
 ];
@@ -68,20 +68,20 @@ $getArgs = [];
 $tpp = $loguser['threadsperpage'];
 if($tpp<1) $tpp=50;
 
-if(isset($_GET['from']))
-	$from = (int)$_GET['from'];
+if(isset($http->get('from')))
+	$from = (int)$http->get('from');
 else
 	$from = 0;
 
-if(isset($_GET['order'])) {
-	$dir = $_GET['order'];
+if(isset($http->get('order'))) {
+	$dir = $http->get('order');
 	if($dir != "asc" && $dir != "desc")
 		unset($dir);
 	else
 		$getArgs[] = 'order='.$dir;
 }
 
-$sort = $_GET['sort'];
+$sort = $http->get('sort');
 if(!in_array($sort, ['', 'id', 'name', 'reg']))
 	unset($sort);
 
@@ -89,17 +89,16 @@ if ($sort)
 	$getArgs[] = 'sort='.$sort;
 
 $pow = null;
-if($_GET['group'] !== "none") {
-	if ($_GET['group'] === 'staff') {
+if($http->get('group') !== "none") {
+	if ($http->get('group') === 'staff') {
 		$pow = [];
 		foreach ($usergroups as $g) {
 			if ($g['display'] == 1)
 				$pow[] = $g['id'];
 		}
-	}
-	else
-		$pow = (int)$_GET['group'];
-		
+	} else
+		$pow = (int)$http->get('group');
+
 	if ($pow !== null)
 		$getArgs[] = 'group='.$pow;
 }
@@ -124,7 +123,7 @@ if($pow !== null) {
 		$where .= " AND (SELECT COUNT(*) FROM {secondarygroups} sg WHERE sg.userid=id AND sg.groupid={2})>0";
 }
 
-$query = $_GET['name'];
+$query = $http->get('name');
 
 if($query != "") {
 	$where.= " and (name like {3} or displayname like {3})";
@@ -154,6 +153,10 @@ while($user = Fetch($rUsers)) {
 	$udata['posts'] = $user['posts'];
 	$udata['birthday'] = ($user['birthday'] ? cdate('M jS', $user['birthday']) : '');
 	$udata['regdate'] = cdate('M jS Y', $user['regdate']);
+	$udata['banlink'] = return pageLinkTag("<span$classing class=\"userlink\" title=\"$title\">$fname</span>", "banuser", [
+			'id' => $user['id'],
+			'name' => slugify($user['name'])
+		]);
 
 	$users[] = $udata;
 	$i++;
@@ -179,7 +182,7 @@ function makeSelect($name, $options) {
 			continue;
 		}
 
-		$result .= "\n\t<option".($key===$_GET[$name] ? " selected=\"selected\"" : "")." value=\"".$key."\">".$value."</option>";
+		$result .= "\n\t<option".($key===$http->get($name) ? " selected=\"selected\"" : "")." value=\"".$key."\">".$value."</option>";
 	}
 
 	if ($hasgroups) $result .= "\n\t</optgroup>";
