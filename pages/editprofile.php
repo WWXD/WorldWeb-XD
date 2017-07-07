@@ -448,13 +448,13 @@ function dummycallback($field, $item) {
 function HandlePicture($field, $type, &$usepic) {
 	global $userid;
 
+	$extensions = [".png",".jpg",".jpeg",".gif"];
+
 	if($type == 0) {
-		$extensions = [".png",".jpg",".jpeg",".gif"];
 		$maxDim = 200;
 		$maxSize = 600 * 1024;
 		$errorname = __('avatar');
 	} else if($type == 1) {
-		$extensions = [".png", ".gif"];
 		$maxDim = 16;
 		$maxSize = 100 * 1024;
 		$errorname = __('minipic');
@@ -475,7 +475,6 @@ function HandlePicture($field, $type, &$usepic) {
 	if($fileSize > $maxSize && !$allowOversize)
 		return format(__("File size for {0} is too high. The limit is {1} bytes, the uploaded image is {2} bytes."), $errorname, $maxSize, $fileSize)."</li>";
 
-	$ext = '.blarg';
 	switch($fileType) {
 		case 1:
 			$sourceImage = imagecreatefromgif($tempFile);
