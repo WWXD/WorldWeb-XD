@@ -1,9 +1,8 @@
 {capture "breadcrumbs"}
 {if $layout_crumbs || $layout_actionlinks}
-		<table class="outline breadcrumbs"><tr class="header1">
-			<th>
+		<div class="w3-bar w3-WWXD-theme">
 				{if $layout_actionlinks && count($layout_actionlinks)}
-				<div class="actionlinks" style="float:right;">
+				<div class="actionlinks w3-button w3-right">
 					<ul class="pipemenu smallFonts">
 					{foreach $layout_actionlinks as $alink}
 						<li>{$alink}
@@ -12,157 +11,85 @@
 				</div>
 				{/if}
 				{if $layout_crumbs && count($layout_crumbs)}
-				<ul class="crumbLinks">
+				<ul class="crumbLinks w3-button">
 				{foreach $layout_crumbs as $url=>$text}
 					<li><a href="{$url|escape}">{$text}</a>
 				{/foreach}
 				</ul>
 				{/if}
-			</th>
-		</tr></table>
-{/if}
+		</div>
+{else}<div class="w3-bar w3-WWXD-theme" style="min-height: 2px;"></div>{/if}
 {/capture}
-<table id="main" class="layout-table">
-<tr>
-<td id="main-header" colspan="3">
-	<table id="header" class="outline">
-		<tr>
-			{if $poratext}<td class="cell0 left" colspan="3">
-				<table class="layout-table">
-				<tr>
-				<td>
-					<a href="{pageLink name='home'}">{$logo}</a>
-				</td>
-				<td>
-					<table class="outline" id="headerInfo">
-						<tr class="header1"><th>{$poratitle}</th></tr>
-						<tr>
-							<td class="cell1 center">
-								{$poratext}
-							</td>
-						</tr>
-					</table>
-				</td>
-				</tr>
-				</table>
-			</td>{else}<td class="cell0 center" colspan="3">
-				<table class="layout-table">
-				<tr>
-				<td>
-					<a href="{pageLink name='home'}"><img id="theme_banner" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a>
-				</td>
-				</tr>
-				</table>
-			</td>{/if}
-		</tr>
-		<tr class="header1">
-			<td class="cell0 center" style="width: 140px">
-				{$layout_views}
-			</td>
-			<th id="navBar">
-				<div style="display:inline-block; float:right;">
-					{if $loguserid}
-					<div id="userMenuContainer" class="dropdownContainer">
-						<div id="userMenuButton" class="navButton">
-							{$loguserlink}
-							<i class="icon-caret-down"></i>
-						</div>
-						<ul class="dropdownMenu">
-							{foreach $layout_userpanel as $url=>$text}
-								<li><a href="{$url|escape}">{$text}</a>
-							{/foreach}
-							<li><a href="#" onclick="$('#logout').submit(); return false;">Log out</a>
-						</ul>
-					</div>
-					{$numnotifs=count($notifications)}
-					<div id="notifMenuContainer" class="dropdownContainer {if $numnotifs}hasNotifs{else}noNotif{/if}">
-						<div id="notifMenuButton" class="navButton">
-							Notifications
-							<span id="notifCount">{$numnotifs}</span>
-							<i class="icon-caret-down"></i>
-						</div>
-						<ul id="notifList" class="dropdownMenu">
-						{if $numnotifs}
-							{foreach $notifications as $notif}
-								<li>{$notif.text}<br><small>{$notif.formattedDate}</small>
-							{/foreach}
-						{/if}
-						</ul>
-					</div>
-					{else}
-					<div id="userMenuContainer" class="dropdownContainer">
-						<div id="userMenuButton" class="navButton">
-							Guest
-							<i class="icon-caret-down"></i>
-						</div>
-						<ul class="dropdownMenu">
-							<li><a href="{pageLink name='register'}">Register</a>
-							<li><a href="{pageLink name='login'}">Log in</a>
-						</ul>
-					</div>
-					{/if}
-				</div>
-				<div id="navMenuContainer">
-					<span class="navButton"><a href="{pageLink name='home'}">Home</a></span>
-					{foreach $headerlinks as $url=>$text}
-						<span class="navButton"><a href="{$url|escape}">{$text}</a></span>
-					{/foreach}
-				</div>
-			</th>
-			<td class="cell0 center" style="width: 140px">
-				{$layout_time}
-			</td>
-		</tr>
-		<tr class="cell0">
-			<td class="smallFonts center" colspan="3">
-				{$layout_onlineusers}{if $layout_birthdays}<br>{$layout_birthdays}{/if}
-			</td>
-		</tr>
-		<tr class="header1"><th id="header-sep" colspan="3"></th></tr>
-	</table>
-</td>
-</tr>
 
-	<tr><td class="crumb-container" colspan="3">
-		{$smarty.capture.breadcrumbs}
-	</td></tr>
-
-<tr>
-
-<td id="main-page">
-	<table id="page-container" class="layout-table">
-	<tr><td class="contents-container">
-		{$layout_contents}
-	</td></tr>
-	</table>
-</td>
-</tr>
-	<tr><td class="crumb-container" colspan="3">
-		{$smarty.capture.breadcrumbs}
-	</td></tr>
-<tr>
-<td id="main-footer" colspan="3">
-
-	<table id="footer" class="outline">
-	<tr>
-	<td class="cell2">
-		<table class="layout-table" style="line-height: 1.4em;">
-			<tr>
-			<td style="text-align: left;">
-				{$layout_credits}<br>
-				{$board_credits}
-			</td>
-			<td style="text-align: center;">
-				{$perfdata}
-			</td>
-			<td style="text-align: right;">
-				{$mobileswitch}
-			</td>
+<div style="margin: 10px 10px 10px 10px;">
+	{if $poratext}
+		<a href="{pageLink name='home'}">{$logo}</a>
+		<table class="w3-table-all w3-centered" style="float: right;">
+			<tr><th>{$poratitle}</th></tr>
+			<tr><td>{$poratext}</td></tr>
 		</table>
-	</td>
-	</tr>
-	</table>
-
-</td>
-</tr>
-</table>
+	{else}
+		<center><a href="{pageLink name='home'}">{$logo}</a></center>
+	{/if}
+</div>
+<div class="w3-bar w3-WWXD-theme">
+	<a href="/" class="w3-bar-item w3-button w3-mobile">Home</a>
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button w3-mobile">Forums <i class="icon-caret-down"></i></button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4 w3-mobile">
+			<a href="{actionLink page='board'}" class="w3-bar-item w3-button w3-mobile">Index</a>
+			<a href="{actionLink page='faq'}" class="w3-bar-item w3-button w3-mobile">FAQ</a>
+			<a href="{actionLink page='lastposts'}" class="w3-bar-item w3-button w3-mobile">Latest posts</a>
+			<a href="{actionLink page='search'}" class="w3-bar-item w3-button w3-mobile">Search</a>
+			<a href="{actionLink page='memberlist'}" class="w3-bar-item w3-button w3-mobile">Member list</a>
+			<a href="{actionLink page='ranks'}" class="w3-bar-item w3-button w3-mobile">Ranks</a>
+		</div>
+	</div>
+	{foreach $headerlinks as $url=>$text}
+		<a href="{$url|escape}" class="w3-mobile w3-bar-item w3-button">{$text}</a>
+	{/foreach}
+	{if $loguserid}
+		<div class="w3-dropdown-hover w3-right w3-mobile">
+			<button class="w3-button w3-mobile">{$loguserlink} <i class="icon-caret-down"></i></button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4 w3-mobile">
+				{foreach $layout_userpanel as $url=>$text}
+					<a href="{$url|escape}" class="w3-bar-item w3-button w3-mobile">{$text}</a>
+				{/foreach}
+				<a href="#" onclick="$('#logout').submit(); return false;" class="w3-bar-item w3-button w3-mobile">Log out</a>
+			</div>
+		</div> <!-- Too lazy to convert this to W3CSS RN. I'll convert it later -->
+		<div id="notifMenuContainer" class="dropdownContainer {if $numnotifs}hasNotifs{else}noNotif{/if}">
+			<div id="notifMenuButton" class="navButton">
+				Notifications
+				<span id="notifCount">{$numnotifs}</span>
+				<i class="icon-caret-down"></i>
+			</div>
+			<ul id="notifList" class="dropdownMenu">
+				{if $numnotifs}
+					{foreach $notifications as $notif}
+						<li>{$notif.text}<br><small>{$notif.formattedDate}</small>
+					{/foreach}
+				{/if}
+			</ul>
+		</div>
+	{else}
+		<div class="w3-dropdown-hover w3-right w3-mobile">
+			<button class="w3-button w3-mobile">Guest <i class="icon-caret-down"></i></button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4 w3-mobile">
+				<a href="{actionLink page='login'}" class="w3-bar-item w3-button w3-mobile">Login</a>
+				<a href="{actionLink page='register'}" class="w3-bar-item w3-button w3-mobile">Register</a>
+			</div>
+		</div>
+	{/if}
+</div>
+<center>{$layout_onlineusers}{if $layout_birthdays}<br>{$layout_birthdays}{/if}</center>
+<div id="main-page">
+	<div class="crumb-container">{$smarty.capture.breadcrumbs}</div>
+	<div class="contents-container">{$layout_contents}</div>
+	<div class="crumb-container">{$smarty.capture.breadcrumbs}</div>
+</div>
+<div class="w3-bar w3-WWXD-theme">
+	<div class="w3-button">{$layout_credits}<br>
+	{$board_credits}</div>
+	<div class="w3-button w3-right">{$mobileswitch}</div>
+</div>
