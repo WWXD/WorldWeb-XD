@@ -32,95 +32,6 @@ if (!defined('BLARG')) die();
 			"name" => "Custom Credits",
 			'category' => 'Board identity'
 		],
-		"minwords" => [
-			"type" => "integer",
-			"default" => "5",
-			"name" => "Minimum word count"
-		],
-		'newsForum' => [
-			'type' => 'forum',
-			'default' => '0',
-			'name' => 'Latest News forum'
-		],
-		'anncForum' => [
-			'type' => 'forum',
-			'default' => '0',
-			'name' => 'Announcements forum'
-		],
-		"trashForum" => [
-			"type" => "forum",
-			"default" => "0",
-			"name" => "Trash forum"
-		],
-		"secretTrashForum" => [
-			"type" => "forum",
-			"default" => "0",
-			"name" => "Deleted threads forum"
-		],
-		"tagsDirection" => [
-			"type" => "options",
-			"options" => ['Left' => 'Left', 'Right' => 'Right'],
-			"default" => 'Right',
-			"name" => "Direction of thread tags"
-		],
-		"alwaysMinipic" => [
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Show minipics everywhere"
-		],
-		"showExtraSidebar" => [
-			"type" => "boolean",
-			"default" => "1",
-			"name" => "Show extra info in post sidebar"
-		],
-		"profilePreviewText" => [
-			"type" => "textbbcode",
-			"default" => "This is a sample post. You [b]probably[/b] [i]already[/i] [u]know[/u] what this is for.
-[quote=Goomba][quote=Mario]Woohoo! [url=http://www.mariowiki.com/Super_Mushroom]That's what I needed![/url][/quote]Oh, nooo! *stomp*[/quote]
-Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perhaps how to do the classic infinite loop?
-[source=c]while(true){
-    printf(\"Hello World!
-\");
-}[/source]",
-			"name" => "Post preview text"
-		],
-		"Syndromes" => [
-			"type" => "options",
-			"options" => ['0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'],
-			"default" => '1',
-			"name" => "Syndromes"
-		],
-		"postLayoutType" => [
-			"type" => "options",
-			"options" => ['0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'],
-			"default" => '2',
-			"name" => "Post layout type"
-		],
-		"postAttach" => [
-			"type" => "boolean",
-			"default" => "0",
-			"name" => "Allow post attachments"
-		],
-		"customTitleThreshold" => [
-			"type" => "integer",
-			"default" => "100",
-			"name" => "Custom title threshold (posts)"
-		],
-		"oldThreadThreshold" => [
-			"type" => "integer",
-			"default" => "3",
-			"name" => "Old thread threshold (months)"
-		],
-		"minwords" => [
-			"type" => "integer",
-			"default" => "5",
-			"name" => "Minimum post word count"
-		],
-		"floodProtectionInterval" => [
-			"type" => "integer",
-			"default" => "10",
-			"name" => "Minimum time between user posts (seconds)"
-		],
 		
 		
 		"dateformat" => [
@@ -159,6 +70,79 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"name" => "Board language",
 			'category' => 'Presentation'
 		],
+		"tagsDirection" => [
+			"type" => "options",
+			"options" => ['Left' => 'Left', 'Right' => 'Right'],
+			"default" => 'Right',
+			"name" => "Direction of thread tags",
+			'category' => 'Presentation'
+		],
+		"alwaysMinipic" => [
+			"type" => "boolean",
+			"default" => "0",
+			"name" => "Show minipics everywhere",
+			'category' => 'Presentation'
+		],
+		"showExtraSidebar" => [
+			"type" => "boolean",
+			"default" => "1",
+			"name" => "Show extra info in post sidebar",
+			'category' => 'Presentation'
+		],
+		"profilePreviewText" => [
+			"type" => "textbbcode",
+			"default" => "This is a sample post. You [b]probably[/b] [i]already[/i] [u]know[/u] what this is for.
+
+[quote=Goomba][quote=Mario]Woohoo! [url=http://www.mariowiki.com/Super_Mushroom]That's what I needed![/url][/quote]Oh, nooo! *stomp*[/quote]
+
+Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perhaps how to do the classic infinite loop?
+[source=c]while(true){
+    printf(\"Hello World!
+\");
+}[/source]",
+			"name" => "Post preview text",
+			'category' => 'Presentation'
+		],
+
+
+		"Syndromes" => [
+			"type" => "options",
+			"options" => ['0' => 'None', '1' => 'WorldWeb XD', '2' => 'Acmlmboard 2.0', '3' => 'Neritic Net', '4' => 'Vizzed'],
+			"default" => '1',
+			"name" => "Syndromes",
+			'category' => 'Functionality'
+		],
+		"postLayoutType" => [
+			"type" => "options",
+			"options" => ['0' => 'Signature', '1' => 'Post header + signature', '2' => 'Post header + signature + sidebars'],
+			"default" => '2',
+			"name" => "Post layout type",
+			'category' => 'Functionality'
+		],
+		"postAttach" => [
+			"type" => "boolean",
+			"default" => "0",
+			"name" => "Allow post attachments",
+			'category' => 'Functionality'
+		],
+		"customTitleThreshold" => [
+			"type" => "integer",
+			"default" => "100",
+			"name" => "Custom title threshold (posts)",
+			'category' => 'Functionality'
+		],
+		"oldThreadThreshold" => [
+			"type" => "integer",
+			"default" => "3",
+			"name" => "Old thread threshold (months)",
+			'category' => 'Functionality'
+		],
+		"minwords" => [
+			"type" => "integer",
+			"default" => "5",
+			"name" => "Minimum post word count",
+			'category' => 'Functionality'
+		],
 		"viewcountInterval" => [
 			"type" => "integer",
 			"default" => "10000",
@@ -185,6 +169,12 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 			"help" => "Email address used to send the pasword reset e-mails. If left blank, the password reset feature is disabled.",
 			'category' => 'Functionality'
 		],
+		"floodProtectionInterval" => [
+			"type" => "integer",
+			"default" => "10",
+			"name" => "Minimum time between user posts (seconds)",
+			'category' => 'Functionality'
+		],
 		"nofollow" => [
 			"type" => "boolean",
 			"default" => "0",
@@ -200,6 +190,20 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		],
 
 
+		"ircserver" => [
+			"type" => "text",
+			"default" => "irc.fortytwo.tech",
+			"name" => "Server Name",
+			'category' => 'IRC'
+		],
+		"ircchannel" => [
+			"type" => "text",
+			"default" => "42net",
+			"name" => "Channel",
+			'category' => 'IRC'
+		],
+
+
 		'PoRATitle' => [
 			'type' => 'text',
 			'default' => 'Blargbox',
@@ -208,7 +212,7 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		],
 		"PoRAText" => [
 			"type" => "textbox",
-			"default" => "Welcome to your new WorldWeb XD Website! You can edit the board settings, forum list, this very message, and other stuff from the admin panel.<br/>Enjoy WorldWeb XD!",
+			"default" => "Welcome to Blargboard. Edit this.",
 			"name" => "Info box text",
 			'category' => 'Information',
 		],
@@ -226,52 +230,77 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		],
 
 
-		"EmailVerification" => [
+		"email" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Email Verification (Verification part not working just yet)",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"math" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Math question",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"RegWordKey" => [
 			"type" => "text",
 			"default" => "",
 			"name" => "Registration Key",
 			"help" => "This is the actual registration key used. Leave blank in order to not use this function.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"Captcha" => [
 			"type" => "boolean",
-			"options" => ['0' => 'None', '1' => 'PHPCaptcha', '2' => 'BotDetect Captcha'],
 			"default" => "0",
 			"name" => "Captcha",
-			"help" => "You'll need to download the files seperately... You can either download <a href=\"http://www.phpcaptcha.org/\">PHPCaptcha</a> and extract it into a /securimage/ folder, or you can download <a href=\"https://captcha.com/\">BotDetect Captcha</a> and extract it into the /lib/ folder.",
-			'category' => 'Registration settings'
+			"help" => "You'll need to download Securimage from http://www.phpcaptcha.org and extract it into a /securimage folder.",
+			'category' => 'RegistrationSec'
 		],
 		"AdminVer" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Admin Verification",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"PassChecker" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "A Password checker.",
 			"help" => "Straitly ported from ABXD.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
 		],
 		"DisReg" => [
 			"type" => "boolean",
 			"default" => "0",
 			"name" => "Turn off registration",
 			"help" => "Usefull when your site is hit with a spam attack.",
-			'category' => 'Registration settings'
+			'category' => 'RegistrationSec'
+		],
+
+
+		'newsForum' => [
+			'type' => 'forum',
+			'default' => '0',
+			'name' => 'Latest News forum',
+			'category' => 'Forum settings',
+		],
+		'anncForum' => [
+			'type' => 'forum',
+			'default' => '0',
+			'name' => 'Announcements forum',
+			'category' => 'Forum settings',
+		],
+		"trashForum" => [
+			"type" => "forum",
+			"default" => "0",
+			"name" => "Trash forum",
+			'category' => 'Forum settings',
+		],
+		"secretTrashForum" => [
+			"type" => "forum",
+			"default" => "0",
+			"name" => "Deleted threads forum",
+			'category' => 'Forum settings',
 		],
 
 
