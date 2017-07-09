@@ -9,6 +9,9 @@ $sidelinks = [
 			'text' => 'Home Page',
 			'icon' => 'home'
 		],
+		actionLink('board') => [
+			'text' => 'Forum'
+		],
 		actionLink('FAQ') => [
 			'text' => 'FAQ',
 			'icon' => 'question'
@@ -20,6 +23,18 @@ $sidelinks = [
 		actionLink('online') => [
 			'text' => 'Online Users',
 			'icon' => 'eye-open'
+		],
+		actionLink('ranks') => [
+			'text' => 'Ranks',
+			'icon' => 'trophy'
+		],
+		actionLink('lastposts') => [
+			'text' => 'Last Posts',
+			'icon' => 'reorder'
+		],
+		actionLink('search') => [
+			'text' => 'Search',
+			'icon' => 'search'
 		],
 	],
 ];
