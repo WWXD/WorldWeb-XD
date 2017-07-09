@@ -39,7 +39,7 @@ if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Rereg ra
 if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Last Known Browsers'), 'lkb');
 if ($loguser['root'])						$adminLinks[] = actionLinkTag(__('Edit Groups'), 'editgroups');
 if (HasPermission('admin.editusers'))		$adminLinks[] = actionLinkTag(__('Add secondary Groups'), 'secgroups');
-
+if (HasPermission('admin.editforums')) { $adminLinks[] = actionLinkTag(__("Manage forum list"), "editfora"); }
 
 $bucket = "adminpanel"; include(BOARD_ROOT."lib/pluginloader.php");
 
