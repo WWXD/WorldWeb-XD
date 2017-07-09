@@ -136,8 +136,6 @@ require_once(__DIR__."/smarty/Smarty.class.php");
 $tpl = new Smarty;
 $tpl->assign('config', ['date' => $loguser['dateformat'], 'time' => $loguser['timeformat']]);
 $tpl->assign('loguserid', $loguserid);
-$tpl->setCompileDir(URL_ROOT."/tmp/templates_compiled");
-$tpl->setCacheDir(URL_ROOT."tmp/templates_cache");
 require_once(__DIR__."/PipeMenuBuilder.php");
 require_once(__DIR__."/Browserdetection.php");
 
